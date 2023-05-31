@@ -1,0 +1,25 @@
+{
+  "name": "demolay-mansys-isande2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndreiMarin15/Demolay-ManSys-ISANDE2.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndreiMarin15/Demolay-ManSys-ISANDE2/issues"
+  },
+  "homepage": "https://github.com/AndreiMarin15/Demolay-ManSys-ISANDE2#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.1.3",
+    "express": "^4.18.2"
+  }
+}
