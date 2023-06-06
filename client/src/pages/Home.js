@@ -19,9 +19,11 @@ function Home() {
 				<input type="password" id="pass" name="pass"/>
 				</form>
 
-				<button type="submit" form="login" id="primary-btn" value="LOGIN"> 
-					LOGIN 
-				</button>
+				<Link to="/appform1">
+					<button type="submit" form="login" id="primary-btn" value="LOGIN"> 
+						LOGIN 
+					</button>
+				</Link>
 			</div>
 		</div>
 	);
