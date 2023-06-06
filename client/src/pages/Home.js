@@ -1,16 +1,15 @@
-import { Link } from 'react-router-dom';
-import './styles/base.css'
-import '../App.css';
+import { Link } from "react-router-dom";
+import "../styles/base.css";
 
 function Home() {
-    return (
-      <div className="test">
-       <h1>Home</h1>
+	return (
+		<div className="test">
+			<h1>Home</h1>
+			<Link to="/about">About</Link>
+			<br></br>
+			<Link to="/yana">Yana</Link>
+		</div>
+	);
+}
 
-       <Link to ="/about">About</Link>
-       <Link to ="/yana">Yana</Link>
-      </div>
-    );
-  }
-  
-  export default Home;
+export default Home;

@@ -8,7 +8,7 @@ import About from './pages/About';
 import Yana from './pages/Yana';
 function App() {
 	return (
-		<div className="App">
+		<div>
 			<Routes>
         <Route path="/" element={<Home />} />
         <Route path="about" element={<About />} />

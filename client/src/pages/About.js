@@ -1,9 +1,8 @@
-import '..styles/base.css';
-import '../App.css';
+import '../styles/base.css';
 
 function About() {
     return (
-      <div className="App">
+      <div>
         <p>I am about page</p>
       </div>
     );
