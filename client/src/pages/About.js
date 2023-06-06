@@ -1,11 +1,11 @@
-import '../styles/base.css';
+import "../styles/base.css";
 
 function About() {
-    return (
-      <div>
-        <p>I am about page</p>
-      </div>
-    );
-  }
-  
-  export default About;
+	return (
+		<div>
+			<p>About Page</p>
+		</div>
+	);
+}
+
+export default About;

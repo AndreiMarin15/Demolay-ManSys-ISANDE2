@@ -2,7 +2,7 @@ import "../styles/base.css";
 function Contact() {
 	return (
 		<div>
-			<p>I am Yana</p>
+			<p>Contact Page</p>
 		</div>
 	);
 }
