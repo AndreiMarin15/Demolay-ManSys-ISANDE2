@@ -12,8 +12,8 @@ const Navbar = () => {
           <MenuLink to="/about" activeStyle>
             About
           </MenuLink>
-          <MenuLink to="/yana" activeStyle>
-            Yana
+          <MenuLink to="/contact" activeStyle>
+            Contact
           </MenuLink>
         </Menu>
       </PrimaryNav>

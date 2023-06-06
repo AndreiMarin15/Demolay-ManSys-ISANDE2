@@ -1,5 +1,5 @@
 import "../styles/base.css";
-function Yana() {
+function Contact() {
 	return (
 		<div>
 			<p>I am Yana</p>
@@ -7,4 +7,4 @@ function Yana() {
 	);
 }
 
-export default Yana;
+export default Contact;
