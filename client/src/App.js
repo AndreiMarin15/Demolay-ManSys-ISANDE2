@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import AppForm1 from './pages/AppForm1';
+import AppForm2 from './pages/AppForm2';
+
 
 import Header from './components/Header'
 function App() {
@@ -17,6 +19,8 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element = {<Contact/>} />
           <Route path="appform1" element ={<AppForm1/>}/>
+          <Route path="appform2" element ={<AppForm2/>}/>
+
       </Routes>
     </>
   );
