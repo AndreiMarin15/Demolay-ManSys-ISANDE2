@@ -1,3 +1,4 @@
+import '..styles/base.css';
 import '../App.css';
 
 function About() {
