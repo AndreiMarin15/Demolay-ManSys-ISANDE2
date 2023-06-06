@@ -13,13 +13,13 @@ function Home() {
 			<div id="child">
 				<form id="login">
 				<label for="idnum">ID Number</label>
-				<input type="number" id="idnum" name="idnum"/>
+				<input type="text" id="idnum" name="idnum"/>
 				<br></br>
 				<label for="pass">Password</label>
 				<input type="password" id="pass" name="pass"/>
 				</form>
 
-				<button type="submit" form="login" value="LOGIN"> 
+				<button type="submit" form="login" id="primary-btn" value="LOGIN"> 
 					LOGIN 
 				</button>
 			</div>

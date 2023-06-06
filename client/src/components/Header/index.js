@@ -1,8 +1,12 @@
 import React from 'react'
-import { PrimaryNav, MenuLink, Menu, Hamburger } from './NavElement'
+import { PrimaryNav, MenuLink, Menu, Hamburger, Login} from './NavElement'
+
 const Navbar = () => {
   return (
     <>
+    /* TO DO: INSERT LOGO (navlogo.png) EITHER INSIDE NAV BAR OR ABOVE
+       ADD 'LOGIN' BUTTON TO LEAD TO LOGIN SCREEN -- DIFFERS FROM HOME SCREEN */
+
       <PrimaryNav>
         <Hamburger />
         <Menu>
@@ -10,10 +14,10 @@ const Navbar = () => {
             Home
           </MenuLink>
           <MenuLink to="/about" activeStyle>
-            About
+            About DeMolay
           </MenuLink>
           <MenuLink to="/contact" activeStyle>
-            Contact
+            Chapter Locations
           </MenuLink>
         </Menu>
       </PrimaryNav>
