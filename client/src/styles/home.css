@@ -49,3 +49,7 @@ input:focus {
   border: 2px solid var(--gray-sec);
 }
 
+.logocenter {
+  width: 100px;
+  height: 100px;
+}
