@@ -1,0 +1,12 @@
+@import "base.css";
+
+.conf-message {
+  font-family: "PT Sans";
+  font-size: 16px;
+  margin-left: 40px;
+  margin-bottom: 30px;
+}
+
+.sub-btn {
+  margin-left: 40px;
+}

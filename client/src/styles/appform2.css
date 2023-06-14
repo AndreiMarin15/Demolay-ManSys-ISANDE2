@@ -1,157 +1,17 @@
 @import "base.css";
 
 .angry-grid {
-    display: grid; 
- 
-    grid-template-rows: 0.4fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    
-    gap: 0px;
-    height: 100%;
-    margin: auto;
- }
+  display: grid;
 
- label {
-    display: inline-block;
-    text-align: right;
-  }
-   
- #item-0 {
- 
-    background-color: #dfae6a; 
-    grid-row-start: 1;
-    grid-column-start: 1;
- 
-    grid-row-end: 2;
-    grid-column-end: 3;
-    
- }
- #item-1 {
- 
-    background-color: #bdd5d7; 
-    grid-row-start: 1;
-    grid-column-start: 3;
- 
-    grid-row-end: 2;
-    grid-column-end: 7;
-    text-align: right;
- }
- #item-2 {
- 
-    background-color: #87C68C; 
-    grid-row-start: 2;
-    grid-column-start: 1;
- 
-    grid-row-end: 3;
-    grid-column-end: 4;
-    
- }
- #item-3 {
- 
-    background-color: #559CD9; 
-    grid-row-start: 3;
-    grid-column-start: 1;
- 
-    grid-row-end: 4;
-    grid-column-end: 3; 
-    display: flex;
- }
- #item-4 {
- 
-    background-color: #96576C; 
-    grid-row-start: 3;
-    grid-column-start: 3;
- 
-    grid-row-end: 4;
-    grid-column-end: 6;
-    
- }
- #item-5 {
- 
-    background-color: #EC9959; 
-    grid-row-start: 2;
-    grid-column-start: 4;
- 
-    grid-row-end: 3;
-    grid-column-end: 7;
-    
- }
- #item-6 {
- 
-    background-color: #85E99B; 
-    grid-row-start: 3;
-    grid-column-start: 6;
- 
-    grid-row-end: 4;
-    grid-column-end: 7;
-    
- }
- #item-7 {
- 
-    background-color: #887A9E; 
-    grid-row-start: 4;
-    grid-column-start: 1;
- 
-    grid-row-end: 5;
-    grid-column-end: 3;
-    
- }
- #item-8 {
- 
-    background-color: #F5CFDC; 
-    grid-row-start: 4;
-    grid-column-start: 3;
- 
-    grid-row-end: 5;
-    grid-column-end: 5;
-    
- }
- #item-9 {
- 
-    background-color: #BE5B55; 
-    grid-row-start: 4;
-    grid-column-start: 5;
- 
-    grid-row-end: 5;
-    grid-column-end: 7;
-    
- }
- #item-10 {
- 
-    background-color: #7EDEFE; 
-    grid-row-start: 5;
-    grid-column-start: 1;
- 
-    grid-row-end: 6;
-    grid-column-end: 7;
-    
- }
- #item-11 {
- 
-    background-color: #785999; 
-    grid-row-start: 6;
-    grid-column-start: 1;
- 
-    grid-row-end: 7;
-    grid-column-end: 4;
-    
- }
- #item-12 {
- 
-    background-color: #99D7F9; 
-    grid-row-start: 6;
-    grid-column-start: 4;
- 
-    grid-row-end: 7;
-    grid-column-end: 7;
-    
- }
- #item-13 {
- 
-    background-color: #5697B5; 
-    grid-row-start: 7;
-    grid-column-start: 1;
- 
-    grid-row-end: 8;
-    grid-column-end: 7;
- }
+  grid-template-rows: 0.4fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  gap: 0px;
+  height: 100%;
+  margin: auto;
+}
+
+label {
+  display: inline-block;
+  text-align: right;
+}
