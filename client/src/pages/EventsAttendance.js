@@ -8,7 +8,7 @@ function EventsAttendance() {
             <h1>Add Event</h1>
             <hr/>
             <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-4">
                     <table>
                         <tr>
                             <td>Term:</td>
@@ -37,16 +37,16 @@ function EventsAttendance() {
                     </table>
                 </div>
 
-                <div className="col-md-7">
+                <div className="col-md-4">
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <label 
                                 htmlFor="term" 
                                 className="col-form-label text-left">
                                 Term:
                             </label>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-7">
                             <select className="form-select form-control" id="term">
                                 <option>2022</option>
                                 <option>2021</option>
@@ -56,14 +56,14 @@ function EventsAttendance() {
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <label 
                                 htmlFor="meetingname" 
                                 className="col-form-label text-right">
                                 Meeting Name:
                             </label>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-7">
                             <select className="form-select form-control" id="meetingName">
                                 <option>Meeting 1</option>
                                 <option>Meeting 2</option>
@@ -73,27 +73,27 @@ function EventsAttendance() {
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <label 
                                 htmlFor="meetingdate" 
                                 className="col-form-label text-right">
                                 Meeting Date:
                             </label>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-7">
                             <input type="text" className="form-control" id="meetingDate" placeholder="MM/DD/YYYY"/>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <label 
                                 htmlFor="position" 
                                 className="col-form-label text-right">
                                 Position:
                             </label>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-7">
                             <select className="form-select form-control" id="position">
                                 <option>Position 1</option>
                                 <option>Position 2</option>
@@ -103,14 +103,14 @@ function EventsAttendance() {
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
+                        <div className="col-md-4">
                             <label 
                                 htmlFor="position" 
                                 className="col-form-label text-right">
                                 Performance:
                             </label>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-7">
                             <select className="form-select form-control" id="performance">
                                 <option>Performance 1</option>
                                 <option>Performance 2</option>
@@ -118,7 +118,25 @@ function EventsAttendance() {
                             </select>
                         </div>
                     </div>
-                    <br/>
+                </div>
+                <div className="col-md-4"> 
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-3">
+                            <label 
+                                htmlFor="attendance" 
+                                className="col-form-label text-right">
+                                Attendance:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <select className="form-select form-control" id="attendance">
+                                <option>Attendance 1</option>
+                                <option>Attendance 2</option>
+                                <option>Attendance 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br></br>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
@@ -128,7 +146,7 @@ function EventsAttendance() {
                                 Proof:
                             </label>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-7">
                             <input type="file" className="form-control" id="uploadID" />
                         </div>
                     </div>
