@@ -1,0 +1,27 @@
+@import "base.css";
+
+table {
+  width: 600px;
+  border: 1px solid;
+  margin-left: 10px;
+}
+
+td:nth-child(1) {
+  padding-bottom: 10px;
+}
+
+td:nth-child(2) {
+  overflow-wrap: break-word;
+  padding-left: 15px;
+  padding-bottom: 10px;
+  font-weight: lighter;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+h1 {
+  margin-left: 10px;
+}
+
