@@ -5,11 +5,53 @@ import "../styles/EventsAttendance.css"
 function EventsAttendance() {
     return (
         <div className="container">
-            <h1>Add Event</h1>
+            <br/>
+            <nav class="eventsNavbar">
+                <table class="navbar-table">
+                    <tbody>
+                        <tr class="navbar-row">
+                            <td><a href="/">Attendance</a></td>
+                            <td><a href="/">Athletic</a></td>
+                            <td><a href="/">Civic Service</a></td>
+                            <td><a href="/">Conclave</a></td>
+                            <td><a href="/">Fine Arts</a></td>
+                            <td><a href="/">Fund Raising</a></td>
+                            <td><a href="/">Installing</a></td>
+                            <td><a href="/">Journalism</a></td>
+                        </tr>
+                        <tr className="navbar-row">
+                            <td><a href="/">Masonic Attendance</a></td>
+                            <td><a href="/">Masonic Service</a></td>
+                            <td><a href="/">Merit</a></td>
+                            <td><a href="/">Petitions</a></td>
+                            <td><a href="/">Religion</a></td>
+                            <td><a href="/">Ritual</a></td>
+                            <td><a href="/">Scholastics</a></td>
+                            <td><a href="/">Visitation</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </nav>
+            <br/>
+            {/* Header */}
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <h1>Add Event - Attendance </h1>
+                <Link to="/appform1">
+                    <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
+                        ADD NEW ENTRY
+                    </button>
+                </Link>
+            </div>
+            {/* Instruction */}
+            <div>
+                <p className="instruction"> Please take note that you can only submit the form if you have completed all the requirements. Otherwise, your data will not be saved.  </p>
+            </div>
             <hr/>
+
             <div className="row">
+            {/* First Column */}
                 <div className="col-md-4">
-                    <table>
+                    <table class="legend-table">
                         <tr>
                             <td>Term:</td>
                             <td>means Term of Office</td>
@@ -36,7 +78,7 @@ function EventsAttendance() {
                         </tr>
                     </table>
                 </div>
-
+            {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
@@ -118,7 +160,26 @@ function EventsAttendance() {
                             </select>
                         </div>
                     </div>
+                {/* Buttons */}
+                    <div className="mt-5"></div> 
+                    <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
+                        <div className="mr-2">
+                            <Link to="/appform1">
+                                <button type="submit" form="submit" id="primary-btn" value="BACK">
+                                BACK
+                                </button>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link to="/appform1">
+                            <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+                                SUBMIT
+                            </button>
+                            </Link>
+                         </div>
+                    </div>
                 </div>
+                {/* Third Column */}
                 <div className="col-md-4"> 
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
@@ -151,7 +212,7 @@ function EventsAttendance() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>         
         </div>
     );
 }
