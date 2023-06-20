@@ -19,6 +19,7 @@
   padding-left: 15px;
   padding-bottom: 20px;
   font-weight: lighter;
+  vertical-align: top;
 }
 
 .no-wrap {
@@ -31,11 +32,6 @@ label {
   font-weight: bold;
   font-size: larger;
 }
-
-.term, .meetingName {
-  vertical-align: left;
-}
-
 
 .row {
   display: flex;
@@ -50,8 +46,8 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #350059;
   padding: 10px;
+  background-color: #350059;
 }
 
 .navbar-row {

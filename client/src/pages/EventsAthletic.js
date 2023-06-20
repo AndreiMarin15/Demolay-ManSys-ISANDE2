@@ -2,13 +2,13 @@ import { Link } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/Events.css"
 
-function EventsAttendance() {
+function EventsAthletic() {
     return (
         <div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
-                    <tbody>
+                <tbody>
                         <tr class="navbar-row">
                             <td><a href="/eventsAttendance">Attendance</a></td>
                             <td><a href="/eventsAthletic">Athletic</a></td>
@@ -35,8 +35,8 @@ function EventsAttendance() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Attendance </h1>
-                <Link to="/eventsAttendance">
+                <h1>Add Event - Athletic </h1>
+                <Link to="/eventsAthletic">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,28 +53,20 @@ function EventsAttendance() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td>Term:</td>
-                            <td>means Term of Office</td>
+                            <td>Date:</td>
+                            <td>date of athletic activities</td>
                         </tr>
                         <tr>
-                            <td className="no-wrap">Meeting Name:</td>
-                            <td>name of Stated Meetings</td>
+                            <td className="no-wrap">Name of Sport:</td>
+                            <td>what sport did the member participate</td>
                         </tr>
                         <tr>
-                            <td>Meeting Date:</td>
-                            <td>date of Stated Meetings</td>
+                            <td>Hosted by:</td>
+                            <td>name of chapter or what organization hosted the athletic event</td>
                         </tr>
                         <tr>
-                            <td>Position:</td>
-                            <td>officer’s position or position assigned to a Member during Opening and Closing Ceremonies</td>
-                        </tr>
-                        <tr>
-                            <td>Performance:</td>
-                            <td>based on the delivery of the Ritual part. A member should attain and maintain Expert Status</td>
-                        </tr>
-                        <tr>
-                            <td>Attendance:</td>
-                            <td>to be filled by Award’s Advisor or Chapter Dad</td>
+                            <td>Location:</td>
+                            <td>where the athletic event was held</td>
                         </tr>
                     </table>
                 </div>
@@ -83,16 +75,16 @@ function EventsAttendance() {
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
-                                htmlFor="term" 
+                                htmlFor="nameofsport" 
                                 className="col-form-label text-left">
-                                Term:
+                                Name of Sport:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <select className="form-select form-control" id="term">
-                                <option>2022</option>
-                                <option>2021</option>
-                                <option>2020</option>
+                            <select className="form-select form-control" id="nameofsport">
+                                <option>Sport 1</option>
+                                <option>Sport 2</option>
+                                <option>Sport 3</option>
                             </select>
                         </div>
                     </div>
@@ -100,66 +92,46 @@ function EventsAttendance() {
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
-                                htmlFor="meetingname" 
+                                htmlFor="date" 
                                 className="col-form-label text-right">
-                                Meeting Name:
+                                Date:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <select className="form-select form-control" id="meetingname">
-                                <option>Meeting 1</option>
-                                <option>Meeting 2</option>
-                                <option>Meeting 3</option>
-                            </select>
+                            <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
-                                htmlFor="meetingdate" 
+                                htmlFor="hostedby" 
                                 className="col-form-label text-right">
-                                Meeting Date:
+                                Hosted by:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="text" className="form-control" id="meetingdate" placeholder="MM/DD/YYYY"/>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
-                            <label 
-                                htmlFor="position" 
-                                className="col-form-label text-right">
-                                Position:
-                            </label>
-                        </div>
-                        <div className="col-md-7">
-                            <select className="form-select form-control" id="position">
-                                <option>Position 1</option>
-                                <option>Position 2</option>
-                                <option>Position 3</option>
+                            <select className="form-select form-control" id="hostedby">
+                                <option>Hosted by 1</option>
+                                <option>Hosted by 2</option>
+                                <option>Hosted by 3</option>
                             </select>
                         </div>
                     </div>
-                    <br/>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
-                                htmlFor="position" 
+                                htmlFor="location" 
                                 className="col-form-label text-right">
-                                Performance:
+                                Location:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <select className="form-select form-control" id="performance">
-                                <option>Performance 1</option>
-                                <option>Performance 2</option>
-                                <option>Performance 3</option>
-                            </select>
+                            <input type="text" className="form-control" id="location" placeholder="Enter Location"/>
                         </div>
                     </div>
+                    <br/>
+                    
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -184,31 +156,14 @@ function EventsAttendance() {
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
-                                htmlFor="attendance" 
-                                className="col-form-label text-right">
-                                Attendance:
-                            </label>
-                        </div>
-                        <div className="col-md-7">
-                            <select className="form-select form-control" id="attendance">
-                                <option>Attendance 1</option>
-                                <option>Attendance 2</option>
-                                <option>Attendance 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br></br>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
-                            <label 
-                                htmlFor="uploadproof"
+                                htmlFor="uploadID"
                                 className="col-form-label text-right"
                             >
                                 Proof:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="file" className="form-control" id="uploadproof" />
+                            <input type="file" className="form-control" id="uploadID" />
                         </div>
                     </div>
                 </div>
@@ -217,4 +172,4 @@ function EventsAttendance() {
     );
 }
 
-export default EventsAttendance;
+export default EventsAthletic;
