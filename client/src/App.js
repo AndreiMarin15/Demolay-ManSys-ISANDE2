@@ -13,6 +13,10 @@ import EventsCivicService from './pages/EventsCivicService';
 import EventsConclave from './pages/EventsConclave';
 import EventsFineArts from './pages/EventsFineArts';
 import EventsFundraising from './pages/EventsFundraising';
+import EventsInstalling from './pages/EventsInstalling';
+import EventsJournalism from './pages/EventsJournalism';
+import EventsMasonicAttendance from './pages/EventsMasonicAttendance';
+import EventsMasonicService from './pages/EventsMasonicService';
 
 import Header from './components/Header'
 function App() {
@@ -30,6 +34,11 @@ function App() {
           <Route path="eventsConclave" element ={<EventsConclave/>}/>
           <Route path="eventsFineArts" element ={<EventsFineArts/>}/>
           <Route path="eventsFundraising" element ={<EventsFundraising/>}/>
+          <Route path="eventsInstalling" element ={<EventsInstalling/>}/>
+          <Route path="eventsJournalism" element ={<EventsJournalism/>}/>
+          <Route path="eventsMasonicAttendance" element ={<EventsMasonicAttendance/>}/>
+          <Route path="eventsMasonicService" element ={<EventsMasonicService/>}/>
+          
       </Routes>
     </>
   );
