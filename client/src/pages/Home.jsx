@@ -6,7 +6,7 @@ import "../styles/home.css";
 function Home() {
   return (
     <div id="homelogo">
-      <img src={logo} id="big"></img>
+      <img src={logo} id="big" alt="DeMolay" ></img>
       <h1>Welcome to DeMolay!</h1>
 
       <div id="homechild">
