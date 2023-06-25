@@ -7,7 +7,6 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import AppForm1 from './pages/AppForm1';
-import AppForm1 from "./pages/AppForm1";
 import AppForm2 from "./pages/AppForm2";
 import AppForm3 from "./pages/AppForm3";
 import AppForm4 from "./pages/AppForm4";
