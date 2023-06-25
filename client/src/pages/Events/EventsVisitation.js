@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsAthletic() {
+function EventsVisitation() {
     return (
         <div className="container">
             <br/>
@@ -35,8 +35,8 @@ function EventsAthletic() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Athletic </h1>
-                <Link to="/eventsAthletic">
+                <h1>Add Event - Visitation </h1>
+                <Link to="/eventsVisitation">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,85 +53,64 @@ function EventsAthletic() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td>Date:</td>
-                            <td>date of athletic activities</td>
+                            <td>Date</td>
+                            <td>date visited to other Chapter and attended stated meeting</td>
                         </tr>
                         <tr>
-                            <td className="no-wrap">Name of Sport:</td>
-                            <td>what sport did the member participate</td>
-                        </tr>
-                        <tr>
-                            <td>Hosted by:</td>
-                            <td>name of chapter or what organization hosted the athletic event</td>
+                            <td>Chapter:</td>
+                            <td>name of the Chapter visited</td>
                         </tr>
                         <tr>
                             <td>Location:</td>
-                            <td>where the athletic event was held</td>
+                            <td>where the chapter is located</td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
-                            <label 
-                                htmlFor="nameofsport" 
-                                className="col-form-label text-left">
-                                Name of Sport:
-                            </label>
-                        </div>
-                        <div className="col-md-7">
-                            <select className="form-select form-control" id="nameofsport">
-                                <option>Sport 1</option>
-                                <option>Sport 2</option>
-                                <option>Sport 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             <label 
                                 htmlFor="date" 
                                 className="col-form-label text-right">
                                 Date:
                             </label>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                             <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             <label 
-                                htmlFor="hostedby" 
-                                className="col-form-label text-right">
-                                Hosted by:
+                                htmlFor="chapter" 
+                                className="col-form-label text-left">
+                                Chapter:
                             </label>
                         </div>
-                        <div className="col-md-7">
-                            <select className="form-select form-control" id="hostedby">
-                                <option>Hosted by 1</option>
-                                <option>Hosted by 2</option>
-                                <option>Hosted by 3</option>
+                        <div className="col-md-6">
+                            <select className="form-select form-control" id="chapter">
+                                <option>Chapter 1</option>
+                                <option>Chapter 2</option>
+                                <option>Chapter 3</option>
                             </select>
                         </div>
                     </div>
+                    <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             <label 
                                 htmlFor="location" 
                                 className="col-form-label text-right">
                                 Location:
                             </label>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-6">
                             <input type="text" className="form-control" id="location" placeholder="Enter Location"/>
                         </div>
                     </div>
-                    <br/>
-                    
+   
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -172,4 +151,4 @@ function EventsAthletic() {
     );
 }
 
-export default EventsAthletic;
+export default EventsVisitation;

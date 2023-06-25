@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsMasonicAttendance() {
+function EventsAthletic() {
     return (
         <div className="container">
             <br/>
@@ -35,8 +35,8 @@ function EventsMasonicAttendance() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Masonic Attendance </h1>
-                <Link to="/eventsMasonicAttendance">
+                <h1>Add Event - Athletic </h1>
+                <Link to="/eventsAthletic">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -54,16 +54,41 @@ function EventsMasonicAttendance() {
                     <table class="legend-table">
                         <tr>
                             <td>Date:</td>
-                            <td>defines the date when did the Master Mason attended your Chapter’s meeting</td>
+                            <td>date of athletic activities</td>
                         </tr>
                         <tr>
-                            <td className="no-wrap">Mason's Full Name:</td>
-                            <td>defines the date when did the Master Mason attended your Chapter’s meeting</td>
+                            <td className="no-wrap">Name of Sport:</td>
+                            <td>what sport did the member participate</td>
+                        </tr>
+                        <tr>
+                            <td>Hosted by:</td>
+                            <td>name of chapter or what organization hosted the athletic event</td>
+                        </tr>
+                        <tr>
+                            <td>Location:</td>
+                            <td>where the athletic event was held</td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                            <label 
+                                htmlFor="nameofsport" 
+                                className="col-form-label text-left">
+                                Name of Sport:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <select className="form-select form-control" id="nameofsport">
+                                <option>Sport 1</option>
+                                <option>Sport 2</option>
+                                <option>Sport 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
@@ -80,17 +105,33 @@ function EventsMasonicAttendance() {
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
-                                htmlFor="masonsfullname" 
+                                htmlFor="hostedby" 
                                 className="col-form-label text-right">
-                                Mason's Full Name:
+                                Hosted by:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="text" className="form-control" id="masonsfullname" placeholder="Enter Mason's Full Name"/>
+                            <select className="form-select form-control" id="hostedby">
+                                <option>Hosted by 1</option>
+                                <option>Hosted by 2</option>
+                                <option>Hosted by 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                            <label 
+                                htmlFor="location" 
+                                className="col-form-label text-right">
+                                Location:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <input type="text" className="form-control" id="location" placeholder="Enter Location"/>
                         </div>
                     </div>
                     <br/>
-   
+                    
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -131,4 +172,4 @@ function EventsMasonicAttendance() {
     );
 }
 
-export default EventsMasonicAttendance;
+export default EventsAthletic;

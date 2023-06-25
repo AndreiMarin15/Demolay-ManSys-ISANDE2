@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsConclave() {
+function EventsPetitions() {
     return (
         <div className="container">
             <br/>
@@ -35,8 +35,8 @@ function EventsConclave() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Conclave </h1>
-                <Link to="/eventsConclave">
+                <h1>Add Event - Petitions </h1>
+                <Link to="/eventsPetitions">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,98 +53,81 @@ function EventsConclave() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td>Duration:</td>
-                            <td>defines how long the conclave is</td>
+                            <td>Name</td>
+                            <td>full Name of newly initiated member</td>
                         </tr>
                         <tr>
-                            <td>Type:</td>
-                            <td>defines if it is National or Luzon, Visayas, Mindanao Jurisdictional Conclave</td>
+                            <td>I.D. Date:</td>
+                            <td>Initiatory Degree date (when the member was newly initiated)</td>
                         </tr>
                         <tr>
-                            <td className="no-wrap">Chap Rep:</td>
-                            <td>name of the chapter that was represented by the member</td>
+                            <td>Chapter:</td>
+                            <td>the Chapter that accepted your recruited member</td>
                         </tr>
                         <tr>
-                            <td>OR No.:</td>
-                            <td>official receipt number from the host reflecting the member’s name or registration sheet that includes the member’s name with a copy of the OR reflecting the chapter’s name </td>
+                            <td>SCOD-OR No.:</td>
+                            <td>Official Receipt Number reflecting the newly initiated member’s name</td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
+                        <div className="col-md-5">
                             <label 
-                                htmlFor="duration" 
-                                className="col-form-label text-left">
-                                Duration:
-                            </label>
-                        </div>
-                        <div className="col-md-4">
-                            <select className="form-select form-control" id="duration1">
-                                <option>Duration 1</option>
-                                <option>Duration 2</option>
-                                <option>Duration 3</option>
-                            </select>
-                        </div>
-                        -
-                        <div className="col-md-4">
-                            <select className="form-select form-control" id="duration2">
-                                <option>Duration 1</option>
-                                <option>Duration 2</option>
-                                <option>Duration 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
-                            <label 
-                                htmlFor="type" 
-                                className="col-form-label text-left">
-                                Type:
-                            </label>
-                        </div>
-                        <div className="col-md-8">
-                            <select className="form-select form-control" id="type">
-                                <option>Type 1</option>
-                                <option>Type 2</option>
-                                <option>Type 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
-                            <label 
-                                htmlFor="chaprep" 
-                                className="col-form-label text-left">
-                                Chap Rep:
-                            </label>
-                        </div>
-                        <div className="col-md-8">
-                            <select className="form-select form-control" id="chaprep">
-                                <option>Chap Rep 1</option>
-                                <option>Chap Rep 2</option>
-                                <option>Chap Rep 3</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-3">
-                            <label 
-                                htmlFor="orno" 
+                                htmlFor="name" 
                                 className="col-form-label text-right">
-                                OR No:
+                               Name:
                             </label>
                         </div>
-                        <div className="col-md-8">
-                            <input type="text" className="form-control" id="orno" placeholder="Enter OR No."/>
+                        <div className="col-md-6">
+                            <input type="text" className="form-control" id="scod" placeholder="Enter Member Name"/>
                         </div>
                     </div>
                     <br/>
-                    
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-5">
+                            <label 
+                                htmlFor="date" 
+                                className="col-form-label text-right">
+                                I.D. Date:
+                            </label>
+                        </div>
+                        <div className="col-md-6">
+                            <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-5">
+                            <label 
+                                htmlFor="chapter" 
+                                className="col-form-label text-left">
+                                Chapter:
+                            </label>
+                        </div>
+                        <div className="col-md-6">
+                            <select className="form-select form-control" id="chapter">
+                                <option>Chapter 1</option>
+                                <option>Chapter 2</option>
+                                <option>Chapter 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-5">
+                            <label 
+                                htmlFor="scod" 
+                                className="col-form-label text-right">
+                                SCOD-OR No.:
+                            </label>
+                        </div>
+                        <div className="col-md-6">
+                            <input type="text" className="form-control" id="scod" placeholder="Enter SCOD-OR No."/>
+                        </div>
+                    </div>
+   
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -185,4 +168,4 @@ function EventsConclave() {
     );
 }
 
-export default EventsConclave;
+export default EventsPetitions;

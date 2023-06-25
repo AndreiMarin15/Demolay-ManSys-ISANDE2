@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsMasonicService() {
+function EventsJournalism() {
     return (
         <div className="container">
             <br/>
@@ -35,8 +35,8 @@ function EventsMasonicService() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Masonic Service </h1>
-                <Link to="/eventsMasonicService">
+                <h1>Add Event - Journalism </h1>
+                <Link to="/eventsJournalism">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,81 +53,61 @@ function EventsMasonicService() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td className="no-wrap">Name of Masonic Service:</td>
-                            <td>title of Masonic Service activity conducted/participated by the member</td>
+                            <td className="no-wrap">Name of Newspaper:</td>
+                            <td>title of the Chapter newspaper</td>
                         </tr>
                         <tr>
                             <td>Date:</td>
-                            <td>date of Masonic Service Activities</td>
+                            <td>date when the chapter newspaper was issued</td>
                         </tr>
                         <tr>
-                            <td className="no-wrap">Number of Hours:</td>
-                            <td>number of hour garnered by the member</td>
-                        </tr>
-                        <tr>
-                            <td>Location:</td>
-                            <td>where the Masonic Service activity was held</td>
+                            <td>Position:</td>
+                            <td>position of the member in the newspaper committee</td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label 
-                                htmlFor="nameofmasonicservice" 
-                                className="col-form-label text-left">
-                                Name of Masonic Service:
+                                htmlFor="nameofnewspaper" 
+                                className="col-form-label text-right">
+                                Name:
                             </label>
                         </div>
-                        <div className="col-md-5">
-                            <select className="form-select form-control" id="nameofmasonicservice">
-                                <option>Name 1</option>
-                                <option>Name 2</option>
-                                <option>Name 3</option>
-                            </select>
+                        <div className="col-md-7">
+                            <input type="text" className="form-control" id="nameofnewspaper" placeholder="Enter Name of Newspaper"/>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label 
                                 htmlFor="date" 
                                 className="col-form-label text-right">
                                 Date:
                             </label>
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-7">
                             <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-6">
+                        <div className="col-md-4">
                             <label 
-                                htmlFor="noofhours" 
+                                htmlFor="position" 
                                 className="col-form-label text-right">
-                                No. of Hours:
+                                Position:
                             </label>
                         </div>
-                        <div className="col-md-5">
-                            <input type="text" className="form-control" id="noofhours" placeholder="00"/>
+                        <div className="col-md-7">
+                            <input type="text" className="form-control" id="position" placeholder="Enter Position"/>
                         </div>
                     </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-6">
-                            <label 
-                                htmlFor="location" 
-                                className="col-form-label text-right">
-                                Location:
-                            </label>
-                        </div>
-                        <div className="col-md-5">
-                            <input type="text" className="form-control" id="location" placeholder="Enter Location"/>
-                        </div>
-                    </div>
-   
+
+                    
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -168,4 +148,4 @@ function EventsMasonicService() {
     );
 }
 
-export default EventsMasonicService;
+export default EventsJournalism;

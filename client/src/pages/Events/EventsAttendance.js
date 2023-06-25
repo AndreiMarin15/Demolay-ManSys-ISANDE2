@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsCivicService() {
+function EventsAttendance() {
     return (
         <div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
-                <tbody>
+                    <tbody>
                         <tr class="navbar-row">
                             <td><a href="/eventsAttendance">Attendance</a></td>
                             <td><a href="/eventsAthletic">Athletic</a></td>
@@ -35,8 +35,8 @@ function EventsCivicService() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Civic Service </h1>
-                <Link to="/eventsCivicService">
+                <h1>Add Event - Attendance </h1>
+                <Link to="/eventsAttendance">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,82 +53,113 @@ function EventsCivicService() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td className="no-wrap">Name of CS Project:</td>
-                            <td>title of civic service activity conducted/participated by the member</td>
+                            <td>Term:</td>
+                            <td>means Term of Office</td>
                         </tr>
                         <tr>
-                            <td>Date:</td>
-                            <td>date of civic service activities</td>
+                            <td className="no-wrap">Meeting Name:</td>
+                            <td>name of Stated Meetings</td>
                         </tr>
                         <tr>
-                            <td>Number of Hours:</td>
-                            <td>number of hour garnered by the member</td>
+                            <td>Meeting Date:</td>
+                            <td>date of Stated Meetings</td>
                         </tr>
                         <tr>
-                            <td>Location:</td>
-                            <td>where the civic service activity was held</td>
+                            <td>Position:</td>
+                            <td>officer’s position or position assigned to a Member during Opening and Closing Ceremonies</td>
+                        </tr>
+                        <tr>
+                            <td>Performance:</td>
+                            <td>based on the delivery of the Ritual part. A member should attain and maintain Expert Status</td>
+                        </tr>
+                        <tr>
+                            <td>Attendance:</td>
+                            <td>to be filled by Award’s Advisor or Chapter Dad</td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-5">
+                        <div className="col-md-4">
                             <label 
-                                htmlFor="nameofcsproject" 
+                                htmlFor="term" 
                                 className="col-form-label text-left">
-                                Name of CS Project:
+                                Term:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <select className="form-select form-control" id="nameofcsproject">
-                                <option>CS Project 1</option>
-                                <option>CS Project 2</option>
-                                <option>CS Project 3</option>
+                            <select className="form-select form-control" id="term">
+                                <option>2022</option>
+                                <option>2021</option>
+                                <option>2020</option>
                             </select>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-5">
+                        <div className="col-md-4">
                             <label 
-                                htmlFor="date" 
+                                htmlFor="meetingname" 
                                 className="col-form-label text-right">
-                                Date:
+                                Meeting Name:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
+                            <select className="form-select form-control" id="meetingname">
+                                <option>Meeting 1</option>
+                                <option>Meeting 2</option>
+                                <option>Meeting 3</option>
+                            </select>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-5">
+                        <div className="col-md-4">
                             <label 
-                                htmlFor="date" 
+                                htmlFor="meetingdate" 
                                 className="col-form-label text-right">
-                                Number of Hours:
+                                Meeting Date:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="text" className="form-control" id="numofhours" placeholder="00"/>
+                            <input type="text" className="form-control" id="meetingdate" placeholder="MM/DD/YYYY"/>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-5">
+                        <div className="col-md-4">
                             <label 
-                                htmlFor="location" 
+                                htmlFor="position" 
                                 className="col-form-label text-right">
-                                Location:
+                                Position:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="text" className="form-control" id="location" placeholder="Enter Location"/>
+                            <select className="form-select form-control" id="position">
+                                <option>Position 1</option>
+                                <option>Position 2</option>
+                                <option>Position 3</option>
+                            </select>
                         </div>
                     </div>
                     <br/>
-                    
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                            <label 
+                                htmlFor="position" 
+                                className="col-form-label text-right">
+                                Performance:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <select className="form-select form-control" id="performance">
+                                <option>Performance 1</option>
+                                <option>Performance 2</option>
+                                <option>Performance 3</option>
+                            </select>
+                        </div>
+                    </div>
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -153,14 +184,31 @@ function EventsCivicService() {
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
-                                htmlFor="uploadID"
+                                htmlFor="attendance" 
+                                className="col-form-label text-right">
+                                Attendance:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <select className="form-select form-control" id="attendance">
+                                <option>Attendance 1</option>
+                                <option>Attendance 2</option>
+                                <option>Attendance 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br></br>
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-3">
+                            <label 
+                                htmlFor="uploadproof"
                                 className="col-form-label text-right"
                             >
                                 Proof:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="file" className="form-control" id="uploadID" />
+                            <input type="file" className="form-control" id="uploadproof" />
                         </div>
                     </div>
                 </div>
@@ -169,4 +217,4 @@ function EventsCivicService() {
     );
 }
 
-export default EventsCivicService;
+export default EventsAttendance;

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsInstalling() {
+function EventsConclave() {
     return (
         <div className="container">
             <br/>
@@ -35,8 +35,8 @@ function EventsInstalling() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Installing </h1>
-                <Link to="/eventsInstalling">
+                <h1>Add Event - Conclave </h1>
+                <Link to="/eventsConclave">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,68 +53,97 @@ function EventsInstalling() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td>Date:</td>
-                            <td>date when the Installation is conducted</td>
+                            <td>Duration:</td>
+                            <td>defines how long the conclave is</td>
                         </tr>
                         <tr>
-                            <td>Chapter:</td>
-                            <td>chapter that conducted the Installation</td>
+                            <td>Type:</td>
+                            <td>defines if it is National or Luzon, Visayas, Mindanao Jurisdictional Conclave</td>
                         </tr>
                         <tr>
-                            <td>Position:</td>
-                            <td>speaking part ONLY performs by the applicant</td>
+                            <td className="no-wrap">Chap Rep:</td>
+                            <td>name of the chapter that was represented by the member</td>
                         </tr>
                         <tr>
-                            <td>Performance:</td>
-                            <td>base on the delivery of the Ritual part</td>
+                            <td>OR No.:</td>
+                            <td>official receipt number from the host reflecting the member’s name or registration sheet that includes the member’s name with a copy of the OR reflecting the chapter’s name </td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                             <label 
-                                htmlFor="date" 
-                                className="col-form-label text-right">
-                                Date:
-                            </label>
-                        </div>
-                        <div className="col-md-7">
-                            <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
-                        </div>
-                    </div>
-                    <br/>
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
-                            <label 
-                                htmlFor="chapter" 
+                                htmlFor="duration" 
                                 className="col-form-label text-left">
-                                Chapter:
+                                Duration:
                             </label>
                         </div>
-                        <div className="col-md-7">
-                            <select className="form-select form-control" id="chapter">
-                                <option>Chapter 1</option>
-                                <option>Chapter 2</option>
-                                <option>Chapter 3</option>
+                        <div className="col-md-4">
+                            <select className="form-select form-control" id="duration1">
+                                <option>Duration 1</option>
+                                <option>Duration 2</option>
+                                <option>Duration 3</option>
+                            </select>
+                        </div>
+                        -
+                        <div className="col-md-4">
+                            <select className="form-select form-control" id="duration2">
+                                <option>Duration 1</option>
+                                <option>Duration 2</option>
+                                <option>Duration 3</option>
                             </select>
                         </div>
                     </div>
                     <br/>
                     <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                             <label 
-                                htmlFor="position" 
-                                className="col-form-label text-right">
-                                Position:
+                                htmlFor="type" 
+                                className="col-form-label text-left">
+                                Type:
                             </label>
                         </div>
-                        <div className="col-md-7">
-                            <input type="text" className="form-control" id="position" placeholder="Enter Position"/>
+                        <div className="col-md-8">
+                            <select className="form-select form-control" id="type">
+                                <option>Type 1</option>
+                                <option>Type 2</option>
+                                <option>Type 3</option>
+                            </select>
                         </div>
                     </div>
-
+                    <br/>
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-3">
+                            <label 
+                                htmlFor="chaprep" 
+                                className="col-form-label text-left">
+                                Chap Rep:
+                            </label>
+                        </div>
+                        <div className="col-md-8">
+                            <select className="form-select form-control" id="chaprep">
+                                <option>Chap Rep 1</option>
+                                <option>Chap Rep 2</option>
+                                <option>Chap Rep 3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br/>
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-3">
+                            <label 
+                                htmlFor="orno" 
+                                className="col-form-label text-right">
+                                OR No:
+                            </label>
+                        </div>
+                        <div className="col-md-8">
+                            <input type="text" className="form-control" id="orno" placeholder="Enter OR No."/>
+                        </div>
+                    </div>
+                    <br/>
                     
                 {/* Buttons */}
                     <div className="mt-5"></div> 
@@ -156,4 +185,4 @@ function EventsInstalling() {
     );
 }
 
-export default EventsInstalling;
+export default EventsConclave;

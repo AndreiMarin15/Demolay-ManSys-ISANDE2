@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import "../styles/base.css";
-import "../styles/Events.css"
+import "../../styles/base.css";
+import "../../styles/Events.css"
 
-function EventsJournalism() {
+function EventsMasonicAttendance() {
     return (
         <div className="container">
             <br/>
@@ -35,8 +35,8 @@ function EventsJournalism() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1>Add Event - Journalism </h1>
-                <Link to="/eventsJournalism">
+                <h1>Add Event - Masonic Attendance </h1>
+                <Link to="/eventsMasonicAttendance">
                     <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
                         ADD NEW ENTRY
                     </button>
@@ -53,34 +53,17 @@ function EventsJournalism() {
                 <div className="col-md-4">
                     <table class="legend-table">
                         <tr>
-                            <td className="no-wrap">Name of Newspaper:</td>
-                            <td>title of the Chapter newspaper</td>
-                        </tr>
-                        <tr>
                             <td>Date:</td>
-                            <td>date when the chapter newspaper was issued</td>
+                            <td>defines the date when did the Master Mason attended your Chapter’s meeting</td>
                         </tr>
                         <tr>
-                            <td>Position:</td>
-                            <td>position of the member in the newspaper committee</td>
+                            <td className="no-wrap">Mason's Full Name:</td>
+                            <td>defines the date when did the Master Mason attended your Chapter’s meeting</td>
                         </tr>
                     </table>
                 </div>
             {/* Second Column */}
                 <div className="col-md-4">
-                    <div className="row align-items-center mt-3">
-                        <div className="col-md-4">
-                            <label 
-                                htmlFor="nameofnewspaper" 
-                                className="col-form-label text-right">
-                                Name:
-                            </label>
-                        </div>
-                        <div className="col-md-7">
-                            <input type="text" className="form-control" id="nameofnewspaper" placeholder="Enter Name of Newspaper"/>
-                        </div>
-                    </div>
-                    <br/>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
@@ -97,17 +80,17 @@ function EventsJournalism() {
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label 
-                                htmlFor="position" 
+                                htmlFor="masonsfullname" 
                                 className="col-form-label text-right">
-                                Position:
+                                Mason's Full Name:
                             </label>
                         </div>
                         <div className="col-md-7">
-                            <input type="text" className="form-control" id="position" placeholder="Enter Position"/>
+                            <input type="text" className="form-control" id="masonsfullname" placeholder="Enter Mason's Full Name"/>
                         </div>
                     </div>
-
-                    
+                    <br/>
+   
                 {/* Buttons */}
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
@@ -148,4 +131,4 @@ function EventsJournalism() {
     );
 }
 
-export default EventsJournalism;
+export default EventsMasonicAttendance;
