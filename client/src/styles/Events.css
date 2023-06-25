@@ -1,0 +1,79 @@
+@import "base.css";
+
+.legend-table {
+  width: 320px;
+  height:350px;
+  border: 1px solid;
+  margin-left: 10px;
+}
+
+.legend-table td:nth-child(1) {
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.legend-table td:nth-child(2) {
+  overflow-wrap: break-word;
+  padding-left: 15px;
+  padding-bottom: 20px;
+  font-weight: lighter;
+  vertical-align: top;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}
+
+label {
+  white-space: nowrap;
+  text-align: left;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.instruction {
+  font-style: italic;
+}
+
+.eventsNavbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #350059;
+}
+
+.navbar-row {
+  border-bottom: none;
+  position: relative;
+}
+
+.navbar-row:first-child {
+  border-bottom: 1px solid #ffffff;
+}
+
+.navbar-table {
+  width: 100%;
+  text-align: center;
+}
+
+.navbar-row a {
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 60px;
+}
+
+.navbar-row a:hover {
+  color: #efb015;
+}
+
+
+
+
