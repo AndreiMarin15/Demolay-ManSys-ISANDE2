@@ -4,7 +4,7 @@ import { PrimaryNav, MenuLink, Menu, Hamburger, Login} from './NavElement'
 const Navbar = () => {
   return (
     <>
-    /* TO DO: INSERT LOGO (navlogo.png) EITHER INSIDE NAV BAR OR ABOVE
+  /* TO DO: INSERT LOGO (navlogo.png) EITHER INSIDE NAV BAR OR ABOVE
        ADD 'LOGIN' BUTTON TO LEAD TO LOGIN SCREEN -- DIFFERS FROM HOME SCREEN */
 
       <PrimaryNav>
