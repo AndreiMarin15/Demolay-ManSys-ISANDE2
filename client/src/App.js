@@ -7,6 +7,11 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import AppForm1 from './pages/AppForm1';
+import AppForm1 from "./pages/AppForm1";
+import AppForm2 from "./pages/AppForm2";
+import AppForm3 from "./pages/AppForm3";
+import AppForm4 from "./pages/AppForm4";
+import AppForm5 from "./pages/AppForm5";
 import EventsAttendance from './pages/Events/EventsAttendance';
 import EventsAthletic from './pages/Events/EventsAthletic';
 import EventsCivicService from './pages/Events/EventsCivicService';
@@ -24,16 +29,22 @@ import EventsRitual from './pages/Events/EventsRitual';
 import EventsScholastics from './pages/Events/EventsScholastics';
 import EventsVisitation from './pages/Events/EventsVisitation';
 
-import Header from './components/Header'
+
+import Header from "./components/Header";
 function App() {
   return (
     <>
+
     <Header/>
     <Routes>
           <Route path="/" element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element = {<Contact/>} />
           <Route path="appform1" element ={<AppForm1/>}/>
+          <Route path="appform2" element={<AppForm2 />} />
+          <Route path="appform3" element={<AppForm3 />} />
+          <Route path="appform4" element={<AppForm4 />} />
+          <Route path="appform5" element={<AppForm5 />} />
           <Route path="eventsAttendance" element ={<EventsAttendance/>}/>
           <Route path="eventsAthletic" element ={<EventsAthletic/>}/>
           <Route path="eventsCivicService" element ={<EventsCivicService/>}/>
@@ -51,6 +62,7 @@ function App() {
           <Route path="eventsScholastics" element ={<EventsScholastics/>}/>
           <Route path="eventsVisitation" element ={<EventsVisitation/>}/>
           
+
       </Routes>
     </>
   );

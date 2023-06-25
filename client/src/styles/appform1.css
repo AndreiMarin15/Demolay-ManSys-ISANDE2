@@ -1,0 +1,18 @@
+@import "base.css";
+
+#child {
+    display: grid;
+    flex-direction: row;
+    width: 100%;
+  }
+
+#application1 {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+}
+
+#next-btn1 {
+  margin-left: 40px;
+  height: 30px;  
+  line-height: 0;
+}
