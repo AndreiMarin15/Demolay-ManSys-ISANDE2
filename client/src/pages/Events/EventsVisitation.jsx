@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css"
+import { Component } from "react";
 
-function EventsVisitation() {
-    return (
-        <div className="container">
+export default class EventsAtletic extends Component {
+    render(){
+        return(<div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
@@ -147,8 +148,8 @@ function EventsVisitation() {
                     </div>
                 </div>
             </div>         
-        </div>
-    );
+        </div>)
+    }
 }
 
-export default EventsVisitation;
+

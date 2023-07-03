@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/appform3.css";
+import { Component } from "react";
 
-function AppForm3() {
-  return (
-    <div className="container container-fluid ">
+export default class AppForm3 extends Component {
+  render() {
+    return (
+<div className="container container-fluid ">
       <div className="row">
         <div className="col-md-6">
           <h1>Application</h1>
@@ -419,7 +421,8 @@ function AppForm3() {
         </div>
       </div>
     </div>
-  );
+    )
+  }
 }
 
-export default AppForm3;
+

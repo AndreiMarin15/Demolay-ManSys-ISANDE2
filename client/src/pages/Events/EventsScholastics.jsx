@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css"
 
-function EventsScholastics() {
-    return (
-        <div className="container">
+import { Component } from "react";
+
+export default class EventsScholastics extends Component {
+    render(){
+        return(<div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
@@ -160,8 +162,8 @@ function EventsScholastics() {
                     </div>
                 </div>
             </div>         
-        </div>
-    );
+        </div>)
+    }
 }
 
-export default EventsScholastics;
+

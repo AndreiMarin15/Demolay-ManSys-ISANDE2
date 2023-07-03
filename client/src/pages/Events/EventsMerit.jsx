@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css"
+import { Component } from "react";
 
-function EventsMerit() {
-    return (
-        <div className="container">
+export default class EventsMerit extends Component {
+    render(){
+        return(<div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
@@ -164,8 +165,8 @@ function EventsMerit() {
                     </div>
                 </div>
             </div>         
-        </div>
-    );
+        </div>)
+    }
 }
 
-export default EventsMerit;
+

@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/appform5.css";
+import { Component } from "react";
 
-function AppForm5() {
-  return (
-    <div className="container container-fluid ">
+export default class AppForm5 extends Component {
+  render() {
+    return (
+      <div className="container container-fluid ">
       <div className="row">
         <div className="col-md-12">
           <h1>Application Submitted!</h1>
@@ -70,7 +72,6 @@ function AppForm5() {
       </form>
       
     </div>
-  );
+    )
+  }
 }
-
-export default AppForm5;
