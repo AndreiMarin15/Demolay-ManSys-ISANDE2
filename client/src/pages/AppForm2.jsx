@@ -1,9 +1,68 @@
-import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 import "../styles/base.css";
 import "../styles/appform2.css";
+import axios from "axios";
 import { Component } from "react";
 
 export default class AppForm2 extends Component {
+	constructor(props) {
+		super(props);
+
+		this.onChangeFirstName = this.onChangeFirstName.bind(this);
+		this.onChangeLastName = this.onChangeLastName.bind(this);
+		this.onChangeMiddleName = this.onChangeMiddleName.bind(this);
+
+
+		this.state = {
+			lastName: "",
+			givenName: "",
+			middleName: "",
+			
+		};
+	}
+
+	onChangeFirstName(e) {
+		this.setState({
+			givenName: e.target.value,
+		});
+		console.log(this.state.givenName)
+	};
+
+	onChangeLastName (e) {
+		this.setState({
+			lastName: e.target.value,
+		});
+		console.log(this.state.lastName)
+	};
+
+	onChangeMiddleName (e) {
+		this.setState({
+			middleName: e.target.value,
+		});
+
+		console.log(this.state.middleName)
+	};
+
+	onSubmit = (e) => {
+		const  {applicationId}  = useParams();
+		e.preventDefault();
+		const applicationUpdate = {
+			givenName: this.state.givenName,
+			lastName: this.state.lastName,
+			middleName: this.state.middleName,
+		};
+
+		
+		console.log(applicationUpdate);
+		console.log(applicationId);
+	//	axios.post(`http://localhost:5000/newApplication2/${applicationId}`, applicationUpdate).then(res => {
+	//		console.log(res.data)
+	//		window.location.href = `/`
+	//	})
+
+		
+	};
+
 	render() {
 		return (
 			<div className="container container-fluid ">
@@ -18,14 +77,22 @@ export default class AppForm2 extends Component {
 				</div>
 				<hr />
 
-				<form className="g-2">
+				<form className="g-2" id="application2" onSubmit={this.onSubmit}>
 					<div className="row">
 						<div className="col-md-6">
 							<div className="row mb-3">
 								<label for="inputLast" className="col-md-4 col-form-label text-right">
 									Last Name:
 								</label>
-								<input type="text" className="form-control" id="inputLast" placeholder="Last Name" />
+								<input
+									type="text"
+									name="lastName"
+									className="form-control"
+									id="inputLast"
+									placeholder="Last Name"
+									onChange={this.onChangeLastName}
+									value={this.state.lastName}
+								/>
 							</div>
 						</div>
 
@@ -44,7 +111,14 @@ export default class AppForm2 extends Component {
 								<label for="inputGiven" className="col-md-4 col-form-label text-right">
 									Given Name:
 								</label>
-								<input type="text" className="form-control" id="inputGiven" placeholder="Given Name" />
+								<input
+									type="text"
+									className="form-control"
+									id="inputGiven"
+									placeholder="Given Name"
+									onChange={this.onChangeFirstName}
+									value={this.state.givenName}
+								/>
 							</div>
 						</div>
 					</div>
@@ -54,7 +128,14 @@ export default class AppForm2 extends Component {
 								<label for="inputMiddle" className="col-md-4 col-form-label text-right">
 									Middle Name:
 								</label>
-								<input type="text" className="form-control" id="inputMiddle" placeholder="Middle Name" />
+								<input
+									type="text"
+									className="form-control"
+									id="inputMiddle"
+									placeholder="Middle Name"
+									onChange={this.onChangeMiddleName}
+									value={this.state.middleName}
+								/>
 							</div>
 						</div>
 					</div>
@@ -280,11 +361,8 @@ export default class AppForm2 extends Component {
 					</div>
 
 					<div className="col-12">
-						<Link to="/appform3">
-							<button type="submit" className="btn btn-primary float-end">
-								Next
-							</button>
-						</Link>
+						
+						<input type="submit" value="Next" className="btn btn-primary float-end" />
 					</div>
 				</form>
 			</div>

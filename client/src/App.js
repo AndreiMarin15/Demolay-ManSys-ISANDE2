@@ -1,6 +1,6 @@
 import "./App.css";
 import * as React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from './pages/Home';
@@ -30,6 +30,8 @@ import EventsVisitation from './pages/Events/EventsVisitation';
 
 
 import Header from "./components/Header";
+
+
 function App() {
   return (
     <>
@@ -40,7 +42,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="contact" element = {<Contact/>} />
           <Route path="appform1" element ={<AppForm1/>}/>
-          <Route path="appform2" element={<AppForm2 />} />
+          <Route path="appform2/:applicationId" element={<AppForm2 />} />
           <Route path="appform3" element={<AppForm3 />} />
           <Route path="appform4" element={<AppForm4 />} />
           <Route path="appform5" element={<AppForm5 />} />
