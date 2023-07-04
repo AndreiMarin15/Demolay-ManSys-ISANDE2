@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import "../styles/base.css";
-import "../styles/appstatus1.css";
+import "../styles/appstatus2.css";
 
 import { Component } from "react";
 
-export default class AppStatus1 extends Component {
+export default class AppStatus2 extends Component {
   render() {
     return (
       /* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
@@ -29,7 +29,7 @@ export default class AppStatus1 extends Component {
             {/* Vertical line or divider */}
             <div className="vertical-line"></div>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-4 justify-content-center">
             {/* Content for the right column */}
             <h2 className="text-center" style={{ marginLeft: "-80px" }}>
               Application Details
@@ -54,30 +54,44 @@ export default class AppStatus1 extends Component {
                 <td>Status:</td>
                 <td>
                   {" "}
-                  <p className="text-center" id="status-review">
-                    In Review
+                  <p className="text-center" id="app-status">
+                    Approved
                   </p>
                 </td>
               </tr>
             </table>
+
+            <hr
+              style={{
+                color: "black",
+                height: "1px",
+                marginLeft: "-35px",
+              }}
+            />
+
+            <table
+              style={{
+                marginLeft: "80px",
+                border: "1px solid black",
+                padding: "50px",
+              }}
+            >
+              <tr>
+                <td style={{ padding: "8px" }}>
+                  <b>Member ID:</b> 2092034911{" "}
+                </td>
+              </tr>
+            </table>
+
             <p
               className="text-center"
-              id="desc"
+              id="cont"
               style={{ marginLeft: "-80px" }}
             >
-              Your application is currently in review by an investigation
-              committee. <br />
-              Expect results within 5 days.
+              If you wish to continue, kindly upload your proof of payment{" "}
+              <a href="/AppPayment">here</a>.{" "}
             </p>
           </div>
-        </div>
-
-        <div className="col-12 sub-btn">
-          <Link to="/">
-            <button type="submit" className="btn btn-primary">
-              SUBMIT
-            </button>
-          </Link>
         </div>
       </div>
     );

@@ -1,8 +1,8 @@
 @import "base.css";
 
-.vertical-line {
+#horizontal-line {
   width: 1px;
-  background-color: #ccc;
+  background-color: black;
   height: 100%;
   margin: 0 auto;
 }
@@ -27,13 +27,14 @@
   vertical-align: top;
 }
 
-#status-review {
-  background-color: #ffdd6b;
+#app-status {
+  background-color: #2a5f2f;
   border-radius: 10px;
   padding: 2px;
+  color: white;
 }
 
-#desc {
-  margin-top: 10px;
+#cont {
+  margin-top: 25px;
   font-size: 14px;
 }
