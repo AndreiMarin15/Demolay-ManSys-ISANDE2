@@ -19,7 +19,7 @@ const Navbar = () => {
           <MenuLink to="/contact" activeStyle>
             Chapter Locations
           </MenuLink>
-          <MenuLink to="/eventsAttendance" activeStyle>
+          <MenuLink to="/eventsHome" activeStyle>
             Events
           </MenuLink>
         </Menu>

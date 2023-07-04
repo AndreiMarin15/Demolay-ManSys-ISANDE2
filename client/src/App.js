@@ -11,6 +11,7 @@ import AppForm2 from "./pages/AppForm2";
 import AppForm3 from "./pages/AppForm3";
 import AppForm4 from "./pages/AppForm4";
 import AppForm5 from "./pages/AppForm5";
+import EventsHome from './pages/Events/EventsHome';
 import EventsAttendance from './pages/Events/EventsAttendance';
 import EventsAthletic from './pages/Events/EventsAthletic';
 import EventsCivicService from './pages/Events/EventsCivicService';
@@ -46,6 +47,7 @@ function App() {
           <Route path="appform3" element={<AppForm3 />} />
           <Route path="appform4" element={<AppForm4 />} />
           <Route path="appform5" element={<AppForm5 />} />
+          <Route path="eventsHome" element ={<EventsHome/>}/>
           <Route path="eventsAttendance" element ={<EventsAttendance/>}/>
           <Route path="eventsAthletic" element ={<EventsAthletic/>}/>
           <Route path="eventsCivicService" element ={<EventsCivicService/>}/>
