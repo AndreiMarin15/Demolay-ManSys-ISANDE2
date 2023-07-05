@@ -30,6 +30,7 @@ import EventsScholastics from './pages/Events/EventsScholastics';
 import EventsVisitation from './pages/Events/EventsVisitation';
 import EventsValidation from './pages/Events/EventsValidation-Advisor';
 import EventsProof from './pages/Events/EventsProof-Advisor';
+import EventsPaymentValidation from './pages/Events/EventsPaymentValidation-Admin';
 
 
 import Header from "./components/Header";
@@ -68,7 +69,7 @@ function App() {
           <Route path="eventsVisitation" element ={<EventsVisitation/>}/>
           <Route path="eventsValidation" element ={<EventsValidation/>}/>
           <Route path="eventsProof" element ={<EventsProof/>}/>
-          
+          <Route path="eventsPaymentValidation" element ={<EventsPaymentValidation/>}/>
 
       </Routes>
     </>
