@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/appform5.css";
 import { Component } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default class AppForm5 extends Component {
-  render() {
-    return (
+function Appform5 () {
+  return (
       <div className="container container-fluid ">
       <div className="row">
         <div className="col-md-12">
@@ -73,5 +75,6 @@ export default class AppForm5 extends Component {
       
     </div>
     )
-  }
 }
+
+export default Appform5;
