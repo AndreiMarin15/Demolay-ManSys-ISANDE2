@@ -11,7 +11,7 @@ import AppForm2 from "./pages/AppForm2";
 import AppForm3 from "./pages/AppForm3";
 import AppForm4 from "./pages/AppForm4";
 import AppForm5 from "./pages/AppForm5";
-import EventsHome from './pages/Events/EventsHome';
+import EventsHome from './pages/Events/EventsHome-Member';
 import EventsAttendance from './pages/Events/EventsAttendance';
 import EventsAthletic from './pages/Events/EventsAthletic';
 import EventsCivicService from './pages/Events/EventsCivicService';
@@ -28,6 +28,7 @@ import EventsReligion from './pages/Events/EventsReligion';
 import EventsRitual from './pages/Events/EventsRitual';
 import EventsScholastics from './pages/Events/EventsScholastics';
 import EventsVisitation from './pages/Events/EventsVisitation';
+import EventsValidation from './pages/Events/EventsValidation-Advisor';
 
 
 import Header from "./components/Header";
@@ -64,6 +65,7 @@ function App() {
           <Route path="eventsRitual" element ={<EventsRitual/>}/>
           <Route path="eventsScholastics" element ={<EventsScholastics/>}/>
           <Route path="eventsVisitation" element ={<EventsVisitation/>}/>
+          <Route path="eventsValidation" element ={<EventsValidation/>}/>
           
 
       </Routes>

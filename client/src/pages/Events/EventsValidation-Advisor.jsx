@@ -5,21 +5,19 @@ import { Component } from "react";
 
 function renderTableData() {
     const tableData = [
-      ["1", "Attendance", "Validated", "1st"],
-      ["2", "Athletic", "Not Started", "N/A"],
-      ["3", "Civic Service", "Not Started", "N/A"],
-      ["4", "Conclave", "Validated", "2nd"],
-      ["5", "Fine Arts", "Not Started", "N/A"],
+      ["1", "Ambrosio Flores", "Attendance"],
+      ["2", "Emilio Aguinaldo", "Athletic"],
+      ["3", "Jose Rizal", "Conclave"],
+      ["4", "Elpidio Quirino", "Attendance"],
     ];
   
     return tableData.map((rowData, index) => {
-      const [col1, col2, col3, col4] = rowData;
+      const [col1, col2, col3] = rowData;
       return (
         <tr key={index}>
           <td>{col1}</td>
           <td>{col2}</td>
           <td>{col3}</td>
-          <td>{col4}</td>
           <td><button>View</button></td>
         </tr>
       );
@@ -74,9 +72,8 @@ function EventsHome() {
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Merit Bar</th>
-                                <th>Status</th>
-                                <th>No. of Instance</th>
+                                <th>Name of Requester</th>
+                                <th>Requested Merit Bar</th>
                                 <th>View</th>
                             </tr>
                         </thead>
@@ -185,20 +182,11 @@ function EventsHome() {
                     </div>
                     {/* Buttons */}
                     <div className="d-flex justify-content-center mt-4">
-                        <div className="mr-2">
-                            <Link to="/eventsHome">
-                                <button type="previous" form="previous" id="primary-btn" value="PREVIOUS">
-                                PREVIOUS
-                                </button>
-                            </Link>
-                        </div>
-                        <div className="ms-2">
-                            <Link to="/appform1">
-                                <button type="next" form="next" id="primary-btn" value="NEXT">
-                                NEXT
-                                </button>
-                            </Link>
-                        </div>
+                        <Link to="/appform1">
+                            <button type="button" form="button" id="primary-btn" value="NEXT">
+                            VALIDATE
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>         
