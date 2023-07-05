@@ -29,6 +29,7 @@ import EventsRitual from './pages/Events/EventsRitual';
 import EventsScholastics from './pages/Events/EventsScholastics';
 import EventsVisitation from './pages/Events/EventsVisitation';
 import EventsValidation from './pages/Events/EventsValidation-Advisor';
+import EventsProof from './pages/Events/EventsProof-Advisor';
 
 
 import Header from "./components/Header";
@@ -66,6 +67,7 @@ function App() {
           <Route path="eventsScholastics" element ={<EventsScholastics/>}/>
           <Route path="eventsVisitation" element ={<EventsVisitation/>}/>
           <Route path="eventsValidation" element ={<EventsValidation/>}/>
+          <Route path="eventsProof" element ={<EventsProof/>}/>
           
 
       </Routes>

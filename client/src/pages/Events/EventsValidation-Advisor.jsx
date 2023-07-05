@@ -24,7 +24,7 @@ function renderTableData() {
     });
   }
 
-function EventsHome() {
+function EventsValidation() {
     return (
         <div className="container">
             <br/>
@@ -194,4 +194,4 @@ function EventsHome() {
     )
 }
 
-export default EventsHome;
+export default EventsValidation;
