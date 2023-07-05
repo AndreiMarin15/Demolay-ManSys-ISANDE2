@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/appstatus1.css";
 
-import { Component } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default class AppStatus1 extends Component {
-  render() {
-    return (
+function AppStatus1 () {return (
       /* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
       <div className="container container-fluid ">
         <div className="row">
@@ -80,6 +80,8 @@ export default class AppStatus1 extends Component {
           </Link>
         </div>
       </div>
-    );
-  }
-}
+    );}
+
+export default AppStatus1;
+
+
