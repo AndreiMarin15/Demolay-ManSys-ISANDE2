@@ -3,34 +3,32 @@ import "../../styles/base.css";
 import "../../styles/Events.css"
 import { Component } from "react";
 
-export default class EventsHome extends Component {
+function renderTableData() {
+    const tableData = [
+      ["1", "Attendance", "Validated", "1st"],
+      ["2", "Athletic", "Not Started", "N/A"],
+      ["3", "Civic Service", "Not Started", "N/A"],
+      ["4", "Conclave", "Validated", "2nd"],
+      ["5", "Fine Arts", "Not Started", "N/A"],
+    ];
+  
+    return tableData.map((rowData, index) => {
+      const [col1, col2, col3, col4] = rowData;
+      return (
+        <tr key={index}>
+          <td>{col1}</td>
+          <td>{col2}</td>
+          <td>{col3}</td>
+          <td>{col4}</td>
+          <td><button>View</button></td>
+        </tr>
+      );
+    });
+  }
 
-    renderTableData() {
-        const tableData = [
-            ["1", "Attendance", "Validated", "1st"],
-            ["2", "Athletic", "Not Started", "N/A"],
-            ["3", "Civic Service", "Not Started", "N/A"],
-            ["4", "Conclave", "Validated", "2nd"],
-            ["5", "Fine Arts", "Not Started", "N/A"],
-            
-        ];
-
-        return tableData.map((rowData, index) => {
-            const [col1, col2, col3, col4] = rowData;
-            return (
-                <tr key={index}>
-                    <td>{col1}</td>
-                    <td>{col2}</td>
-                    <td>{col3}</td>
-                    <td>{col4}</td>
-                    <td><button>View</button></td>
-                </tr>
-            );
-        });
-    }
-
-    render(){
-        return(<div className="container">
+function EventsHome() {
+    return (
+        <div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
@@ -83,7 +81,7 @@ export default class EventsHome extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.renderTableData()}
+                            {renderTableData()}
                         </tbody>
                     </table>
                 </div>
@@ -93,7 +91,7 @@ export default class EventsHome extends Component {
                     <div className="vl"></div>
                 </div>
             {/* Second Column */}
-                <div className="col-md-5">
+                <div className="col-md-5 mx-auto">
                     <h2> Attendance </h2>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
@@ -109,7 +107,7 @@ export default class EventsHome extends Component {
                             readOnly
                             />
                         </div>
-					</div>
+                    </div>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label htmlFor="meetingname" className="col-form-label text-right">
@@ -124,7 +122,7 @@ export default class EventsHome extends Component {
                             readOnly
                             />
                         </div>
-					</div>
+                    </div>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label htmlFor="meetingdate" className="col-form-label text-right">
@@ -139,7 +137,7 @@ export default class EventsHome extends Component {
                             readOnly
                             />
                         </div>
-					</div>
+                    </div>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label htmlFor="position" className="col-form-label text-right">
@@ -154,7 +152,7 @@ export default class EventsHome extends Component {
                             readOnly
                             />
                         </div>
-					</div>
+                    </div>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label htmlFor="position" className="col-form-label text-right">
@@ -169,7 +167,7 @@ export default class EventsHome extends Component {
                             readOnly
                             />
                         </div>
-					</div>
+                    </div>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">
                             <label htmlFor="proof" className="col-form-label text-right">
@@ -184,11 +182,28 @@ export default class EventsHome extends Component {
                             readOnly
                             />
                         </div>
-					</div>
+                    </div>
+                    {/* Buttons */}
+                    <div className="d-flex justify-content-center mt-4">
+                        <div className="mr-2">
+                            <Link to="/eventsHome">
+                                <button type="previous" form="previous" id="primary-btn" value="PREVIOUS">
+                                PREVIOUS
+                                </button>
+                            </Link>
+                        </div>
+                        <div className="ms-2">
+                            <Link to="/appform1">
+                                <button type="next" form="next" id="primary-btn" value="NEXT">
+                                NEXT
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-                {/* Buttons */}
-                    
             </div>         
-        </div>)
-    }
+        </div>
+    )
 }
+
+export default EventsHome;
