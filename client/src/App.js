@@ -48,6 +48,7 @@ function App() {
         <Route path="appform1" element={<AppForm1 />} />
         <Route path="appform2/:applicationId" element={<AppForm2 />} />
         <Route path="appform3" element={<AppForm3 />} />
+        <Route path="appform3/:applicationId" element={<AppForm3 />} />
         <Route path="appform4" element={<AppForm4 />} />
         <Route path="appform5" element={<AppForm5 />} />
         <Route path="appstatus1" element={<AppStatus1 />} />
@@ -76,6 +77,7 @@ function App() {
         <Route path="eventsRitual" element={<EventsRitual />} />
         <Route path="eventsScholastics" element={<EventsScholastics />} />
         <Route path="eventsVisitation" element={<EventsVisitation />} />
+
       </Routes>
     </>
   );

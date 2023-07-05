@@ -37,11 +37,15 @@ const db = {
 	},
 
 	updateOne: function (model, filter, update, cb) {
-		model.updateOne(filter, update, (err, res) => {
-			if (err) return cb(false);
-			console.log("Updated: " + res.nModified);
-			return cb(true);
-		});
+		model
+			.updateOne(filter, update)
+			.then((res) => {
+				console.log("Updated: " + res);
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 
 	updateMany: function (model, filter, update, cb) {
