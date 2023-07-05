@@ -1,0 +1,40 @@
+@import "base.css";
+
+#horizontal-line {
+  width: 1px;
+  background-color: black;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.details-table {
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.details-table td:nth-child(1) {
+  padding-bottom: 5px;
+  padding-left: 10px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.details-table td:nth-child(2) {
+  overflow-wrap: break-word;
+  padding-left: 15px;
+  padding-bottom: 5px;
+  font-weight: lighter;
+  vertical-align: top;
+}
+
+#app-status {
+  background-color: #2a5f2f;
+  border-radius: 10px;
+  padding: 2px;
+  color: white;
+}
+
+#cont {
+  margin-top: 25px;
+  font-size: 14px;
+}

@@ -54,7 +54,7 @@ function AppStatus1 () {return (
                 <td>Status:</td>
                 <td>
                   {" "}
-                  <p className="text-center" id="app-status">
+                  <p className="text-center" id="status-review">
                     In Review
                   </p>
                 </td>
