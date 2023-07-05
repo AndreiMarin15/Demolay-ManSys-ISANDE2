@@ -102,7 +102,7 @@ function Appform2() {
 		console.log(applicationId);
 		axios.post(`http://localhost:5000/newApplication2/${applicationId}`, applicationUpdate).then((res) => {
 			console.log(res.data);
-			window.location.href = `/newApplication3/${applicationId}`;
+			window.location.href = `/appform3/${applicationId}`;
 		});
 	};
 

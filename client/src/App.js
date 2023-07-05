@@ -50,6 +50,7 @@ function App() {
         <Route path="appform3" element={<AppForm3 />} />
         <Route path="appform3/:applicationId" element={<AppForm3 />} />
         <Route path="appform4" element={<AppForm4 />} />
+        <Route path="appform4/:applicationId" element={<AppForm4 />} />
         <Route path="appform5" element={<AppForm5 />} />
         <Route path="appstatus1" element={<AppStatus1 />} />
         <Route path="appstatus2" element={<AppStatus2 />} />

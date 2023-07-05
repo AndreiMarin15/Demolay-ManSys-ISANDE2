@@ -12,5 +12,6 @@ router.route("/").get((req, res) => {
 // router.get("/login", controller.getIndex);
 router.post("/newApplication", controller.newApplication);
 router.post("/newApplication2/:id", controller.newApplication2)
+router.post("/newApplication3/:id", controller.newApplication3)
 
 module.exports = router;

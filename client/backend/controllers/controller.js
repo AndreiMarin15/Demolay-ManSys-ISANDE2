@@ -1,4 +1,4 @@
-const Application = require("../models/applications.js");
+const Application = require("../models/applications.js").default;
 const db = require("../models/db.js");
 
 const controller = {
@@ -16,10 +16,10 @@ const controller = {
 
 	newApplication2: async (req, res) => {
 		const applicationId = req.params.id;
-        console.log(applicationId)
-        console.log(req.body)
-        const update = {
-            lastName: req.body.lastName,
+		console.log(applicationId);
+		console.log(req.body);
+		const update = {
+			lastName: req.body.lastName,
 			givenName: req.body.givenName,
 			middleName: req.body.middleName,
 
@@ -45,10 +45,51 @@ const controller = {
 			hobbies: req.body.hobbies,
 			interests: req.body.interests,
 			clubs: req.body.clubs,
-        }
+		};
 
-        console.log(update)
-        
+		console.log(update);
+
+		await db.updateOne(Application, { _id: applicationId }, update, (result) => {
+			console.log(result);
+			res.send(result._id);
+		});
+	},
+
+	newApplication3: async (req, res) => {
+		// TODO - Implement this function to handle the third step of creating an Application in the system
+
+		const applicationId = req.params.id;
+		console.log(applicationId);
+		console.log(req.body);
+		const update = {
+			appliedInAnotherChapter: req.body.appliedInAnotherChapter,
+			chapterApplied: req.body.chapterApplied,
+			yearApplied: req.body.yearApplied,
+			status: req.body.status,
+
+			relativeName: req.body.relativeName,
+			relationship: req.body.relationship,
+			lodge: req.body.lodge,
+
+			reference1Name: req.body.reference1Name,
+			reference1Age: req.body.reference1Age,
+			reference1Email: req.body.reference1Email,
+			reference1Mobile: req.body.reference1Mobile,
+
+			reference2Name: req.body.reference2Name,
+			reference2Age: req.body.reference2Age,
+			reference2Email: req.body.reference2Email,
+			reference2Mobile: req.body.reference2Mobile,
+
+			parentName: req.body.parentName,
+			parentRelationship: req.body.parentRelationship,
+			parentEmail: req.body.parentEmail,
+			parentMobile: req.body.parentMobile,
+			parentApproved: req.body.parentApproved,
+		};
+
+		console.log(update);
+
 		await db.updateOne(Application, { _id: applicationId }, update, (result) => {
 			console.log(result);
 			res.send(result._id);
