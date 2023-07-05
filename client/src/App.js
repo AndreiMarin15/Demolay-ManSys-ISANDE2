@@ -14,6 +14,9 @@ import AppForm5 from "./pages/AppForm5";
 import AppStatus1 from "./pages/AppStatus1";
 import AppStatus2 from "./pages/AppStatus2";
 import AppPayment from "./pages/AppPayment";
+import EOApp1 from "./pages/EOApp1";
+import CSApp1 from "./pages/CSApp1";
+import CSForm10 from "./pages/CSForm10";
 
 import EventsAttendance from "./pages/Events/EventsAttendance";
 import EventsAthletic from "./pages/Events/EventsAthletic";
@@ -50,6 +53,9 @@ function App() {
         <Route path="appstatus1" element={<AppStatus1 />} />
         <Route path="appstatus2" element={<AppStatus2 />} />
         <Route path="apppayment" element={<AppPayment />} />
+        <Route path="eoapp1" element={<EOApp1 />} />
+        <Route path="csapp1" element={<CSApp1 />} />
+        <Route path="csform10" element={<CSForm10 />} />
 
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
