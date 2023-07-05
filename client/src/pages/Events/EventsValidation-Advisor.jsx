@@ -57,11 +57,7 @@ function EventsValidation() {
             <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h1> Events </h1>
-            </div>
-            {/* Instruction */}
-            <div>
-                <p className="instruction"> Please take note that you can only submit the form if you have completed all the requirements. Otherwise, your data will not be saved.  </p>
+                <h1> Request for Merit Bars </h1>
             </div>
             <hr/>
 
