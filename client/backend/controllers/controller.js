@@ -1,7 +1,10 @@
 const Application = require("../models/applications.js");
+const Chapters = require("../models/chapters.js");
+const Regions = require("../models/regions.js");
 const db = require("../models/db.js");
 
 const controller = {
+
 	newApplication: async (req, res) => {
 		const application = {
 			regionId: req.body.regionId,
@@ -171,8 +174,213 @@ const controller = {
 			res.send(result)
 		})
 	}
+  
+  checkAndInitDB: async (req, res) => {
+    try {
+      const regionCount = await Regions.countDocuments();
+      const chapterCount = await Chapters.countDocuments();
+
+      if (regionCount === 0) {
+        // If empty, initialize DeMolay Regions data
+
+        const initialRegions = [
+          {
+            regionID: 0,
+            regionName: "Region NCR-A",
+            regionDesc: "NCR-A",
+          },
+
+          {
+            regionID: 1,
+            regionName: "Region NCR-B",
+            regionDesc: "NCR-B",
+          },
+
+          {
+            regionID: 2,
+            regionName: "Region 4-A",
+            regionDesc: "Cavite",
+          },
+
+          {
+            regionID: 3,
+            regionName: "Region 4-B",
+            regionDesc: "Laguna",
+          },
+        ];
+
+        await Regions.insertMany(initialRegions);
+
+        console.log("Initialized data");
+      } else {
+        console.log("Regions already exist");
+      }
+
+      if (chapterCount === 0) {
+        // If empty, initialize Chapters data
+
+        const initialChapters = [
+          {
+            chapterID: 0,
+            name: "Jose Abad Santos Chapter No. 1",
+            chapterNumber: 1,
+            sponsor: "Masonic Senior DeMolay Club",
+            memberCount: 40,
+            meetingDate: "1st Sundays",
+            meetingTime: "02:00 PM",
+            meetingVenue:
+              "Philippine DeMolay Youth Center, 1440 San Marcelino St., Ermita, Manila City",
+            email: "",
+            website: "",
+            regionID: 0,
+          },
+
+          {
+            chapterID: 1,
+            name: "Loyalty Chapter No. 3",
+            chapterNumber: 3,
+            sponsor: "Luzon Bodies A.&A.S.R.",
+            memberCount: 45,
+            meetingDate: "2nd Sundays",
+            meetingTime: "02:00 PM",
+            meetingVenue:
+              "Philippine DeMolay Youth Center, 1440 San Marcelino St., Ermita, Manila City",
+            email: "",
+            website: "",
+            regionID: 0,
+          },
+
+          {
+            chapterID: 2,
+            name: "Ambrosio A. Flores Chapter No. 45",
+            chapterNumber: 45,
+            sponsor:
+              "Norberto S. Amoranto Memorial Masonic Lodge No. 358 F.&A.M., Capitol City Masonic Lodge No. 174 F.&A.M.",
+            memberCount: 42,
+            meetingDate: "2nd Sundays",
+            meetingTime: "02:00 PM",
+            meetingVenue: "Capitol Masonic Temple, Diliman, Quezon City",
+            email: "",
+            website: "",
+            regionID: 0,
+          },
+
+          {
+            chapterID: 3,
+            name: "Gen. Douglas MacArthur Chapter No. 12",
+            chapterNumber: 12,
+            sponsor: "Manila Mt. Lebanon Masonic Lodge No.1",
+            memberCount: 33,
+            meetingDate: "2nd Saturdays",
+            meetingTime: "02:00 PM",
+            meetingVenue: "Scottish Rite Temple, Taft, Manila City",
+            email: "",
+            website: "",
+            regionID: 1,
+          },
+
+          {
+            chapterID: 4,
+            name: "A. Mabini Chapter No. 37",
+            chapterNumber: 37,
+            sponsor: "BF Parañaque Masonic Club",
+            memberCount: 43,
+            meetingDate: "1st Sundays",
+            meetingTime: "02:00 PM",
+            meetingVenue:
+              "King Solomon's Garden, Leonardo Da Vinci St., BF Resort Village, Las Piñas City",
+            email: "",
+            website: "",
+            regionID: 1,
+          },
+
+          {
+            chapterID: 5,
+            name: "Katarungan Centennial Chapter No. 101",
+            chapterNumber: 101,
+            sponsor: "Katarungan Masonic Lodge No. 450 F.&A.M.",
+            memberCount: 48,
+            meetingDate: "2nd Sundays",
+            meetingTime: "02:00 PM",
+            meetingVenue:
+              "Arzo Hotel Makati, 1086 Rodriguez Ave., Bangkal, Makati City",
+            email: "",
+            website: "",
+            regionID: 1,
+          },
+
+          {
+            chapterID: 6,
+            name: "Dasmariñas Chapter No. 92",
+            chapterNumber: 92,
+            sponsor: "Dasmariñas Lodge No. 346 F.&.AM.",
+            memberCount: 70,
+            meetingDate: "2nd Saturdays",
+            meetingTime: "02:00 PM",
+            meetingVenue: "Dasmariñas Lodge No. 346 F.&A.M., Mango Village",
+            email: "",
+            website: "",
+            regionID: 2,
+          },
+
+          {
+            chapterID: 7,
+            name: "Tanza Chapter No. 108",
+            chapterNumber: 108,
+            sponsor: "Saint Augustine Masonic Lodge No. 300 F.&A.M.",
+            memberCount: 87,
+            meetingDate: "2nd Saturdays",
+            meetingTime: "02:00 PM",
+            meetingVenue:
+              "Saint Augustine Masonic Lodge No. 300 F.&A.M., Retirees Vill-2, Tanza, Calabarzon",
+            email: "",
+            website: "",
+            regionID: 2,
+          },
+
+          {
+            chapterID: 8,
+            name: "Werner P. Schetelig Chapter No. 27",
+            chapterNumber: 27,
+            sponsor: "Malinaw Lodge No. 25 F.&.AM.",
+            memberCount: 32,
+            meetingDate: "4th Saturdays",
+            meetingTime: "02:00 PM",
+            meetingVenue: "Malinaw Lodge No. 25 F.&.AM., San Pablo City",
+            email: "",
+            website: "",
+            regionID: 3,
+          },
+
+          {
+            chapterID: 9,
+            name: "San Pedro Chapter No. 57",
+            chapterNumber: 57,
+            sponsor: "San Pedro Lodge No. 292 F.&A.M.",
+            memberCount: 25,
+            meetingDate: "4th Saturdays",
+            meetingTime: "02:00 PM",
+            meetingVenue:
+              "San Pedro Lodge No. 292 F.&A.M., Silcas Subdivision, Martinez, Biñan, Laguna",
+            email: "",
+            website: "",
+            regionID: 3,
+          },
+        ];
+
+        await Chapters.insertMany(initialChapters);
+
+        console.log("Initialized data");
+      } else {
+        console.log("Chapters already exist");
+      }
+    } catch (error) {
+      console.error("Error checking or initializing data:", error);
+    }
+  },
 
 	
+
 };
 
 module.exports = controller;

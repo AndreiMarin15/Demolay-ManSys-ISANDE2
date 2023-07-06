@@ -134,7 +134,7 @@ function EventsMerit () {
                     <div className="mt-5"></div> 
                     <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
                         <div className="mr-2">
-                            <Link to="/appform1">
+                            <Link to="/eventsHome">
                                 <button type="submit" form="submit" id="primary-btn" value="BACK">
                                 BACK
                                 </button>
