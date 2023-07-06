@@ -31,33 +31,6 @@ function EventsPaymentValidation() {
     return (
         <div className="container">
             <br/>
-            <nav class="eventsNavbar">
-                <table class="navbar-table">
-                <tbody>
-                        <tr class="navbar-row">
-                            <td><a href="/eventsAttendance">Attendance</a></td>
-                            <td><a href="/eventsAthletic">Athletic</a></td>
-                            <td><a href="/eventsCivicService">Civic Service</a></td>
-                            <td><a href="/eventsConclave">Conclave</a></td>
-                            <td><a href="/eventsFineArts">Fine Arts</a></td>
-                            <td><a href="/eventsFundRaising">Fund Raising</a></td>
-                            <td><a href="/eventsInstalling">Installing</a></td>
-                            <td><a href="/eventsJournalism">Journalism</a></td>
-                        </tr>
-                        <tr className="navbar-row">
-                            <td><a href="/eventsMasonicAttendance">Masonic Attendance</a></td>
-                            <td><a href="/eventsMasonicService">Masonic Service</a></td>
-                            <td><a href="/eventsMerit">Merit</a></td>
-                            <td><a href="/eventsPetitions">Petitions</a></td>
-                            <td><a href="/eventsReligion">Religion</a></td>
-                            <td><a href="/eventsRitual">Ritual</a></td>
-                            <td><a href="/eventsScholastics">Scholastics</a></td>
-                            <td><a href="/eventsVisitation">Visitation</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </nav>
-            <br/>
             {/* Header */}
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h1> Request for Merit Bars </h1>

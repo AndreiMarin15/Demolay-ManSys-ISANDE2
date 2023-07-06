@@ -73,11 +73,6 @@ label {
 .navbar-row a:hover {
   color: #efb015;
 }
-.vl {
-  border-left: 3px solid rgb(211, 211, 211);
-  height: 500px;
-}
-
 
 .vl {
   border-left: 3px solid rgb(179, 179, 179);

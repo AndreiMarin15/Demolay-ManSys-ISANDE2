@@ -41,6 +41,8 @@ import EventsValidation from './pages/Events/EventsValidation-Advisor';
 import EventsProof from './pages/Events/EventsProof-Advisor';
 import EventsPaymentValidation from './pages/Events/EventsPaymentValidation-Admin';
 
+import TurnoverDashboard1 from "./pages/Turnover/TurnoverDashboard1";
+
 import Header from "./components/Header";
 
 function App() {
@@ -72,10 +74,7 @@ function App() {
         <Route path="eventsFundraising" element={<EventsFundraising />} />
         <Route path="eventsInstalling" element={<EventsInstalling />} />
         <Route path="eventsJournalism" element={<EventsJournalism />} />
-        <Route
-          path="eventsMasonicAttendance"
-          element={<EventsMasonicAttendance />}
-        />
+        <Route path="eventsMasonicAttendance" element={<EventsMasonicAttendance />}/>
         <Route path="eventsMasonicService" element={<EventsMasonicService />} />
         <Route path="eventsMerit" element={<EventsMerit />} />
         <Route path="eventsPetitions" element={<EventsPetitions />} />
@@ -86,6 +85,8 @@ function App() {
         <Route path="eventsValidation" element ={<EventsValidation/>}/>
         <Route path="eventsProof" element ={<EventsProof/>}/>
         <Route path="eventsPaymentValidation" element ={<EventsPaymentValidation/>}/>
+
+        <Route path="turnoverDashboard1" element ={<TurnoverDashboard1/>}/>
 
 
       </Routes>
