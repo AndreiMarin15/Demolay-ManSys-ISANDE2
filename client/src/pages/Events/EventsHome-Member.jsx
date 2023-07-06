@@ -63,7 +63,7 @@ function EventsHome() {
             </div>
             {/* Instruction */}
             <div>
-                <p className="instruction"> Please take note that you can only submit the form if you have completed all the requirements. Otherwise, your data will not be saved.  </p>
+                <p className="instruction"> Please take note that you can only submit the form if you have completed all the requirements.</p>
             </div>
             <hr/>
 

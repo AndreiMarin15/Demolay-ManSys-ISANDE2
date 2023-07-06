@@ -24,7 +24,13 @@ function openTab(event, tabId) {
   }
   
 function TurnoverDashboard1 () {
- return(
+
+    {/* Default tab on load */}
+    useEffect(() => {
+        document.getElementById("tab1").style.display = "block";
+      }, []);
+      
+    return(
     <div className="container">
         <h1> Home </h1>
         <hr/>

@@ -42,6 +42,8 @@ import EventsProof from './pages/Events/EventsProof-Advisor';
 import EventsPaymentValidation from './pages/Events/EventsPaymentValidation-Admin';
 
 import TurnoverDashboard1 from "./pages/Turnover/TurnoverDashboard1";
+import TurnoverTF1 from "./pages/Turnover/TurnoverTF1";
+import TurnoverTF2 from "./pages/Turnover/TurnoverTF2";
 
 import Header from "./components/Header";
 
@@ -87,7 +89,8 @@ function App() {
         <Route path="eventsPaymentValidation" element ={<EventsPaymentValidation/>}/>
 
         <Route path="turnoverDashboard1" element ={<TurnoverDashboard1/>}/>
-
+        <Route path="turnoverTF1" element ={<TurnoverTF1/>}/>
+        <Route path="turnoverTF2" element ={<TurnoverTF2/>}/>
 
       </Routes>
     </>

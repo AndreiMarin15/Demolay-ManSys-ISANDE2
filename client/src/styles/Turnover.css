@@ -54,17 +54,17 @@ h4 {
     gap: 20px;
   }
   
-  .boxRow {
+.boxRow {
     display: flex;
     flex-wrap: wrap;
     gap: 50px;
-  }
-  
-  .box {
+}
+
+.box {
     width: 200px;
     height: 200px;
     border: 1px solid #ccc;
     padding: 20px;
     text-align: left;
-  }
+}
   
