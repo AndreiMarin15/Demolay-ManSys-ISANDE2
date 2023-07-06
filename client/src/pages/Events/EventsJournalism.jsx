@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css"
-import { Component } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default class EventsJournalism extends Component {
-    render(){
-        return(<div className="container">
+function EventsJournalism () {
+ return(<div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
@@ -146,6 +147,9 @@ export default class EventsJournalism extends Component {
                 </div>
             </div>         
         </div>)
-    }
 }
+
+export default EventsJournalism
+
+
 

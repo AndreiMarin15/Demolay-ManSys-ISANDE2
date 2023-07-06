@@ -79,6 +79,7 @@ label {
 }
 
 
-
-
-
+.vl {
+  border-left: 3px solid rgb(179, 179, 179);
+  height: 100%;
+}

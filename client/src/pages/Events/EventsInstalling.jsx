@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css"
-import { Component } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-export default class EventsInstalling extends Component {
-    render(){
-        return(<div className="container">
+function EventsInstalling () {
+ return(<div className="container">
             <br/>
             <nav class="eventsNavbar">
                 <table class="navbar-table">
@@ -154,5 +155,8 @@ export default class EventsInstalling extends Component {
                 </div>
             </div>         
         </div>)
-    }
 }
+
+export default EventsInstalling
+
+

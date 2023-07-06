@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-    
   },
   "repository": {
     "type": "git",
@@ -19,6 +18,9 @@
   },
   "homepage": "https://github.com/AndreiMarin15/Demolay-ManSys-ISANDE2#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "bootstrap": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^16.1.3",
