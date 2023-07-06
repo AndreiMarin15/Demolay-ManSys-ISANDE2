@@ -1,371 +1,536 @@
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/appform2.css";
 import axios from "axios";
-import { Component } from "react";
+import { useEffect, useState } from "react";
 
-export default class AppForm2 extends Component {
-	constructor(props) {
-		super(props);
+function Appform2() {
+	const [formData, setFormData] = useState({
+		cities: [],
+		states: [],
+		regions: [],
+		religions: [],
 
-		this.onChangeFirstName = this.onChangeFirstName.bind(this);
-		this.onChangeLastName = this.onChangeLastName.bind(this);
-		this.onChangeMiddleName = this.onChangeMiddleName.bind(this);
+		lastName: "",
+		givenName: "",
+		middleName: "",
+		photo: "",
 
+		streetAddress: "",
+		apt: "",
+		brgy: "",
+		city: "",
+		state: "",
+		memberRegion: "",
+		zipCode: "",
 
-		this.state = {
-			lastName: "",
-			givenName: "",
-			middleName: "",
-			
-		};
-	}
+		email: "",
+		birthdate: "",
+		currentSchool: "",
+		facebook: "",
+		birthplace: "",
+		course: "",
+		mobile: "",
+		religion: "",
+		phone: "",
 
-	onChangeFirstName(e) {
-		this.setState({
-			givenName: e.target.value,
+		schoolAddress: "",
+		hobbies: "",
+		interests: "",
+		clubs: "",
+	});
+	let { applicationId } = useParams();
+
+	useEffect(() => {
+		setFormData({
+			...FormData,
+			cities: ["Manila", "Muntinlupa", "Makati"],
+			states: ["Laguna", "Metro Manila", "Pampanga"],
+			regions: ["NCR", "Region IV", "Region V"],
+			religions: ["Christian", "Roman Catholic"],
+			city: "Manila",
+			state: "National Capital Region",
+			region: "NCR",
+			religion: "Christian",
 		});
-		console.log(this.state.givenName)
+	}, []);
+
+	const onChange = (e) => {
+		setFormData((prev) => {
+			let helper = { ...prev };
+
+			helper[`${e.target.id}`] = e.target.value;
+
+			return helper;
+		});
+
+		console.log(formData)
 	};
 
-	onChangeLastName (e) {
-		this.setState({
-			lastName: e.target.value,
-		});
-		console.log(this.state.lastName)
-	};
-
-	onChangeMiddleName (e) {
-		this.setState({
-			middleName: e.target.value,
-		});
-
-		console.log(this.state.middleName)
-	};
-
-	onSubmit = (e) => {
-		const  {applicationId}  = useParams();
+	const onSubmit = (e) => {
 		e.preventDefault();
 		const applicationUpdate = {
-			givenName: this.state.givenName,
-			lastName: this.state.lastName,
-			middleName: this.state.middleName,
+			lastName: formData.lastName,
+			givenName: formData.givenName,
+			middleName: formData.middleName,
+
+			streetAddress: formData.streetAddress,
+			apt: formData.apt,
+			brgy: formData.brgy,
+			city: formData.city,
+			state: formData.state,
+			memberRegion: formData.memberRegion,
+			zipCode: formData.zipCode,
+
+			email: formData.email,
+			birthdate: formData.birthdate,
+			currentSchool: formData.currentSchool,
+			facebook: formData.facebook,
+			birthplace: formData.birthplace,
+			course: formData.course,
+			mobile: formData.mobile,
+			religion: formData.religion,
+			phone: formData.phone,
+
+			schoolAddress: formData.schoolAddress,
+			hobbies: formData.hobbies,
+			interests: formData.interests,
+			clubs: formData.clubs,
 		};
 
-		
 		console.log(applicationUpdate);
 		console.log(applicationId);
-	//	axios.post(`http://localhost:5000/newApplication2/${applicationId}`, applicationUpdate).then(res => {
-	//		console.log(res.data)
-	//		window.location.href = `/`
-	//	})
-
-		
+		axios.post(`http://localhost:5000/newApplication2/${applicationId}`, applicationUpdate).then((res) => {
+			console.log(res.data);
+			window.location.href = `/newApplication3/${applicationId}`;
+		});
 	};
 
-	render() {
-		return (
-			<div className="container container-fluid ">
+	return (
+		<div className="container container-fluid ">
+			<div className="row">
+				<div className="col-md-6">
+					<h1>Application</h1>
+				</div>
+
+				<div className="col-md-6">
+					<h1 className="position-absolute end-0"> [Chapter] </h1>
+				</div>
+			</div>
+			<hr />
+
+			<form className="g-2" id="application2" onSubmit={onSubmit}>
 				<div className="row">
 					<div className="col-md-6">
-						<h1>Application</h1>
+						<div className="row mb-3">
+							<label for="inputLast" className="col-md-4 col-form-label text-right">
+								Last Name:
+							</label>
+							<input
+								type="text"
+								name="lastName"
+								className="form-control"
+								id="lastName"
+								placeholder="Last Name"
+								onChange={onChange}
+								value={formData.lastName}
+							/>
+						</div>
 					</div>
 
 					<div className="col-md-6">
-						<h1 className="position-absolute end-0"> [Chapter] </h1>
+						<div className="row mb-3">
+							<label for="uploadID" className="col-md-4 col-form-label text-right">
+								ID (2 x 2) Photo:
+							</label>
+							<input type="file" className="form-control" id="uploadID" />
+						</div>
 					</div>
 				</div>
-				<hr />
-
-				<form className="g-2" id="application2" onSubmit={this.onSubmit}>
-					<div className="row">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputLast" className="col-md-4 col-form-label text-right">
-									Last Name:
-								</label>
-								<input
-									type="text"
-									name="lastName"
-									className="form-control"
-									id="inputLast"
-									placeholder="Last Name"
-									onChange={this.onChangeLastName}
-									value={this.state.lastName}
-								/>
-							</div>
-						</div>
-
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="uploadID" className="col-md-4 col-form-label text-right">
-									ID (2 x 2) Photo:
-								</label>
-								<input type="file" className="form-control" id="uploadID" />
-							</div>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputGiven" className="col-md-4 col-form-label text-right">
-									Given Name:
-								</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputGiven"
-									placeholder="Given Name"
-									onChange={this.onChangeFirstName}
-									value={this.state.givenName}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="row mb-4">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputMiddle" className="col-md-4 col-form-label text-right">
-									Middle Name:
-								</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputMiddle"
-									placeholder="Middle Name"
-									onChange={this.onChangeMiddleName}
-									value={this.state.middleName}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className="row mb-2">
-						<h4>Address Details</h4>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputStreet" className="col-md-4 col-form-label text-right">
-									Street Address
-								</label>
-								<input type="text" className="form-control" id="inputStreet" placeholder="1234 Main St" />
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputCity" className="col-md-4 col-form-label text-right">
-									City
-								</label>
-								<select className="form-select form-control" id="inputCity" placeholder="New York City">
-									<option>Manila</option>
-									<option>Muntinlupa</option>
-									<option>Makati</option>
-								</select>
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputCity" className="col-md-4 col-form-label text-right">
-									Zip Code{" "}
-								</label>
-								<select className="form-select form-control" id="inputCity" placeholder="New York City">
-									<option>Manila</option>
-									<option>Muntinlupa</option>
-									<option>Makati</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputApt" className="col-md-4 col-form-label text-right">
-									Apt, suite, etc (optional)
-								</label>
-								<input
-									type="text"
-									className="form-control"
-									id="inputAddress2"
-									placeholder="Apartment, studio, or floor"
-								/>
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputProvince" className="col-md-4 col-form-label text-right">
-									State/Province
-								</label>
-								<select className="form-select form-control" id="inputBrgy">
-									<option>Laguna</option>
-									<option>Metro Manila</option>
-									<option>Pampanga</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div className="row mb-4">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputBrgy" className="col-md-4 col-form-label text-right">
-									Barangay/District
-								</label>
-								<select className="form-select form-control" id="inputBrgy">
-									<option>Malate</option>
-									<option>Platero</option>
-									<option>Tagapo</option>
-								</select>
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputRegion" className="col-md-4 col-form-label text-right">
-									Region{" "}
-								</label>
-								<select className="form-select form-control" id="inputRegion">
-									<option>NCR</option>
-									<option>Region IV</option>
-									<option>Region V</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div className="row mb-2">
-						<h4>Personal Details</h4>
-					</div>
-					<div className="row">
-						<div className="col-md-4">
-							<div className="row mb-3">
-								<label for="inputEmail" className="col-md-4 col-form-label text-right">
-									Email
-								</label>
-								<input type="email" className="form-control" id="inputEmail" placeholder="Email" />
-							</div>
-						</div>
-
-						<div className="col-md-5">
-							<div className="row mb-3">
-								<label for="inputFB" className="col-md-4 col-form-label text-right">
-									Facebook Name
-								</label>
-								<input type="text" className="form-control" id="inputFB" placeholder="Facebook" />
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputnum" className="col-md-4 col-form-label text-right">
-									Mobile No.
-								</label>
-								<input type="number" className="form-control" id="inputnum" placeholder="09178060641" />
-							</div>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-md-4">
-							<div className="row mb-3">
-								<label for="inputBday" className="col-md-4 col-form-label text-right">
-									Birthdate
-								</label>
-								<input type="date" className="form-control" id="inputBday" />
-							</div>
-						</div>
-
-						<div className="col-md-5">
-							<div className="row mb-3">
-								<label for="inputBirthplace" className="col-md-4 col-form-label text-right">
-									Birthplace
-								</label>
-								<input type="text" className="form-control" id="inputBirthplace" placeholder="Olongapo, Zambales" />
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputReligion" className="col-md-4 col-form-label text-right">
-									Religion
-								</label>
-								<select className="form-select form-control" id="inputReligion" placeholder="Select">
-									<option>Christian</option>
-									<option>Roman Catholic</option>
-									<option>...</option>
-								</select>
-							</div>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-md-4">
-							<div className="row mb-3">
-								<label for="inputSchool" className="col-md-4 col-form-label text-right">
-									Current School
-								</label>
-								<input type="text" className="form-control" id="inputSchool" placeholder="De La Salle University" />
-							</div>
-						</div>
-
-						<div className="col-md-5">
-							<div className="row mb-3">
-								<label for="inputCourse" className="col-md-4 col-form-label text-right">
-									Level/Course
-								</label>
-								<input type="text" className="form-control" id="inputCourse" placeholder="BS Information Systems" />
-							</div>
-						</div>
-
-						<div className="col-md-3">
-							<div className="row mb-3">
-								<label for="inputCont" className="col-sm-4 col-form-label text-right">
-									Contact No.
-								</label>
-								<input type="text" className="form-control" id="inputCont" placeholder="8954061" />
-							</div>
-						</div>
-					</div>
-					<div className="row">
+				<div className="row">
+					<div className="col-md-6">
 						<div className="row mb-3">
-							<label for="schoolAdd" className="col-md-2 col-form-label text-right">
-								School Address
+							<label for="inputGiven" className="col-md-4 col-form-label text-right">
+								Given Name:
 							</label>
-							<input type="text" className="form-control" id="schoolAdd" placeholder="1004 Malate Manila" />
+							<input
+								type="text"
+								className="form-control"
+								id="givenName"
+								placeholder="Given Name"
+								onChange={onChange}
+								value={formData.givenName}
+							/>
 						</div>
 					</div>
-					<div className="row">
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputHobbies" className="col-md-4 col-form-label text-right">
-									Hobbies
-								</label>
-								<input type="text" className="form-control" id="inputHobbies" />
-							</div>
-						</div>
-
-						<div className="col-md-6">
-							<div className="row mb-3">
-								<label for="inputInterests" className="col-md-4 col-form-label text-right">
-									Interests{" "}
-								</label>
-								<input type="text" className="form-control" id="inputInterests" />
-							</div>
-						</div>
-					</div>
-					<div className="row">
+				</div>
+				<div className="row mb-4">
+					<div className="col-md-6">
 						<div className="row mb-3">
-							<label for="list" className="col-md-2 col-form-label text-right">
-								List your Clubs/Organizations/Groups
+							<label for="inputMiddle" className="col-md-4 col-form-label text-right">
+								Middle Name:
 							</label>
-							<input type="text" className="form-control" id="inputHobbies" />
+							<input
+								type="text"
+								className="form-control"
+								id="middleName"
+								placeholder="Middle Name"
+								onChange={onChange}
+								value={formData.middleName}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="row mb-2">
+					<h4>Address Details</h4>
+				</div>
+				<div className="row">
+					<div className="col-md-6">
+						<div className="row mb-3">
+							<label for="inputStreet" className="col-md-4 col-form-label text-right">
+								Street Address
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="streetAddress"
+								placeholder="1234 Main St"
+								onChange={onChange}
+								value={formData.streetAddress}
+							/>
 						</div>
 					</div>
 
-					<div className="col-12">
-						
-						<input type="submit" value="Next" className="btn btn-primary float-end" />
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputCity" className="col-md-4 col-form-label text-right">
+								City
+							</label>
+							<select
+								className="form-select form-control"
+								id="inputCity"
+								placeholder="New York City"
+								onChange={onChange}
+								value={formData.city}
+							>
+								{formData.cities.map(function (city) {
+									return (
+										<option key={city} value={city}>
+											{city}
+										</option>
+									);
+								})}
+							</select>
+						</div>
 					</div>
-				</form>
-			</div>
-		);
-	}
+
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputCity" className="col-md-4 col-form-label text-right">
+								Zip Code{" "}
+							</label>
+
+							<input
+								type="text"
+								className="form-control"
+								id="zipCode"
+								placeholder="1234"
+								onChange={onChange}
+								value={formData.zipCode}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-md-6">
+						<div className="row mb-3">
+							<label for="inputApt" className="col-md-4 col-form-label text-right">
+								Apt, suite, etc (optional)
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="apt"
+								placeholder="Apartment, studio, or floor"
+								onChange={onChange}
+								value={formData.apt}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputProvince" className="col-md-4 col-form-label text-right">
+								State/Province
+							</label>
+							<select className="form-select form-control" id="state" onChange={onChange} value={formData.state}>
+								{formData.states.map(function (state) {
+									return (
+										<option key={state} value={state}>
+											{state}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div className="row mb-4">
+					<div className="col-md-6">
+						<div className="row mb-3">
+							<label for="inputBrgy" className="col-md-4 col-form-label text-right">
+								Barangay/District
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="brgy"
+								placeholder="Malate"
+								onChange={onChange}
+								value={formData.brgy}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputRegion" className="col-md-4 col-form-label text-right">
+								Region{" "}
+							</label>
+							<select
+								className="form-select form-control"
+								id="memberRegion"
+								onChange={onChange}
+								value={formData.memberRegion}
+							>
+								{formData.regions.map(function (region) {
+									return (
+										<option key={region} value={region}>
+											{region}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div className="row mb-2">
+					<h4>Personal Details</h4>
+				</div>
+				<div className="row">
+					<div className="col-md-4">
+						<div className="row mb-3">
+							<label for="inputEmail" className="col-md-4 col-form-label text-right">
+								Email
+							</label>
+							<input
+								type="email"
+								className="form-control"
+								id="email"
+								placeholder="Email"
+								onChange={onChange}
+								value={formData.email}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-5">
+						<div className="row mb-3">
+							<label for="inputFB" className="col-md-4 col-form-label text-right">
+								Facebook Name
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="facebook"
+								placeholder="Facebook"
+								onChange={onChange}
+								value={formData.facebook}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputnum" className="col-md-4 col-form-label text-right">
+								Mobile No.
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="mobile"
+								placeholder="09178060641"
+								onChange={onChange}
+								value={formData.mobile}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-md-4">
+						<div className="row mb-3">
+							<label for="inputBday" className="col-md-4 col-form-label text-right">
+								Birthdate
+							</label>
+							<input
+								type="date"
+								className="form-control"
+								id="birthdate"
+								onChange={onChange}
+								value={formData.birthdate}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-5">
+						<div className="row mb-3">
+							<label for="inputBirthplace" className="col-md-4 col-form-label text-right">
+								Birthplace
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="birthplace"
+								placeholder="Olongapo, Zambales"
+								onChange={onChange}
+								value={formData.birthplace}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputReligion" className="col-md-4 col-form-label text-right">
+								Religion
+							</label>
+							<select
+								className="form-select form-control"
+								id="religion"
+								placeholder="Select"
+								onChange={onChange}
+								value={formData.religion}
+							>
+								{formData.religions.map(function (religion) {
+									return (
+										<option key={religion} value={religion}>
+											{religion}
+										</option>
+									);
+								})}
+							</select>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-md-4">
+						<div className="row mb-3">
+							<label for="inputSchool" className="col-md-4 col-form-label text-right">
+								Current School
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="currentSchool"
+								placeholder="De La Salle University"
+								onChange={onChange}
+								value={formData.currentSchool}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-5">
+						<div className="row mb-3">
+							<label for="inputCourse" className="col-md-4 col-form-label text-right">
+								Level/Course
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="course"
+								placeholder="BS Information Systems"
+								onChange={onChange}
+								value={formData.course}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-3">
+						<div className="row mb-3">
+							<label for="inputCont" className="col-sm-4 col-form-label text-right">
+								Contact No.
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="phone"
+								placeholder="8954061"
+								onChange={onChange}
+								value={formData.phone}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="row mb-3">
+						<label for="schoolAdd" className="col-md-2 col-form-label text-right">
+							School Address
+						</label>
+						<input
+							type="text"
+							className="form-control"
+							id="schoolAddress"
+							placeholder="1004 Malate Manila"
+							onChange={onChange}
+							value={formData.schoolAddress}
+						/>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-md-6">
+						<div className="row mb-3">
+							<label for="inputHobbies" className="col-md-4 col-form-label text-right">
+								Hobbies
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="hobbies"
+								onChange={onChange}
+								value={formData.hobbies}
+							/>
+						</div>
+					</div>
+
+					<div className="col-md-6">
+						<div className="row mb-3">
+							<label for="inputInterests" className="col-md-4 col-form-label text-right">
+								Interests{" "}
+							</label>
+							<input
+								type="text"
+								className="form-control"
+								id="interests"
+								onChange={onChange}
+								value={formData.interests}
+							/>
+						</div>
+					</div>
+				</div>
+				<div className="row">
+					<div className="row mb-3">
+						<label for="list" className="col-md-2 col-form-label text-right">
+							List your Clubs/Organizations/Groups
+						</label>
+						<input type="text" className="form-control" id="clubs" onChange={onChange} value={formData.clubs} />
+					</div>
+				</div>
+
+				<div className="col-12">
+					<input type="submit" value="Next" className="btn btn-primary float-end" />
+				</div>
+			</form>
+		</div>
+	);
 }
+
+export default Appform2;

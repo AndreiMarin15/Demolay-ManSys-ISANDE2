@@ -1,0 +1,59 @@
+@import "base.css";
+
+.table-bordered-custom td {
+  border: 1px solid #343c44;
+}
+
+.table-bordered-custom {
+  overflow: hidden;
+}
+
+.table-bordered-custom th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.table-bordered-custom th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.thead-custom th {
+  background-color: #343c44;
+  color: white;
+}
+
+.form-control-sm {
+  height: 10px;
+}
+
+.btn-sm {
+  height: 10px;
+}
+
+.filterbtn {
+  height: 10px;
+  border: 0;
+  margin-left: 5px;
+}
+
+.info-table td {
+  padding-top: 15px;
+}
+
+.info-table td:first-child {
+  text-align: end;
+  padding-right: 15px;
+  font-weight: 700;
+}
+
+.info-table td:last-child {
+  border-bottom: 1px solid black;
+}
+
+.custom {
+  background-color: #343c44;
+}
+
+.custom:hover {
+  background-color: #74777a;
+  border: 1px solid #343c44;
+}
