@@ -2,8 +2,18 @@ import { Link } from "react-router-dom";
 import logo from "../img/logo.png";
 import "../styles/base.css";
 import "../styles/home.css";
+import { useEffect } from "react";
+import axios from "axios";
 
 function Home() {
+
+  useEffect(() => {
+		axios.get(`http://localhost:5000/initDatabase`).then(respone => {
+      console.log(respone.data)
+    })
+	}, []);
+  
+
   return (
     <div id="homelogo">
       <img src={logo} id="big" alt="DeMolay" ></img>

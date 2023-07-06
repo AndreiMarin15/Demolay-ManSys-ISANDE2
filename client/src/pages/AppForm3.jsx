@@ -39,26 +39,33 @@ function Appform3() {
 	let { applicationId } = useParams();
 
 	useEffect(() => {
-		setFormData({
-			...FormData,
-			years: [
-				{ key: "N/A", value: null },
-				{ key: 2022, value: 2022 },
-				{ key: 2021, value: 2021 },
-				{ key: 2020, value: 2020 },
-				{ key: 2019, value: 2019 },
-			],
-			chapters: [
-				{ key: "N/A", value: null },
-				{ key: "Chapter One", value: "Chapter One" },
-				{ key: "Chapter Two", value: "Chapter Two" },
-				{ key: "Chapter Three", value: "Chapter Three" },
-			],
-			yearApplied: null,
-			chapterApplied: null,
-			appliedInAnotherChapter: false,
-			parentApproved: false,
+		axios.get("http://localhost:5000/getAllChapters").then((res1) => {
+			setFormData({
+				...FormData,
+				chapters: res1.data.map((res) => {
+					return {
+						key: res.name,
+						value: res.chapterID,
+					};
+				}),
+				//
+				chapterApplied: res1.data[0].name,
+				years: [
+					{ key: "N/A", value: null },
+					{ key: 2022, value: 2022 },
+					{ key: 2021, value: 2021 },
+					{ key: 2020, value: 2020 },
+					{ key: 2019, value: 2019 },
+				],
+				yearApplied: null,
+			
+				appliedInAnotherChapter: false,
+				parentApproved: false,
+				
+			});
 		});
+
+		
 	}, []);
 
 	const onChange = (e) => {

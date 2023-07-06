@@ -70,7 +70,7 @@ function Appform4() {
 
 	useEffect(() => {
 		axios.get(`http://localhost:5000/applications/${applicationId}`).then((response) => {
-      console.log(response.data)
+			console.log(response.data);
 			setFormData({
 				...FormData,
 				years: [
@@ -80,69 +80,72 @@ function Appform4() {
 					{ key: 2020, value: 2020 },
 					{ key: 2019, value: 2019 },
 				],
-				chapters: [
-					{ key: "N/A", value: null },
-					{ key: "Chapter One", value: "Chapter One" },
-					{ key: "Chapter Two", value: "Chapter Two" },
-					{ key: "Chapter Three", value: "Chapter Three" },
-				],
+				chapters: response.data[2].map((res) => {
+					return {
+						key: res.name,
+						value: res.chapterID,
+					};
+				}),
 				cities: ["Manila", "Muntinlupa", "Makati"],
 				states: ["Laguna", "Metro Manila", "Pampanga"],
-				regions: ["NCR", "Region IV", "Region V"],
+				regions: response.data[1].map((res) => {
+					return {
+						name: res.regionName,
+						id: res.regionID,
+					};
+				}),
 				religions: ["Christian", "Roman Catholic"],
 
-				
+				lastName: response.data[0].lastName,
+				givenName: response.data[0].givenName,
+				middleName: response.data[0].middleName,
 
-				lastName: response.data.lastName,
-				givenName: response.data.givenName,
-				middleName: response.data.middleName,
+				streetAddress: response.data[0].streetAddress,
+				apt: response.data[0].apt,
+				brgy: response.data[0].brgy,
+				city: response.data[0].city,
+				state: response.data[0].state,
+				memberRegion: response.data[0].memberRegion,
+				zipCode: response.data[0].zipCode,
 
-				streetAddress: response.data.streetAddress,
-				apt: response.data.apt,
-				brgy: response.data.brgy,
-				city: response.data.city,
-				state: response.data.state,
-				memberRegion: response.data.memberRegion,
-				zipCode: response.data.zipCode,
+				email: response.data[0].email,
+				birthdate: response.data[0].birthdate,
+				currentSchool: response.data[0].currentSchool,
+				facebook: response.data[0].facebook,
+				birthplace: response.data[0].birthplace,
+				course: response.data[0].course,
+				mobile: response.data[0].mobile,
+				religion: response.data[0].religion,
+				phone: response.data[0].phone,
 
-				email: response.data.email,
-				birthdate: response.data.birthdate,
-				currentSchool: response.data.currentSchool,
-				facebook: response.data.facebook,
-				birthplace: response.data.birthplace,
-				course: response.data.course,
-				mobile: response.data.mobile,
-				religion: response.data.religion,
-				phone: response.data.phone,
+				schoolAddress: response.data[0].schoolAddress,
+				hobbies: response.data[0].hobbies,
+				interests: response.data[0].interests,
+				clubs: response.data[0].clubs,
 
-				schoolAddress: response.data.schoolAddress,
-				hobbies: response.data.hobbies,
-				interests: response.data.interests,
-				clubs: response.data.clubs,
+				appliedInAnotherChapter: response.data[0].appliedInAnotherChapter,
+				chapterApplied: response.data[0].chapterApplied,
+				yearApplied: response.data[0].yearApplied,
+				status: response.data[0].status,
 
-				appliedInAnotherChapter: response.data.appliedInAnotherChapter,
-				chapterApplied: response.data.chapterApplied,
-				yearApplied: response.data.yearApplied,
-				status: response.data.status,
+				relativeName: response.data[0].relativeName,
+				relationship: response.data[0].relationship,
+				lodge: response.data[0].lodge,
 
-				relativeName: response.data.relativeName,
-				relationship: response.data.relationship,
-				lodge: response.data.lodge,
+				reference1Name: response.data[0].reference1Name,
+				reference1Age: response.data[0].reference1Age,
+				reference1Email: response.data[0].reference1Email,
+				reference1Mobile: response.data[0].reference1Mobile,
 
-				reference1Name: response.data.reference1Name,
-				reference1Age: response.data.reference1Age,
-				reference1Email: response.data.reference1Email,
-				reference1Mobile: response.data.reference1Mobile,
+				reference2Name: response.data[0].reference2Name,
+				reference2Age: response.data[0].reference2Age,
+				reference2Email: response.data[0].reference2Email,
+				reference2Mobile: response.data[0].reference2Mobile,
 
-				reference2Name: response.data.reference2Name,
-				reference2Age: response.data.reference2Age,
-				reference2Email: response.data.reference2Email,
-				reference2Mobile: response.data.reference2Mobile,
-
-				parentName: response.data.parentName,
-				parentRelationship: response.data.parentRelationship,
-				parentEmail: response.data.parentEmail,
-				parentMobile: response.data.parentMobile,
+				parentName: response.data[0].parentName,
+				parentRelationship: response.data[0].parentRelationship,
+				parentEmail: response.data[0].parentEmail,
+				parentMobile: response.data[0].parentMobile,
 			});
 		});
 	});
@@ -428,8 +431,8 @@ function Appform4() {
 							>
 								{formData.regions.map(function (region) {
 									return (
-										<option key={region} value={region}>
-											{region}
+										<option key={region.name} value={region.name}>
+											{region.name}
 										</option>
 									);
 								})}
@@ -500,7 +503,7 @@ function Appform4() {
 								className="form-control"
 								id="birthdate"
 								onChange={onChange}
-								value={ formData.birthdate ? formData.birthdate.substring(0,10) : "1-1-2000"}
+								value={formData.birthdate ? formData.birthdate.substring(0, 10) : "1-1-2000"}
 							/>
 						</div>
 					</div>
@@ -743,7 +746,14 @@ function Appform4() {
 							<label for="inputFB" className="col-md-4 col-form-label text-right">
 								Relationship
 							</label>
-							<input type="text" className="form-control" id="relationship" placeholder="i.e. Father" onChange={onChange} value={formData.relationship}/>
+							<input
+								type="text"
+								className="form-control"
+								id="relationship"
+								placeholder="i.e. Father"
+								onChange={onChange}
+								value={formData.relationship}
+							/>
 						</div>
 					</div>
 
@@ -979,7 +989,7 @@ function Appform4() {
 					</p>
 				</div>
 				<div className="col-12 text-center">
-        <input type="submit" value="Submit" className="btn btn-primary" />
+					<input type="submit" value="Submit" className="btn btn-primary" />
 				</div>
 			</form>
 		</div>

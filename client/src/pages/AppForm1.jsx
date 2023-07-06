@@ -3,7 +3,6 @@ import "../styles/appform1.css";
 import axios from "axios";
 import { Component } from "react";
 
-
 export default class Appform1 extends Component {
 	constructor(props) {
 		super(props);
@@ -21,27 +20,55 @@ export default class Appform1 extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			regions: [
-				{ name: "NCR", id: 1 },
-				{ name: "MIMAROPA", id: 2 },
-				{ name: "CALABARZON", id: 3 },
-			],
-			chapters: [
-				{ name: "Chapter One", id: 1 },
-				{ name: "Chapter Two", id: 2 },
-				{ name: "Chapter Three", id: 3 },
-			],
-			regionId: "1",
-			chapterId: "1",
-		});
+		axios
+			.get("http://localhost:5000/getRegions")
+			.then((res1) => {
+				this.setState({
+					regions: res1.data.map((res) => {
+						return {
+							name: res.regionName,
+							id: res.regionID,
+						};
+					}),
+
+					regionId: res1.data[0].regionID,
+				});
+
+				console.log(`Current RegID: ${this.state.regionId}`);
+				return axios.get(`http://localhost:5000/getChapters/${this.state.regionId}`);
+			})
+			.then((res2) => {
+				this.setState({
+					chapters: res2.data.map((res) => {
+						return {
+							name: res.name,
+							id: res.chapterId,
+						};
+					}),
+
+					chapterId: res2.data[0].chapterID,
+				});
+			})
+			.catch((err) => console.log(err));
 	}
 
 	onChangeRegion(e) {
 		this.setState({
 			regionId: e.target.value,
 		});
-		console.log(e.target.value);
+		axios.get(`http://localhost:5000/getChapters/${e.target.value}`).then((result) => {
+			this.setState({
+				chapters: result.data.map((res) => {
+					return {
+						name: res.name,
+						id: res.chapterID,
+					};
+				}),
+				chapterId: result.data[0].chapterID,
+			});
+
+			console.log(this.state.chapters);
+		});
 	}
 
 	onChangeChapter(e) {
@@ -63,10 +90,8 @@ export default class Appform1 extends Component {
 
 		axios.post("http://localhost:5000/newApplication", application).then((res) => {
 			console.log("data: " + res.data);
-			window.location.href = `/appform2/${res.data}`
+			window.location.href = `/appform2/${res.data}`;
 		});
-
-		
 	}
 
 	render() {

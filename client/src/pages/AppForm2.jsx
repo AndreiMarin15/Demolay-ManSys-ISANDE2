@@ -69,16 +69,25 @@ function Appform2() {
 	let { applicationId } = useParams();
 
 	useEffect(() => {
-		setFormData({
-			...FormData,
-			cities: ["Manila", "Muntinlupa", "Makati"],
-			states: ["Laguna", "Metro Manila", "Pampanga"],
-			regions: ["NCR", "Region IV", "Region V"],
-			religions: ["Christian", "Roman Catholic"],
-			city: "Manila",
-			state: "National Capital Region",
-			region: "NCR",
-			religion: "Christian",
+		axios.get("http://localhost:5000/getRegions").then((res1) => {
+			setFormData({
+				...FormData,
+				regions: res1.data.map((res) => {
+					return {
+						name: res.regionName,
+						id: res.regionID,
+					};
+				}),
+				//
+				memberRegion: res1.data[0].regionName,
+				regionId: res1.data[0].regionID,
+				cities: ["Manila", "Muntinlupa", "Makati"],
+				states: ["Laguna", "Metro Manila", "Pampanga"],
+				religions: ["Christian", "Roman Catholic"],
+				city: "Manila",
+				state: "National Capital Region",
+				religion: "Christian",
+			});
 		});
 	}, []);
 
@@ -92,6 +101,7 @@ function Appform2() {
 		});
 
 		console.log(formData);
+		console.log(formData.memberRegion);
 	};
 
 	const onSubmit = (e) => {
@@ -332,8 +342,8 @@ function Appform2() {
 							>
 								{formData.regions.map(function (region) {
 									return (
-										<option key={region} value={region}>
-											{region}
+										<option key={region.name} value={region.name}>
+											{region.name}
 										</option>
 									);
 								})}
