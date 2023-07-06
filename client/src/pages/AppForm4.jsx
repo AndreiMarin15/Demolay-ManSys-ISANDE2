@@ -744,7 +744,7 @@ function Appform4() {
 							<label for="inputFB" className="col-md-4 col-form-label text-right">
 								Relationship
 							</label>
-							<input type="text" className="form-control" id="inputFB" placeholder="i.e. Father" />
+							<input type="text" className="form-control" id="relationship" placeholder="i.e. Father" onChange={onChange} value={formData.relationship}/>
 						</div>
 					</div>
 
@@ -914,7 +914,7 @@ function Appform4() {
 								Name
 							</label>
 							<input
-								type="email"
+								type="text"
 								className="form-control"
 								id="parentName"
 								placeholder="Full Name"
@@ -980,11 +980,7 @@ function Appform4() {
 					</p>
 				</div>
 				<div className="col-12 text-center">
-					<Link to="/appform5">
-						<button type="submit" className="btn btn-primary">
-							SUBMIT
-						</button>
-					</Link>
+        <input type="submit" value="Submit" className="btn btn-primary" />
 				</div>
 			</form>
 		</div>

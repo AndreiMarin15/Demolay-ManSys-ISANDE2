@@ -244,7 +244,7 @@ function Appform3() {
 								<label for="inputFB" className="col-md-4 col-form-label text-right">
 									Relationship
 								</label>
-								<input type="text" className="form-control" id="inputFB" placeholder="i.e. Father" />
+								<input type="text" className="form-control" id="relationship" placeholder="i.e. Father" onChange={onChange} value={formData.relationship}/>
 							</div>
 						</div>
 
