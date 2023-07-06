@@ -173,7 +173,7 @@ const controller = {
 		db.findOne(Application, {_id: applicationId}, {}, (result) => {
 			res.send(result)
 		})
-	}
+	},
   
   checkAndInitDB: async (req, res) => {
     try {
