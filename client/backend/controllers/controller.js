@@ -1,4 +1,6 @@
 const Application = require("../models/applications.js");
+const Provinces = require("../models/provinces.js");
+const Cities = require("../models/cities.js");
 const Chapters = require("../models/chapters.js");
 const Regions = require("../models/regions.js");
 const db = require("../models/db.js");
@@ -64,8 +66,109 @@ const controller = {
 
   checkAndInitDB: async (req, res) => {
     try {
+      const provinceCount = await Provinces.countDocuments();
+      const cityCount = await Cities.countDocuments();
       const regionCount = await Regions.countDocuments();
       const chapterCount = await Chapters.countDocuments();
+
+      if (provinceCount === 0) {
+        // If empty, initialize Provinces data
+
+        const initialProvinces = [
+          {
+            provinceID: 0,
+            name: "Metro Manila",
+          },
+
+          {
+            provinceID: 1,
+            name: "Cavite",
+          },
+
+          {
+            provinceID: 2,
+            name: "Laguna",
+          },
+        ];
+
+        await Provinces.insertMany(initialProvinces);
+
+        console.log("Initialized data");
+      } else {
+        console.log("Provinces already exist");
+      }
+
+      if (cityCount === 0) {
+        // If empty, initialize Cities data
+
+        const initialCities = [
+          {
+            cityID: 0,
+            provinceID: 0,
+            name: "Manila City",
+          },
+
+          {
+            cityID: 1,
+            provinceID: 0,
+            name: "Quezon City",
+          },
+
+          {
+            cityID: 2,
+            provinceID: 0,
+            name: "Makati City",
+          },
+
+          {
+            cityID: 3,
+            provinceID: 0,
+            name: "Pasig City",
+          },
+
+          {
+            cityID: 4,
+            provinceID: 0,
+            name: "Parañaque City",
+          },
+
+          {
+            cityID: 5,
+            provinceID: 0,
+            name: "Las Piñas City",
+          },
+
+          {
+            cityID: 6,
+            provinceID: 1,
+            name: "Dasmariñas City",
+          },
+
+          {
+            cityID: 7,
+            provinceID: 1,
+            name: "Tanza City",
+          },
+
+          {
+            cityID: 8,
+            provinceID: 2,
+            name: "San Pablo City",
+          },
+
+          {
+            cityID: 9,
+            provinceID: 2,
+            name: "San Pedro City",
+          },
+        ];
+
+        await Cities.insertMany(initialCities);
+
+        console.log("Initialized data");
+      } else {
+        console.log("Cities already exist");
+      }
 
       if (regionCount === 0) {
         // If empty, initialize DeMolay Regions data
