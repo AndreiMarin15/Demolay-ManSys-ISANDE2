@@ -1,4 +1,4 @@
-const Application = require("../models/applications.js").default;
+const Application = require("../models/applications.js");
 const db = require("../models/db.js");
 
 const controller = {
@@ -18,6 +18,7 @@ const controller = {
 		const applicationId = req.params.id;
 		console.log(applicationId);
 		console.log(req.body);
+		
 		const update = {
 			lastName: req.body.lastName,
 			givenName: req.body.givenName,
@@ -91,10 +92,20 @@ const controller = {
 		console.log(update);
 
 		await db.updateOne(Application, { _id: applicationId }, update, (result) => {
-			console.log(result);
+			
 			res.send(result._id);
 		});
 	},
+
+	getApplication: async(req, res) => {
+		const applicationId = req.params.id
+
+		db.findOne(Application, {_id: applicationId}, {}, (result) => {
+			res.send(result)
+		})
+	}
+
+	
 };
 
 module.exports = controller;

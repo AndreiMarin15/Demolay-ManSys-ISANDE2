@@ -14,4 +14,6 @@ router.post("/newApplication", controller.newApplication);
 router.post("/newApplication2/:id", controller.newApplication2)
 router.post("/newApplication3/:id", controller.newApplication3)
 
+router.get("/applications/:id", controller.getApplication)
+
 module.exports = router;

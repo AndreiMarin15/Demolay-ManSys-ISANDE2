@@ -88,43 +88,43 @@ function Appform3() {
 	};
 
 	const onSubmit = (e) => {
-    e.preventDefault();
+		e.preventDefault();
 
-    const applicationUpdate = {
-    appliedInAnotherChapter: formData.appliedInAnotherChapter,
-		chapterApplied: formData.chapterApplied,
-		yearApplied: formData.yearApplied,
-		status: formData.status,
+		const applicationUpdate = {
+			appliedInAnotherChapter: formData.appliedInAnotherChapter,
+			chapterApplied: formData.chapterApplied,
+			yearApplied: formData.yearApplied,
+			status: formData.status,
 
-		relativeName: formData.relativeName,
-		relationship: formData.relationship,
-		lodge: formData.lodge,
+			relativeName: formData.relativeName,
+			relationship: formData.relationship,
+			lodge: formData.lodge,
 
-		reference1Name: formData.reference1Name,
-		reference1Age: formData.reference1Age,
-		reference1Email: formData.reference1Email,
-		reference1Mobile: formData.reference1Mobile,
+			reference1Name: formData.reference1Name,
+			reference1Age: formData.reference1Age,
+			reference1Email: formData.reference1Email,
+			reference1Mobile: formData.reference1Mobile,
 
-		reference2Name: formData.reference2Name,
-		reference2Age: formData.reference2Age,
-		reference2Email: formData.reference2Email,
-		reference2Mobile: formData.reference2Mobile,
+			reference2Name: formData.reference2Name,
+			reference2Age: formData.reference2Age,
+			reference2Email: formData.reference2Email,
+			reference2Mobile: formData.reference2Mobile,
 
-		parentName: formData.parentName,
-		parentRelationship: formData.parentRelationship,
-		parentEmail: formData.parentEmail,
-		parentMobile: formData.parentMobile,
-		parentApproved: formData.parentApproved,
-    }
+			parentName: formData.parentName,
+			parentRelationship: formData.parentRelationship,
+			parentEmail: formData.parentEmail,
+			parentMobile: formData.parentMobile,
+			parentApproved: formData.parentApproved,
+		};
 
-    console.log(applicationUpdate)
-    console.log(applicationId)
+		console.log(applicationUpdate);
+		console.log(applicationId);
 
-    axios.post(`http://localhost:5000/newApplication3/${applicationId}`, applicationUpdate).then((res) => {
+		axios.post(`http://localhost:5000/newApplication3/${applicationId}`, applicationUpdate).then((res) => {
 			console.log(res.data);
 			window.location.href = `/appform4/${applicationId}`;
 		});
-  };
+	};
 
 	return (
 		<div className="container container-fluid ">
@@ -504,9 +504,7 @@ function Appform3() {
 					</div>
 
 					<div className="col-6">
-						
-            <input type="submit" value="Next" className="btn btn-primary float-end" />
-					
+						<input type="submit" value="Next" className="btn btn-primary float-end" />
 					</div>
 				</div>
 			</form>

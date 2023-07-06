@@ -1,12 +1,16 @@
 // insert connection string to database
-
+const mongoose = require("mongoose");
 // everything will only be used sa ___Controller.js these will be the replacement of usual functions because marami tayo controllers and marami rin models
 const db = {
 	findOne: function (model, query, projection, cb) {
-		model.findOne(query, projection, (err, res) => {
-			if (err) return cb(false);
-			return cb(res);
-		});
+		model.findOne(query, projection)
+		.then(res => {
+			
+			return cb(res)
+		})
+		.catch(err => {
+			if(err) return cb(false)
+		})
 	},
 
 	findMany: function (model, query, projection, cb) {
