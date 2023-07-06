@@ -10,6 +10,8 @@ function Appform2() {
 		states: [],
 		regions: [],
 		religions: [],
+		years: [],
+		chapters: [],
 
 		lastName: "",
 		givenName: "",
@@ -38,6 +40,31 @@ function Appform2() {
 		hobbies: "",
 		interests: "",
 		clubs: "",
+
+		appliedInAnotherChapter: false,
+		chapterApplied: "",
+		yearApplied: 0,
+		status: "",
+
+		relativeName: "",
+		relationship: "",
+		lodge: "",
+
+		reference1Name: "",
+		reference1Age: 0,
+		reference1Email: "",
+		reference1Mobile: "",
+
+		reference2Name: "",
+		reference2Age: 0,
+		reference2Email: "",
+		reference2Mobile: "",
+
+		parentName: "",
+		parentRelationship: "",
+		parentEmail: "",
+		parentMobile: "",
+		parentApproved: false,
 	});
 	let { applicationId } = useParams();
 
@@ -64,7 +91,7 @@ function Appform2() {
 			return helper;
 		});
 
-		console.log(formData)
+		console.log(formData);
 	};
 
 	const onSubmit = (e) => {
@@ -102,7 +129,7 @@ function Appform2() {
 		console.log(applicationId);
 		axios.post(`http://localhost:5000/newApplication2/${applicationId}`, applicationUpdate).then((res) => {
 			console.log(res.data);
-			window.location.href = `/newApplication3/${applicationId}`;
+			window.location.href = `/appform3/${applicationId}`;
 		});
 	};
 
@@ -491,13 +518,7 @@ function Appform2() {
 							<label for="inputHobbies" className="col-md-4 col-form-label text-right">
 								Hobbies
 							</label>
-							<input
-								type="text"
-								className="form-control"
-								id="hobbies"
-								onChange={onChange}
-								value={formData.hobbies}
-							/>
+							<input type="text" className="form-control" id="hobbies" onChange={onChange} value={formData.hobbies} />
 						</div>
 					</div>
 
