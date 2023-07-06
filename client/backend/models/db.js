@@ -1,23 +1,27 @@
 // insert connection string to database
-const mongoose = require("mongoose");
+
 // everything will only be used sa ___Controller.js these will be the replacement of usual functions because marami tayo controllers and marami rin models
 const db = {
 	findOne: function (model, query, projection, cb) {
-		model.findOne(query, projection)
-		.then(res => {
-			
-			return cb(res)
-		})
-		.catch(err => {
-			if(err) return cb(false)
-		})
+		model
+			.findOne(query, projection)
+			.then((res) => {
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 
 	findMany: function (model, query, projection, cb) {
-		model.find(query, projection, (err, res) => {
-			if (err) return cb(false);
-			return cb(res);
-		});
+		model
+			.find(query, projection)
+			.then((res) => {
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 
 	insertOne: function (model, docu, cb) {
@@ -33,11 +37,14 @@ const db = {
 	},
 
 	insertMany: function (model, docs, cb) {
-		model.insertMany(docs, (err, res) => {
-			if (err) return cb(false);
-			console.log("Added: " + res);
-			return cb(true);
-		});
+		model
+			.insertMany(docs)
+			.then((res) => {
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 
 	updateOne: function (model, filter, update, cb) {
@@ -53,27 +60,36 @@ const db = {
 	},
 
 	updateMany: function (model, filter, update, cb) {
-		model.updateMany(filter, update, (err, res) => {
-			if (err) return cb(false);
-			console.log("Updated: " + res.nModified);
-			return cb(true);
-		});
+		model
+			.updateMany(filter, update)
+			.then((res) => {
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 
 	delOne: function (model, conditions, cb) {
-		model.deleteOne(conditions, (err, res) => {
-			if (err) return cb(false);
-			console.log("Deleted: " + res.deletedCount);
-			return cb(true);
-		});
+		model
+			.deleteOne(conditions)
+			.then((res) => {
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 
 	delMany: function (model, conditions, cb) {
-		model.deleteMany(conditions, (err, res) => {
-			if (err) return cb(false);
-			console.log("Deleted: " + res.deletedCount);
-			return cb(true);
-		});
+		model
+			.deleteMany(conditions)
+			.then((res) => {
+				return cb(res);
+			})
+			.catch((err) => {
+				if (err) return cb(false);
+			});
 	},
 };
 
