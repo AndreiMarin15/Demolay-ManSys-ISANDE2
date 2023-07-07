@@ -67,4 +67,56 @@ h4 {
     padding: 20px;
     text-align: left;
 }
+
+.progress-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .progress-circle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+    font-weight: bold;
+  }
+  
+  .progress-circle.active {
+    background-color: #350059;
+  }
+  
+  .progress-labels {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    font-size: 12px;
+  }
+  
+  .progress-label {
+    text-align: center;
+    flex-basis: calc(100% / 6 - 10px);
+    margin: 5px; 
+  }
+
+  .progress-line:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #ccc; 
+    z-index: -1;
+  }
+  
+  
   
