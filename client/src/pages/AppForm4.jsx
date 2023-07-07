@@ -38,9 +38,6 @@ function Appform4() {
 		religion: "",
 		phone: "",
 
-
-		
-
 		schoolAddress: "",
 		hobbies: "",
 		interests: "",
@@ -73,9 +70,10 @@ function Appform4() {
 
 	useEffect(() => {
 		axios.get(`http://localhost:5000/applications/${applicationId}`).then(async (response) => {
-			
 			const res2 = await axios.get("http://localhost:5000/getProvinces");
-			const res3 = await axios.get(`http://localhost:5000/getCities/${response.data[0].province ? response.data[0].province : 0}`);
+			const res3 = await axios.get(
+				`http://localhost:5000/getCities/${response.data[0].province ? response.data[0].province : 0}`
+			);
 			setFormData({
 				...FormData,
 				years: [
@@ -124,7 +122,7 @@ function Appform4() {
 				zipCode: response.data[0].zipCode,
 
 				email: response.data[0].email,
-				birthdate:  response.data[0].birthdate ?  response.data[0].birthdate : "2000-01-01",
+				birthdate: response.data[0].birthdate ? response.data[0].birthdate : "2000-01-01",
 				currentSchool: response.data[0].currentSchool,
 				facebook: response.data[0].facebook,
 				birthplace: response.data[0].birthplace,
@@ -196,7 +194,7 @@ function Appform4() {
 			streetAddress: formData.streetAddress,
 			apt: formData.apt,
 			brgy: formData.brgy,
-			city: formData.city  ? formData.city : 0,
+			city: formData.city ? formData.city : 0,
 			province: formData.province ? formData.province : 0,
 			memberRegion: formData.memberRegion,
 			zipCode: formData.zipCode,
@@ -287,17 +285,11 @@ function Appform4() {
 								ID (2 x 2) Photo:
 							</label>
 
-							{
-								formData.photo ? <img src= {formData.photo} alt="" /> : <input
-								type="file"
-								className="form-control"
-								id="photo"
-								accept=".jpeg, .png, .jpg"
-								
-							/>
-							}
-							
-							
+							{formData.photo ? (
+								<img src={formData.photo} alt="" />
+							) : (
+								<input type="file" className="form-control" id="photo" accept=".jpeg, .png, .jpg" />
+							)}
 						</div>
 					</div>
 				</div>

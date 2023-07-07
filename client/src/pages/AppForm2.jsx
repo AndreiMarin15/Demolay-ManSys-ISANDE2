@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 
 function Appform2() {
 	const [photoData, setPhoto] = useState({
-		photo: ""
-	})
+		photo: "",
+	});
 
 	const [formData, setFormData] = useState({
 		cities: [],
@@ -102,7 +102,6 @@ function Appform2() {
 				city: res3.data[0].cityID,
 
 				religion: "Christian",
-				
 			});
 		});
 	}, []);
@@ -191,10 +190,10 @@ function Appform2() {
 
 		setPhoto({
 			...photoData,
-			photo: base64
-		})
+			photo: base64,
+		});
 
-		console.log(photoData)
+		console.log(photoData);
 	};
 
 	function convertToBase64(file) {
