@@ -68,7 +68,7 @@ function EventsValidation() {
                         <div className="col-md-8">
                             <input
                             type="text"
-                            className="form-control"
+                            className="form-control readonly-input"
                             value="2023 - A"
                             readOnly
                             />
@@ -83,7 +83,7 @@ function EventsValidation() {
                         <div className="col-md-8">
                             <input
                             type="text"
-                            className="form-control"
+                            className="form-control readonly-input"
                             value="Meeting 1"
                             readOnly
                             />
@@ -98,7 +98,7 @@ function EventsValidation() {
                         <div className="col-md-8">
                             <input
                             type="text"
-                            className="form-control"
+                            className="form-control readonly-input"
                             value="01/01/23"
                             readOnly
                             />
@@ -113,7 +113,7 @@ function EventsValidation() {
                         <div className="col-md-8">
                             <input
                             type="text"
-                            className="form-control"
+                            className="form-control readonly-input"
                             value="Junior Deacon"
                             readOnly
                             />
@@ -128,7 +128,7 @@ function EventsValidation() {
                         <div className="col-md-8">
                             <input
                             type="text"
-                            className="form-control"
+                            className="form-control readonly-input"
                             value="Beginner"
                             readOnly
                             />
@@ -143,7 +143,7 @@ function EventsValidation() {
                         <div className="col-md-8">
                             <input
                             type="text"
-                            className="form-control"
+                            className="form-control readonly-input"
                             value=" "
                             readOnly
                             />

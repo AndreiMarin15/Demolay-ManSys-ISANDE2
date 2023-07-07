@@ -60,13 +60,14 @@ function TurnoverTF4 () {
     <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-3">
             <h1> Term and Financial Report </h1>
-            <Link to="/eventsAthletic">
+            <Link to="/turnoverTF4">
                 <button type="submit" form="submit" id="primary-btn">
                     SAVE AND COMPLETE LATER
                 </button>
             </Link>
         </div>
         <hr />
+        {/* Progress Line */}
         <div class="progress-line">
             <div class="progress-circle active"></div>
             <div class="progress-circle active"></div>
@@ -103,12 +104,12 @@ function TurnoverTF4 () {
         </table>
         {/* Button */}
         <div className="d-flex justify-content-between mt-4">
-            <Link to="/appform1">
+            <Link to="/turnoverTF3">
                 <button type="button" id="back-btn">
                     BACK
                 </button>
             </Link>
-            <Link to="/appform1">
+            <Link to="/turnoverTF5">
                 <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
                     NEXT
                 </button>

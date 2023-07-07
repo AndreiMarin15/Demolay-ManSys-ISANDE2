@@ -46,6 +46,8 @@ import TurnoverTF1 from "./pages/Turnover/TurnoverTF1";
 import TurnoverTF2 from "./pages/Turnover/TurnoverTF2";
 import TurnoverTF3 from "./pages/Turnover/TurnoverTF3";
 import TurnoverTF4 from "./pages/Turnover/TurnoverTF4";
+import TurnoverTF5 from "./pages/Turnover/TurnoverTF5";
+import TurnoverTF6 from "./pages/Turnover/TurnoverTF6";
 
 import Header from "./components/Header";
 
@@ -95,6 +97,9 @@ function App() {
         <Route path="turnoverTF2" element ={<TurnoverTF2/>}/>
         <Route path="turnoverTF3" element ={<TurnoverTF3/>}/>
         <Route path="turnoverTF4" element ={<TurnoverTF4/>}/>
+        <Route path="turnoverTF5" element ={<TurnoverTF5/>}/>
+        <Route path="turnoverTF6" element ={<TurnoverTF6/>}/>
+        
 
       </Routes>
     </>

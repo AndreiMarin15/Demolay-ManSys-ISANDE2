@@ -12,7 +12,7 @@ function TurnoverTF3 () {
     <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-3">
             <h1> Term and Financial Report </h1>
-            <Link to="/eventsAthletic">
+            <Link to="/turnoverTF3">
                 <button type="submit" form="submit" id="primary-btn">
                     SAVE AND COMPLETE LATER
                 </button>
@@ -50,7 +50,7 @@ function TurnoverTF3 () {
                     <div className="col-md-6">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="3"
                         readOnly
                         />
@@ -66,7 +66,7 @@ function TurnoverTF3 () {
                     <div className="col-md-6">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="1"
                         readOnly
                         />
@@ -82,7 +82,7 @@ function TurnoverTF3 () {
                     <div className="col-md-6">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="5"
                         readOnly
                         />
@@ -100,7 +100,7 @@ function TurnoverTF3 () {
                     <div className="col-md-5">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="PHP 2,400"
                         readOnly
                         />
@@ -116,7 +116,7 @@ function TurnoverTF3 () {
                     <div className="col-md-5">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="PHP 800"
                         readOnly
                         />
@@ -132,7 +132,7 @@ function TurnoverTF3 () {
                     <div className="col-md-5">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="PHP 4,000"
                         readOnly
                         />
@@ -148,7 +148,7 @@ function TurnoverTF3 () {
                     <div className="col-md-5">
                         <input
                         type="text"
-                        className="form-control"
+                        className="form-control readonly-input"
                         value="PHP 7,200"
                         readOnly
                         />
@@ -171,12 +171,12 @@ function TurnoverTF3 () {
             </div>
             {/* Button */}
             <div className="d-flex justify-content-between mt-4">
-                <Link to="/appform1">
+                <Link to="/turnoverTF2">
                     <button type="button" id="back-btn">
                         BACK
                     </button>
                 </Link>
-                <Link to="/appform1">
+                <Link to="/turnoverTF4">
                     <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
                         NEXT
                     </button>

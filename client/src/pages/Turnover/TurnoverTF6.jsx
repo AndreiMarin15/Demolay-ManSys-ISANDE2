@@ -5,29 +5,30 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
-function TurnoverTF2 () {
+  
+function TurnoverTF6 () {
 
     return(
     <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-3">
             <h1> Term and Financial Report </h1>
-            <Link to="/turnoverTF2">
+            <Link to="/turnoverTF5">
                 <button type="submit" form="submit" id="primary-btn">
                     SAVE AND COMPLETE LATER
                 </button>
             </Link>
         </div>
-        <hr/>
+        <hr />
         {/* Progress Line */}
         <div class="progress-line">
             <div class="progress-circle active"></div>
             <div class="progress-circle active"></div>
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
-            <div class="progress-circle"></div>
+            <div class="progress-circle active"></div>
+            <div class="progress-circle active"></div>
+            <div class="progress-circle active"></div>
+            <div class="progress-circle active"></div>
         </div>
+
         <div class="progress-labels">
             <div class="progress-label">Chapter Information</div>
             <div class="progress-label">Membership Survey</div>
@@ -39,219 +40,227 @@ function TurnoverTF2 () {
         <br />
         <div className="row">
             {/* First Column */}
-            <div className="col-md-6">
+            <div className="col-md-4">
                 <div className="row align-items-center mt-3">
-                    <div className="col-md-4">
-                        <label htmlFor="totalmembers" className="col-form-label text-left">
-                            Total Members:
+                    <div className="col-md-6">
+                        <label htmlFor="mastercouncilor" className="col-form-label text-left">
+                            Master Councilor:
                         </label>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <input
                         type="text"
                         className="form-control readonly-input"
-                        value="53"
+                        value="Name"
                         readOnly
                         />
                     </div>
                 </div>
 
                 <div className="row align-items-center mt-3">
-                    <div className="col-md-4">
-                        <label htmlFor="initiatedmembers" className="col-form-label text-left">
-                            Initiated Members:
+                    <div className="col-md-6">
+                        <label htmlFor="chapterscribe" className="col-form-label text-left">
+                            Chapter Scribe:
                         </label>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <input
                         type="text"
                         className="form-control readonly-input"
-                        value="13"
+                        value="Name"
+                        readOnly
+                        />
+                    </div>
+                </div>
+
+                <br />
+
+                <div className="row align-items-center mt-3">
+                    <div className="col-md-6">
+                        <label htmlFor="advisorycouncil" className="col-form-label text-left">
+                            Advisory Council Chairman:
+                        </label>
+                    </div>
+                    <div className="col-md-6">
+                        <input
+                        type="text"
+                        className="form-control readonly-input"
+                        value="Name"
                         readOnly
                         />
                     </div>
                 </div>
 
                 <div className="row align-items-center mt-3">
-                    <div className="col-md-4">
-                        <label htmlFor="affiliatedmembers" className="col-form-label text-left">
-                            Affiliated Members:
+                    <div className="col-md-6">
+                        <label htmlFor="chapteradvisor" className="col-form-label text-left">
+                            Chapter Advisor:
                         </label>
                     </div>
-                    <div className="col-md-8">
+                    <div className="col-md-6">
                         <input
                         type="text"
                         className="form-control readonly-input"
-                        value="3"
-                        readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                    <div className="col-md-4">
-                        <label htmlFor="membershipgain" className="col-form-label text-left">
-                            Total Membership Gains:
-                        </label>
-                    </div>
-                    <div className="col-md-8">
-                        <input
-                        type="text"
-                        className="form-control readonly-input"
-                        value="16"
-                        readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                    <div className="col-md-4">
-                        <label htmlFor="reachedmajority" className="col-form-label text-left">
-                            Reached Majority:
-                        </label>
-                    </div>
-                    <div className="col-md-8">
-                        <input
-                        type="text"
-                        className="form-control readonly-input"
-                        value="5"
-                        readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                    <div className="col-md-4">
-                        <label htmlFor="transferredmembers" className="col-form-label text-left">
-                            Transferred Members:
-                        </label>
-                    </div>
-                    <div className="col-md-8">
-                        <input
-                        type="text"
-                        className="form-control readonly-input"
-                        value="1"
+                        value="Name"
                         readOnly
                         />
                     </div>
                 </div>
             </div>
             {/* Second Column */}
-            <div className="col-md-6">
+            <div className="col-md-4">
                 <div className="row align-items-center mt-3">
-                    <div className="col-md-5">
-                        <label htmlFor="deaths" className="col-form-label text-left">
-                            Deaths:
+                    <div className="col-md-4">
+                        <label htmlFor="status" className="col-form-label text-left">
+                            Status:
                         </label>
                     </div>
-                    <div className="col-md-7">
+                    <div className="col-md-8">
                         <input
                         type="text"
                         className="form-control readonly-input"
-                        value="0"
+                        value="Not applicable"
                         readOnly
                         />
                     </div>
                 </div>
 
                 <div className="row align-items-center mt-3">
-                    <div className="col-md-5">
-                        <label htmlFor="resigned" className="col-form-label text-left">
-                            Resigned:
+                    <div className="col-md-4">
+                        <label htmlFor="status" className="col-form-label text-left">
+                            Status:
                         </label>
                     </div>
-                    <div className="col-md-7">
+                    <div className="col-md-8">
                         <input
                         type="text"
                         className="form-control readonly-input"
-                        value="2"
+                        value="Not applicable"
+                        readOnly
+                        />
+                    </div>
+                </div>
+
+                <br />
+
+                <div className="row align-items-center mt-3">
+                    <div className="col-md-4">
+                        <label htmlFor="status" className="col-form-label text-left">
+                            Status:
+                        </label>
+                    </div>
+                    <div className="col-md-8">
+                        <input
+                        type="text"
+                        className="form-control readonly-input"
+                        value="Not applicable"
                         readOnly
                         />
                     </div>
                 </div>
 
                 <div className="row align-items-center mt-3">
-                    <div className="col-md-5">
-                        <label htmlFor="expelled" className="col-form-label text-left">
-                            Expelled:
+                    <div className="col-md-4">
+                        <label htmlFor="status" className="col-form-label text-left">
+                            Status:
                         </label>
                     </div>
-                    <div className="col-md-7">
+                    <div className="col-md-8">
                         <input
                         type="text"
                         className="form-control readonly-input"
-                        value="2"
-                        readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                    <div className="col-md-5">
-                        <label htmlFor="membershiplosses" className="col-form-label text-left">
-                            Total Membership Losses:
-                        </label>
-                    </div>
-                    <div className="col-md-7">
-                        <input
-                        type="text"
-                        className="form-control readonly-input"
-                        value="10"
-                        readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                    <div className="col-md-5">
-                        <label htmlFor="membershiptermend" className="col-form-label text-left">
-                            Total Membership as of Term-end:
-                        </label>
-                    </div>
-                    <div className="col-md-7">
-                        <input
-                        type="text"
-                        className="form-control readonly-input"
-                        value="59"
-                        readOnly
-                        />
-                    </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                    <div className="col-md-5">
-                        <label htmlFor="transferredmembers" className="col-form-label text-left">
-                            Transferred Members:
-                        </label>
-                    </div>
-                    <div className="col-md-7">
-                        <input
-                        type="text"
-                        className="form-control readonly-input"
-                        value="1"
+                        value="Not applicable"
                         readOnly
                         />
                     </div>
                 </div>
             </div>
-            {/* Button */}
-            <div className="d-flex justify-content-between mt-4">
-                <Link to="/turnoverTF1">
-                    <button type="button" id="back-btn">
-                        BACK
-                    </button>
-                </Link>
-                <Link to="/turnoverTF3">
-                    <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
-                        NEXT
-                    </button>
-                </Link>
+            {/* Third Column */}
+            <div className="col-md-4">
+                <div className="row align-items-center mt-3">
+                    <div className="col-md-4">
+                        <label htmlFor="datesigned" className="col-form-label text-left">
+                            Date Signed:
+                        </label>
+                    </div>
+                    <div className="col-md-8">
+                        <input
+                        type="text"
+                        className="form-control readonly-input"
+                        value="Date"
+                        readOnly
+                        />
+                    </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                    <div className="col-md-4">
+                        <label htmlFor="datesigned" className="col-form-label text-left">
+                            Date Signed:
+                        </label>
+                    </div>
+                    <div className="col-md-8">
+                        <input
+                        type="text"
+                        className="form-control readonly-input"
+                        value="Date"
+                        readOnly
+                        />
+                    </div>
+                </div>
+
+                <br />
+
+                <div className="row align-items-center mt-3">
+                    <div className="col-md-4">
+                        <label htmlFor="datesigned" className="col-form-label text-left">
+                            Date Signed:
+                        </label>
+                    </div>
+                    <div className="col-md-8">
+                        <input
+                        type="text"
+                        className="form-control readonly-input"
+                        value="Date"
+                        readOnly
+                        />
+                    </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                    <div className="col-md-4">
+                        <label htmlFor="datesigned" className="col-form-label text-left">
+                            Date Signed:
+                        </label>
+                    </div>
+                    <div className="col-md-8">
+                        <input
+                        type="text"
+                        className="form-control readonly-input"
+                        value="Date"
+                        readOnly
+                        />
+                    </div>
+                </div>
             </div>
-        </div>    
+        </div>
+        {/* Button */}
+        <div className="d-flex justify-content-between mt-4">
+            <Link to="/turnoverTF5">
+                <button type="button" id="back-btn">
+                    BACK
+                </button>
+            </Link>
+            <Link to="/turnoverTF1">
+                <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+                    SEND
+                </button>
+            </Link>
+        </div>
     </div>)
 }
 
-export default TurnoverTF2
+export default TurnoverTF6
 
 
 

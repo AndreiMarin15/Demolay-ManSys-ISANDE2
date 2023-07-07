@@ -118,5 +118,11 @@ h4 {
     z-index: -1;
   }
   
+  .readonly-input {
+    background-color: #ccc; 
+    color: #000000; 
+    cursor: not-allowed;
+}
+
   
   
