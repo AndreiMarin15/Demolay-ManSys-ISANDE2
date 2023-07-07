@@ -2,6 +2,7 @@ import "./App.css";
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -56,7 +57,9 @@ function App() {
         <Route path="appform3" element={<AppForm3 />} />
         <Route path="appform3/:applicationId" element={<AppForm3 />} />
         <Route path="appform4" element={<AppForm4 />} />
+        <Route path="appform4/:applicationId" element={<AppForm4 />} />
         <Route path="appform5" element={<AppForm5 />} />
+        <Route path="appform5/:id" element={<AppForm5 />} />
         <Route path="appstatus1" element={<AppStatus1 />} />
         <Route path="appstatus2" element={<AppStatus2 />} />
         <Route path="apppayment" element={<AppPayment />} />

@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 
 const applicationSchema = new Schema(
     {
+        applicantId: String,
+        applicantPassword: String,
+
         applicationId: String,
         regionId: String,
         chapterId: String,
@@ -37,7 +40,7 @@ const applicationSchema = new Schema(
 
         appliedInAnotherChapter: Boolean,
         chapterApplied: String,
-        year: Number,
+        yearApplied: Number,
         status: String,
 
         relativeName: String,
