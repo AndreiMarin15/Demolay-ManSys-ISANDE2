@@ -186,65 +186,67 @@ function Appform4() {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-		const applicationUpdate = {
-			lastName: formData.lastName,
-			givenName: formData.givenName,
-			middleName: formData.middleName,
+	//const applicationUpdate = {
+	//	lastName: formData.lastName,
+	//	givenName: formData.givenName,
+	//	middleName: formData.middleName,
 
-			streetAddress: formData.streetAddress,
-			apt: formData.apt,
-			brgy: formData.brgy,
-			city: formData.city ? formData.city : 0,
-			province: formData.province ? formData.province : 0,
-			memberRegion: formData.memberRegion,
-			zipCode: formData.zipCode,
+	//	streetAddress: formData.streetAddress,
+	//	apt: formData.apt,
+	//	brgy: formData.brgy,
+	//	city: formData.city ? formData.city : 0,
+	//	province: formData.province ? formData.province : 0,
+	//	memberRegion: formData.memberRegion,
+	//	zipCode: formData.zipCode,
 
-			email: formData.email,
-			birthdate: formData.birthdate,
-			currentSchool: formData.currentSchool,
-			facebook: formData.facebook,
-			birthplace: formData.birthplace,
-			course: formData.course,
-			mobile: formData.mobile,
-			religion: formData.religion,
-			phone: formData.phone,
+	//	email: formData.email,
+	//	birthdate: formData.birthdate,
+	//	currentSchool: formData.currentSchool,
+	//	facebook: formData.facebook,
+	//	birthplace: formData.birthplace,
+	//	course: formData.course,
+	//	mobile: formData.mobile,
+	//	religion: formData.religion,
+	//	phone: formData.phone,
 
-			schoolAddress: formData.schoolAddress,
-			hobbies: formData.hobbies,
-			interests: formData.interests,
-			clubs: formData.clubs,
+	//	schoolAddress: formData.schoolAddress,
+	//	hobbies: formData.hobbies,
+	//	interests: formData.interests,
+	//	clubs: formData.clubs,
 
-			appliedInAnotherChapter: formData.appliedInAnotherChapter,
-			chapterApplied: formData.chapterApplied,
-			yearApplied: formData.yearApplied,
-			status: formData.status,
+	//	appliedInAnotherChapter: formData.appliedInAnotherChapter,
+	//	chapterApplied: formData.chapterApplied,
+	//	yearApplied: formData.yearApplied,
+	//	status: formData.status,
 
-			relativeName: formData.relativeName,
-			relationship: formData.relationship,
-			lodge: formData.lodge,
+	//	relativeName: formData.relativeName,
+	//	relationship: formData.relationship,
+	//	lodge: formData.lodge,
 
-			reference1Name: formData.reference1Name,
-			reference1Age: formData.reference1Age,
-			reference1Email: formData.reference1Email,
-			reference1Mobile: formData.reference1Mobile,
+	//	reference1Name: formData.reference1Name,
+	//	reference1Age: formData.reference1Age,
+	//	reference1Email: formData.reference1Email,
+	//	reference1Mobile: formData.reference1Mobile,
 
-			reference2Name: formData.reference2Name,
-			reference2Age: formData.reference2Age,
-			reference2Email: formData.reference2Email,
-			reference2Mobile: formData.reference2Mobile,
+	//	reference2Name: formData.reference2Name,
+	//	reference2Age: formData.reference2Age,
+	//	reference2Email: formData.reference2Email,
+	//	reference2Mobile: formData.reference2Mobile,
 
-			parentName: formData.parentName,
-			parentRelationship: formData.parentRelationship,
-			parentEmail: formData.parentEmail,
-			parentMobile: formData.parentMobile,
-		};
+	//	parentName: formData.parentName,
+	//	parentRelationship: formData.parentRelationship,
+	//	parentEmail: formData.parentEmail,
+	//	parentMobile: formData.parentMobile,
+	//};
 
-		console.log(applicationUpdate);
-		console.log(applicationId);
-		axios.post(`http://localhost:5000/newApplication4/${applicationId}`, applicationUpdate).then((res) => {
-			console.log(res.data);
-			window.location.href = `/appform5/${applicationId}`;
-		});
+	//console.log(applicationUpdate);
+	//console.log(applicationId);
+	//	axios.post(`http://localhost:5000/newApplication4/${applicationId}`, applicationUpdate).then((res) => {
+	//		console.log(res.data);
+	//		window.location.href = `/appform5/${applicationId}`;
+	//	});
+
+		window.location.href = `/appform5/${applicationId}`;
 	};
 
 	return (
@@ -264,7 +266,7 @@ function Appform4() {
 				<div className="row">
 					<div className="col-md-6">
 						<div className="row mb-3">
-							<label for="inputLast" className="col-md-4 col-form-label text-right">
+							<label for="lastName" className="col-md-4 col-form-label text-right">
 								Last Name:
 							</label>
 							<input
@@ -275,6 +277,7 @@ function Appform4() {
 								placeholder="Last Name"
 								onChange={onChange}
 								value={formData.lastName}
+								disabled
 							/>
 						</div>
 					</div>
@@ -286,7 +289,7 @@ function Appform4() {
 							</label>
 
 							{formData.photo ? (
-								<img src={formData.photo} alt="" />
+								<img src={formData.photo} alt="" /> /* pwede gawing label toh para if clinick picture mag iinput @yana */
 							) : (
 								<input type="file" className="form-control" id="photo" accept=".jpeg, .png, .jpg" />
 							)}
@@ -306,6 +309,7 @@ function Appform4() {
 								placeholder="Given Name"
 								onChange={onChange}
 								value={formData.givenName}
+								disabled
 							/>
 						</div>
 					</div>
@@ -323,6 +327,7 @@ function Appform4() {
 								placeholder="Middle Name"
 								onChange={onChange}
 								value={formData.middleName}
+								disabled
 							/>
 						</div>
 					</div>
@@ -343,6 +348,7 @@ function Appform4() {
 								placeholder="1234 Main St"
 								onChange={onChange}
 								value={formData.streetAddress}
+								disabled
 							/>
 						</div>
 					</div>
@@ -358,6 +364,7 @@ function Appform4() {
 								placeholder="New York City"
 								onChange={onChange}
 								value={formData.city}
+								disabled
 							>
 								{formData.cities.map(function (city) {
 									return (
@@ -383,6 +390,7 @@ function Appform4() {
 								placeholder="1234"
 								onChange={onChange}
 								value={formData.zipCode}
+								disabled
 							/>
 						</div>
 					</div>
@@ -400,6 +408,7 @@ function Appform4() {
 								placeholder="Apartment, studio, or floor"
 								onChange={onChange}
 								value={formData.apt}
+								disabled
 							/>
 						</div>
 					</div>
@@ -409,7 +418,7 @@ function Appform4() {
 							<label for="inputProvince" className="col-md-4 col-form-label text-right">
 								State/Province
 							</label>
-							<select className="form-select form-control" id="province" onChange={onChange} value={formData.province}>
+							<select className="form-select form-control" id="province" onChange={onChange} value={formData.province} disabled>
 								{formData.states.map(function (state) {
 									return (
 										<option key={state.name} value={state.provinceID}>
@@ -434,6 +443,7 @@ function Appform4() {
 								placeholder="Malate"
 								onChange={onChange}
 								value={formData.brgy}
+								disabled
 							/>
 						</div>
 					</div>
@@ -448,6 +458,7 @@ function Appform4() {
 								id="memberRegion"
 								onChange={onChange}
 								value={formData.memberRegion}
+								disabled
 							>
 								{formData.regions.map(function (region) {
 									return (
@@ -476,6 +487,7 @@ function Appform4() {
 								placeholder="Email"
 								onChange={onChange}
 								value={formData.email}
+								disabled
 							/>
 						</div>
 					</div>
@@ -492,6 +504,7 @@ function Appform4() {
 								placeholder="Facebook"
 								onChange={onChange}
 								value={formData.facebook}
+								disabled
 							/>
 						</div>
 					</div>
@@ -508,6 +521,7 @@ function Appform4() {
 								placeholder="09178060641"
 								onChange={onChange}
 								value={formData.mobile}
+								disabled
 							/>
 						</div>
 					</div>
@@ -524,6 +538,7 @@ function Appform4() {
 								id="birthdate"
 								onChange={onChange}
 								value={formData.birthdate ? formData.birthdate.substring(0, 10) : "1-1-2000"}
+								disabled
 							/>
 						</div>
 					</div>
@@ -540,6 +555,7 @@ function Appform4() {
 								placeholder="Olongapo, Zambales"
 								onChange={onChange}
 								value={formData.birthplace}
+								disabled
 							/>
 						</div>
 					</div>
@@ -555,6 +571,7 @@ function Appform4() {
 								placeholder="Select"
 								onChange={onChange}
 								value={formData.religion}
+								disabled
 							>
 								{formData.religions.map(function (religion) {
 									return (
@@ -580,6 +597,7 @@ function Appform4() {
 								placeholder="De La Salle University"
 								onChange={onChange}
 								value={formData.currentSchool}
+								disabled
 							/>
 						</div>
 					</div>
@@ -596,6 +614,7 @@ function Appform4() {
 								placeholder="BS Information Systems"
 								onChange={onChange}
 								value={formData.course}
+								disabled
 							/>
 						</div>
 					</div>
@@ -612,6 +631,7 @@ function Appform4() {
 								placeholder="8954061"
 								onChange={onChange}
 								value={formData.phone}
+								disabled
 							/>
 						</div>
 					</div>
@@ -628,6 +648,7 @@ function Appform4() {
 							placeholder="1004 Malate Manila"
 							onChange={onChange}
 							value={formData.schoolAddress}
+							disabled
 						/>
 					</div>
 				</div>
@@ -637,7 +658,7 @@ function Appform4() {
 							<label for="inputHobbies" className="col-md-4 col-form-label text-right">
 								Hobbies
 							</label>
-							<input type="text" className="form-control" id="hobbies" onChange={onChange} value={formData.hobbies} />
+							<input type="text" className="form-control" id="hobbies" onChange={onChange} value={formData.hobbies} disabled />
 						</div>
 					</div>
 
@@ -652,6 +673,7 @@ function Appform4() {
 								id="interests"
 								onChange={onChange}
 								value={formData.interests}
+								disabled
 							/>
 						</div>
 					</div>
@@ -661,7 +683,7 @@ function Appform4() {
 						<label for="list" className="col-md-2 col-form-label text-right">
 							List your Clubs/Organizations/Groups
 						</label>
-						<input type="text" className="form-control" id="clubs" onChange={onChange} value={formData.clubs} />
+						<input type="text" className="form-control" id="clubs" onChange={onChange} value={formData.clubs} disabled/>
 					</div>
 				</div>
 
@@ -673,6 +695,7 @@ function Appform4() {
 							id="appliedInAnotherChapter"
 							onChange={onTickApplied}
 							checked={formData.appliedInAnotherChapter}
+							disabled
 						/>
 						<label className="form-check-label" for="gridCheck">
 							Applied in any other DeMolay Chapter
@@ -695,6 +718,7 @@ function Appform4() {
 								id="chapterApplied"
 								onChange={onChange}
 								value={formData.chapterApplied}
+								disabled
 							>
 								{formData.chapters.map(function (chapter) {
 									return (
@@ -717,6 +741,7 @@ function Appform4() {
 								id="yearApplied"
 								onChange={onChange}
 								value={formData.yearApplied}
+								disabled
 							>
 								{formData.years.map(function (year) {
 									return (
@@ -734,7 +759,7 @@ function Appform4() {
 							<label for="checkbox" className="col-md-4 col-form-label text-right">
 								Status:
 							</label>
-							<input type="text" id="status" placeholder="Status" onChange={onChange} value={formData.status} />
+							<input type="text" id="status" placeholder="Status" onChange={onChange} value={formData.status} disabled/>
 						</div>
 					</div>
 				</div>
@@ -757,6 +782,7 @@ function Appform4() {
 								placeholder="Full Name"
 								onChange={onChange}
 								value={formData.relativeName}
+								disabled
 							/>
 						</div>
 					</div>
@@ -773,6 +799,7 @@ function Appform4() {
 								placeholder="i.e. Father"
 								onChange={onChange}
 								value={formData.relationship}
+								disabled
 							/>
 						</div>
 					</div>
@@ -789,6 +816,7 @@ function Appform4() {
 								placeholder="Lodge Name"
 								onChange={onChange}
 								value={formData.lodge}
+								disabled
 							/>
 						</div>
 					</div>
@@ -812,6 +840,7 @@ function Appform4() {
 								placeholder="Full Name"
 								onChange={onChange}
 								value={formData.reference1Name}
+								disabled
 							/>
 						</div>
 					</div>
@@ -828,6 +857,7 @@ function Appform4() {
 								placeholder="23"
 								onChange={onChange}
 								value={formData.reference1Age}
+								disabled
 							/>
 						</div>
 					</div>
@@ -844,6 +874,7 @@ function Appform4() {
 								placeholder="Email"
 								onChange={onChange}
 								value={formData.reference1Email}
+								disabled
 							/>
 						</div>
 					</div>
@@ -860,6 +891,7 @@ function Appform4() {
 								placeholder="09178060641"
 								onChange={onChange}
 								value={formData.reference1Mobile}
+								disabled
 							/>
 						</div>
 					</div>
@@ -878,6 +910,7 @@ function Appform4() {
 								placeholder="Full Name"
 								onChange={onChange}
 								value={formData.reference2Name}
+								disabled
 							/>
 						</div>
 					</div>
@@ -894,6 +927,7 @@ function Appform4() {
 								placeholder="23"
 								onChange={onChange}
 								value={formData.reference2Age}
+								disabled
 							/>
 						</div>
 					</div>
@@ -910,6 +944,7 @@ function Appform4() {
 								placeholder="Email"
 								onChange={onChange}
 								value={formData.reference2Email}
+								disabled
 							/>
 						</div>
 					</div>
@@ -926,6 +961,7 @@ function Appform4() {
 								placeholder="09178060641"
 								onChange={onChange}
 								value={formData.reference2Mobile}
+								disabled
 							/>
 						</div>
 					</div>
@@ -949,6 +985,7 @@ function Appform4() {
 								placeholder="Full Name"
 								onChange={onChange}
 								value={formData.parentName}
+								disabled
 							/>
 						</div>
 					</div>
@@ -965,6 +1002,7 @@ function Appform4() {
 								placeholder="i.e. Father"
 								onChange={onChange}
 								value={formData.parentRelationship}
+								disabled
 							/>
 						</div>
 					</div>
@@ -981,6 +1019,7 @@ function Appform4() {
 								placeholder="Email"
 								onChange={onChange}
 								value={formData.parentEmail}
+								disabled
 							/>
 						</div>
 					</div>
@@ -997,6 +1036,7 @@ function Appform4() {
 								placeholder="09178060641"
 								onChange={onChange}
 								value={formData.parentMobile}
+								disabled
 							/>
 						</div>
 					</div>
@@ -1007,7 +1047,10 @@ function Appform4() {
 						Please ENSURE that all details for submission are ACCURATE. You will no longer be able to modify the details
 						once submitted.
 					</p>
+					<p className="warning-msg">If you wish to edit your application, kindly go back to the previous pages</p>
+					<p className="warning-msg">To access your application form in another session, you may do so using your unique application ID: {applicationId}</p>
 				</div>
+				
 				<div className="col-12 text-center">
 					<input type="submit" value="Submit" className="btn btn-primary" />
 				</div>
