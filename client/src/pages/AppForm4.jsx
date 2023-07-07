@@ -24,7 +24,7 @@ function Appform4() {
 		apt: "",
 		brgy: "",
 		city: "",
-		state: "",
+		province: "",
 		memberRegion: "",
 		zipCode: "",
 
@@ -37,6 +37,9 @@ function Appform4() {
 		mobile: "",
 		religion: "",
 		phone: "",
+
+
+		
 
 		schoolAddress: "",
 		hobbies: "",
@@ -69,8 +72,10 @@ function Appform4() {
 	});
 
 	useEffect(() => {
-		axios.get(`http://localhost:5000/applications/${applicationId}`).then((response) => {
-			console.log(response.data);
+		axios.get(`http://localhost:5000/applications/${applicationId}`).then(async (response) => {
+			
+			const res2 = await axios.get("http://localhost:5000/getProvinces");
+			const res3 = await axios.get(`http://localhost:5000/getCities/${response.data[0].province ? response.data[0].province : 0}`);
 			setFormData({
 				...FormData,
 				years: [
@@ -86,15 +91,25 @@ function Appform4() {
 						value: res.chapterID,
 					};
 				}),
-				cities: ["Manila", "Muntinlupa", "Makati"],
-				states: ["Laguna", "Metro Manila", "Pampanga"],
+				cities: res3.data.map((city) => {
+					return {
+						name: city.name,
+						cityID: city.cityID,
+					};
+				}),
+				states: res2.data.map((province) => {
+					return {
+						name: province.name,
+						provinceID: province.provinceID,
+					};
+				}),
 				regions: response.data[1].map((res) => {
 					return {
 						name: res.regionName,
 						id: res.regionID,
 					};
 				}),
-				religions: ["Christian", "Roman Catholic"],
+				religions: ["Christian", "Roman Catholic", "Islam", "Iglesia Ni Cristo", "Others"],
 
 				lastName: response.data[0].lastName,
 				givenName: response.data[0].givenName,
@@ -103,13 +118,13 @@ function Appform4() {
 				streetAddress: response.data[0].streetAddress,
 				apt: response.data[0].apt,
 				brgy: response.data[0].brgy,
-				city: response.data[0].city,
-				state: response.data[0].state,
+				city: response.data[0].city ? response.data[0].city : 0,
+				province: response.data[0].province ? response.data[0].province : 0,
 				memberRegion: response.data[0].memberRegion,
 				zipCode: response.data[0].zipCode,
 
 				email: response.data[0].email,
-				birthdate: response.data[0].birthdate,
+				birthdate:  response.data[0].birthdate ?  response.data[0].birthdate : "2000-01-01",
 				currentSchool: response.data[0].currentSchool,
 				facebook: response.data[0].facebook,
 				birthplace: response.data[0].birthplace,
@@ -117,6 +132,8 @@ function Appform4() {
 				mobile: response.data[0].mobile,
 				religion: response.data[0].religion,
 				phone: response.data[0].phone,
+
+				photo: response.data[0].photo ? response.data[0].photo : null,
 
 				schoolAddress: response.data[0].schoolAddress,
 				hobbies: response.data[0].hobbies,
@@ -179,8 +196,8 @@ function Appform4() {
 			streetAddress: formData.streetAddress,
 			apt: formData.apt,
 			brgy: formData.brgy,
-			city: formData.city,
-			state: formData.state,
+			city: formData.city  ? formData.city : 0,
+			province: formData.province ? formData.province : 0,
 			memberRegion: formData.memberRegion,
 			zipCode: formData.zipCode,
 
@@ -269,7 +286,18 @@ function Appform4() {
 							<label for="uploadID" className="col-md-4 col-form-label text-right">
 								ID (2 x 2) Photo:
 							</label>
-							<input type="file" className="form-control" id="uploadID" />
+
+							{
+								formData.photo ? <img src= {formData.photo} alt="" /> : <input
+								type="file"
+								className="form-control"
+								id="photo"
+								accept=".jpeg, .png, .jpg"
+								
+							/>
+							}
+							
+							
 						</div>
 					</div>
 				</div>
@@ -341,8 +369,8 @@ function Appform4() {
 							>
 								{formData.cities.map(function (city) {
 									return (
-										<option key={city} value={city}>
-											{city}
+										<option key={city.name} value={city.cityID}>
+											{city.name}
 										</option>
 									);
 								})}
@@ -389,11 +417,11 @@ function Appform4() {
 							<label for="inputProvince" className="col-md-4 col-form-label text-right">
 								State/Province
 							</label>
-							<select className="form-select form-control" id="state" onChange={onChange} value={formData.state}>
+							<select className="form-select form-control" id="province" onChange={onChange} value={formData.province}>
 								{formData.states.map(function (state) {
 									return (
-										<option key={state} value={state}>
-											{state}
+										<option key={state.name} value={state.provinceID}>
+											{state.name}
 										</option>
 									);
 								})}

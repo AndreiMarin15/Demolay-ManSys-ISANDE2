@@ -15,11 +15,13 @@ const applicationSchema = new Schema(
         middleName: String,
         memberID: String,
 
+        photo: String,
+
         streetAddress: String,
         apt: String,
         brgy: String,
         city: String,
-        state: String,
+        province: String,
         memberRegion: String,
         zipCode: Number,
 

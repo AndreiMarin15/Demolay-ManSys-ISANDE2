@@ -19,6 +19,8 @@ router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
 router.get("/getChapters/:regionId", controller.getChapters);
 router.get("/getAllChapters/", controller.getAllChapters);
+router.get("/getProvinces", controller.getProvinces);
+router.get("/getCities/:provinceID", controller.getCities);
 router.get("/applications/:id", controller.getApplication);
 
 module.exports = router;
