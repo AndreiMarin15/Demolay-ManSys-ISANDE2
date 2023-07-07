@@ -38,6 +38,7 @@ function TurnoverTF5 () {
             <div class="progress-label">Signatories</div>
         </div>
         <br />
+        <h2> Bank Account Details </h2>
         {/* First Column */}
         <div className="row">
             <div className="col-md-6">

@@ -17,7 +17,6 @@ function TurnoverTF1 () {
                     SAVE AND COMPLETE LATER
                 </button>
             </Link>
-        <br />
         </div>
         <hr/>
         {/* Progress Line */}

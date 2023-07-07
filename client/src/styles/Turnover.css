@@ -119,7 +119,7 @@ h4 {
   }
   
   .readonly-input {
-    background-color: #ccc; 
+    background-color: #dfdddd; 
     color: #000000; 
     cursor: not-allowed;
 }
