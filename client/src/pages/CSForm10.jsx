@@ -215,56 +215,61 @@ function CSForm10() {
 
                 <tr>
                   <td>3</td>
-                  <td>Nick Jonas</td>
+                  <td></td>
 
-                  <td>
-                    <a href="facebook.com">View Details</a>
-                  </td>
-                  <td>
-                    <button type="submit" className="btn custom-add">
-                      <FontAwesomeIcon
-                        icon={faArrowLeft}
-                        style={{ color: "#ffffff", marginRight: "8px" }}
-                      />
-                      Return
-                    </button>
-                  </td>
+                  <td></td>
+                  <td></td>
                 </tr>
 
                 <tr>
                   <td>4</td>
-                  <td>Peter Parker</td>
+                  <td></td>
 
-                  <td>
-                    <a href="facebook.com">View Details</a>
-                  </td>
-                  <td>
-                    <button type="submit" className="btn custom-add">
-                      <FontAwesomeIcon
-                        icon={faArrowLeft}
-                        style={{ color: "#ffffff", marginRight: "8px" }}
-                      />
-                      Return
-                    </button>
-                  </td>
+                  <td></td>
+                  <td></td>
                 </tr>
 
                 <tr>
                   <td>5</td>
-                  <td>Harry Styles</td>
+                  <td></td>
 
-                  <td>
-                    <a href="facebook.com">View Details</a>
-                  </td>
-                  <td>
-                    <button type="submit" className="btn custom-add">
-                      <FontAwesomeIcon
-                        icon={faArrowLeft}
-                        style={{ color: "#ffffff", marginRight: "8px" }}
-                      />
-                      Return
-                    </button>
-                  </td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td></td>
+
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td></td>
+
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td></td>
+
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td></td>
+
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>10</td>
+                  <td></td>
+
+                  <td></td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>

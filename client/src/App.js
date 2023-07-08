@@ -19,6 +19,11 @@ import AppPayment from "./pages/AppPayment";
 import EOApp1 from "./pages/EOApp1";
 import CSApp1 from "./pages/CSApp1";
 import CSForm10 from "./pages/CSForm10";
+import CSForm10Sum from "./pages/CSForm10Sum";
+import CSAppInProgress from "./pages/CSAppInProgress";
+import CSAppPending from "./pages/CSAppPending";
+import CAAppRejected from "./pages/CAAppRejected";
+import CAForm10Approve from "./pages/CAForm10Approve";
 
 import EventsHome from "./pages/Events/EventsHome-Member";
 import EventsAttendance from "./pages/Events/EventsAttendance";
@@ -65,7 +70,12 @@ function App() {
         <Route path="apppayment" element={<AppPayment />} />
         <Route path="eoapp1" element={<EOApp1 />} />
         <Route path="csapp1" element={<CSApp1 />} />
+        <Route path="csappinprogress" element={<CSAppInProgress />} />
         <Route path="csform10" element={<CSForm10 />} />
+        <Route path="csform10sum" element={<CSForm10Sum />} />
+        <Route path="csapppending" element={<CSAppPending />} />
+        <Route path="caapprejected" element={<CAAppRejected />} />
+        <Route path="caform10approve" element={<CAForm10Approve />} />
         <Route path="eventsHome" element={<EventsHome />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />

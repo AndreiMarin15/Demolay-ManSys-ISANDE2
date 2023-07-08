@@ -1,0 +1,12 @@
+.form10-table {
+  border: 1px solid black;
+}
+
+.form10-table td {
+  border: 1px solid black;
+}
+
+.form10-table td:nth-last-child(2) {
+  width: 0;
+  white-space: nowrap;
+}
