@@ -88,9 +88,27 @@ export default class AppStatus2 extends Component {
               id="cont"
               style={{ marginLeft: "-80px" }}
             >
-              If you wish to continue, kindly upload your proof of payment{" "}
-              <a href="/AppPayment">here</a>.{" "}
+              If you wish to continue, kindly upload your proof of payment
+              below.
             </p>
+
+            <div className="row" style={{ marginLeft: "80px" }}>
+              <label for="uploadProof" className="col-form-label text-right">
+                Proof of Payment:
+              </label>
+              <input type="file" className="form-control" id="uploadProof" />
+            </div>
+
+            <div
+              className="col-12 text-center"
+              style={{ marginLeft: "-30px", marginTop: "20px" }}
+            >
+              <Link to="/">
+                <button type="submit" className="btn btn-primary">
+                  SUBMIT
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

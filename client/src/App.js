@@ -2,6 +2,7 @@ import "./App.css";
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -12,6 +13,14 @@ import AppForm3 from "./pages/AppForm3";
 import AppForm4 from "./pages/AppForm4";
 import AppForm5 from "./pages/AppForm5";
 
+import AppStatus1 from "./pages/AppStatus1";
+import AppStatus2 from "./pages/AppStatus2";
+import AppPayment from "./pages/AppPayment";
+import EOApp1 from "./pages/EOApp1";
+import CSApp1 from "./pages/CSApp1";
+import CSForm10 from "./pages/CSForm10";
+
+import EventsHome from "./pages/Events/EventsHome-Member";
 import EventsAttendance from "./pages/Events/EventsAttendance";
 import EventsAthletic from "./pages/Events/EventsAthletic";
 import EventsCivicService from "./pages/Events/EventsCivicService";
@@ -28,6 +37,9 @@ import EventsReligion from "./pages/Events/EventsReligion";
 import EventsRitual from "./pages/Events/EventsRitual";
 import EventsScholastics from "./pages/Events/EventsScholastics";
 import EventsVisitation from "./pages/Events/EventsVisitation";
+import EventsValidation from "./pages/Events/EventsValidation-Advisor";
+import EventsProof from "./pages/Events/EventsProof-Advisor";
+import EventsPaymentValidation from "./pages/Events/EventsPaymentValidation-Admin";
 
 import Header from "./components/Header";
 
@@ -45,7 +57,16 @@ function App() {
         <Route path="appform3" element={<AppForm3 />} />
         <Route path="appform3/:applicationId" element={<AppForm3 />} />
         <Route path="appform4" element={<AppForm4 />} />
+        <Route path="appform4/:applicationId" element={<AppForm4 />} />
         <Route path="appform5" element={<AppForm5 />} />
+        <Route path="appform5/:id" element={<AppForm5 />} />
+        <Route path="appstatus1" element={<AppStatus1 />} />
+        <Route path="appstatus2" element={<AppStatus2 />} />
+        <Route path="apppayment" element={<AppPayment />} />
+        <Route path="eoapp1" element={<EOApp1 />} />
+        <Route path="csapp1" element={<CSApp1 />} />
+        <Route path="csform10" element={<CSForm10 />} />
+        <Route path="eventsHome" element={<EventsHome />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
         <Route path="eventsCivicService" element={<EventsCivicService />} />
@@ -65,6 +86,12 @@ function App() {
         <Route path="eventsRitual" element={<EventsRitual />} />
         <Route path="eventsScholastics" element={<EventsScholastics />} />
         <Route path="eventsVisitation" element={<EventsVisitation />} />
+        <Route path="eventsValidation" element={<EventsValidation />} />
+        <Route path="eventsProof" element={<EventsProof />} />
+        <Route
+          path="eventsPaymentValidation"
+          element={<EventsPaymentValidation />}
+        />
       </Routes>
     </>
   );

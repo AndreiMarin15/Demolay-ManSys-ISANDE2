@@ -7,6 +7,19 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function Appform5 () {
+  let { applicationId } = useParams();
+
+  const [formData, setFormData] = useState({
+    applicantId: "",
+    applicantPassword: ""
+  })
+
+  // TODO: Generate applicant ID
+  // 1. UseEffect to check the most recent applicantID
+  // 1.a. If there is no applicant ID, generate one with the format
+  // 1.b. If there is an existing applicant ID, add one
+  // 2. Assign the created ID to the disabled input
+
   return (
       <div className="container container-fluid ">
       <div className="row">

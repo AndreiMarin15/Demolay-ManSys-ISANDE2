@@ -5,22 +5,27 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function Appform2() {
+	const [photoData, setPhoto] = useState({
+		photo: "",
+	});
+
 	const [formData, setFormData] = useState({
 		cities: [],
-		states: [],
+		provinces: [],
 		regions: [],
 		religions: [],
+		years: [],
+		chapters: [],
 
 		lastName: "",
 		givenName: "",
 		middleName: "",
-		photo: "",
 
 		streetAddress: "",
 		apt: "",
 		brgy: "",
 		city: "",
-		state: "",
+		province: "",
 		memberRegion: "",
 		zipCode: "",
 
@@ -38,20 +43,66 @@ function Appform2() {
 		hobbies: "",
 		interests: "",
 		clubs: "",
+
+		appliedInAnotherChapter: false,
+		chapterApplied: "",
+		yearApplied: 0,
+		status: "",
+
+		relativeName: "",
+		relationship: "",
+		lodge: "",
+
+		reference1Name: "",
+		reference1Age: 0,
+		reference1Email: "",
+		reference1Mobile: "",
+
+		reference2Name: "",
+		reference2Age: 0,
+		reference2Email: "",
+		reference2Mobile: "",
+
+		parentName: "",
+		parentRelationship: "",
+		parentEmail: "",
+		parentMobile: "",
+		parentApproved: false,
 	});
 	let { applicationId } = useParams();
 
 	useEffect(() => {
-		setFormData({
-			...FormData,
-			cities: ["Manila", "Muntinlupa", "Makati"],
-			states: ["Laguna", "Metro Manila", "Pampanga"],
-			regions: ["NCR", "Region IV", "Region V"],
-			religions: ["Christian", "Roman Catholic"],
-			city: "Manila",
-			state: "National Capital Region",
-			region: "NCR",
-			religion: "Christian",
+		axios.get("http://localhost:5000/getRegions").then(async (res1) => {
+			const res2 = await axios.get("http://localhost:5000/getProvinces");
+			const res3 = await axios.get(`http://localhost:5000/getCities/${res2.data[0].provinceID}`);
+
+			setFormData({
+				...FormData,
+				regions: res1.data.map((res) => {
+					return {
+						name: res.regionName,
+						id: res.regionID,
+					};
+				}),
+				memberRegion: res1.data[0].regionName,
+				regionId: res1.data[0].regionID,
+				cities: res3.data.map((city) => {
+					return {
+						name: city.name,
+						cityID: city.cityID,
+					};
+				}),
+				provinces: res2.data.map((province) => {
+					return {
+						name: province.name,
+						provinceID: province.provinceID,
+					};
+				}),
+				religions: ["Christian", "Roman Catholic", "Islam", "Iglesia Ni Cristo", "Others"],
+				city: res3.data[0].cityID,
+
+				religion: "Christian",
+			});
 		});
 	}, []);
 
@@ -63,8 +114,33 @@ function Appform2() {
 
 			return helper;
 		});
+		console.log(formData);
+	};
 
-		console.log(formData)
+	const onChangeCity = (e) => {
+		setFormData({
+			...formData,
+			city: e.target.value,
+		});
+		console.log(formData);
+	};
+
+	const onChangeProvince = (e) => {
+		axios.get(`http://localhost:5000/getCities/${e.target.value}`).then((res) => {
+			setFormData({
+				...formData,
+
+				cities: res.data.map((city) => {
+					return {
+						name: city.name,
+						cityID: city.cityID,
+					};
+				}),
+				city: res.data[0].cityID,
+				province: res.data[0].provinceID,
+			});
+		});
+		console.log(formData);
 	};
 
 	const onSubmit = (e) => {
@@ -77,10 +153,12 @@ function Appform2() {
 			streetAddress: formData.streetAddress,
 			apt: formData.apt,
 			brgy: formData.brgy,
-			city: formData.city,
-			state: formData.state,
+			city: formData.city ? formData.city : 0,
+			province: formData.province ? formData.province : 0,
 			memberRegion: formData.memberRegion,
 			zipCode: formData.zipCode,
+
+			photo: photoData.photo,
 
 			email: formData.email,
 			birthdate: formData.birthdate,
@@ -102,9 +180,35 @@ function Appform2() {
 		console.log(applicationId);
 		axios.post(`http://localhost:5000/newApplication2/${applicationId}`, applicationUpdate).then((res) => {
 			console.log(res.data);
-			window.location.href = `/newApplication3/${applicationId}`;
+			window.location.href = `/appform3/${applicationId}`;
 		});
 	};
+
+	const handleImageUpload = async (e) => {
+		const file = e.target.files[0];
+		const base64 = await convertToBase64(file);
+
+		setPhoto({
+			...photoData,
+			photo: base64,
+		});
+
+		console.log(photoData);
+	};
+
+	function convertToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const fileReader = new FileReader();
+
+			fileReader.readAsDataURL(file);
+			fileReader.onload = () => {
+				resolve(fileReader.result);
+			};
+			fileReader.onerror = (error) => {
+				reject(error);
+			};
+		});
+	}
 
 	return (
 		<div className="container container-fluid ">
@@ -143,7 +247,13 @@ function Appform2() {
 							<label for="uploadID" className="col-md-4 col-form-label text-right">
 								ID (2 x 2) Photo:
 							</label>
-							<input type="file" className="form-control" id="uploadID" />
+							<input
+								type="file"
+								className="form-control"
+								id="photo"
+								accept=".jpeg, .png, .jpg"
+								onChange={handleImageUpload}
+							/>
 						</div>
 					</div>
 				</div>
@@ -210,13 +320,13 @@ function Appform2() {
 								className="form-select form-control"
 								id="inputCity"
 								placeholder="New York City"
-								onChange={onChange}
+								onChange={onChangeCity}
 								value={formData.city}
 							>
 								{formData.cities.map(function (city) {
 									return (
-										<option key={city} value={city}>
-											{city}
+										<option key={city.name} value={city.cityID}>
+											{city.name}
 										</option>
 									);
 								})}
@@ -263,11 +373,16 @@ function Appform2() {
 							<label for="inputProvince" className="col-md-4 col-form-label text-right">
 								State/Province
 							</label>
-							<select className="form-select form-control" id="state" onChange={onChange} value={formData.state}>
-								{formData.states.map(function (state) {
+							<select
+								className="form-select form-control"
+								id="province"
+								onChange={onChangeProvince}
+								value={formData.province}
+							>
+								{formData.provinces.map(function (province) {
 									return (
-										<option key={state} value={state}>
-											{state}
+										<option key={province.name} value={province.provinceID}>
+											{province.name}
 										</option>
 									);
 								})}
@@ -305,8 +420,8 @@ function Appform2() {
 							>
 								{formData.regions.map(function (region) {
 									return (
-										<option key={region} value={region}>
-											{region}
+										<option key={region.name} value={region.name}>
+											{region.name}
 										</option>
 									);
 								})}
@@ -491,13 +606,7 @@ function Appform2() {
 							<label for="inputHobbies" className="col-md-4 col-form-label text-right">
 								Hobbies
 							</label>
-							<input
-								type="text"
-								className="form-control"
-								id="hobbies"
-								onChange={onChange}
-								value={formData.hobbies}
-							/>
+							<input type="text" className="form-control" id="hobbies" onChange={onChange} value={formData.hobbies} />
 						</div>
 					</div>
 
