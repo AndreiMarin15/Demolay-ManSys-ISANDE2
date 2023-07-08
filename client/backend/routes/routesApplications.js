@@ -14,6 +14,7 @@ router.post("/newApplication", controller.newApplication);
 router.post("/newApplication2/:id", controller.newApplication2);
 router.post("/newApplication3/:id", controller.newApplication3);
 router.post("/newApplication4/:id", controller.newApplication4);
+router.post("/newApplication5/:id", controller.newApplication5);
 
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
@@ -21,6 +22,9 @@ router.get("/getChapters/:regionId", controller.getChapters);
 router.get("/getAllChapters/", controller.getAllChapters);
 router.get("/getProvinces", controller.getProvinces);
 router.get("/getCities/:provinceID", controller.getCities);
+router.get("/generateID", controller.generateApplicantID)
+
+
 router.get("/applications/:id", controller.getApplication);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const Cities = require("../models/cities.js");
 const Chapters = require("../models/chapters.js");
 const Regions = require("../models/regions.js");
 const db = require("../models/db.js");
+const bcrypt = require("bcrypt");
 
 const controller = {
 	newApplication: async (req, res) => {
@@ -167,6 +168,25 @@ const controller = {
 			console.log(result);
 			res.send(result._id);
 		});
+	},
+
+	newApplication5: async (req, res) => {
+		const applicationId = req.params.id;
+		console.log("ID: " + applicationId)
+		console.log(req.body)
+		bcrypt.hash(req.body.applicantPassword, 10, (err, hash) => {
+			console.log("Hashed: " + hash);
+			console.log("Old Password: " + req.body.applicantPassword);
+			const update = {
+				applicantId: req.body.applicantId,
+				applicantPassword: hash,
+			};
+
+			db.updateOne(Application, { _id: applicationId }, update, (result) => {
+				console.log(result._id)
+				res.send(result._id);
+			});
+		})
 	},
 
 	getApplication: async (req, res) => {
@@ -528,6 +548,28 @@ const controller = {
 			.then((result) => {
 				res.send(result);
 			});
+	},
+
+	generateApplicantID: async (req, res) => {
+		db.findMany(Application, { applicantId: { $exists: true } }, { applicantId: 1 }, async (applications) => {
+			if (applications.length > 1 && applications) {
+				let highestId = applications[0].applicantId;
+				await applications.forEach((application) => {
+					if (parseInt(application.applicantId) > parseInt(highestId)) {
+						highestId = application.applicantId;
+					}
+				});
+
+				res.send(highestId);
+				// eslint-disable-next-line eqeqeq
+			} else if (applications.length == 1 && applications) {
+				res.send(applications[0].applicantId);
+			} else {
+				const currentYear = new Date().getFullYear();
+
+				res.send((currentYear.toString() + "0000").toString());
+			}
+		});
 	},
 };
 
