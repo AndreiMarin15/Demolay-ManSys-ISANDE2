@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function Appform5() {
+
 	const [formData, setFormData] = useState({
 		applicantId: "",
 	});
@@ -121,6 +122,7 @@ function Appform5() {
 			</form>
 		</div>
 	);
+
 }
 
 export default Appform5;
