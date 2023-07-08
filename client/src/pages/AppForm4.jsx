@@ -186,65 +186,65 @@ function Appform4() {
 
 	const onSubmit = (e) => {
 		e.preventDefault();
-	//const applicationUpdate = {
-	//	lastName: formData.lastName,
-	//	givenName: formData.givenName,
-	//	middleName: formData.middleName,
+		//const applicationUpdate = {
+		//	lastName: formData.lastName,
+		//	givenName: formData.givenName,
+		//	middleName: formData.middleName,
 
-	//	streetAddress: formData.streetAddress,
-	//	apt: formData.apt,
-	//	brgy: formData.brgy,
-	//	city: formData.city ? formData.city : 0,
-	//	province: formData.province ? formData.province : 0,
-	//	memberRegion: formData.memberRegion,
-	//	zipCode: formData.zipCode,
+		//	streetAddress: formData.streetAddress,
+		//	apt: formData.apt,
+		//	brgy: formData.brgy,
+		//	city: formData.city ? formData.city : 0,
+		//	province: formData.province ? formData.province : 0,
+		//	memberRegion: formData.memberRegion,
+		//	zipCode: formData.zipCode,
 
-	//	email: formData.email,
-	//	birthdate: formData.birthdate,
-	//	currentSchool: formData.currentSchool,
-	//	facebook: formData.facebook,
-	//	birthplace: formData.birthplace,
-	//	course: formData.course,
-	//	mobile: formData.mobile,
-	//	religion: formData.religion,
-	//	phone: formData.phone,
+		//	email: formData.email,
+		//	birthdate: formData.birthdate,
+		//	currentSchool: formData.currentSchool,
+		//	facebook: formData.facebook,
+		//	birthplace: formData.birthplace,
+		//	course: formData.course,
+		//	mobile: formData.mobile,
+		//	religion: formData.religion,
+		//	phone: formData.phone,
 
-	//	schoolAddress: formData.schoolAddress,
-	//	hobbies: formData.hobbies,
-	//	interests: formData.interests,
-	//	clubs: formData.clubs,
+		//	schoolAddress: formData.schoolAddress,
+		//	hobbies: formData.hobbies,
+		//	interests: formData.interests,
+		//	clubs: formData.clubs,
 
-	//	appliedInAnotherChapter: formData.appliedInAnotherChapter,
-	//	chapterApplied: formData.chapterApplied,
-	//	yearApplied: formData.yearApplied,
-	//	status: formData.status,
+		//	appliedInAnotherChapter: formData.appliedInAnotherChapter,
+		//	chapterApplied: formData.chapterApplied,
+		//	yearApplied: formData.yearApplied,
+		//	status: formData.status,
 
-	//	relativeName: formData.relativeName,
-	//	relationship: formData.relationship,
-	//	lodge: formData.lodge,
+		//	relativeName: formData.relativeName,
+		//	relationship: formData.relationship,
+		//	lodge: formData.lodge,
 
-	//	reference1Name: formData.reference1Name,
-	//	reference1Age: formData.reference1Age,
-	//	reference1Email: formData.reference1Email,
-	//	reference1Mobile: formData.reference1Mobile,
+		//	reference1Name: formData.reference1Name,
+		//	reference1Age: formData.reference1Age,
+		//	reference1Email: formData.reference1Email,
+		//	reference1Mobile: formData.reference1Mobile,
 
-	//	reference2Name: formData.reference2Name,
-	//	reference2Age: formData.reference2Age,
-	//	reference2Email: formData.reference2Email,
-	//	reference2Mobile: formData.reference2Mobile,
+		//	reference2Name: formData.reference2Name,
+		//	reference2Age: formData.reference2Age,
+		//	reference2Email: formData.reference2Email,
+		//	reference2Mobile: formData.reference2Mobile,
 
-	//	parentName: formData.parentName,
-	//	parentRelationship: formData.parentRelationship,
-	//	parentEmail: formData.parentEmail,
-	//	parentMobile: formData.parentMobile,
-	//};
+		//	parentName: formData.parentName,
+		//	parentRelationship: formData.parentRelationship,
+		//	parentEmail: formData.parentEmail,
+		//	parentMobile: formData.parentMobile,
+		//};
 
-	//console.log(applicationUpdate);
-	//console.log(applicationId);
-	//	axios.post(`http://localhost:5000/newApplication4/${applicationId}`, applicationUpdate).then((res) => {
-	//		console.log(res.data);
-	//		window.location.href = `/appform5/${applicationId}`;
-	//	});
+		//console.log(applicationUpdate);
+		//console.log(applicationId);
+		//	axios.post(`http://localhost:5000/newApplication4/${applicationId}`, applicationUpdate).then((res) => {
+		//		console.log(res.data);
+		//		window.location.href = `/appform5/${applicationId}`;
+		//	});
 
 		window.location.href = `/appform5/${applicationId}`;
 	};
@@ -289,7 +289,10 @@ function Appform4() {
 							</label>
 
 							{formData.photo ? (
-								<img src={formData.photo} alt="" /> /* pwede gawing label toh para if clinick picture mag iinput @yana */
+								<img
+									src={formData.photo}
+									alt=""
+								/> /* pwede gawing label toh para if clinick picture mag iinput @yana */
 							) : (
 								<input type="file" className="form-control" id="photo" accept=".jpeg, .png, .jpg" />
 							)}
@@ -418,7 +421,13 @@ function Appform4() {
 							<label for="inputProvince" className="col-md-4 col-form-label text-right">
 								State/Province
 							</label>
-							<select className="form-select form-control" id="province" onChange={onChange} value={formData.province} disabled>
+							<select
+								className="form-select form-control"
+								id="province"
+								onChange={onChange}
+								value={formData.province}
+								disabled
+							>
 								{formData.states.map(function (state) {
 									return (
 										<option key={state.name} value={state.provinceID}>
@@ -658,7 +667,14 @@ function Appform4() {
 							<label for="inputHobbies" className="col-md-4 col-form-label text-right">
 								Hobbies
 							</label>
-							<input type="text" className="form-control" id="hobbies" onChange={onChange} value={formData.hobbies} disabled />
+							<input
+								type="text"
+								className="form-control"
+								id="hobbies"
+								onChange={onChange}
+								value={formData.hobbies}
+								disabled
+							/>
 						</div>
 					</div>
 
@@ -683,7 +699,14 @@ function Appform4() {
 						<label for="list" className="col-md-2 col-form-label text-right">
 							List your Clubs/Organizations/Groups
 						</label>
-						<input type="text" className="form-control" id="clubs" onChange={onChange} value={formData.clubs} disabled/>
+						<input
+							type="text"
+							className="form-control"
+							id="clubs"
+							onChange={onChange}
+							value={formData.clubs}
+							disabled
+						/>
 					</div>
 				</div>
 
@@ -759,7 +782,14 @@ function Appform4() {
 							<label for="checkbox" className="col-md-4 col-form-label text-right">
 								Status:
 							</label>
-							<input type="text" id="status" placeholder="Status" onChange={onChange} value={formData.status} disabled/>
+							<input
+								type="text"
+								id="status"
+								placeholder="Status"
+								onChange={onChange}
+								value={formData.status}
+								disabled
+							/>
 						</div>
 					</div>
 				</div>
@@ -1048,9 +1078,12 @@ function Appform4() {
 						once submitted.
 					</p>
 					<p className="warning-msg">If you wish to edit your application, kindly go back to the previous pages</p>
-					<p className="warning-msg">To access your application form in another session, you may do so using your unique application ID: {applicationId}</p>
+					<p className="warning-msg">
+						To access your application form in another session, you may do so using your unique application ID:{" "}
+						{applicationId}
+					</p>
 				</div>
-				
+
 				<div className="col-12 text-center">
 					<input type="submit" value="Submit" className="btn btn-primary" />
 				</div>
