@@ -24,6 +24,7 @@ import CSAppInProgress from "./pages/CSAppInProgress";
 import CSAppPending from "./pages/CSAppPending";
 import CAAppRejected from "./pages/CAAppRejected";
 import CAForm10Approve from "./pages/CAForm10Approve";
+import AdminCreate from "./pages/AdminCreate";
 
 import EventsHome from "./pages/Events/EventsHome-Member";
 import EventsAttendance from "./pages/Events/EventsAttendance";
@@ -76,6 +77,7 @@ function App() {
         <Route path="csapppending" element={<CSAppPending />} />
         <Route path="caapprejected" element={<CAAppRejected />} />
         <Route path="caform10approve" element={<CAForm10Approve />} />
+        <Route path="admincreate" element={<AdminCreate />} />
         <Route path="eventsHome" element={<EventsHome />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />

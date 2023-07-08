@@ -6,13 +6,13 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function Appform5 () {
+function Appform5() {
   let { applicationId } = useParams();
 
   const [formData, setFormData] = useState({
     applicantId: "",
-    applicantPassword: ""
-  })
+    applicantPassword: "",
+  });
 
   // TODO: Generate applicant ID
   // 1. UseEffect to check the most recent applicantID
@@ -21,7 +21,7 @@ function Appform5 () {
   // 2. Assign the created ID to the disabled input
 
   return (
-      <div className="container container-fluid ">
+    <div className="container container-fluid ">
       <div className="row">
         <div className="col-md-12">
           <h1>Application Submitted!</h1>
@@ -37,7 +37,7 @@ function Appform5 () {
         </div>
       </div>
 
-      <form className="g-2">
+      <form className="g-2" style={{ marginLeft: "30px" }}>
         <div className="row">
           <div className="col-md-4">
             <div className="row mb-3">
@@ -85,9 +85,8 @@ function Appform5 () {
           </Link>
         </div>
       </form>
-      
     </div>
-    )
+  );
 }
 
 export default Appform5;
