@@ -77,7 +77,7 @@ function Appform5() {
 				</div>
 			</div>
 
-			<form className="g-2" onSubmit={onSubmit}>
+			<form className="g-2" onSubmit={onSubmit} style={{marginLeft: "30px"}}>
 				<div className="row">
 					<div className="col-md-4">
 						<div className="row mb-3">
