@@ -1,63 +1,62 @@
 import "../styles/base.css";
 import "../styles/appform1.css";
 import axios from "axios";
-import { Component } from "react";
 
-export default class Appform1 extends Component {
-	constructor(props) {
-		super(props);
+import { useEffect, useState, useRef } from "react";
 
-		this.onChangeChapter = this.onChangeChapter.bind(this);
-		this.onChangeRegion = this.onChangeRegion.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+function Appform1() {
+	
 
-		this.state = {
-			regionId: "",
-			chapterId: "",
-			regions: [],
-			chapters: [],
-		};
-	}
+	const [formData, setFormData] = useState({
+		regionId: "",
+		chapterId: "",
+		regions: [],
+		chapters: [],
+	});
 
-	componentDidMount() {
-		axios
-			.get("http://localhost:5000/getRegions")
-			.then((res1) => {
-				this.setState({
+	
+	let triggers = useRef(0)
+	useEffect(() => {
+		
+		async function fetchData() {
+			axios.get("http://localhost:5000/getRegions").then(async (res1) => {
+				const res2 = await axios.get(`http://localhost:5000/getChapters/${res1.data[0].regionID}`);
+				setFormData({
+					...formData,
 					regions: res1.data.map((res) => {
 						return {
 							name: res.regionName,
 							id: res.regionID,
 						};
 					}),
-
-					regionId: res1.data[0].regionID,
-				});
-
-				console.log(`Current RegID: ${this.state.regionId}`);
-				return axios.get(`http://localhost:5000/getChapters/${this.state.regionId}`);
-			})
-			.then((res2) => {
-				this.setState({
 					chapters: res2.data.map((res) => {
 						return {
 							name: res.name,
 							id: res.chapterId,
 						};
 					}),
-
-					chapterId: res2.data[0].chapterID,
+					
+					regionId: res1.data[0].regionID,
+					chapterId: res2.data[0].chapterID
 				});
-			})
-			.catch((err) => console.log(err));
-	}
+			});
 
-	onChangeRegion(e) {
-		this.setState({
-			regionId: e.target.value,
-		});
+			
+		}
+		if(triggers.current === 0){
+			fetchData()
+			console.log(formData)
+			triggers.current += 1
+		}
+		
+		
+	}, [formData]);
+
+	const onChangeRegion = async (e) => {
 		axios.get(`http://localhost:5000/getChapters/${e.target.value}`).then((result) => {
-			this.setState({
+			setFormData({
+				...formData,
+
 				chapters: result.data.map((res) => {
 					return {
 						name: res.name,
@@ -65,85 +64,80 @@ export default class Appform1 extends Component {
 					};
 				}),
 				chapterId: result.data[0].chapterID,
+				regionId: result.data[0].regionID,
 			});
-
-			console.log(this.state.chapters);
 		});
-	}
 
-	onChangeChapter(e) {
-		this.setState({
+	};
+
+	const onChangeChapter = (e) => {
+		setFormData({
+			...formData,
 			chapterId: e.target.value,
 		});
+	};
 
-		console.log(e.target.value);
-	}
-
-	onSubmit(e) {
+	const onSubmit = (e) => {
 		e.preventDefault();
 
 		const application = {
-			regionId: this.state.regionId,
-			chapterId: this.state.chapterId,
+			regionId: formData.regionId,
+			chapterId: formData.chapterId,
 		};
 		console.log(application);
+
+		console.log(application)
 
 		axios.post("http://localhost:5000/newApplication", application).then((res) => {
 			console.log("data: " + res.data);
 			window.location.href = `/appform2/${res.data}`;
 		});
-	}
+	};
 
-	render() {
-		return (
-			<div className="container">
-				<h1>Application</h1>
-				<hr />
+	return (
+		<div className="container">
+			<h1>Application</h1>
+			<hr />
 
-				<div id="child">
-					<form onSubmit={this.onSubmit} id="application1">
-						<label for="region">Region</label>
+			<div id="child">
+				<form onSubmit={onSubmit} id="application1">
+					<label for="region">Region</label>
 
-						<select
-							name="region"
-							id="region"
-							className="dropdown"
-							onChange={this.onChangeRegion}
-							value={this.state.regionId}
-						>
-							{this.state.regions.map(function (region) {
-								return (
-									<option key={region.name} value={region.id}>
-										{region.name}
-									</option>
-								);
-							})}
-						</select>
+					<select name="region" id="regionId" className="dropdown" onChange={onChangeRegion} value={formData.regionId}>
+						{formData.regions.map(function (region) {
+							return (
+								<option key={region.name} value={region.id}>
+									{region.name}
+								</option>
+							);
+						})}
+					</select>
 
-						<label for="chapter" className="labels">
-							Chapter
-						</label>
+					<label for="chapter" className="labels">
+						Chapter
+					</label>
 
-						<select
-							name="chapter"
-							id="chapter"
-							className="dropdown"
-							onChange={this.onChangeChapter}
-							value={this.state.chapterId}
-						>
-							{this.state.chapters.map(function (chapter) {
-								return (
-									<option key={chapter.name} value={chapter.id}>
-										{chapter.name}
-									</option>
-								);
-							})}
-						</select>
+					<select
+						name="chapter"
+						id="chapterId"
+						className="dropdown"
+						onChange={onChangeChapter}
+						value={formData.chapterId}
+					>
+						{formData.chapters.map(function (chapter) {
+							return (
+								<option key={chapter.name} value={chapter.id}>
+									{chapter.name}
+								</option>
+							);
+						})}
+					</select>
 
-						<input type="submit" value="Next" className="primary-btn" id="next-btn1" />
-					</form>
-				</div>
+					<input type="submit" value="Next" className="primary-btn" id="next-btn1" />
+				</form>
 			</div>
-		);
-	}
+		</div>
+	);
 }
+
+export default Appform1;

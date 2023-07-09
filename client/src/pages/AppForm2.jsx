@@ -72,39 +72,44 @@ function Appform2() {
 	let { applicationId } = useParams();
 
 	useEffect(() => {
-		axios.get("http://localhost:5000/getRegions").then(async (res1) => {
-			const res2 = await axios.get("http://localhost:5000/getProvinces");
-			const res3 = await axios.get(`http://localhost:5000/getCities/${res2.data[0].provinceID}`);
-
-			setFormData({
-				...FormData,
-				regions: res1.data.map((res) => {
-					return {
-						name: res.regionName,
-						id: res.regionID,
-					};
-				}),
-				memberRegion: res1.data[0].regionName,
-				regionId: res1.data[0].regionID,
-				cities: res3.data.map((city) => {
-					return {
-						name: city.name,
-						cityID: city.cityID,
-					};
-				}),
-				provinces: res2.data.map((province) => {
-					return {
-						name: province.name,
-						provinceID: province.provinceID,
-					};
-				}),
-				religions: ["Christian", "Roman Catholic", "Islam", "Iglesia Ni Cristo", "Others"],
-				city: res3.data[0].cityID,
-
-				religion: "Christian",
+		async function fetchData() {
+			axios.get("http://localhost:5000/getRegions").then(async (res1) => {
+				const res2 = await axios.get("http://localhost:5000/getProvinces");
+				const res3 = await axios.get(`http://localhost:5000/getCities/${res2.data[0].provinceID}`);
+	
+				setFormData({
+					...formData,
+					regions: res1.data.map((res) => {
+						return {
+							name: res.regionName,
+							id: res.regionID,
+						};
+					}),
+					memberRegion: res1.data[0].regionName,
+					regionId: res1.data[0].regionID,
+					cities: res3.data.map((city) => {
+						return {
+							name: city.name,
+							cityID: city.cityID,
+						};
+					}),
+					provinces: res2.data.map((province) => {
+						return {
+							name: province.name,
+							provinceID: province.provinceID,
+						};
+					}),
+					religions: ["Christian", "Roman Catholic", "Islam", "Iglesia Ni Cristo", "Others"],
+					city: res3.data[0].cityID,
+	
+					religion: "Christian",
+				});
 			});
-		});
-	}, []);
+		}
+
+		fetchData()
+		
+	}, [formData]);
 
 	const onChange = (e) => {
 		setFormData((prev) => {

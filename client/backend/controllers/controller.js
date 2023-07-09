@@ -172,8 +172,8 @@ const controller = {
 
 	newApplication5: async (req, res) => {
 		const applicationId = req.params.id;
-		console.log("ID: " + applicationId)
-		console.log(req.body)
+		console.log("ID: " + applicationId);
+		console.log(req.body);
 		bcrypt.hash(req.body.applicantPassword, 10, (err, hash) => {
 			console.log("Hashed: " + hash);
 			console.log("Old Password: " + req.body.applicantPassword);
@@ -183,10 +183,10 @@ const controller = {
 			};
 
 			db.updateOne(Application, { _id: applicationId }, update, (result) => {
-				console.log(result._id)
+				console.log(result._id);
 				res.send(result._id);
 			});
-		})
+		});
 	},
 
 	getApplication: async (req, res) => {
@@ -509,7 +509,7 @@ const controller = {
 
 	getRegions: async (req, res) => {
 		db.findMany(Regions, {}, { regionID: 1, regionName: 1 }, (result) => {
-			console.log(result);
+			
 			res.send(result);
 		});
 	},
@@ -517,8 +517,8 @@ const controller = {
 	getChapters: async (req, res) => {
 		const regionId = req.params.regionId;
 		console.log(regionId);
-		db.findMany(Chapters, { regionID: regionId }, { chapterID: 1, name: 1 }, (result) => {
-			console.log(result);
+		db.findMany(Chapters, { regionID: regionId }, { chapterID: 1, name: 1, regionID: 1 }, (result) => {
+			
 			res.send(result);
 		});
 	},
