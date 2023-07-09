@@ -9,7 +9,7 @@ const memberSchema = new Schema(
 			required: true,
 			unique: true,
 			trim: true,
-			minlength: 3,
+			
 		},
 
 		password: {
@@ -17,7 +17,7 @@ const memberSchema = new Schema(
 			required: true,
 			unique: false,
 			trim: false,
-			minlength: 6,
+			
 		},
 
 		lastName: String,
