@@ -5,8 +5,6 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 
 function Appform1() {
-	
-
 	const [formData, setFormData] = useState({
 		regionId: "",
 		chapterId: "",
@@ -14,10 +12,8 @@ function Appform1() {
 		chapters: [],
 	});
 
-	
-	let triggers = useRef(0)
+	let triggers = useRef(0);
 	useEffect(() => {
-		
 		async function fetchData() {
 			axios.get("http://localhost:5000/getRegions").then(async (res1) => {
 				const res2 = await axios.get(`http://localhost:5000/getChapters/${res1.data[0].regionID}`);
@@ -35,21 +31,17 @@ function Appform1() {
 							id: res.chapterId,
 						};
 					}),
-					
+
 					regionId: res1.data[0].regionID,
-					chapterId: res2.data[0].chapterID
+					chapterId: res2.data[0].chapterID,
 				});
 			});
-
-			
 		}
-		if(triggers.current === 0){
-			fetchData()
-			console.log(formData)
-			triggers.current += 1
+		if (triggers.current === 0) {
+			fetchData();
+			console.log(formData);
+			triggers.current += 1;
 		}
-		
-		
 	}, [formData]);
 
 	const onChangeRegion = async (e) => {
@@ -67,7 +59,6 @@ function Appform1() {
 				regionId: result.data[0].regionID,
 			});
 		});
-
 	};
 
 	const onChangeChapter = (e) => {
@@ -86,7 +77,7 @@ function Appform1() {
 		};
 		console.log(application);
 
-		console.log(application)
+		console.log(application);
 
 		axios.post("http://localhost:5000/newApplication", application).then((res) => {
 			console.log("data: " + res.data);
