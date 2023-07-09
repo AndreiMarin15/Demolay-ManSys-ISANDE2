@@ -9,22 +9,27 @@ const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
 const API_REGION = "https://psgc.gitlab.io/api/regions/";
 
 function Appform2() {
-  const [cities, setCities] = useState([]);
-  const [provinces, setProvinces] = useState([]);
-  const [regions, setRegions] = useState([]);
+  const [photoData, setPhoto] = useState({
+    photo: "",
+  });
 
   const [formData, setFormData] = useState({
+    cities: [],
+    provinces: [],
+    regions: [],
     religions: [],
+    years: [],
+    chapters: [],
+
     lastName: "",
     givenName: "",
     middleName: "",
-    photo: "",
 
     streetAddress: "",
     apt: "",
     brgy: "",
     city: "",
-    state: "",
+    province: "",
     memberRegion: "",
     zipCode: "",
 
@@ -42,33 +47,83 @@ function Appform2() {
     hobbies: "",
     interests: "",
     clubs: "",
+
+    appliedInAnotherChapter: false,
+    chapterApplied: "",
+    yearApplied: 0,
+    status: "",
+
+    relativeName: "",
+    relationship: "",
+    lodge: "",
+
+    reference1Name: "",
+    reference1Age: 0,
+    reference1Email: "",
+    reference1Mobile: "",
+
+    reference2Name: "",
+    reference2Age: 0,
+    reference2Email: "",
+    reference2Mobile: "",
+
+    parentName: "",
+    parentRelationship: "",
+    parentEmail: "",
+    parentMobile: "",
+    parentApproved: false,
   });
-
-  useEffect(() => {
-    async function getData() {
-      const cities = await fetch(API_CITY);
-      const provinces = await fetch(API_PROVINCE);
-      const regions = await fetch(API_REGION);
-
-      setCities(await cities.json());
-      setProvinces(await provinces.json());
-      setRegions(await regions.json());
-    }
-
-    getData();
-  }, []);
-
   let { applicationId } = useParams();
 
   useEffect(() => {
-    setFormData({
-      ...FormData,
-      religions: ["Christian", "Roman Catholic"],
-      city: "",
-      state: "",
-      region: "",
-      religion: "Christian",
-    });
+    async function fetchData() {
+      axios.get(API_REGION).then(async (res1) => {
+        const res2 = await axios.get(
+          `https://psgc.gitlab.io/api/regions/${res1.data[0].code}/provinces/`
+        );
+        const res3 = await axios.get(
+          `https://psgc.gitlab.io/api/provinces/${res2.data[0].code}/cities/`
+        );
+
+        setFormData({
+          ...formData,
+          regions: res1.data.map((region) => {
+            return {
+              name: region.name,
+              id: region.code,
+            };
+          }),
+          memberRegion: res1.data[0].code,
+
+          provinces: res2.data.map((province) => {
+            return {
+              name: province.name,
+              provinceID: province.code,
+            };
+          }),
+
+          cities: res3.data.map((city) => {
+            return {
+              name: city.name,
+              cityID: city.code,
+            };
+          }),
+
+          religions: [
+            "Christian",
+            "Roman Catholic",
+            "Islam",
+            "Iglesia Ni Cristo",
+            "Others",
+          ],
+          city: res3.data[0].code,
+
+          religion: "Christian",
+        });
+      });
+    }
+
+    fetchData();
   }, []);
 
   const onChange = (e) => {
@@ -79,6 +134,66 @@ function Appform2() {
 
       return helper;
     });
+    console.log(formData);
+  };
+
+  const handleCityChange = (e) => {
+    setFormData({
+      ...formData,
+      city: e.target.value,
+    });
+
+    console.log(formData);
+  };
+
+  const handleProvinceChange = (e) => {
+    axios
+      .get(`https://psgc.gitlab.io/api/provinces/${e.target.value}/cities/`)
+      .then((res) => {
+        res.data === undefined || res.data.length === 0
+          ? setFormData({
+              ...formData,
+              cities: null,
+            })
+          : setFormData({
+              ...formData,
+
+              cities: res.data.map((city) => {
+                return {
+                  name: city.name,
+                  cityID: city.code,
+                };
+              }),
+              city: res.data[0].code,
+              province: res.data[0].provinceCode,
+            });
+      });
+
+    console.log(formData);
+  };
+
+  const handleRegionChange = (e) => {
+    axios
+      .get(`https://psgc.gitlab.io/api/regions/${e.target.value}/provinces/`)
+      .then((res) => {
+        res.data === undefined || res.data.length === 0
+          ? setFormData({
+              ...formData,
+              provinces: null,
+            })
+          : setFormData({
+              ...formData,
+
+              provinces: res.data.map((province) => {
+                return {
+                  name: province.name,
+                  provinceID: province.code,
+                };
+              }),
+              province: res.data[0].code,
+              memberRegion: res.data[0].regionCode,
+            });
+      });
 
     console.log(formData);
   };
@@ -93,10 +208,12 @@ function Appform2() {
       streetAddress: formData.streetAddress,
       apt: formData.apt,
       brgy: formData.brgy,
-      city: formData.city,
-      state: formData.state,
+      city: formData.city ? formData.city : 0,
+      province: formData.province ? formData.province : 0,
       memberRegion: formData.memberRegion,
       zipCode: formData.zipCode,
+
+      photo: photoData.photo,
 
       email: formData.email,
       birthdate: formData.birthdate,
@@ -123,9 +240,35 @@ function Appform2() {
       )
       .then((res) => {
         console.log(res.data);
-        window.location.href = `/newApplication3/${applicationId}`;
+        window.location.href = `/appform3/${applicationId}`;
       });
   };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setPhoto({
+      ...photoData,
+      photo: base64,
+    });
+
+    console.log(photoData);
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
 
   return (
     <div className="container container-fluid ">
@@ -170,7 +313,13 @@ function Appform2() {
               >
                 ID (2 x 2) Photo:
               </label>
-              <input type="file" className="form-control" id="uploadID" />
+              <input
+                type="file"
+                className="form-control"
+                id="photo"
+                accept=".jpeg, .png, .jpg"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -249,16 +398,20 @@ function Appform2() {
                 className="form-select form-control"
                 id="inputCity"
                 placeholder="New York City"
-                onChange={onChange}
+                onChange={handleCityChange}
                 value={formData.city}
               >
-                {cities.map((city) => {
-                  return (
-                    <option key={city.code} value={city.name}>
-                      {city.name}
-                    </option>
-                  );
-                })}
+                {formData.cities ? (
+                  formData.cities.map(function (city) {
+                    return (
+                      <option key={city.name} value={city.cityID}>
+                        {city.name}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option key="" value=""></option>
+                )}
               </select>
             </div>
           </div>
@@ -313,15 +466,21 @@ function Appform2() {
               </label>
               <select
                 className="form-select form-control"
-                id="state"
-                onChange={onChange}
-                value={formData.state}
+                id="province"
+                onChange={handleProvinceChange}
+                value={formData.province}
               >
-                {provinces.map((province) => (
-                  <option key={province.code} value={province.name}>
-                    {province.name}
-                  </option>
-                ))}
+                {formData.provinces ? (
+                  formData.provinces.map(function (province) {
+                    return (
+                      <option key={province.name} value={province.provinceID}>
+                        {province.name}
+                      </option>
+                    );
+                  })
+                ) : (
+                  <option key="" value=""></option>
+                )}
               </select>
             </div>
           </div>
@@ -357,14 +516,16 @@ function Appform2() {
               <select
                 className="form-select form-control"
                 id="memberRegion"
-                onChange={onChange}
+                onChange={handleRegionChange}
                 value={formData.memberRegion}
               >
-                {regions.map((region) => (
-                  <option key={region.code} value={region.name}>
-                    {region.name}
-                  </option>
-                ))}
+                {formData.regions.map(function (region) {
+                  return (
+                    <option key={region.name} value={region.id}>
+                      {region.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
           </div>
