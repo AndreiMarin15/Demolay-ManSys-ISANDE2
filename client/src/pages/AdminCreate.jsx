@@ -50,22 +50,18 @@ function AdminCreate() {
 		console.log(formData.position);
 	};
 
-	const isSeniorDemolay = () => {
-		if (formData.position == 3) {
-			return (
-				<div className="row">
-					<div className="col-md-4">
-						<div className="row mb-3" id="divYears">
-							<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
-								Years
-							</label>
-							<input class="form-control" id="yearsAsSenior" type="text" placeholder="User ID" />{" "}
-						</div>
-					</div>
-				</div>
-			);
-		}
+  const onChange = (e) => {
+		setFormData((prev) => {
+			let helper = { ...prev };
+
+			helper[`${e.target.id}`] = e.target.value;
+
+			return helper;
+		});
+		console.log(formData);
 	};
+
+
 
 	return (
 		<div className="container container-fluid ">
