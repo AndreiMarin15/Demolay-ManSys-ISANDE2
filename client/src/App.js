@@ -21,6 +21,7 @@ import CSApp1 from "./pages/CSApp1";
 import CSForm10 from "./pages/CSForm10";
 
 import EventsHome from './pages/Events/EventsHome-Member';
+import EventsAdd from './pages/Events/EventsAdd-MCScribe';
 import EventsAttendance from "./pages/Events/EventsAttendance";
 import EventsAthletic from "./pages/Events/EventsAthletic";
 import EventsCivicService from "./pages/Events/EventsCivicService";
@@ -73,7 +74,9 @@ function App() {
         <Route path="eoapp1" element={<EOApp1 />} />
         <Route path="csapp1" element={<CSApp1 />} />
         <Route path="csform10" element={<CSForm10 />} />
+
         <Route path="eventsHome" element ={<EventsHome/>}/>
+        <Route path="eventsAdd" element ={<EventsAdd/>}/>
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
         <Route path="eventsCivicService" element={<EventsCivicService />} />

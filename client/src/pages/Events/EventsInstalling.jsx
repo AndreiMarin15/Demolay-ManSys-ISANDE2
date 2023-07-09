@@ -116,26 +116,6 @@ function EventsInstalling () {
                             <input type="text" className="form-control" id="position" placeholder="Enter Position"/>
                         </div>
                     </div>
-
-                    
-                {/* Buttons */}
-                    <div className="mt-5"></div> 
-                    <div className="d-flex justify-content-center position-absolute bottom-0 start-50 translate-middle-x mb-4">
-                        <div className="mr-2">
-                            <Link to="/eventsHome">
-                                <button type="submit" form="submit" id="primary-btn" value="BACK">
-                                BACK
-                                </button>
-                            </Link>
-                        </div>
-                        <div>
-                            <Link to="/appform1">
-                            <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
-                                SUBMIT
-                            </button>
-                            </Link>
-                         </div>
-                    </div>
                 </div>
                 {/* Third Column */}
                 <div className="col-md-4"> 
@@ -152,6 +132,19 @@ function EventsInstalling () {
                             <input type="file" className="form-control" id="uploadID" />
                         </div>
                     </div>
+                </div>
+                {/* Buttons */}
+                <div className="d-flex justify-content-between mt-4">
+                    <Link to="/eventsHome">
+                        <button type="button" id="back-btn">
+                            HOME
+                        </button>
+                    </Link>
+                    <Link to="/turnoverTF3">
+                        <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+                            SUBMIT
+                        </button>
+                    </Link>
                 </div>
             </div>         
         </div>)
