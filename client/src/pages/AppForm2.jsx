@@ -109,7 +109,7 @@ function Appform2() {
 
 		fetchData()
 		
-	}, [formData]);
+	}, []);
 
 	const onChange = (e) => {
 		setFormData((prev) => {
