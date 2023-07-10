@@ -3,7 +3,7 @@ import "../../styles/base.css";
 import "../../styles/Events.css"
 import { Component } from "react";
 
-function renderTableData() {
+const RenderTableData = () => {
     const tableData = [
       ["1", "Manila", "3 White, 5 Red, 1 Purple", "P1,000"],
     ];
@@ -19,7 +19,7 @@ function renderTableData() {
         </tr>
       );
     });
-  }
+  };  
 
 function EventsProof() {
     return (
@@ -71,7 +71,7 @@ function EventsProof() {
                             </tr>
                         </thead>
                         <tbody>
-                            {renderTableData()}
+                            {<RenderTableData />}
                         </tbody>
                     </table>
                 </div>

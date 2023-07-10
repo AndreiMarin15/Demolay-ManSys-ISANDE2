@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function renderTableData() {
+const RenderTableData = () => {
     const tableData = [
         ["Ambrosio Flores", "10-18-2003", "04-06-2023", "05-11-2023", "0917806068"],
         ["Ambrosio Flores", "10-18-2003", "04-06-2023", "05-11-2023", "0917806068"],
@@ -18,41 +18,31 @@ function renderTableData() {
         const [col1, col2, col3, col4, col5] = rowData;
         return (
             <tr key={index}>
-                <td>{col1}</td>
-                <td>
+            <td>{col1}</td>
+            <td>
                 <select>
-                    <option value="option1">Yes</option>
-                    <option value="option2">No</option>
+                <option value="option1">Yes</option>
+                <option value="option2">No</option>
                 </select>
-                </td>
-                <td>
-                    <input type="text" placeholder="Search" />
-                    <button style={{ border: 'none', background: 'none' }}>
-                        <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        >
-                        <path
-                            fill="none"
-                            d="M0 0h24v24H0z"
-                        />
-                        <path
-                            fill="currentColor"
-                            d="M15 14l6 6-2 2-6-6a7.94 7.94 0 111.38-1.37zM8 14a6 6 0 100-12 6 6 0 000 12z"
-                        />
-                        </svg>
-                    </button>
-                </td>
-                <td>{col2}</td>
-                <td>{col3}</td>
-                <td>{col4}</td>
-                <td>{col5}</td>
+            </td>
+            <td>
+                <input type="text" placeholder="Search" />
+                <button style={{ border: 'none', background: 'none' }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path fill="none" d="M0 0h24v24H0z" />
+                    <path fill="currentColor" d="M15 14l6 6-2 2-6-6a7.94 7.94 0 111.38-1.37zM8 14a6 6 0 100-12 6 6 0 000 12z" />
+                </svg>
+                </button>
+            </td>
+            <td>{col2}</td>
+            <td>{col3}</td>
+            <td>{col4}</td>
+            <td>{col5}</td>
             </tr>
         );
     });
-}
+  };
+  
   
 function TurnoverTF4 () {
 
@@ -99,7 +89,7 @@ function TurnoverTF4 () {
                 </tr>
             </thead>
             <tbody>
-                {renderTableData()}
+                {<RenderTableData />}
             </tbody>
         </table>
         {/* Button */}

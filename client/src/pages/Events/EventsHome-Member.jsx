@@ -3,7 +3,7 @@ import "../../styles/base.css";
 import "../../styles/Events.css"
 import { Component } from "react";
 
-function renderTableData() {
+const RenderTableData = () => {
     const tableData = [
       ["1", "Attendance", "Validated", "1st"],
       ["2", "Athletic", "Not Started", "N/A"],
@@ -24,7 +24,8 @@ function renderTableData() {
         </tr>
       );
     });
-  }
+  };
+  
 
 function EventsHome() {
     return (
@@ -81,7 +82,7 @@ function EventsHome() {
                             </tr>
                         </thead>
                         <tbody>
-                            {renderTableData()}
+                            {<RenderTableData />}
                         </tbody>
                     </table>
                 </div>

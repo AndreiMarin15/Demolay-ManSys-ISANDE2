@@ -3,26 +3,29 @@ import "../../styles/base.css";
 import "../../styles/Events.css"
 import { Component } from "react";
 
-function renderTableData() {
-    const tableData = [
-      ["1", "Ambrosio Flores", "Attendance"],
-      ["2", "Emilio Aguinaldo", "Athletic"],
-      ["3", "Jose Rizal", "Conclave"],
-      ["4", "Elpidio Quirino", "Attendance"],
-    ];
-  
-    return tableData.map((rowData, index) => {
-      const [col1, col2, col3] = rowData;
-      return (
-        <tr key={index}>
-          <td>{col1}</td>
-          <td>{col2}</td>
-          <td>{col3}</td>
-          <td><button>View</button></td>
-        </tr>
-      );
-    });
-  }
+import React from 'react';
+
+const RenderTableData = () => {
+  const tableData = [
+    ["1", "Ambrosio Flores", "Attendance"],
+    ["2", "Emilio Aguinaldo", "Athletic"],
+    ["3", "Jose Rizal", "Conclave"],
+    ["4", "Elpidio Quirino", "Attendance"],
+  ];
+
+  return tableData.map((rowData, index) => {
+    const [col1, col2, col3] = rowData;
+    return (
+      <tr key={index}>
+        <td>{col1}</td>
+        <td>{col2}</td>
+        <td>{col3}</td>
+        <td><button>View</button></td>
+      </tr>
+    );
+  });
+};
+
 
 function EventsValidation() {
     return (
@@ -47,7 +50,7 @@ function EventsValidation() {
                             </tr>
                         </thead>
                         <tbody>
-                            {renderTableData()}
+                            {<RenderTableData />}
                         </tbody>
                     </table>
                 </div>
@@ -163,4 +166,4 @@ function EventsValidation() {
     )
 }
 
-export default EventsValidation;
+export default EventsValidation

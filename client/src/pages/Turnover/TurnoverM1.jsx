@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function renderTableData() {
+const RenderTableData = () => {
     const tableData = [
         ["Ambrosio Flores", "ambrosioflores@gmail.com", "2092034911", "10-18-2003", "04-06-2023", "05-11-2023"],
         ["Ambrosio Flores", "ambrosioflores@gmail.com", "2092034911", "10-18-2003", "04-06-2023", "05-11-2023"],
@@ -13,7 +13,7 @@ function renderTableData() {
         ["Ambrosio Flores", "ambrosioflores@gmail.com", "2092034911", "10-18-2003", "04-06-2023", "05-11-2023"],
         ["Ambrosio Flores", "ambrosioflores@gmail.com", "2092034911", "10-18-2003", "04-06-2023", "05-11-2023"],
     ];
-  
+
     return tableData.map((rowData, index) => {
         const [col1, col2, col3, col4, col5, col6] = rowData;
         return (
@@ -28,6 +28,7 @@ function renderTableData() {
         );
     });
 }
+
   
 function TurnoverM1 () {
 
@@ -47,7 +48,7 @@ function TurnoverM1 () {
                 </tr>
             </thead>
             <tbody>
-                {renderTableData()}
+                {<RenderTableData />}
             </tbody>
         </table>
         <div className="row">

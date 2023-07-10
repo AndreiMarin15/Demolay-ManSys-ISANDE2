@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-function renderTableData() {
+const RenderTableData = () => {
     const tableData = [
         ["Ambrosio Flores", "Scribe", "ambrosioflores@gmail.com", "09178060658", "287 Katipunan Avenue, Quezon City"],
         ["Ambrosio Flores", "Scribe", "ambrosioflores@gmail.com", "09178060658", "287 Katipunan Avenue, Quezon City"],
@@ -16,9 +16,11 @@ function renderTableData() {
         ["Ambrosio Flores", "Scribe", "ambrosioflores@gmail.com", "09178060658", "287 Katipunan Avenue, Quezon City"],
     ];
   
-    return tableData.map((rowData, index) => {
-        const [col1, col2, col3, col4, col5] = rowData;
-        return (
+    return (
+        <>
+        {tableData.map((rowData, index) => {
+            const [col1, col2, col3, col4, col5] = rowData;
+            return (
             <tr key={index}>
                 <td>{col1}</td>
                 <td>{col2}</td>
@@ -26,12 +28,14 @@ function renderTableData() {
                 <td>{col4}</td>
                 <td>{col5}</td>
                 <td>
-                    <FontAwesomeIcon icon={faEdit} />
+                <FontAwesomeIcon icon={faEdit} />
                 </td>
             </tr>
-        );
-    });
-}
+            );
+        })}
+      </>
+    );
+  };
   
 function TurnoverOA1 () {
 
@@ -52,7 +56,7 @@ function TurnoverOA1 () {
                 </tr>
             </thead>
             <tbody>
-                {renderTableData()}
+                {<RenderTableData />}
             </tbody>
         </table>
         <div className="row">
