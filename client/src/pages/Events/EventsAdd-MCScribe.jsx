@@ -75,7 +75,7 @@ const onChangeMeritBar = (e) => {
 };
 
     return (
-        <div className="container">
+         <div className="container">
             <br/>
 
             {/* Header */}
@@ -710,8 +710,8 @@ const onChangeMeritBar = (e) => {
                 </div>
             </div>
         </div>
-    )
-}
+      )
+   }
 export default EventsAdd
 
 
