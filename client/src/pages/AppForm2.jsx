@@ -3,6 +3,12 @@ import "../styles/base.css";
 import "../styles/appform2.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import e from "cors";
+
+const API_REGION = "https://psgc.gitlab.io/api/regions/";
+const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
+const API_CITY = "https://psgc.gitlab.io/api/cities/";
+const API_MUNICIPALITY = "https://psgc.gitlab.io/api/municipalities/";
 
 function Appform2() {
 	const [photoData, setPhoto] = useState({
@@ -69,47 +75,73 @@ function Appform2() {
 		parentMobile: "",
 		parentApproved: false,
 	});
+
+	const [selectedRegion, setSelectedRegion] = useState("");
+	const [selectedProvince, setSelectedProvince] = useState("");
+	const [provincesByRegion, setProvincesByRegion] = useState([]);
+	const [citiesByProvince, setCitiesByProvince] = useState([]);
+
 	let { applicationId } = useParams();
 
 	useEffect(() => {
-		async function fetchData() {
-			axios.get("http://localhost:5000/getRegions").then(async (res1) => {
-				const res2 = await axios.get("http://localhost:5000/getProvinces");
-				const res3 = await axios.get(`http://localhost:5000/getCities/${res2.data[0].provinceID}`);
-	
-				setFormData({
-					...formData,
-					regions: res1.data.map((res) => {
-						return {
-							name: res.regionName,
-							id: res.regionID,
-						};
-					}),
-					memberRegion: res1.data[0].regionName,
-					regionId: res1.data[0].regionID,
-					cities: res3.data.map((city) => {
-						return {
-							name: city.name,
-							cityID: city.cityID,
-						};
-					}),
-					provinces: res2.data.map((province) => {
-						return {
-							name: province.name,
-							provinceID: province.provinceID,
-						};
-					}),
-					religions: ["Christian", "Roman Catholic", "Islam", "Iglesia Ni Cristo", "Others"],
-					city: res3.data[0].cityID,
-	
-					religion: "Christian",
-				});
-			});
-		}
-
-		fetchData()
-		
+		fetchData();
 	}, []);
+
+	const fetchData = async () => {
+		try {
+			const [regionsResponse, provincesResponse, citiesResponse] = await Promise.all([
+				axios.get(API_REGION),
+				axios.get(API_PROVINCE),
+				axios.get(API_CITY),
+			]);
+
+			setFormData({
+				...formData,
+
+				regions: regionsResponse.data,
+				provinces: provincesResponse.data,
+				cities: citiesResponse.data,
+			});
+
+			console.log(regionsResponse.data, provincesResponse.data, citiesResponse.data);
+		} catch (error) {
+			console.error("Error fetching data:", error);
+		}
+	};
+
+	const handleRegionChange = (e) => {
+		const regionId = e.target.value;
+		setFormData({
+			...formData,
+			memberRegion: regionId,
+		});
+		setSelectedRegion(regionId);
+
+		const filteredProvinces = formData.provinces.filter((province) => province.regionCode === regionId);
+		setProvincesByRegion(filteredProvinces);
+
+		// Reset selected province and cities when region changes
+		setSelectedProvince("");
+		setCitiesByProvince([]);
+
+		// If no provinces in the selected region, filter cities by region
+		if (filteredProvinces.length === 0) {
+			const filteredCitiesByRegion = formData.cities.filter((city) => city.regionCode === regionId);
+			setCitiesByProvince(filteredCitiesByRegion);
+		}
+	};
+
+	const handleProvinceChange = (e) => {
+		const provinceId = e.target.value;
+		setFormData({
+			...formData,
+			province: provinceId,
+		});
+		setSelectedProvince(provinceId);
+
+		const filteredCities = formData.cities.filter((city) => city.provinceCode === provinceId);
+		setCitiesByProvince(filteredCities);
+	};
 
 	const onChange = (e) => {
 		setFormData((prev) => {
@@ -126,24 +158,6 @@ function Appform2() {
 		setFormData({
 			...formData,
 			city: e.target.value,
-		});
-		console.log(formData);
-	};
-
-	const onChangeProvince = (e) => {
-		axios.get(`http://localhost:5000/getCities/${e.target.value}`).then((res) => {
-			setFormData({
-				...formData,
-
-				cities: res.data.map((city) => {
-					return {
-						name: city.name,
-						cityID: city.cityID,
-					};
-				}),
-				city: res.data[0].cityID,
-				province: res.data[0].provinceID,
-			});
 		});
 		console.log(formData);
 	};
@@ -223,7 +237,7 @@ function Appform2() {
 				</div>
 
 				<div className="col-md-6">
-					<h1 className="position-absolute end-0"> [Chapter] </h1>
+					<h1 className="position-absolute end-0">[Chapter chosen from previous page]</h1>
 				</div>
 			</div>
 			<hr />
@@ -318,20 +332,19 @@ function Appform2() {
 
 					<div className="col-md-3">
 						<div className="row mb-3">
-							<label for="inputCity" className="col-md-4 col-form-label text-right">
-								City
+							<label for="inputRegion" className="col-md-4 col-form-label text-right">
+								Region{" "}
 							</label>
 							<select
 								className="form-select form-control"
-								id="inputCity"
-								placeholder="New York City"
-								onChange={onChangeCity}
-								value={formData.city}
+								id="memberRegion"
+								onChange={handleRegionChange}
+								value={formData.memberRegion}
 							>
-								{formData.cities.map(function (city) {
+								{formData.regions.map(function (region) {
 									return (
-										<option key={city.name} value={city.cityID}>
-											{city.name}
+										<option key={region.code} value={region.code}>
+											{region.name}
 										</option>
 									);
 								})}
@@ -375,23 +388,27 @@ function Appform2() {
 
 					<div className="col-md-3">
 						<div className="row mb-3">
-							<label for="inputProvince" className="col-md-4 col-form-label text-right">
-								State/Province
-							</label>
-							<select
-								className="form-select form-control"
-								id="province"
-								onChange={onChangeProvince}
-								value={formData.province}
-							>
-								{formData.provinces.map(function (province) {
-									return (
-										<option key={province.name} value={province.provinceID}>
-											{province.name}
-										</option>
-									);
-								})}
-							</select>
+							{selectedRegion && (
+								<>
+									<label for="inputProvince" className="col-md-4 col-form-label text-right">
+										State/Province
+									</label>
+									<select
+										className="form-select form-control"
+										id="province"
+										onChange={handleProvinceChange}
+										value={formData.province}
+									>
+										{provincesByRegion.map(function (province) {
+											return (
+												<option key={province.code} value={province.code}>
+													{province.name}
+												</option>
+											);
+										})}
+									</select>
+								</>
+							)}
 						</div>
 					</div>
 				</div>
@@ -414,23 +431,28 @@ function Appform2() {
 
 					<div className="col-md-3">
 						<div className="row mb-3">
-							<label for="inputRegion" className="col-md-4 col-form-label text-right">
-								Region{" "}
-							</label>
-							<select
-								className="form-select form-control"
-								id="memberRegion"
-								onChange={onChange}
-								value={formData.memberRegion}
-							>
-								{formData.regions.map(function (region) {
-									return (
-										<option key={region.name} value={region.name}>
-											{region.name}
-										</option>
-									);
-								})}
-							</select>
+							{selectedRegion && (selectedProvince || provincesByRegion == 0) && (
+								<>
+									<label for="inputCity" className="col-md-4 col-form-label text-right">
+										City
+									</label>
+									<select
+										className="form-select form-control"
+										id="inputCity"
+										placeholder="New York City"
+										onChange={onChangeCity}
+										value={formData.city}
+									>
+										{citiesByProvince.map(function (city) {
+											return (
+												<option key={city.code} value={city.code}>
+													{city.name}
+												</option>
+											);
+										})}
+									</select>
+								</>
+							)}
 						</div>
 					</div>
 				</div>
