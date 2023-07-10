@@ -108,7 +108,7 @@ function EventsAttendance() {
               </tr>
               <tr>
                 <td>Attendance:</td>
-                <td>to be filled by Award’s Advisor or Chapter Dad</td>
+                <td>Present, Absent, or Left Early</td>
               </tr>
             </table>
           </div>
@@ -178,9 +178,10 @@ function EventsAttendance() {
               </div>
               <div className="col-md-7">
                 <select className="form-select form-control" id="performance">
-                  <option>Performance 1</option>
-                  <option>Performance 2</option>
-                  <option>Performance 3</option>
+                  <option>Beginner</option>
+                  <option>Amateur</option>
+                  <option>Expert</option>
+                  <option>Master</option>
                 </select>
               </div>
             </div>
@@ -195,9 +196,9 @@ function EventsAttendance() {
               </div>
               <div className="col-md-7">
                 <select className="form-select form-control" id="attendance">
-                  <option>Attendance 1</option>
-                  <option>Attendance 2</option>
-                  <option>Attendance 3</option>
+                  <option>Present</option>
+                  <option>Absent</option>
+                  <option>Left Early</option>
                 </select>
               </div>
             </div>

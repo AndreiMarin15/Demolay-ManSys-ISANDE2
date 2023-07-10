@@ -95,6 +95,19 @@ function EventsJournalism () {
                             <input type="text" className="form-control" id="date" placeholder="MM/DD/YYYY"/>
                         </div>
                     </div>
+                    <br />
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                            <label 
+                                htmlFor="type" 
+                                className="col-form-label text-right">
+                                Type:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <input type="text" className="form-control" id="type" placeholder="Enter Type"/>
+                        </div>
+                    </div>
                     <br/>
                     <div className="row align-items-center mt-3">
                         <div className="col-md-4">

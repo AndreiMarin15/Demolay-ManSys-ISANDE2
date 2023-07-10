@@ -116,6 +116,22 @@ function EventsInstalling () {
                             <input type="text" className="form-control" id="position" placeholder="Enter Position"/>
                         </div>
                     </div>
+                    <br />
+                    <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                            <label htmlFor="position" className="col-form-label text-right">
+                            Performance:
+                            </label>
+                        </div>
+                        <div className="col-md-7">
+                            <select className="form-select form-control" id="performance">
+                            <option>Beginner</option>
+                            <option>Amateur</option>
+                            <option>Expert</option>
+                            <option>Master</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 {/* Third Column */}
                 <div className="col-md-4"> 

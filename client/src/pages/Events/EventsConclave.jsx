@@ -90,7 +90,7 @@ return(<div className="container">
                             <input type="text" className="form-control" id="enddate" placeholder="End Date"/>
                         </div>
                     </div>
-
+                    <br />
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
@@ -107,8 +107,7 @@ return(<div className="container">
                             </select>
                         </div>
                     </div>
-
-
+                    <br />
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
@@ -125,7 +124,7 @@ return(<div className="container">
                             </select>
                         </div>
                     </div>
-                    
+                    <br />
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
