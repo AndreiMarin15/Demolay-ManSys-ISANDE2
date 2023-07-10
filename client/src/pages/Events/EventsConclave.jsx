@@ -72,6 +72,7 @@ return(<div className="container">
                         </tr>
                     </table>
                 </div>
+
             {/* Second Column */}
                 <div className="col-md-4">
                     <div className="row align-items-center mt-3">
@@ -82,23 +83,14 @@ return(<div className="container">
                                 Duration:
                             </label>
                         </div>
-                        <div className="col-md-4">
-                            <select className="form-select form-control" id="duration1">
-                                <option>Duration 1</option>
-                                <option>Duration 2</option>
-                                <option>Duration 3</option>
-                            </select>
+                        <div className="col-md-3">
+                            <input type="text" className="form-control" id="startdate" placeholder="Start Date"/>
                         </div>
-                        -
-                        <div className="col-md-4">
-                            <select className="form-select form-control" id="duration2">
-                                <option>Duration 1</option>
-                                <option>Duration 2</option>
-                                <option>Duration 3</option>
-                            </select>
+                        <div className="col-md-3">
+                            <input type="text" className="form-control" id="enddate" placeholder="End Date"/>
                         </div>
                     </div>
-                    <br/>
+
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
@@ -115,7 +107,8 @@ return(<div className="container">
                             </select>
                         </div>
                     </div>
-                    <br/>
+
+
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
@@ -132,7 +125,7 @@ return(<div className="container">
                             </select>
                         </div>
                     </div>
-                    <br/>
+                    
                     <div className="row align-items-center mt-3">
                         <div className="col-md-3">
                             <label 
@@ -145,8 +138,9 @@ return(<div className="container">
                             <input type="text" className="form-control" id="orno" placeholder="Enter OR No."/>
                         </div>
                     </div>
-                    <br/>
+                
                 </div>
+                
                 {/* Third Column */}
                 <div className="col-md-4"> 
                     <div className="row align-items-center mt-3">
@@ -163,6 +157,7 @@ return(<div className="container">
                         </div>
                     </div>
                 </div>
+                
                 {/* Buttons */}
                 <div className="d-flex justify-content-between mt-4">
                     <Link to="/eventsHome">

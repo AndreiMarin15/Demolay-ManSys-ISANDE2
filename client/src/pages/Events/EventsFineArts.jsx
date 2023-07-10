@@ -114,9 +114,8 @@ return(<div className="container">
                         </div>
                         <div className="col-md-7">
                             <select className="form-select form-control" id="type">
-                                <option>Type 1</option>
-                                <option>Type 2</option>
-                                <option>Type 3</option>
+                                <option>Musical</option>
+                                <option>Theatrical</option>
                             </select>
                         </div>
                     </div>
