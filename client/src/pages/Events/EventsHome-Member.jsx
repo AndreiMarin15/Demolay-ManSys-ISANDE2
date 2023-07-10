@@ -3,6 +3,7 @@ import "../../styles/base.css";
 import "../../styles/Events.css";
 import { Component } from "react";
 
+
 const RenderTableData = () => {
    const tableData = [
       ["1", "Attendance", "Validated", "1st"],
@@ -250,6 +251,7 @@ function EventsHome() {
          </div>
       </div>
    );
+
 }
 
 export default EventsHome;

@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const membershipSchema = new Schema(
     {
-        memberID: String,
+        memberIDs: [String],
         chapterID: String,
         firstLineSigner: String,
         paymentStatus: Boolean,
