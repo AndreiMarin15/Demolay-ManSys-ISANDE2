@@ -232,7 +232,6 @@ function EventsHome() {
                
                <div className="d-flex justify-content-center mt-4">
                   <div className="mr-2">
-                    ```javascript
                      <Link to="/eventsHome">
                         <button type="button" form="button" id="primary-btn" value="PREVIOUS">
                            PREVIOUS
