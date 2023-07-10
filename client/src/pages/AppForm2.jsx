@@ -7,8 +7,7 @@ import e from "cors";
 
 const API_REGION = "https://psgc.gitlab.io/api/regions/";
 const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
-const API_CITY = "https://psgc.gitlab.io/api/cities/";
-const API_MUNICIPALITY = "https://psgc.gitlab.io/api/municipalities/";
+const API_CITY = "https://psgc.gitlab.io/api/cities-municipalities/";
 
 function Appform2() {
   const [photoData, setPhoto] = useState({
