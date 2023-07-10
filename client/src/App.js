@@ -29,8 +29,6 @@ import AdminCreate from "./pages/AdminCreate";
 import EventsHome from './pages/Events/EventsHome-Member';
 import EventsAdd from './pages/Events/EventsAdd-MCScribe';
 
-import EventsHome from "./pages/Events/EventsHome-Member";
-
 import EventsAttendance from "./pages/Events/EventsAttendance";
 import EventsAthletic from "./pages/Events/EventsAthletic";
 import EventsCivicService from "./pages/Events/EventsCivicService";
