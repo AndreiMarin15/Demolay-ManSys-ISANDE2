@@ -63,7 +63,9 @@ const applicationSchema = new Schema(
         parentRelationship: String,
         parentEmail: String,
         parentMobile: String,
-        parentApproved: Boolean
+        parentApproved: Boolean,
+
+        dateCreated: Date
         
     }
 )

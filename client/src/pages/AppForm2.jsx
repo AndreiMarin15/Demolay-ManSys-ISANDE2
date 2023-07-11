@@ -19,7 +19,7 @@ function Appform2() {
 		cities: [],
 		provinces: [],
 		regions: [],
-		religions: [],
+		religions: ["Roman Catholic", "Christian", "Islam", "Iglesia Ni Cristo"],
 		years: [],
 		chapters: [],
 
