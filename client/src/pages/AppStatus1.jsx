@@ -29,6 +29,7 @@ function AppStatus1() {
 			});
 		}
 		fetchData();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		/* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
