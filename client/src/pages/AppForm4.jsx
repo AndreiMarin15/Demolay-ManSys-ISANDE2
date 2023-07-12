@@ -4,12 +4,16 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const API_REGION = "https://psgc.gitlab.io/api/regions/";
+const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
+const API_CITY = "https://psgc.gitlab.io/api/cities-municipalities/";
+
 function Appform4() {
 	let { applicationId } = useParams();
 
 	const [formData, setFormData] = useState({
 		cities: [],
-		states: [],
+		provinces: [],
 		regions: [],
 		religions: [],
 		years: [],
@@ -70,10 +74,10 @@ function Appform4() {
 
 	useEffect(() => {
 		axios.get(`http://localhost:5000/applications/${applicationId}`).then(async (response) => {
-			const res2 = await axios.get("http://localhost:5000/getProvinces");
-			const res3 = await axios.get(
-				`http://localhost:5000/getCities/${response.data[0].province ? response.data[0].province : 0}`
-			);
+			const regionsResponse = await axios.get(API_REGION);
+			const provincesResponse = await axios.get(API_PROVINCE);
+			const citiesResponse = await axios.get(API_CITY);
+
 			setFormData({
 				...FormData,
 				years: [
@@ -89,24 +93,11 @@ function Appform4() {
 						value: res.chapterID,
 					};
 				}),
-				cities: res3.data.map((city) => {
-					return {
-						name: city.name,
-						cityID: city.cityID,
-					};
-				}),
-				states: res2.data.map((province) => {
-					return {
-						name: province.name,
-						provinceID: province.provinceID,
-					};
-				}),
-				regions: response.data[1].map((res) => {
-					return {
-						name: res.regionName,
-						id: res.regionID,
-					};
-				}),
+
+				regions: regionsResponse.data,
+				provinces: provincesResponse.data,
+				cities: citiesResponse.data,
+			
 				religions: ["Christian", "Roman Catholic", "Islam", "Iglesia Ni Cristo", "Others"],
 
 				lastName: response.data[0].lastName,
@@ -163,7 +154,8 @@ function Appform4() {
 				parentMobile: response.data[0].parentMobile,
 			});
 		});
-	});
+	}, []);
+
 
 	const onChange = (e) => {
 		setFormData((prev) => {
@@ -358,21 +350,20 @@ function Appform4() {
 
 					<div className="col-md-3">
 						<div className="row mb-3">
-							<label for="inputCity" className="col-md-4 col-form-label text-right">
-								City
+						<label for="inputRegion" className="col-md-4 col-form-label text-right">
+								Region{" "}
 							</label>
 							<select
 								className="form-select form-control"
-								id="inputCity"
-								placeholder="New York City"
+								id="memberRegion"
 								onChange={onChange}
-								value={formData.city}
+								value={formData.memberRegion}
 								disabled
 							>
-								{formData.cities.map(function (city) {
+								{formData.regions.map(function (region) {
 									return (
-										<option key={city.name} value={city.cityID}>
-											{city.name}
+										<option key={region.code} value={region.code}>
+											{region.name}
 										</option>
 									);
 								})}
@@ -417,9 +408,9 @@ function Appform4() {
 					</div>
 
 					<div className="col-md-3">
-						<div className="row mb-3">
+						<div className="row mb-3">						
 							<label for="inputProvince" className="col-md-4 col-form-label text-right">
-								State/Province
+								Province
 							</label>
 							<select
 								className="form-select form-control"
@@ -428,10 +419,10 @@ function Appform4() {
 								value={formData.province}
 								disabled
 							>
-								{formData.states.map(function (state) {
+								{formData.provinces.map(function (province) {
 									return (
-										<option key={state.name} value={state.provinceID}>
-											{state.name}
+										<option key={province.code} value={province.code}>
+											{province.name}
 										</option>
 									);
 								})}
@@ -439,10 +430,10 @@ function Appform4() {
 						</div>
 					</div>
 				</div>
-				<div className="row mb-4">
+				<div className="row mb-in4">
 					<div className="col-md-6">
 						<div className="row mb-3">
-							<label for="inputBrgy" className="col-md-4 col-form-label text-right">
+							<label for="putBrgy" className="col-md-4 col-form-label text-right">
 								Barangay/District
 							</label>
 							<input
@@ -459,20 +450,21 @@ function Appform4() {
 
 					<div className="col-md-3">
 						<div className="row mb-3">
-							<label for="inputRegion" className="col-md-4 col-form-label text-right">
-								Region{" "}
+						<label for="inputCity" className="col-md-4 col-form-label text-right">
+								City
 							</label>
 							<select
 								className="form-select form-control"
-								id="memberRegion"
+								id="inputCity"
+								placeholder="New York City"
 								onChange={onChange}
-								value={formData.memberRegion}
+								value={formData.city}
 								disabled
 							>
-								{formData.regions.map(function (region) {
+								{formData.cities.map(function (city) {
 									return (
-										<option key={region.name} value={region.name}>
-											{region.name}
+										<option key={city.code} value={city.code}>
+											{city.name}
 										</option>
 									);
 								})}
