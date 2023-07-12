@@ -73,7 +73,7 @@ function AppStatus1() {
 							<td>{formData.dateCreated ? formData.dateCreated.substring(0, 10) : "2000-1-1"}</td>
 						</tr>
 
-						{formData.status == "In Review" && (
+						{formData.status === "In Review" && (
 							<tr>
 								<td>Status:</td>
 								<td>
@@ -85,7 +85,7 @@ function AppStatus1() {
 							</tr>
 						)}
 
-						{formData.status == "Approved" && (
+						{formData.status === "Approved" && (
 							<tr>
 								<td>Status:</td>
 								<td>
@@ -98,14 +98,14 @@ function AppStatus1() {
 						)}
 					</table>
 
-					{formData.status == "In Review" && (
+					{formData.status === "In Review" && (
 						<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
 							Your application is currently in review by an investigation committee. <br />
 							Expect results within 5 days.
 						</p>
 					)}
 
-					{formData.status == "Approved" && (
+					{formData.status === "Approved" && (
 						<>
 							<hr
 								style={{
@@ -151,7 +151,7 @@ function AppStatus1() {
 					)}
 				</div>
 			</div>
-			{formData.status == "In Review" && (
+			{formData.status === "In Review" && (
 				<div className="col-12 sub-btn">
 					<Link to="/">
 						<button type="submit" className="btn btn-primary">
