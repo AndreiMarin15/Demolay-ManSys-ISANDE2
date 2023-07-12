@@ -166,6 +166,16 @@ hr {
   margin-left: 5px;
 }
 
+.darkorange-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8743;
+  margin-right: 8px;
+  margin-left: 5px;
+}
+
 .custom-add {
   background-color: var(--purple-pri);
   font-family: "Open Sans";

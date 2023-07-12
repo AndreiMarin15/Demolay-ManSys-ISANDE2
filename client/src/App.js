@@ -3,7 +3,6 @@ import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -26,8 +25,8 @@ import CAAppRejected from "./pages/CAAppRejected";
 import CAForm10Approve from "./pages/CAForm10Approve";
 import AdminCreate from "./pages/AdminCreate";
 
-import EventsHome from './pages/Events/EventsHome-Member';
-import EventsAdd from './pages/Events/EventsAdd-MCScribe';
+import EventsHome from "./pages/Events/EventsHome-Member";
+import EventsAdd from "./pages/Events/EventsAdd-MCScribe";
 
 import EventsAttendance from "./pages/Events/EventsAttendance";
 import EventsAthletic from "./pages/Events/EventsAthletic";
@@ -59,6 +58,8 @@ import TurnoverTF6 from "./pages/Turnover/TurnoverTF6";
 import TurnoverM1 from "./pages/Turnover/TurnoverM1";
 import TurnoverOA1 from "./pages/Turnover/TurnoverOA1";
 
+import Circular1 from "./pages/Circular/Circular1";
+
 import Header from "./components/Header";
 
 function App() {
@@ -86,15 +87,13 @@ function App() {
         <Route path="csapp1" element={<CSApp1 />} />
         <Route path="csappinprogress" element={<CSAppInProgress />} />
         <Route path="csform10" element={<CSForm10 />} />
-
         <Route path="csform10sum" element={<CSForm10Sum />} />
         <Route path="csapppending" element={<CSAppPending />} />
         <Route path="caapprejected" element={<CAAppRejected />} />
         <Route path="caform10approve" element={<CAForm10Approve />} />
         <Route path="admincreate" element={<AdminCreate />} />
         <Route path="eventsHome" element={<EventsHome />} />
-        <Route path="eventsAdd" element ={<EventsAdd/>}/>
-
+        <Route path="eventsAdd" element={<EventsAdd />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
         <Route path="eventsCivicService" element={<EventsCivicService />} />
@@ -103,7 +102,10 @@ function App() {
         <Route path="eventsFundraising" element={<EventsFundraising />} />
         <Route path="eventsInstalling" element={<EventsInstalling />} />
         <Route path="eventsJournalism" element={<EventsJournalism />} />
-        <Route path="eventsMasonicAttendance" element={<EventsMasonicAttendance />}/>
+        <Route
+          path="eventsMasonicAttendance"
+          element={<EventsMasonicAttendance />}
+        />
         <Route path="eventsMasonicService" element={<EventsMasonicService />} />
         <Route path="eventsMerit" element={<EventsMerit />} />
         <Route path="eventsPetitions" element={<EventsPetitions />} />
@@ -111,29 +113,28 @@ function App() {
         <Route path="eventsRitual" element={<EventsRitual />} />
         <Route path="eventsScholastics" element={<EventsScholastics />} />
         <Route path="eventsVisitation" element={<EventsVisitation />} />
-
-        <Route path="eventsValidation" element ={<EventsValidation/>}/>
-        <Route path="eventsProof" element ={<EventsProof/>}/>
-        <Route path="eventsPaymentValidation" element ={<EventsPaymentValidation/>}/>
-
-        <Route path="turnoverDashboard1" element ={<TurnoverDashboard1/>}/>
-        <Route path="turnoverTF1" element ={<TurnoverTF1/>}/>
-        <Route path="turnoverTF2" element ={<TurnoverTF2/>}/>
-        <Route path="turnoverTF3" element ={<TurnoverTF3/>}/>
-        <Route path="turnoverTF4" element ={<TurnoverTF4/>}/>
-        <Route path="turnoverTF5" element ={<TurnoverTF5/>}/>
-        <Route path="turnoverTF6" element ={<TurnoverTF6/>}/>
-        <Route path="turnoverM1" element ={<TurnoverM1/>}/>
-        <Route path="turnoverOA1" element ={<TurnoverOA1/>}/>
-
-
         <Route path="eventsValidation" element={<EventsValidation />} />
         <Route path="eventsProof" element={<EventsProof />} />
         <Route
           path="eventsPaymentValidation"
           element={<EventsPaymentValidation />}
         />
-
+        <Route path="turnoverDashboard1" element={<TurnoverDashboard1 />} />
+        <Route path="turnoverTF1" element={<TurnoverTF1 />} />
+        <Route path="turnoverTF2" element={<TurnoverTF2 />} />
+        <Route path="turnoverTF3" element={<TurnoverTF3 />} />
+        <Route path="turnoverTF4" element={<TurnoverTF4 />} />
+        <Route path="turnoverTF5" element={<TurnoverTF5 />} />
+        <Route path="turnoverTF6" element={<TurnoverTF6 />} />
+        <Route path="turnoverM1" element={<TurnoverM1 />} />
+        <Route path="turnoverOA1" element={<TurnoverOA1 />} />
+        <Route path="eventsValidation" element={<EventsValidation />} />
+        <Route path="eventsProof" element={<EventsProof />} />
+        <Route
+          path="eventsPaymentValidation"
+          element={<EventsPaymentValidation />}
+        />
+        <Route path="circular1" element={<Circular1 />} />
       </Routes>
     </>
   );

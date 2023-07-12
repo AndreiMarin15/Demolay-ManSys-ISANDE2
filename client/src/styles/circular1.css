@@ -1,0 +1,32 @@
+@import "base.css";
+
+.list-group-item {
+  border: 1px solid #000000;
+  border-radius: 2px;
+  margin: 8px;
+}
+
+.list-group-item:nth-child(odd) {
+  border-top: 1px solid #000000;
+}
+
+.list-group-item:nth-child(even) {
+  border-top: 1px solid #000000;
+}
+
+.view-btn {
+  font-weight: bold;
+  color: #646464;
+}
+
+.name {
+  margin-top: 10px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.hori-line {
+  margin-top: 20px;
+  height: 1px;
+  color: black;
+}
