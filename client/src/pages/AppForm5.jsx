@@ -3,16 +3,17 @@ import "../styles/base.css";
 import "../styles/appform5.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 function Appform5() {
-
 	const [formData, setFormData] = useState({
 		applicantId: "",
+		status: "In Review",
 	});
 
 	const [passwordData, setPassword] = useState({
 		applicantPassword: "",
+		passwordConfirm: "",
 	});
 
 	// TODO: Generate applicant ID
@@ -33,7 +34,7 @@ function Appform5() {
 		fetchData();
 	}, [formData]);
 
-	const onChange = (e) => {
+	const onChangePassword = (e) => {
 		setPassword({
 			...passwordData,
 			applicantPassword: e.target.value,
@@ -42,22 +43,52 @@ function Appform5() {
 		console.log(formData, passwordData);
 	};
 
+	useEffect(() => {
+		if (passwordData.passwordConfirm !== passwordData.applicantPassword) {
+			passwordConfirmRef.current.style.borderColor = "red";
+			console.log(passwordData);
+		} else {
+			passwordConfirmRef.current.style.borderColor = "black";
+		}
+	}, [passwordData.passwordConfirm]);
+
+	const passwordConfirmRef = useRef(null);
+
+	const onChangeConfirm = (e) => {
+		setPassword({
+			...passwordData,
+			passwordConfirm: e.target.value,
+		});
+	};
+
 	let { applicationId } = useParams();
 	const onSubmit = (e) => {
 		e.preventDefault();
+		const currentDate = new Date();
+		const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+		const formattedDate = currentDate.toLocaleDateString("en-US", options).split("/").reverse().join("-");
 
-		const applicationUpdate = {
-			applicantId: formData.applicantId,
-			applicantPassword: passwordData.applicantPassword,
-		};
+		console.log(formattedDate);
 
-		console.log(applicationUpdate);
-		console.log(applicationId);
+		if (passwordData.applicantPassword === passwordData.passwordConfirm) {
+			const applicationUpdate = {
+				applicantId: formData.applicantId,
+				applicantPassword: passwordData.applicantPassword,
+				status: formData.status,
+				dateCreated: currentDate
+			};
 
-		axios.post(`http://localhost:5000/newApplication5/${applicationId}`, applicationUpdate).then((res) => {
-			console.log(res.data);
-			//window.location.href = `/`;
-		});
+			console.log(applicationUpdate);
+			console.log(applicationId);
+
+			axios.post(`http://localhost:5000/newApplication5/${applicationId}`, applicationUpdate).then((res) => {
+				console.log(res.data);
+				alert("Application Submited")
+				window.location.href = `/`;
+			});
+		} else {
+			alert(`Passwords don't match. Please try again.`);
+		}
 	};
 
 	return (
@@ -77,7 +108,7 @@ function Appform5() {
 				</div>
 			</div>
 
-			<form className="g-2" onSubmit={onSubmit} style={{marginLeft: "30px"}}>
+			<form className="g-2" onSubmit={onSubmit} style={{ marginLeft: "30px" }}>
 				<div className="row">
 					<div className="col-md-4">
 						<div className="row mb-3">
@@ -107,8 +138,28 @@ function Appform5() {
 								id="applicantPassword"
 								type="password"
 								placeholder="Password"
-								onChange={onChange}
+								onChange={onChangePassword}
 								value={passwordData.applicantPassword}
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div className="row">
+					<div className="col-md-4">
+						<div className="row mb-3">
+							<label for="applicantPassword" className="col-md-4 col-form-label text-right">
+								Confirm Password
+							</label>
+
+							<input
+								class="form-control"
+								id="passwordConfirm"
+								type="password"
+								placeholder="Confirm Password"
+								onChange={onChangeConfirm}
+								ref={passwordConfirmRef}
+								value={passwordData.passwordConfirm}
 							/>
 						</div>
 					</div>
@@ -122,7 +173,6 @@ function Appform5() {
 			</form>
 		</div>
 	);
-
 }
 
 export default Appform5;

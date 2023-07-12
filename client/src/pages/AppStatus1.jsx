@@ -6,82 +6,99 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function AppStatus1 () {return (
-      /* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
-      <div className="container container-fluid ">
-        <div className="row">
-          <div className="col-md-12">
-            <h1>My Application</h1>
-          </div>
-        </div>
+function AppStatus1() {
+	let { id } = useParams();
 
-        <hr />
+	const [formData, setFormData] = useState({
+		applicantId: "",
+		chapter: "",
+		dateCreated: "",
+		status: "",
+	});
 
-        <div className="row" style={{ marginLeft: "40px" }}>
-          <div className="col-md-7">
-            {/* Content for the left column */}
-            <h2>Left Column</h2>
-            <p>
-              This is where the applicant's submitted application form will go.
-            </p>
-          </div>
-          <div className="col-md-1">
-            {/* Vertical line or divider */}
-            <div className="vertical-line"></div>
-          </div>
-          <div className="col-md-4">
-            {/* Content for the right column */}
-            <h2 className="text-center" style={{ marginLeft: "-80px" }}>
-              Application Details
-            </h2>
-            <table className="details-table">
-              <tr>
-                <td>Applicant ID:</td>
-                <td>1092034911</td>
-              </tr>
+	useEffect(() => {
+		async function fetchData() {
+			const application = await axios.get(`http://localhost:5000/getStatus1/${id}`);
 
-              <tr>
-                <td>Chapter applied to:</td>
-                <td>Ambrosio A. Flores</td>
-              </tr>
+			setFormData({
+				...formData,
+				applicantId: application.data.applicantId,
+				chapter: application.data.chapter,
+				dateCreated: application.data.dateCreated,
+				status: application.data.status,
+			});
+		}
+		fetchData();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+	return (
+		/* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
+		<div className="container container-fluid ">
+			<div className="row">
+				<div className="col-md-12">
+					<h1>My Application</h1>
+				</div>
+			</div>
 
-              <tr>
-                <td>Application Date:</td>
-                <td>March 27, 2023</td>
-              </tr>
+			<hr />
 
-              <tr>
-                <td>Status:</td>
-                <td>
-                  {" "}
-                  <p className="text-center" id="status-review">
-                    In Review
-                  </p>
-                </td>
-              </tr>
-            </table>
-            <p
-              className="text-center"
-              id="desc"
-              style={{ marginLeft: "-80px" }}
-            >
-              Your application is currently in review by an investigation
-              committee. <br />
-              Expect results within 5 days.
-            </p>
-          </div>
-        </div>
+			<div className="row" style={{ marginLeft: "40px" }}>
+				<div className="col-md-7">
+					{/* Content for the left column */}
+					<h2>Left Column</h2>
+					<p>This is where the applicant's submitted application form will go.</p>
+				</div>
+				<div className="col-md-1">
+					{/* Vertical line or divider */}
+					<div className="vertical-line"></div>
+				</div>
+				<div className="col-md-4">
+					{/* Content for the right column */}
+					<h2 className="text-center" style={{ marginLeft: "-80px" }}>
+						Application Details
+					</h2>
+					<table className="details-table">
+						<tr>
+							<td>Applicant ID:</td>
+							<td>{formData.applicantId}</td>
+						</tr>
 
-        <div className="col-12 sub-btn">
-          <Link to="/">
-            <button type="submit" className="btn btn-primary">
-              SUBMIT
-            </button>
-          </Link>
-        </div>
-      </div>
-    );}
+						<tr>
+							<td>Chapter applied to:</td>
+							<td>{formData.chapter}</td>
+						</tr>
+
+						<tr>
+							<td>Application Date:</td>
+							<td>{formData.dateCreated.substring(0, 10)}</td>
+						</tr>
+
+						<tr>
+							<td>Status:</td>
+							<td>
+								{" "}
+								<p className="text-center" id="status-review">
+								{formData.status}
+								</p>
+							</td>
+						</tr>
+					</table>
+					<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
+						Your application is currently in review by an investigation committee. <br />
+						Expect results within 5 days.
+					</p>
+				</div>
+			</div>
+
+			<div className="col-12 sub-btn">
+				<Link to="/">
+					<button type="submit" className="btn btn-primary">
+						SUBMIT
+					</button>
+				</Link>
+			</div>
+		</div>
+	);
+}
 
 export default AppStatus1;
-
-

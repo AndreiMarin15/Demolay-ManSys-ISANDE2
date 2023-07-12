@@ -139,7 +139,6 @@ function AdminCreate() {
 					</div>
 				</div>
 				<br />
-
 				{
 					// eslint-disable-next-line eqeqeq
 					formData.position == 3 && (
@@ -148,23 +147,13 @@ function AdminCreate() {
 								<div className="col-md-4">
 									<div className="row mb-3" id="divYears">
 										<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
-											Years
+											Years as Advisor
 										</label>
 										<input class="form-control" id="yearsAsSenior" type="text" placeholder="User ID" />{" "}
 									</div>
 								</div>
 							</div>
 
-							<div className="row">
-								<div className="col-md-4">
-									<div className="row mb-3" id="divYears">
-										<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
-											Years
-										</label>
-										<input class="form-control" id="yearsAsSenior" type="text" placeholder="User ID" />{" "}
-									</div>
-								</div>
-							</div>
 						</>
 					)
 				}
@@ -177,9 +166,27 @@ function AdminCreate() {
 								<div className="col-md-4">
 									<div className="row mb-3" id="divYears">
 										<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
-											Favorite Member
+											Suffix
 										</label>
 										<input class="form-control" id="yearsAsSenior" type="text" placeholder="User ID" />{" "}
+									</div>
+								</div>
+
+								<div className="col-md-4">
+									<div className="row mb-3" id="divYears">
+										<label for="masonicLodge" className="col-md-4 col-form-label text-right">
+											Masonic Lodge
+										</label>
+										<input class="form-control" id="masonicLodge" type="text" placeholder="Lodge" />{" "}
+									</div>
+								</div>
+
+								<div className="col-md-4">
+									<div className="row mb-3" id="divYears">
+										<label for="yearsAdvisor" className="col-md-4 col-form-label text-right">
+											Years as Advisor
+										</label>
+										<input class="form-control" id="yearsAdvisor" type="text" placeholder="Years" />{" "}
 									</div>
 								</div>
 							</div>
