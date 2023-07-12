@@ -99,14 +99,14 @@ function Appform2() {
         ...formData,
 
         regions: regionsResponse.data,
-        provinces: provincesResponse.data,
-        cities: citiesResponse.data,
+        provinces: provincesResponse.data.sort((a,b) => a.name.localeCompare(b.name)),
+        cities: citiesResponse.data.sort((a,b) => a.name.localeCompare(b.name)),
       });
 
       console.log(
-        regionsResponse.data,
-        provincesResponse.data,
-        citiesResponse.data
+        formData.regions,
+        formData.provinces,
+        formData.cities
       );
     } catch (error) {
       console.error("Error fetching data:", error);
