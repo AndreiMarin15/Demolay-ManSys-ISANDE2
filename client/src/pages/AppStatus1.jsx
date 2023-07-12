@@ -29,7 +29,7 @@ function AppStatus1() {
 			});
 		}
 		fetchData();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		/* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
@@ -70,33 +70,96 @@ function AppStatus1() {
 
 						<tr>
 							<td>Application Date:</td>
-							<td>{formData.dateCreated.substring(0, 10)}</td>
+							<td>{formData.dateCreated ? formData.dateCreated.substring(0, 10) : "2000-1-1"}</td>
 						</tr>
 
-						<tr>
-							<td>Status:</td>
-							<td>
-								{" "}
-								<p className="text-center" id="status-review">
-								{formData.status}
-								</p>
-							</td>
-						</tr>
+						{formData.status == "In Review" && (
+							<tr>
+								<td>Status:</td>
+								<td>
+									{" "}
+									<p className="text-center" id="status-review">
+										{formData.status}
+									</p>
+								</td>
+							</tr>
+						)}
+
+						{formData.status == "Approved" && (
+							<tr>
+								<td>Status:</td>
+								<td>
+									{" "}
+									<p className="text-center" id="app-status">
+										Approved
+									</p>
+								</td>
+							</tr>
+						)}
 					</table>
-					<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
-						Your application is currently in review by an investigation committee. <br />
-						Expect results within 5 days.
-					</p>
+
+					{formData.status == "In Review" && (
+						<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
+							Your application is currently in review by an investigation committee. <br />
+							Expect results within 5 days.
+						</p>
+					)}
+
+					{formData.status == "Approved" && (
+						<>
+							<hr
+								style={{
+									color: "black",
+									height: "1px",
+									marginLeft: "-35px",
+								}}
+							/>
+
+							<table
+								style={{
+									marginLeft: "80px",
+									border: "1px solid black",
+									padding: "50px",
+								}}
+							>
+								<tr>
+									<td style={{ padding: "8px" }}>
+										<b>Member ID:</b> 2092034911{" "}
+									</td>
+								</tr>
+							</table>
+
+							<p className="text-center" id="cont" style={{ marginLeft: "-80px" }}>
+								If you wish to continue, kindly upload your proof of payment below.
+							</p>
+
+							<div className="row" style={{ marginLeft: "80px" }}>
+								<label for="uploadProof" className="col-form-label text-right">
+									Proof of Payment:
+								</label>
+								<input type="file" className="form-control" id="uploadProof" />
+							</div>
+
+							<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
+								<Link to="/">
+									<button type="submit" className="btn btn-primary">
+										SUBMIT
+									</button>
+								</Link>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
-
-			<div className="col-12 sub-btn">
-				<Link to="/">
-					<button type="submit" className="btn btn-primary">
-						SUBMIT
-					</button>
-				</Link>
-			</div>
+			{formData.status == "In Review" && (
+				<div className="col-12 sub-btn">
+					<Link to="/">
+						<button type="submit" className="btn btn-primary">
+							SUBMIT
+						</button>
+					</Link>
+				</div>
+			)}
 		</div>
 	);
 }
