@@ -7,12 +7,11 @@ import { useEffect, useState } from "react";
 
 function Appform3() {
 	const [formData, setFormData] = useState({
-		years: [],
 		chapters: [],
 
 		appliedInAnotherChapter: false,
 		chapterApplied: "",
-		yearApplied: 0,
+		yearApplied: "",
 		status: "",
 
 		relativeName: "",
@@ -50,22 +49,13 @@ function Appform3() {
 				}),
 				//
 				chapterApplied: res1.data[0].name,
-				years: [
-					{ key: "N/A", value: null },
-					{ key: 2022, value: 2022 },
-					{ key: 2021, value: 2021 },
-					{ key: 2020, value: 2020 },
-					{ key: 2019, value: 2019 },
-				],
+
 				yearApplied: null,
-			
+
 				appliedInAnotherChapter: false,
 				parentApproved: false,
-				
 			});
 		});
-
-		
 	}, []);
 
 	const onChange = (e) => {
@@ -195,29 +185,30 @@ function Appform3() {
 								<label for="chapYear" className="col-md-4 col-form-label text-right">
 									Year
 								</label>
-								<select
-									className="form-select form-control"
+								<input
+									type="text"
+									className="form-control"
 									id="yearApplied"
+									placeholder="Year Applied"
 									onChange={onChange}
 									value={formData.yearApplied}
-								>
-									{formData.years.map(function (year) {
-										return (
-											<option key={year.key} value={year.value}>
-												{year.key}
-											</option>
-										);
-									})}
-								</select>
+								/>
 							</div>
 						</div>
 
 						<div className="col-md-1">
 							<div className="row mb-3">
-								<label for="checkbox" className="col-md-4 col-form-label text-right">
+								<label for="checkbox" className="col-md-1 col-form-label text-right">
 									Status:
 								</label>
-								<input type="text" id="status" placeholder="Status" onChange={onChange} value={formData.status} />
+								<input
+									type="text"
+									className="form-control"
+									id="status"
+									placeholder="Status"
+									onChange={onChange}
+									value={formData.status}
+								/>
 							</div>
 						</div>
 					</div>
@@ -251,7 +242,14 @@ function Appform3() {
 								<label for="inputFB" className="col-md-4 col-form-label text-right">
 									Relationship
 								</label>
-								<input type="text" className="form-control" id="relationship" placeholder="i.e. Father" onChange={onChange} value={formData.relationship}/>
+								<input
+									type="text"
+									className="form-control"
+									id="relationship"
+									placeholder="i.e. Father"
+									onChange={onChange}
+									value={formData.relationship}
+								/>
 							</div>
 						</div>
 
