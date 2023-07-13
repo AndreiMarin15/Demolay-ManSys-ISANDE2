@@ -84,7 +84,7 @@ function Appform5() {
 			axios.post(`http://localhost:5000/newApplication5/${applicationId}`, applicationUpdate).then((res) => {
 				console.log(res.data);
 				alert("Application Submited")
-				window.location.href = `/`;
+				window.location.href = `/appstatus1/${applicationId}`;
 			});
 		} else {
 			alert(`Passwords don't match. Please try again.`);
