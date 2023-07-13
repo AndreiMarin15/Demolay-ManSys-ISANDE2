@@ -42,9 +42,12 @@ function Home() {
     axios.post('http://localhost:5000/login', loginDetails).then(result => {
     if(!result.data){
       alert("Incorrect Credentials. Please try again.")
-    } else {
-      window.location.href = `/appstatus1/${result.data}`
-      console.log(result.data)
+    } else if(result.data[0] === 1) {
+      window.location.href = `/appstatus1/${result.data[1]}`
+      console.log(result.data[1])
+    } else if (result.data[0] === 0){
+      window.location.href = `/admincreate/`
+      console.log(result.data[1])
     }
 
       console.log(result)

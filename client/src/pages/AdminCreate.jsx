@@ -11,8 +11,21 @@ function AdminCreate() {
 		positions: [],
 
 		position: "",
-		name: "",
+		lastName: "",
+		givenName: "",
+		middleName: "",
+		userId: "",
 	});
+	const [advisoryCouncilData, setAdvisoryCouncil] = useState({});
+	const [masterMasonData, setMasterMason] = useState({
+		suffix: "",
+		masonicLodge: "",
+		yearsAsAdvisor: "",
+	});
+	const [seniorDemolayData, setSeniorDemolay] = useState({
+		yearsAsAdvisor: "",
+	});
+	const [adminData, setAdminData] = useState({});
 
 	useEffect(() => {
 		setFormData({
@@ -50,7 +63,7 @@ function AdminCreate() {
 		console.log(formData.position);
 	};
 
-  const onChange = (e) => {
+	const onChange = (e) => {
 		setFormData((prev) => {
 			let helper = { ...prev };
 
@@ -61,7 +74,25 @@ function AdminCreate() {
 		console.log(formData);
 	};
 
+	const onChangeSeniorDemolay = (e) => {
+		setSeniorDemolay((prev) => {
+			let helper = { ...prev };
 
+			helper[`${e.target.id}`] = e.target.value;
+
+			return helper;
+		});
+	};
+
+	const onChangeMasterMason = (e) => {
+		setMasterMason((prev) => {
+			let helper = { ...prev };
+
+			helper[`${e.target.id}`] = e.target.value;
+
+			return helper;
+		});
+	};
 
 	return (
 		<div className="container container-fluid ">
@@ -80,7 +111,14 @@ function AdminCreate() {
 							<label for="lastName" className="col-md-4 col-form-label text-right">
 								User Last Name
 							</label>
-							<input class="form-control" id="lastName" type="text" placeholder="Last Name" />{" "}
+							<input
+								class="form-control"
+								id="lastName"
+								type="text"
+								placeholder="Last Name"
+								onChange={onChange}
+								value={formData.lastName}
+							/>{" "}
 						</div>
 					</div>
 
@@ -89,7 +127,14 @@ function AdminCreate() {
 							<label for="givenName" className="col-md-4 col-form-label text-right">
 								User Given Name
 							</label>
-							<input class="form-control" id="givenName" type="text" placeholder="Given Name" />{" "}
+							<input
+								class="form-control"
+								id="givenName"
+								type="text"
+								placeholder="Given Name"
+								onChange={onChange}
+								value={formData.givenName}
+							/>{" "}
 						</div>
 					</div>
 
@@ -98,7 +143,14 @@ function AdminCreate() {
 							<label for="middleName" className="col-md-4 col-form-label text-right">
 								User Middle Name
 							</label>
-							<input class="form-control" id="middleName" type="text" placeholder="Middle Name" />{" "}
+							<input
+								class="form-control"
+								id="middleName"
+								type="text"
+								placeholder="Middle Name"
+								onChange={onChange}
+								value={formData.middleName}
+							/>{" "}
 						</div>
 					</div>
 				</div>
@@ -109,7 +161,14 @@ function AdminCreate() {
 							<label for="userID" className="col-md-4 col-form-label text-right">
 								User ID
 							</label>
-							<input class="form-control" id="staffID" type="text" placeholder="User ID" />{" "}
+							<input
+								class="form-control"
+								id="userId"
+								type="text"
+								placeholder="User ID"
+								onChange={onChange}
+								value={formData.userId}
+							/>{" "}
 						</div>
 					</div>
 
@@ -139,24 +198,6 @@ function AdminCreate() {
 					</div>
 				</div>
 				<br />
-				{
-					// eslint-disable-next-line eqeqeq
-					formData.position == 3 && (
-						<>
-							<div className="row">
-								<div className="col-md-4">
-									<div className="row mb-3" id="divYears">
-										<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
-											Years as Advisor
-										</label>
-										<input class="form-control" id="yearsAsSenior" type="text" placeholder="User ID" />{" "}
-									</div>
-								</div>
-							</div>
-
-						</>
-					)
-				}
 
 				{
 					// eslint-disable-next-line eqeqeq
@@ -168,7 +209,14 @@ function AdminCreate() {
 										<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
 											Suffix
 										</label>
-										<input class="form-control" id="yearsAsSenior" type="text" placeholder="User ID" />{" "}
+										<input
+											class="form-control"
+											id="suffix"
+											type="text"
+											placeholder="User ID"
+											onChange={onChangeMasterMason}
+											value={masterMasonData.suffix}
+										/>{" "}
 									</div>
 								</div>
 
@@ -177,7 +225,14 @@ function AdminCreate() {
 										<label for="masonicLodge" className="col-md-4 col-form-label text-right">
 											Masonic Lodge
 										</label>
-										<input class="form-control" id="masonicLodge" type="text" placeholder="Lodge" />{" "}
+										<input
+											class="form-control"
+											id="masonicLodge"
+											type="text"
+											placeholder="Lodge"
+											onChange={onChangeMasterMason}
+											value={masterMasonData.masonicLodge}
+										/>{" "}
 									</div>
 								</div>
 
@@ -186,7 +241,39 @@ function AdminCreate() {
 										<label for="yearsAdvisor" className="col-md-4 col-form-label text-right">
 											Years as Advisor
 										</label>
-										<input class="form-control" id="yearsAdvisor" type="text" placeholder="Years" />{" "}
+										<input
+											class="form-control"
+											id="yearsAsAdvisor"
+											type="text"
+											placeholder="Years"
+											onChange={onChangeMasterMason}
+											value={masterMasonData.yearsAsAdvisor}
+										/>{" "}
+									</div>
+								</div>
+							</div>
+						</>
+					)
+				}
+
+				{
+					// eslint-disable-next-line eqeqeq
+					formData.position == 3 && (
+						<>
+							<div className="row">
+								<div className="col-md-4">
+									<div className="row mb-3" id="divYears">
+										<label for="yearsAsSenior" className="col-md-4 col-form-label text-right">
+											Years as Advisor
+										</label>
+										<input
+											class="form-control"
+											id="yearsAsAdvisor"
+											type="text"
+											placeholder="User ID"
+											onChange={onChangeSeniorDemolay}
+											value={masterMasonData.yearsAsAdvisor}
+										/>{" "}
 									</div>
 								</div>
 							</div>
