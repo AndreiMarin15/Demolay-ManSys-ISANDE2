@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
 import Home from "./pages/Home";
+import Login from "./pages/Login";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import AppForm1 from "./pages/AppForm1";
@@ -25,6 +26,7 @@ import CSAppPending from "./pages/CSAppPending";
 import CAAppRejected from "./pages/CAAppRejected";
 import CAForm10Approve from "./pages/CAForm10Approve";
 import AdminCreate from "./pages/AdminCreate";
+import MyChapter from "./pages/MyChapter";
 
 import EventsHome from "./pages/Events/EventsHome-Member";
 import EventsAttendance from "./pages/Events/EventsAttendance";
@@ -55,6 +57,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="login" element={<Login />} />
         <Route path="about" element={<About />} />
         <Route path="contact" element={<Contact />} />
         <Route path="appform1" element={<AppForm1 />} />
@@ -78,6 +81,7 @@ function App() {
         <Route path="caapprejected" element={<CAAppRejected />} />
         <Route path="caform10approve" element={<CAForm10Approve />} />
         <Route path="admincreate" element={<AdminCreate />} />
+        <Route path="mychapter" element={<MyChapter />} />
         <Route path="eventsHome" element={<EventsHome />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
