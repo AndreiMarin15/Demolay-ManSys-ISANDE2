@@ -107,7 +107,7 @@ export default function MyChapter() {
       contact: "0995 966 0823",
       idDate: "January 28, 2018",
       ddDate: "March 04, 2018",
-      position: "Member",
+      position: "",
       dualChapter: "A. Mabini Chapter No. 37",
       status: "Senior",
     },
@@ -131,7 +131,7 @@ export default function MyChapter() {
       contact: "0915 804 8757",
       idDate: "November 11, 2012",
       ddDate: "November 11, 2012",
-      position: "Member",
+      position: "",
       dualChapter: "A. Mabini Chapter No. 37",
       status: "Senior",
     },
@@ -197,21 +197,6 @@ export default function MyChapter() {
     }
   };
 
-  const tableData = membersData.map((record) => {
-    return {
-      id: record.id,
-      lastName: record.lastName,
-      firstName: record.firstName,
-      email: record.email,
-      contact: record.contact,
-      idDate: record.idDate,
-      ddDate: record.ddDate,
-      position: record.position,
-      dualChapter: record.dualChapter,
-      status: record.status,
-    };
-  });
-
   const filteredData = getActiveTableData().filter((record) => {
     const values = Object.values(record).join(" ").toLowerCase();
     return values.includes(searchText.toLowerCase());
@@ -265,6 +250,7 @@ export default function MyChapter() {
           columns={getActiveTableColumns()}
           data={filteredData}
           selectableRows
+          highlightOnHover
           fixedHeader
           pagination
           subHeader

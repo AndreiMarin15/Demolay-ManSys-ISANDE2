@@ -27,6 +27,7 @@ import CAAppRejected from "./pages/CAAppRejected";
 import CAForm10Approve from "./pages/CAForm10Approve";
 import AdminCreate from "./pages/AdminCreate";
 import MyChapter from "./pages/MyChapter";
+import AllChapters from "./pages/AllChapters";
 
 import EventsHome from "./pages/Events/EventsHome-Member";
 import EventsAttendance from "./pages/Events/EventsAttendance";
@@ -82,6 +83,7 @@ function App() {
         <Route path="caform10approve" element={<CAForm10Approve />} />
         <Route path="admincreate" element={<AdminCreate />} />
         <Route path="mychapter" element={<MyChapter />} />
+        <Route path="allchapters" element={<AllChapters />} />
         <Route path="eventsHome" element={<EventsHome />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
