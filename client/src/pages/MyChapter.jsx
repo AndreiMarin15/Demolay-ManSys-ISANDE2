@@ -3,7 +3,18 @@ import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
 
 export default function MyChapter() {
-  const columns = [
+  const [activeTab, setActiveTab] = useState("members");
+  const [searchText, setSearchText] = useState("");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
+  const handleSearch = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const membersColumns = [
     {
       name: "DeMolay ID",
       selector: (row) => row.id,
@@ -55,7 +66,39 @@ export default function MyChapter() {
     },
   ];
 
-  const data = [
+  const advisoryColumns = [
+    {
+      name: "ID",
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Last Name",
+      selector: (row) => row.lastName,
+      sortable: true,
+    },
+    {
+      name: "First Name",
+      selector: (row) => row.firstName,
+      sortable: true,
+    },
+    {
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
+    },
+    {
+      name: "Contact Number",
+      selector: (row) => row.contact,
+    },
+    {
+      name: "Position",
+      selector: (row) => row.position,
+      sortable: true,
+    },
+  ];
+
+  const membersData = [
     {
       id: "18-27061",
       lastName: "Tolentino",
@@ -94,7 +137,67 @@ export default function MyChapter() {
     },
   ];
 
-  const tableData = data.map((record) => {
+  const advisoryData = [
+    {
+      id: "1",
+      lastName: "Fronda",
+      firstName: "Ariel",
+      email: "adfronda@yahoo.com",
+      contact: "0999 999 0000",
+      position: "Chairman",
+    },
+    {
+      id: "2",
+      lastName: "Pasiona",
+      firstName: "Garry",
+      email: "gpasiona@gmail.com",
+      contact: "0999 999 0002",
+      position: "Chapter Advisor",
+    },
+    {
+      id: "3",
+      lastName: "Joaquin",
+      firstName: "Joseph",
+      email: "jjjoaquin@gmail.com",
+      contact: "0999 999 0003",
+      position: "Member",
+    },
+  ];
+
+  const getActiveTableColumns = () => {
+    switch (activeTab) {
+      case "members":
+        return membersColumns;
+      case "officers":
+        return membersColumns;
+      case "advisoryCouncil":
+        return advisoryColumns;
+      default:
+        return [];
+    }
+  };
+
+  const getActiveTableData = () => {
+    switch (activeTab) {
+      case "members":
+        return membersData;
+      case "officers":
+        return membersData.filter(
+          (record) =>
+            record.position === "Master Councilor" ||
+            record.position === "Senior Councilor" ||
+            record.position === "Junior Councilor" ||
+            record.position === "Scribe" ||
+            record.position === "Treasurer"
+        );
+      case "advisoryCouncil":
+        return advisoryData;
+      default:
+        return [];
+    }
+  };
+
+  const tableData = membersData.map((record) => {
     return {
       id: record.id,
       lastName: record.lastName,
@@ -109,13 +212,7 @@ export default function MyChapter() {
     };
   });
 
-  const [searchText, setSearchText] = useState("");
-
-  const handleSearch = (e) => {
-    setSearchText(e.target.value);
-  };
-
-  const filteredData = tableData.filter((record) => {
+  const filteredData = getActiveTableData().filter((record) => {
     const values = Object.values(record).join(" ").toLowerCase();
     return values.includes(searchText.toLowerCase());
   });
@@ -129,8 +226,43 @@ export default function MyChapter() {
 
         <hr />
 
+        <div>
+          <ul className="nav nav-pills mb-3">
+            <li className="nav-item" role="presentation">
+              <button
+                className={`nav-link ${
+                  activeTab === "members" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("members")}
+              >
+                Members
+              </button>
+            </li>
+            <li className="nav-item" role="presentation">
+              <button
+                className={`nav-link ${
+                  activeTab === "officers" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("officers")}
+              >
+                Officers
+              </button>
+            </li>
+            <li className="nav-item" role="presentation">
+              <button
+                className={`nav-link ${
+                  activeTab === "advisoryCouncil" ? "active" : ""
+                }`}
+                onClick={() => handleTabClick("advisoryCouncil")}
+              >
+                Advisory Council
+              </button>
+            </li>
+          </ul>
+        </div>
+
         <DataTable
-          columns={columns}
+          columns={getActiveTableColumns()}
           data={filteredData}
           selectableRows
           fixedHeader
