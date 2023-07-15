@@ -7,6 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function AppStatus1() {
+
 	let { id } = useParams();
 
 	const [formData, setFormData] = useState({
@@ -140,28 +141,12 @@ function AppStatus1() {
 								<input type="file" className="form-control" id="uploadProof" />
 							</div>
 
-							<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
-								<Link to="/">
-									<button type="submit" className="btn btn-primary">
-										SUBMIT
-									</button>
-								</Link>
-							</div>
 						</>
 					)}
 				</div>
 			</div>
-			{formData.status === "In Review" && (
-				<div className="col-12 sub-btn">
-					<Link to="/">
-						<button type="submit" className="btn btn-primary">
-							SUBMIT
-						</button>
-					</Link>
-				</div>
-			)}
+			
 		</div>
 	);
 }
-
 export default AppStatus1;

@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Home() {
-
   useEffect(() => {
 		axios.get(`http://localhost:5000/initDatabase`)
 	}, []);
@@ -54,23 +53,30 @@ function Home() {
     })
   }
 
+
   return (
     <div id="homelogo">
-      <img src={logo} id="big" alt="DeMolay" ></img>
+      <img src={logo} id="big" alt="DeMolay"></img>
       <h1>Welcome to DeMolay!</h1>
 
       <div id="homechild">
-        <form id="login" onSubmit={onSubmit}>
-          <label for="idnum">ID Number</label>
-          <input type="text" id="idNumber" name="idnum" onChange={onChange} value={formData.idNumber} />
-          <br></br>
-          <label for="pass">Password</label>
-          <input type="password" id="password" name="pass" onChange={onChange} value={formData.password} />
-        </form>
 
-        
-          <button type="submit" form="login" class="primary-btn" value="LOGIN">
-            LOGIN
+        <div class="widget-container">
+          <p>
+            For more than one hundred years, DeMolay has helped boys become men
+            of outstanding character, through dedicated mentorships and unique,
+            hands-on life-skill programs.
+          </p>{" "}
+        </div>
+
+        <Link to="/About">
+          <button class="btn btn-outline-warning" value="LEARN MORE">
+            LEARN MORE
+          </button>
+        </Link>
+        <Link to="/appform1">
+          <button class="btn btn-primary" value="APPLY NOW">
+            APPLY NOW
           </button>
         
 
@@ -78,6 +84,9 @@ function Home() {
           <button type="button" class="primary-btn" value="APPLY">
             APPLY
           </button>
+        </Link>
+        <Link to="/Login">
+          <span>Already have an account?</span>
         </Link>
       </div>
     </div>
