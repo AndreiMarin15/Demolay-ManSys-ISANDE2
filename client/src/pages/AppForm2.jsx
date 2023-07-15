@@ -3,7 +3,7 @@ import "../styles/base.css";
 import "../styles/appform2.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import e from "cors";
+
 
 const API_REGION = "https://psgc.gitlab.io/api/regions/";
 const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
@@ -84,6 +84,7 @@ function Appform2() {
 
   useEffect(() => {
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
@@ -99,14 +100,14 @@ function Appform2() {
         ...formData,
 
         regions: regionsResponse.data,
-        provinces: provincesResponse.data,
-        cities: citiesResponse.data,
+        provinces: provincesResponse.data.sort((a,b) => a.name.localeCompare(b.name)),
+        cities: citiesResponse.data.sort((a,b) => a.name.localeCompare(b.name)),
       });
 
       console.log(
-        regionsResponse.data,
-        provincesResponse.data,
-        citiesResponse.data
+        formData.regions,
+        formData.provinces,
+        formData.cities
       );
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -479,6 +480,7 @@ function Appform2() {
           <div className="col-md-3">
             <div className="row mb-3">
               {selectedRegion &&
+                // eslint-disable-next-line eqeqeq
                 (selectedProvince || provincesByRegion == 0) && (
                   <>
                     <label

@@ -5,6 +5,7 @@ const Chapters = require("../models/chapters.js");
 const Regions = require("../models/regions.js");
 const db = require("../models/db.js");
 const bcrypt = require("bcrypt");
+const Accounts = require("../models/accounts.js");
 
 const controller = {
 	newApplication: async (req, res) => {
@@ -180,6 +181,8 @@ const controller = {
 			const update = {
 				applicantId: req.body.applicantId,
 				applicantPassword: hash,
+				status: req.body.status,
+				dateCreated: req.body.dateCreated,
 			};
 
 			db.updateOne(Application, { _id: applicationId }, update, (result) => {
@@ -214,6 +217,21 @@ const controller = {
 			const cityCount = await Cities.countDocuments();
 			const regionCount = await Regions.countDocuments();
 			const chapterCount = await Chapters.countDocuments();
+			const adminCheck = await Accounts.findOne({ accountId: "admin" }); // db.findOne(Accounts, { accountId: "admin" }, {}, (cb) => {return cb});
+
+			if (!adminCheck) {
+				const pword = await bcrypt.hash("admin", 10);
+
+				db.insertOne(
+					Accounts,
+					{
+						accountId: "admin",
+						password: pword,
+						accountType: 0,
+					},
+					(admin) => {}
+				);
+			}
 
 			if (provinceCount === 0) {
 				// If empty, initialize Provinces data
@@ -236,10 +254,6 @@ const controller = {
 				];
 
 				await Provinces.insertMany(initialProvinces);
-
-				console.log("Initialized data");
-			} else {
-				console.log("Provinces already exist");
 			}
 
 			if (cityCount === 0) {
@@ -308,10 +322,6 @@ const controller = {
 				];
 
 				await Cities.insertMany(initialCities);
-
-				console.log("Initialized data");
-			} else {
-				console.log("Cities already exist");
 			}
 
 			if (regionCount === 0) {
@@ -344,10 +354,6 @@ const controller = {
 				];
 
 				await Regions.insertMany(initialRegions);
-
-				console.log("Initialized data");
-			} else {
-				console.log("Regions already exist");
 			}
 
 			if (chapterCount === 0) {
@@ -497,10 +503,6 @@ const controller = {
 				];
 
 				await Chapters.insertMany(initialChapters);
-
-				console.log("Initialized data");
-			} else {
-				console.log("Chapters already exist");
 			}
 		} catch (error) {
 			console.error("Error checking or initializing data:", error);
@@ -509,7 +511,6 @@ const controller = {
 
 	getRegions: async (req, res) => {
 		db.findMany(Regions, {}, { regionID: 1, regionName: 1 }, (result) => {
-			
 			res.send(result);
 		});
 	},
@@ -518,7 +519,6 @@ const controller = {
 		const regionId = req.params.regionId;
 		console.log(regionId);
 		db.findMany(Chapters, { regionID: regionId }, { chapterID: 1, name: 1, regionID: 1 }, (result) => {
-			
 			res.send(result);
 		});
 	},
@@ -570,6 +570,51 @@ const controller = {
 				res.send((currentYear.toString() + "0000").toString());
 			}
 		});
+	},
+
+	login: async (req, res) => {
+		db.findOne(Accounts, { accountId: req.body.idNumber }, {}, (account) => {
+			if (account) {
+				if (bcrypt.compareSync(req.body.password, account.password)) {
+					res.send([0, account.accountId]);
+				}
+			} else {
+				db.findOne(Application, { applicantId: req.body.idNumber }, {}, (applicant) => {
+					// check if applicant exists, if not, check members, and so on
+
+					if (applicant) {
+						if (bcrypt.compareSync(req.body.password, applicant.applicantPassword)) {
+							res.send([0, applicant._id]);
+						}
+					} else {
+						// check members
+						res.send([false, "no hello"]);
+					}
+				});
+			}
+		});
+	},
+
+	getAppStatus1: async (req, res) => {
+		const applicationId = req.params.id;
+		console.log(applicationId);
+		db.findOne(
+			Application,
+			{ _id: applicationId },
+			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1 },
+			(application) => {
+				db.findOne(Chapters, { chapterID: application.chapterId }, { name: 1 }, (chapter) => {
+					const toSend = {
+						applicantId: application.applicantId,
+						chapter: chapter.name,
+						dateCreated: application.dateCreated,
+						status: application.status,
+					};
+					console.log(toSend);
+					res.send(toSend);
+				});
+			}
+		);
 	},
 };
 

@@ -2,7 +2,6 @@ import "./App.css";
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import axios from "axios";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -30,6 +29,8 @@ import MyChapter from "./pages/MyChapter";
 import AllChapters from "./pages/AllChapters";
 
 import EventsHome from "./pages/Events/EventsHome-Member";
+import EventsAdd from "./pages/Events/EventsAdd-MCScribe";
+
 import EventsAttendance from "./pages/Events/EventsAttendance";
 import EventsAthletic from "./pages/Events/EventsAthletic";
 import EventsCivicService from "./pages/Events/EventsCivicService";
@@ -49,6 +50,18 @@ import EventsVisitation from "./pages/Events/EventsVisitation";
 import EventsValidation from "./pages/Events/EventsValidation-Advisor";
 import EventsProof from "./pages/Events/EventsProof-Advisor";
 import EventsPaymentValidation from "./pages/Events/EventsPaymentValidation-Admin";
+
+import TurnoverDashboard1 from "./pages/Turnover/TurnoverDashboard1";
+import TurnoverTF1 from "./pages/Turnover/TurnoverTF1";
+import TurnoverTF2 from "./pages/Turnover/TurnoverTF2";
+import TurnoverTF3 from "./pages/Turnover/TurnoverTF3";
+import TurnoverTF4 from "./pages/Turnover/TurnoverTF4";
+import TurnoverTF5 from "./pages/Turnover/TurnoverTF5";
+import TurnoverTF6 from "./pages/Turnover/TurnoverTF6";
+import TurnoverM1 from "./pages/Turnover/TurnoverM1";
+import TurnoverOA1 from "./pages/Turnover/TurnoverOA1";
+
+import Circular1 from "./pages/Circular/Circular1";
 
 import Header from "./components/Header";
 
@@ -71,6 +84,7 @@ function App() {
         <Route path="appform5" element={<AppForm5 />} />
         <Route path="appform5/:applicationId" element={<AppForm5 />} />
         <Route path="appstatus1" element={<AppStatus1 />} />
+        <Route path="appstatus1/:id" element={<AppStatus1 />} />
         <Route path="appstatus2" element={<AppStatus2 />} />
         <Route path="apppayment" element={<AppPayment />} />
         <Route path="eoapp1" element={<EOApp1 />} />
@@ -85,6 +99,7 @@ function App() {
         <Route path="mychapter" element={<MyChapter />} />
         <Route path="allchapters" element={<AllChapters />} />
         <Route path="eventsHome" element={<EventsHome />} />
+        <Route path="eventsAdd" element={<EventsAdd />} />
         <Route path="eventsAttendance" element={<EventsAttendance />} />
         <Route path="eventsAthletic" element={<EventsAthletic />} />
         <Route path="eventsCivicService" element={<EventsCivicService />} />
@@ -110,6 +125,22 @@ function App() {
           path="eventsPaymentValidation"
           element={<EventsPaymentValidation />}
         />
+        <Route path="turnoverDashboard1" element={<TurnoverDashboard1 />} />
+        <Route path="turnoverTF1" element={<TurnoverTF1 />} />
+        <Route path="turnoverTF2" element={<TurnoverTF2 />} />
+        <Route path="turnoverTF3" element={<TurnoverTF3 />} />
+        <Route path="turnoverTF4" element={<TurnoverTF4 />} />
+        <Route path="turnoverTF5" element={<TurnoverTF5 />} />
+        <Route path="turnoverTF6" element={<TurnoverTF6 />} />
+        <Route path="turnoverM1" element={<TurnoverM1 />} />
+        <Route path="turnoverOA1" element={<TurnoverOA1 />} />
+        <Route path="eventsValidation" element={<EventsValidation />} />
+        <Route path="eventsProof" element={<EventsProof />} />
+        <Route
+          path="eventsPaymentValidation"
+          element={<EventsPaymentValidation />}
+        />
+        <Route path="circular1" element={<Circular1 />} />
       </Routes>
     </>
   );
