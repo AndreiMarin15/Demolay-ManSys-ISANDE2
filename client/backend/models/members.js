@@ -9,7 +9,6 @@ const memberSchema = new Schema(
 			required: true,
 			unique: true,
 			trim: true,
-			
 		},
 
 		password: {
@@ -17,12 +16,11 @@ const memberSchema = new Schema(
 			required: true,
 			unique: false,
 			trim: false,
-			
 		},
 
 		lastName: String,
 
-		firstName: String,
+		givenName: String,
 
 		middleName: String,
 
@@ -45,6 +43,12 @@ const memberSchema = new Schema(
 		facebookLink: String,
 
 		photo: String,
+
+		demolayDegreeDate: String,
+
+		initiatoryDegreeDate: String,
+
+		
 	},
 	{
 		timestamps: true,
