@@ -6,6 +6,7 @@ const Regions = require("../models/regions.js");
 const db = require("../models/db.js");
 const bcrypt = require("bcrypt");
 const Accounts = require("../models/accounts.js");
+const Member = require("../models/members.js");
 
 const controller = {
 	newApplication: async (req, res) => {
@@ -190,6 +191,28 @@ const controller = {
 				res.send(result._id);
 			});
 		});
+	},
+
+	createMember: async (req, res) => {
+		const data = req.body
+
+		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
+			const member = {
+				memberId: data.idNumber,
+				password: hash,
+				givenName: data.givenName,
+				lastName: data.lastName,
+				middleName: data.middleName,
+				chapterId: data.chapterId,
+				email: data.email,
+				demolayDegreeDate: data.demolayDegreeDate,
+				initiatoryDegreeDate: data.initiatoryDegreeDate
+			}
+
+			db.insertOne(Member, member, result => {
+				res.send(result._id)
+			})
+		})
 	},
 
 	getApplication: async (req, res) => {
@@ -577,6 +600,8 @@ const controller = {
 			if (account) {
 				if (bcrypt.compareSync(req.body.password, account.password)) {
 					res.send([0, account.accountId]);
+				} else {
+					res.send("WP")
 				}
 			} else {
 				db.findOne(Application, { applicantId: req.body.idNumber }, {}, (applicant) => {
@@ -584,7 +609,10 @@ const controller = {
 
 					if (applicant) {
 						if (bcrypt.compareSync(req.body.password, applicant.applicantPassword)) {
-							res.send([0, applicant._id]);
+							res.send([1, applicant._id]);
+						}
+						else {
+							res.send("WP")
 						}
 					} else {
 						// check members
@@ -616,6 +644,8 @@ const controller = {
 			}
 		);
 	},
+
+	
 };
 
 module.exports = controller;
