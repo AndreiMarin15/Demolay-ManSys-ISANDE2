@@ -1,0 +1,76 @@
+@import "base.css";
+
+.small {
+  font-size: smaller;
+}
+
+.form-check-label {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.circ-options {
+  margin-top: 20px;
+}
+
+.circ-col {
+  margin-right: -60px;
+}
+
+.form-check {
+  margin-left: -18px;
+}
+
+.circ-btn {
+  background-color: #261d82;
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 5px;
+  transition-duration: 0.1s;
+  cursor: pointer;
+  width: auto;
+}
+
+.circ-btn:hover {
+  background-color: #5952a7;
+  color: white;
+  border: 1px solid #261d82;
+}
+
+.circ-desc {
+  color: rgb(85, 85, 85);
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+  font-family: "Open Sans";
+}
+
+.list-group-item {
+  padding-top: 20px;
+  border: none !important;
+}
+
+.date-time {
+  border-right: 1px solid rgb(97, 97, 97);
+  color: rgb(97, 97, 97);
+  margin-top: 3px;
+}
+
+.circ-date {
+  font-family: "Open Sans";
+  font-size: 15px;
+}
+
+.mb-1 {
+  font-weight: 100;
+}
+
+.circ-bold {
+  font-weight: 700;
+}

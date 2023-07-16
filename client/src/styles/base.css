@@ -207,3 +207,17 @@ hr {
   transition-duration: 0.1s;
   cursor: pointer;
 }
+
+.btn-text {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.btn-text:hover {
+  color: #261d82;
+}
+
+.btn-text:active {
+  color: #261d82;
+}
