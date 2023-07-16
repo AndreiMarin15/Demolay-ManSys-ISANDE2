@@ -7,6 +7,9 @@ import {
   faFilter,
   faEye,
   faCircleUser,
+  faMagnifyingGlass,
+  faFileLines,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 import { Component } from "react";
 import { useParams } from "react-router-dom";
@@ -27,13 +30,13 @@ function Circular1() {
       <hr />
 
       <div className="row">
-        <div className="col-md-2">
+        <div className="col-md-3">
           {/* Content for the left column */}
           <div
             className="row justify-content-center"
             style={{
               marginTop: "10px",
-              marginLeft: "60px",
+              marginLeft: "50px",
             }}
           >
             <FontAwesomeIcon
@@ -49,11 +52,46 @@ function Circular1() {
             </div>
           </div>
 
-          <div className="row" style={{ marginLeft: "60px" }}>
-            <p>Circulars</p>
-            <p>For Review</p>
-            <p>Forms and Reports</p>
-            <p>Directory</p>
+          <div className="text-start" style={{ marginLeft: "100px" }}>
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faBullhorn}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
+              Circulars
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
+              For Review
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faFileLines}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
+              Forms and Reports
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faAddressBook}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
+              Directory
+            </button>
           </div>
         </div>
         <div className="col-md-1">
@@ -61,7 +99,7 @@ function Circular1() {
           <div className="vertical-line"></div>
         </div>
         <div
-          className="col-md-9 justify-content-center"
+          className="col-md-8 justify-content-center"
           style={{ marginLeft: "-60px" }}
         >
           <div className="row">

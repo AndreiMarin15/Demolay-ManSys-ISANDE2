@@ -59,6 +59,9 @@ import TurnoverM1 from "./pages/Turnover/TurnoverM1";
 import TurnoverOA1 from "./pages/Turnover/TurnoverOA1";
 
 import Circular1 from "./pages/Circular/Circular1";
+import Circular2 from "./pages/Circular/Circular2";
+import Circular3 from "./pages/Circular/Circular3";
+import CSCircular from "./pages/Circular/CSCircular";
 
 import Header from "./components/Header";
 
@@ -135,6 +138,9 @@ function App() {
           element={<EventsPaymentValidation />}
         />
         <Route path="circular1" element={<Circular1 />} />
+        <Route path="circular2" element={<Circular2 />} />
+        <Route path="circular3" element={<Circular3 />} />
+        <Route path="cscircular" element={<CSCircular />} />
       </Routes>
     </>
   );
