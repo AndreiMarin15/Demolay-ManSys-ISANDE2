@@ -17,6 +17,8 @@ router.post("/newApplication4/:id", controller.newApplication4);
 router.post("/newApplication5/:id", controller.newApplication5);
 router.post("/login", controller.login);
 router.post("/createMember", controller.createMember)
+router.post("/createAdvisor", controller.createAdvisor)
+router.post("/createAdmin", controller.createAdmin)
 
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);

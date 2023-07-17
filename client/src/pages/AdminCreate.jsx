@@ -54,13 +54,13 @@ function AdminCreate() {
 		} else if (formData.position == 2) {
 			// advisory
 			const advisory = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				userId: formData.userId,
-				initialPassword: formData.initialPassword,
-				email: formData.email,
-				assignedChapterId: advisoryCouncilData.assignedChapterId,
+				lastName: 			formData.lastName,
+				givenName: 			formData.givenName,
+				middleName: 		formData.middleName,
+				userId: 			formData.userId,
+				initialPassword: 	formData.initialPassword,
+				email: 				formData.email,
+				assignedChapterId: 	advisoryCouncilData.assignedChapterId,
 			};
 
 			axios.post(`http://localhost:5000/createAdvisor/`, advisory).then((res) => {
