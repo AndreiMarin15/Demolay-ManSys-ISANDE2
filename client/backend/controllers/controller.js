@@ -644,7 +644,7 @@ const controller = {
 				if (bcrypt.compareSync(req.body.password, account.password)) {
 					req.session.id = account._id;
 					req.session.userId = account.accountId;
-					req.session.userType = 0
+					req.session.userType = "admin";
 					res.send([0, account.accountId]);
 				} else {
 					res.send("WP");
@@ -657,7 +657,7 @@ const controller = {
 						if (bcrypt.compareSync(req.body.password, applicant.applicantPassword)) {
 							req.session.id = applicant._id;
 							req.session.userId = applicant.applicantId;
-							req.session.userType = 1
+							req.session.userType = applicant.position;
 							res.send([1, applicant._id]);
 						} else {
 							res.send("WP");

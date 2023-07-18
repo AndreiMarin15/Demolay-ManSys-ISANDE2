@@ -48,7 +48,7 @@ const memberSchema = new Schema(
 
 		initiatoryDegreeDate: String,
 
-		
+		position: String
 	},
 	{
 		timestamps: true,
