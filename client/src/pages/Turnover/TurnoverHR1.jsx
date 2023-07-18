@@ -297,7 +297,7 @@ function TurnoverHR1() {
          
          <div className="d-flex justify-content-end mt-3">
             <Link to="/turnoverTF2">
-               <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+               <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
                   NEXT
                </button>
             </Link>

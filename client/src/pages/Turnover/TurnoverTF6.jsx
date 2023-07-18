@@ -13,7 +13,7 @@ function TurnoverTF6 () {
       <div className="d-flex justify-content-between align-items-center mb-3">
          <h1> Term and Financial Report </h1>
          <Link to="/turnoverTF5">
-            <button type="submit" form="submit" id="primary-btn">
+            <button type="submit" form="submit" className="primary-btn">
                SAVE AND COMPLETE LATER
             </button>
          </Link>
@@ -257,12 +257,12 @@ function TurnoverTF6 () {
 
         <div className="d-flex justify-content-between mt-4">
             <Link to="/turnoverTF5">
-               <button type="button" id="back-btn">
+               <button type="button" className="primary-btn">
                   BACK
                </button>
             </Link>
             <Link to="/turnoverTF1">
-               <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+               <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
                   SEND
                </button>
             </Link>
