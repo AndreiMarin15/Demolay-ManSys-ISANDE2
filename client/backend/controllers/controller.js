@@ -240,7 +240,6 @@ const controller = {
 		const data = req.body;
 
 		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
-			
 			const admin = {
 				accountId: data.userId,
 				password: hash,
@@ -253,9 +252,9 @@ const controller = {
 				email: data.email,
 			};
 
-			db.insertOne(Accounts, admin, result => {
-				res.send(result._id)
-			})
+			db.insertOne(Accounts, admin, (result) => {
+				res.send(result._id);
+			});
 		});
 	},
 
@@ -643,6 +642,9 @@ const controller = {
 		db.findOne(Accounts, { accountId: req.body.idNumber }, {}, (account) => {
 			if (account) {
 				if (bcrypt.compareSync(req.body.password, account.password)) {
+					req.session.id = account._id;
+					req.session.userId = account.accountId;
+					req.session.userType = 0
 					res.send([0, account.accountId]);
 				} else {
 					res.send("WP");
@@ -653,6 +655,9 @@ const controller = {
 
 					if (applicant) {
 						if (bcrypt.compareSync(req.body.password, applicant.applicantPassword)) {
+							req.session.id = applicant._id;
+							req.session.userId = applicant.applicantId;
+							req.session.userType = 1
 							res.send([1, applicant._id]);
 						} else {
 							res.send("WP");
@@ -663,6 +668,13 @@ const controller = {
 					}
 				});
 			}
+		});
+	},
+
+	logout: function (req, res) {
+		req.session.destroy((err) => {
+			if (err) throw err;
+			res.send("/login");
 		});
 	},
 
