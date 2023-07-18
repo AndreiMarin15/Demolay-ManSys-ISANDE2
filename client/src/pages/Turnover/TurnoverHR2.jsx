@@ -10,6 +10,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 function TurnoverHR2() {
    return (
       <div className="container">
+
          <div className="d-flex justify-content-between align-items-center mb-3">
             <h1> Report on Historical Records, Official Files and Assets, and Properties </h1>
             <Link to="/turnoverTF1">
@@ -26,6 +27,7 @@ function TurnoverHR2() {
                This is to certify that all Historical Records, Official Files and Assets, and Properties of <u> Manila Chapter </u> listed below have been formally turned over to the following term of:
             </p>
          </div>
+
          <div className="row">
             <div style={{ display: 'flex', justifyContent: 'center' }}>
                <div style={{ display: 'flex', alignItems: 'center' }}>
