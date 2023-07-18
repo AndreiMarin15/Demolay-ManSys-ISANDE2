@@ -20,7 +20,11 @@ const RenderTableData = () => {
             <td>{col1}</td>
             <td>{col2}</td>
             <td>{col3}</td>
-            <td><button>View</button></td>
+            <td>
+               <button type="submit" form="submit" className="primary-btn" value="VIEW">
+                  VIEW
+               </button>
+            </td>
          </tr>
       );
    });
@@ -163,7 +167,7 @@ function EventsValidation() {
                
                <div className="d-flex justify-content-center mt-4">
                   <Link to="/appform1">
-                     <button type="button" form="button" id="primary-btn" value="NEXT">
+                     <button type="button" form="button" className="primary-btn" value="NEXT">
                         VALIDATE
                      </button>
                   </Link>

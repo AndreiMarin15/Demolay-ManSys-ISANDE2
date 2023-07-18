@@ -40,19 +40,23 @@ function EventsJournalism() {
          <div className="d-flex justify-content-between align-items-center mb-3">
             <h1>Add Event - Journalism </h1>
             <Link to="/eventsJournalism">
-               <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
+               <button type="submit" form="submit" className="primary-btn" value="ADD NEW ENTRY">
                   ADD NEW ENTRY
                </button>
             </Link>
          </div>
+         
          {/* Instruction */}
+
          <div>
             <p className="instruction"> Please take note that you can only submit the form if you have completed all the requirements. </p>
          </div>
          <hr/>
 
          <div className="row">
+
             {/* First Column */}
+
             <div className="col-md-4">
                <table class="legend-table">
                   <tr>
@@ -69,7 +73,9 @@ function EventsJournalism() {
                   </tr>
                </table>
             </div>
+
             {/* Second Column */}
+
             <div className="col-md-4">
                <div className="row align-items-center mt-3">
                   <div className="col-md-4">
@@ -131,7 +137,9 @@ function EventsJournalism() {
                   </div>
                </div>
             </div>
+
             {/* Third Column */}
+
             <div className="col-md-4">
                <div className="row align-items-center mt-3">
                   <div className="col-md-3">
@@ -147,15 +155,17 @@ function EventsJournalism() {
                   </div>
                </div>
             </div>
+
             {/* Buttons */}
+
             <div className="d-flex justify-content-between mt-4">
                <Link to="/eventsHome">
-                  <button type="button" id="back-btn">
-                     HOME
+                  <button type="button" className="primary-btn">
+                     BACK
                   </button>
                </Link>
                <Link to="/turnoverTF3">
-                  <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+                  <button type="button" className="primary-btn" value="SUBMIT">
                      SUBMIT
                   </button>
                </Link>

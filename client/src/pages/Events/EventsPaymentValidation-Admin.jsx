@@ -17,7 +17,11 @@ const RenderTableData = () => {
          <td>{col2}</td>
          <td>{col3}</td>
          <td>{col4}</td>
-         <td><button>View</button></td>
+         <td>
+            <button type="submit" form="submit" className="primary-btn" value="VIEW">
+               VIEW
+            </button>
+         </td>
          <td>
          {col5}
          <input type="checkbox" name={`paid${index}`} />

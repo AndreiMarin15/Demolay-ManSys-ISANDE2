@@ -42,7 +42,7 @@ function EventsAthletic() {
          <div className="d-flex justify-content-between align-items-center mb-3">
             <h1>Add Event - Athletic </h1>
             <Link to="/eventsAthletic">
-               <button type="submit" form="submit" id="primary-btn" value="ADD NEW ENTRY">
+               <button type="submit" form="submit" className="primary-btn" value="ADD NEW ENTRY">
                   ADD NEW ENTRY
                </button>
             </Link>
@@ -153,12 +153,12 @@ function EventsAthletic() {
             
             <div className="d-flex justify-content-between mt-4">
                <Link to="/eventsHome">
-                  <button type="button" id="back-btn">
-                     HOME
+                  <button type="button" className="primary-btn">
+                     BACK
                   </button>
                </Link>
                <Link to="/turnoverTF3">
-                  <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+                  <button type="button" className="primary-btn" value="SUBMIT">
                      SUBMIT
                   </button>
                </Link>
