@@ -3,6 +3,8 @@ import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import About from "./pages/About";
@@ -69,78 +71,99 @@ import CSCircular from "./pages/Circular/CSCircular";
 import Header from "./components/Header";
 
 function App() {
-	return (
-		<>
-			<Header />
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="login" element={<Login />} />
-				<Route path="about" element={<About />} />
-				<Route path="contact" element={<Contact />} />
-				<Route path="appform1" element={<AppForm1 />} />
-				<Route path="appform2" element={<AppForm2 />} /> {/* testing */}
-				<Route path="appform2/:applicationId" element={<AppForm2 />} />
-				<Route path="appform3" element={<AppForm3 />} />
-				<Route path="appform3/:applicationId" element={<AppForm3 />} />
-				<Route path="appform4" element={<AppForm4 />} />
-				<Route path="appform4/:applicationId" element={<AppForm4 />} />
-				<Route path="appform5" element={<AppForm5 />} />
-				<Route path="appform5/:applicationId" element={<AppForm5 />} />
-				<Route path="appstatus1" element={<AppStatus1 />} />
-				<Route path="appstatus1/:id" element={<AppStatus1 />} />
-				<Route path="appstatus2" element={<AppStatus2 />} />
-				<Route path="apppayment" element={<AppPayment />} />
-				<Route path="eoapp1" element={<EOApp1 />} />
-				<Route path="csapp1" element={<CSApp1 />} />
-				<Route path="csappinprogress" element={<CSAppInProgress />} />
-				<Route path="csform10" element={<CSForm10 />} />
-				<Route path="csform10sum" element={<CSForm10Sum />} />
-				<Route path="csapppending" element={<CSAppPending />} />
-				<Route path="caapprejected" element={<CAAppRejected />} />
-				<Route path="caform10approve" element={<CAForm10Approve />} />
-				<Route path="admincreate" element={<AdminCreate />} />
-				<Route path="mychapter" element={<MyChapter />} />
-				<Route path="allchapters" element={<AllChapters />} />
-				<Route path="eventsHome" element={<EventsHome />} />
-				<Route path="eventsAdd" element={<EventsAdd />} />
-				<Route path="eventsAttendance" element={<EventsAttendance />} />
-				<Route path="eventsAthletic" element={<EventsAthletic />} />
-				<Route path="eventsCivicService" element={<EventsCivicService />} />
-				<Route path="eventsConclave" element={<EventsConclave />} />
-				<Route path="eventsFineArts" element={<EventsFineArts />} />
-				<Route path="eventsFundraising" element={<EventsFundraising />} />
-				<Route path="eventsInstalling" element={<EventsInstalling />} />
-				<Route path="eventsJournalism" element={<EventsJournalism />} />
-				<Route path="eventsMasonicAttendance" element={<EventsMasonicAttendance />} />
-				<Route path="eventsMasonicService" element={<EventsMasonicService />} />
-				<Route path="eventsMerit" element={<EventsMerit />} />
-				<Route path="eventsPetitions" element={<EventsPetitions />} />
-				<Route path="eventsReligion" element={<EventsReligion />} />
-				<Route path="eventsRitual" element={<EventsRitual />} />
-				<Route path="eventsScholastics" element={<EventsScholastics />} />
-				<Route path="eventsVisitation" element={<EventsVisitation />} />
-				<Route path="eventsValidation" element={<EventsValidation />} />
-				<Route path="eventsProof" element={<EventsProof />} />
-				<Route path="eventsPaymentValidation" element={<EventsPaymentValidation />} />
-				<Route path="turnoverDashboard1" element={<TurnoverDashboard1 />} />
-				<Route path="turnoverTF1" element={<TurnoverTF1 />} />
-				<Route path="turnoverTF2" element={<TurnoverTF2 />} />
-				<Route path="turnoverTF3" element={<TurnoverTF3 />} />
-				<Route path="turnoverTF4" element={<TurnoverTF4 />} />
-				<Route path="turnoverTF5" element={<TurnoverTF5 />} />
-				<Route path="turnoverTF6" element={<TurnoverTF6 />} />
-				<Route path="turnoverM1" element={<TurnoverM1 />} />
-				<Route path="turnoverOA1" element={<TurnoverOA1 />} />
-				<Route path="eventsValidation" element={<EventsValidation />} />
-				<Route path="eventsProof" element={<EventsProof />} />
-				<Route path="eventsPaymentValidation" element={<EventsPaymentValidation />} />
-				<Route path="circular1" element={<Circular1 />} />
-				<Route path="circular2" element={<Circular2 />} />
-				<Route path="circular3" element={<Circular3 />} />
-				<Route path="cscircular" element={<CSCircular />} />
-			</Routes>
-		</>
-	);
+  return (
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="login" element={<Login />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="appform1" element={<AppForm1 />} />
+          <Route path="appform2" element={<AppForm2 />} /> {/* testing */}
+          <Route path="appform2/:applicationId" element={<AppForm2 />} />
+          <Route path="appform3" element={<AppForm3 />} />
+          <Route path="appform3/:applicationId" element={<AppForm3 />} />
+          <Route path="appform4" element={<AppForm4 />} />
+          <Route path="appform4/:applicationId" element={<AppForm4 />} />
+          <Route path="appform5" element={<AppForm5 />} />
+          <Route path="appform5/:applicationId" element={<AppForm5 />} />
+          <Route path="appstatus1" element={<AppStatus1 />} />
+          <Route path="appstatus1/:id" element={<AppStatus1 />} />
+          <Route path="appstatus2" element={<AppStatus2 />} />
+          <Route path="apppayment" element={<AppPayment />} />
+          <Route path="eoapp1" element={<EOApp1 />} />
+          {/* protected routes only for Scribe */}
+          <Route
+            element={
+              <RequireAuth allowedRoles={[1]} allowedPositions={["Scribe"]} />
+            }
+          >
+            <Route path="csapp1" element={<CSApp1 />} />
+            <Route path="csappinprogress" element={<CSAppInProgress />} />
+            <Route path="csform10" element={<CSForm10 />} />
+            <Route path="csform10sum" element={<CSForm10Sum />} />
+            <Route path="csapppending" element={<CSAppPending />} />
+          </Route>
+          <Route path="caapprejected" element={<CAAppRejected />} />
+          <Route path="caform10approve" element={<CAForm10Approve />} />
+          <Route path="admincreate" element={<AdminCreate />} />
+          <Route path="mychapter" element={<MyChapter />} />
+          <Route path="allchapters" element={<AllChapters />} />
+          <Route path="eventsHome" element={<EventsHome />} />
+          <Route path="eventsAdd" element={<EventsAdd />} />
+          <Route path="eventsAttendance" element={<EventsAttendance />} />
+          <Route path="eventsAthletic" element={<EventsAthletic />} />
+          <Route path="eventsCivicService" element={<EventsCivicService />} />
+          <Route path="eventsConclave" element={<EventsConclave />} />
+          <Route path="eventsFineArts" element={<EventsFineArts />} />
+          <Route path="eventsFundraising" element={<EventsFundraising />} />
+          <Route path="eventsInstalling" element={<EventsInstalling />} />
+          <Route path="eventsJournalism" element={<EventsJournalism />} />
+          <Route
+            path="eventsMasonicAttendance"
+            element={<EventsMasonicAttendance />}
+          />
+          <Route
+            path="eventsMasonicService"
+            element={<EventsMasonicService />}
+          />
+          <Route path="eventsMerit" element={<EventsMerit />} />
+          <Route path="eventsPetitions" element={<EventsPetitions />} />
+          <Route path="eventsReligion" element={<EventsReligion />} />
+          <Route path="eventsRitual" element={<EventsRitual />} />
+          <Route path="eventsScholastics" element={<EventsScholastics />} />
+          <Route path="eventsVisitation" element={<EventsVisitation />} />
+          <Route path="eventsValidation" element={<EventsValidation />} />
+          <Route path="eventsProof" element={<EventsProof />} />
+          <Route
+            path="eventsPaymentValidation"
+            element={<EventsPaymentValidation />}
+          />
+          <Route path="turnoverDashboard1" element={<TurnoverDashboard1 />} />
+          <Route path="turnoverTF1" element={<TurnoverTF1 />} />
+          <Route path="turnoverTF2" element={<TurnoverTF2 />} />
+          <Route path="turnoverTF3" element={<TurnoverTF3 />} />
+          <Route path="turnoverTF4" element={<TurnoverTF4 />} />
+          <Route path="turnoverTF5" element={<TurnoverTF5 />} />
+          <Route path="turnoverTF6" element={<TurnoverTF6 />} />
+          <Route path="turnoverM1" element={<TurnoverM1 />} />
+          <Route path="turnoverOA1" element={<TurnoverOA1 />} />
+          <Route path="eventsValidation" element={<EventsValidation />} />
+          <Route path="eventsProof" element={<EventsProof />} />
+          <Route
+            path="eventsPaymentValidation"
+            element={<EventsPaymentValidation />}
+          />
+          <Route path="circular1" element={<Circular1 />} />
+          <Route path="circular2" element={<Circular2 />} />
+          <Route path="circular3" element={<Circular3 />} />
+          <Route path="cscircular" element={<CSCircular />} />
+        </Route>
+      </Routes>
+    </>
+  );
 }
 
 export default App;
