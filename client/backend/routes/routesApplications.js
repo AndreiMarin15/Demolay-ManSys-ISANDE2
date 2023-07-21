@@ -16,9 +16,9 @@ router.post("/newApplication3/:id", controller.newApplication3);
 router.post("/newApplication4/:id", controller.newApplication4);
 router.post("/newApplication5/:id", controller.newApplication5);
 router.post("/login", controller.login);
-router.post("/createMember", controller.createMember)
-router.post("/createAdvisor", controller.createAdvisor)
-router.post("/createAdmin", controller.createAdmin)
+router.post("/createMember", controller.createMember);
+router.post("/createAdvisor", controller.createAdvisor);
+router.post("/createAdmin", controller.createAdmin);
 
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
@@ -30,5 +30,7 @@ router.get("/generateID", controller.generateApplicantID);
 router.get("/getStatus1/:id", controller.getAppStatus1);
 
 router.get("/applications/:id", controller.getApplication);
+
+router.get("/getCurrentUser", controller.getCurrentUser);
 
 module.exports = router;
