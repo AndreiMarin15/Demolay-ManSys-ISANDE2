@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 
 require("dotenv").config();
 
-const session = require("express-session")
-const MongoDBSession = require("connect-mongodb-session")(session)
+const session = require("express-session");
+const MongoDBSession = require("connect-mongodb-session")(session);
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,19 +20,23 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const store = new MongoDBSession({
 	uri: uri,
-	collection: "Sessions"
-})
+	collection: "Sessions",
+});
 
 app.use(
 	session({
 		secret: "database",
 		resave: false,
-		saveUninitialized: false,
+		saveUninitialized: true,
 		store: store,
-		expires: new Date(Date.now() + 864000000)
+		expires: new Date(Date.now() + 864000000),
 	})
-)
+);
 
+app.use(function (req, res, next) {
+	res.locals.session = req.session;
+	next();
+});
 
 const connection = mongoose.connection;
 connection.once("open", () => {

@@ -28,22 +28,23 @@ function Login() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const loginDetails = {
-      idNumber: formData.idNumber,
-      password: formData.password,
-    };
-    console.log("triggered");
-    axios.post("http://localhost:5000/login", loginDetails).then((result) => {
-      console.log(result.data);
-      if (result.data === "WP") {
-        alert("Incorrect Credentials. Please try again.");
-      } else if (result.data[0] === 1) {
-        window.location.href = `/appstatus1/${result.data[1]}`;
-        console.log(result.data[1]);
-      } else if (result.data[0] === 0) {
-        window.location.href = `/admincreate/`;
-        console.log(result.data[1]);
-      }
+		const loginDetails = {
+			idNumber: formData.idNumber,
+			password: formData.password,
+		};
+		console.log("triggered");
+		axios.post("http://localhost:5000/login", loginDetails).then((result) => {
+			console.log(result.data[2])
+			console.log(result.data === "WP");
+			if (result.data === "WP") {
+				alert("Incorrect Credentials. Please try again.");
+			} else if (result.data[0] === 1) {
+				window.location.href = `/appstatus1/${result.data[1]}`;
+				console.log(result.data[1]);
+			} else if (result.data[0] === 0) {
+				window.location.href = `/admincreate/`;
+				console.log(result.data[1]);
+			}
 
       console.log(result);
     });
