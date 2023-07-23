@@ -2,13 +2,10 @@ import { Link } from "react-router-dom";
 import "../styles/base.css";
 import "../styles/eoapp1.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFilter,
-  faSquareXmark,
-  faSquareCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faSquareXmark, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { Component } from "react";
 import { useParams } from "react-router-dom";
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -16,138 +13,200 @@ const reject = <FontAwesomeIcon icon={faSquareXmark} />;
 const approve = <FontAwesomeIcon icon={faSquareCheck} />;
 
 function EOApp1() {
-  return (
-    <div className="container container-fluid ">
-      <div className="row">
-        <div className="col-md-12">
-          <h1>Pending Applications</h1>
-        </div>
-      </div>
+	const [applicationData, setApplicationData] = useState({
+		applications: [],
+		filteredApplications: [],
+	});
 
-      <hr />
+	const [applicantInformationData, setApplicantInformation] = useState({
+		uid: "",
+		fullName: "",
+		age: "",
+		contact: "",
+		firstLineSigner: "",
+		otherDetails: "",
+	});
 
-      <div className="row" style={{ marginLeft: "35px" }}>
-        <div className="col-md-5">
-          {/* Content for the left column */}
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Search"
-            />
-            <div className="input-group-append">
-              <button type="button" className="filterbtn">
-                <FontAwesomeIcon icon={faFilter} />
-              </button>
-            </div>
-          </div>
-          <br />
-          <div className="table-responsive">
-            <table className="table table-bordered-custom">
-              <thead className="thead-custom">
-                <tr>
-                  <th>#</th>
-                  <th>Applicant Name</th>
-                  <th>View</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>John Doe</td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
+	const handleSearch = async (e) => {
+		const searchString = e.target.value;
+		const regex = new RegExp(searchString, "i");
+		const filteredApplications = await applicationData.applications.filter((applicant) => {
+			if (regex.test(applicant.givenName) || regex.test(applicant.lastName) || regex.test(applicant.applicantId)) {
+				return true;
+			} else {
+				return false;
+			}
+		});
 
-                <tr>
-                  <td>2</td>
-                  <td>Joe Alwyn</td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="col-md-1">
-          {/* Vertical line or divider */}
-          <div className="vertical-line"></div>
-        </div>
-        <div className="col-md-6 justify-content-center">
-          <h2 className="text-center" style={{ marginLeft: "-40px" }}>
-            Applicant Information
-          </h2>
-          <table className="info-table" style={{ marginLeft: "130px" }}>
-            <tr>
-              <td>Full Name</td>
-              <td>John Doe</td>
-            </tr>
+		setApplicationData({
+			...applicationData,
+			filteredApplications: filteredApplications,
+		});
+	};
 
-            <tr>
-              <td>Age:</td>
-              <td>16</td>
-            </tr>
+	useEffect(() => {
+		axios.get("http://localhost:5000/getApplications").then((applications) => {
+			console.log(applications.data);
+			setApplicationData({
+				...applicationData,
+				applications: applications.data,
+				filteredApplications: applications.data,
+			});
 
-            <tr>
-              <td>Contact:</td>
-              <td>09998765432</td>
-            </tr>
+			setApplicantInformation({
+				...applicantInformationData,
+				uid: applications.data[0]._id,
+				fullName: applications.data[0].givenName + " " + applications.data[0].lastName,
+				age: calculateAge(applications.data[0].birthdate),
+				contact: applications.data[0].mobile,
+				firstLineSigner: applications.data[0].firstLineSigner ? applications.data[0].firstLineSigner : "N/A",
+				otherDetails: applications.data[0].notes ? applications.data[0].notes : "N/A",
+			});
+		});
+	}, []);
 
-            <tr>
-              <td>First Line Signer:</td>
-              <td>Kobi Tolentino</td>
-            </tr>
+	function calculateAge(dateString) {
+		var birthday = new Date(dateString);
+		var ageDifMs = Date.now() - birthday.getTime();
+		var ageDate = new Date(ageDifMs); // miliseconds from epoch
+		return Math.abs(ageDate.getUTCFullYear() - 1970);
+	}
 
-            <tr>
-              <td>Other Details:</td>
-              <td>Notes</td>
-            </tr>
-          </table>
+	const changeInformation = (application) => {
+		console.log(application);
+		setApplicantInformation({
+			...applicantInformationData,
+			uid: application._id,
+			fullName: application.givenName + " " + application.lastName,
+			age: calculateAge(application.birthdate),
+			contact: application.mobile,
+			firstLineSigner: application.firstLineSigner ? application.firstLineSigner : "N/A",
+			otherDetails: application.notes ? application.notes : "N/A",
+		});
+	};
 
-          <div
-            className="col-12 text-center"
-            style={{ marginLeft: "-30px", marginTop: "20px" }}
-          >
-            <Link to="/appform4">
-              <button type="submit" className="btn custom">
-                View Full Application
-              </button>
-            </Link>
-          </div>
-          <br />
-          <br />
+	const redirect = () => {
+		window.location.href = `/appform4/${applicantInformationData.uid}`;
+	};
 
-          <div className="row" style={{ marginLeft: "70px" }}>
-            <div className="col-md-6">
-              <button type="button" style={{ border: "0" }}>
-                <span>
-                  <FontAwesomeIcon
-                    icon={faSquareXmark}
-                    style={{ marginRight: "8px" }}
-                  />
-                </span>
-                <b> Reject Application </b>
-              </button>
-            </div>
+	return (
+		<div className="container container-fluid ">
+			<div className="row">
+				<div className="col-md-12">
+					<h1>Pending Applications</h1>
+				</div>
+			</div>
 
-            <div className="col-md-6">
-              <button type="button" style={{ border: "0" }}>
-                <span>
-                  <FontAwesomeIcon
-                    icon={faSquareCheck}
-                    style={{ marginRight: "8px" }}
-                  />
-                </span>
-                <b>Approve for Petitioning</b>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+			<hr />
+
+			<div className="row" style={{ marginLeft: "35px" }}>
+				<div className="col-md-5">
+					{/* Content for the left column */}
+					<div className="input-group mb-3">
+						<input type="text" className="form-control form-control-sm" placeholder="Search" onChange={handleSearch} />
+						<div className="input-group-append">
+							<button type="button" className="filterbtn">
+								<FontAwesomeIcon icon={faFilter} />
+							</button>
+						</div>
+					</div>
+					<br />
+					<div className="table-responsive">
+						<table className="table table-bordered-custom">
+							<thead className="thead-custom">
+								<tr>
+									<th>#</th>
+									<th>Applicant Name</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								{applicationData.filteredApplications.map(function (application) {
+									return (
+										<tr key={application.applicantId}>
+											<td> {application.applicantId} </td>
+											<td>
+												{application.givenName} {application.lastName}
+											</td>
+											<td>
+												<button className="btn btn-primary" onClick={() => changeInformation(application)}>
+													{" "}
+													View Application
+												</button>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div className="col-md-1">
+					{/* Vertical line or divider */}
+					<div className="vertical-line"></div>
+				</div>
+				<div className="col-md-6 justify-content-center">
+					<h2 className="text-center" style={{ marginLeft: "-40px" }}>
+						Applicant Information
+					</h2>
+					<table className="info-table" style={{ marginLeft: "130px" }}>
+						<tr>
+							<td>Full Name</td>
+							<td> {applicantInformationData.fullName} </td>
+						</tr>
+
+						<tr>
+							<td>Age:</td>
+							<td>{applicantInformationData.age}</td>
+						</tr>
+
+						<tr>
+							<td>Contact:</td>
+							<td>{applicantInformationData.contact}</td>
+						</tr>
+
+						<tr>
+							<td>First Line Signer:</td>
+							<td>{applicantInformationData.firstLineSigner}</td>
+						</tr>
+
+						<tr>
+							<td>Other Details:</td>
+							<td>{applicantInformationData.otherDetails}</td>
+						</tr>
+					</table>
+
+					<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
+						<button type="submit" className="btn custom" onClick={redirect}>
+							View Full Application
+						</button>
+					</div>
+					<br />
+					<br />
+
+					<div className="row" style={{ marginLeft: "70px" }}>
+						<div className="col-md-6">
+							<button type="button" style={{ border: "0" }}>
+								<span>
+									<FontAwesomeIcon icon={faSquareXmark} style={{ marginRight: "8px" }} />
+								</span>
+								<b> Reject Application </b>
+							</button>
+						</div>
+
+						<div className="col-md-6">
+							<button type="button" style={{ border: "0" }}>
+								<span>
+									<FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px" }} />
+								</span>
+								<b>Approve for Petitioning</b>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default EOApp1;

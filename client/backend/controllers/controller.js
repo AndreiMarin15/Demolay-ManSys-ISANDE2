@@ -758,6 +758,12 @@ const controller = {
       }
     );
   },
+
+  getApplications: async (req, res) => {
+    db.findMany(Application, {}, {}, applications => {
+      res.send(applications)
+    })
+  }
 };
 
 module.exports = controller;

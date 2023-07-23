@@ -95,17 +95,17 @@ function App() {
           <Route path="apppayment" element={<AppPayment />} />
           <Route path="eoapp1" element={<EOApp1 />} />
           {/* protected routes only for Scribe */}
-          <Route
+         {/* <Route
             element={
               <RequireAuth allowedRoles={[1]} allowedPositions={["Scribe"]} />
             }
-          >
+          > */}
             <Route path="csapp1" element={<CSApp1 />} />
             <Route path="csappinprogress" element={<CSAppInProgress />} />
             <Route path="csform10" element={<CSForm10 />} />
             <Route path="csform10sum" element={<CSForm10Sum />} />
             <Route path="csapppending" element={<CSAppPending />} />
-          </Route>
+         {/* </Route> */}
           <Route path="caapprejected" element={<CAAppRejected />} />
           <Route path="caform10approve" element={<CAForm10Approve />} />
           <Route path="admincreate" element={<AdminCreate />} />

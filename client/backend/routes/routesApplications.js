@@ -29,6 +29,8 @@ router.get("/getCities/:provinceID", controller.getCities);
 router.get("/generateID", controller.generateApplicantID);
 router.get("/getStatus1/:id", controller.getAppStatus1);
 
+router.get("/getApplications", controller.getApplications)
+
 router.get("/applications/:id", controller.getApplication);
 
 router.get("/getCurrentUser", controller.getCurrentUser);
