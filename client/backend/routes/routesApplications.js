@@ -34,5 +34,5 @@ router.get("/applications/:id", controller.getApplication);
 router.get("/getCurrentUser", controller.getCurrentUser);
 
 
-router.get("/testSession", controller.testSession)
+
 module.exports = router;
