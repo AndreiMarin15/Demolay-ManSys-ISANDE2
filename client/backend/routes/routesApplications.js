@@ -28,6 +28,11 @@ router.get("/getProvinces", controller.getProvinces);
 router.get("/getCities/:provinceID", controller.getCities);
 router.get("/generateID", controller.generateApplicantID);
 router.get("/getStatus1/:id", controller.getAppStatus1);
+router.get("/generateMemberId", controller.generateMemberId)
+
+
+router.post("/approveApplication", controller.approveForPetitioning)
+router.post("/rejectApplication", controller.rejectApplication)
 
 router.get("/getApplications", controller.getApplications)
 

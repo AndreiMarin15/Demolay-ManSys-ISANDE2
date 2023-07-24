@@ -20,6 +20,7 @@ function EOApp1() {
 
 	const [applicantInformationData, setApplicantInformation] = useState({
 		uid: "",
+		applicationId: "",
 		fullName: "",
 		age: "",
 		contact: "",
@@ -56,6 +57,7 @@ function EOApp1() {
 			setApplicantInformation({
 				...applicantInformationData,
 				uid: applications.data[0]._id,
+				applicationId: applications.data[0].applicantId,
 				fullName: applications.data[0].givenName + " " + applications.data[0].lastName,
 				age: calculateAge(applications.data[0].birthdate),
 				contact: applications.data[0].mobile,
@@ -77,12 +79,36 @@ function EOApp1() {
 		setApplicantInformation({
 			...applicantInformationData,
 			uid: application._id,
+			applicationId: application.applicantId,
 			fullName: application.givenName + " " + application.lastName,
 			age: calculateAge(application.birthdate),
 			contact: application.mobile,
 			firstLineSigner: application.firstLineSigner ? application.firstLineSigner : "N/A",
 			otherDetails: application.notes ? application.notes : "N/A",
 		});
+	};
+
+	const approveForPetitioning = (applicationId) => {
+		const approval = {
+			status: "Approved",
+			applicationId: applicationId,
+		};
+
+		axios.post("http://localhost:5000/approveApplication", approval).then((result) => {
+			console.log(result.data);
+			alert(`Approved Application: ${applicantInformationData.applicationId}`);
+		});
+	};
+
+	const rejectApplication = (applicationId) => {
+		const rejection = {
+			status: "Rejected",
+			applicationId: applicationId,
+		};
+
+		axios.post("http://localhost:5000/rejectApplication", rejection).then((result) => {
+				alert(`Rejected Application: ${applicantInformationData.applicationId}`);
+			})
 	};
 
 	const redirect = () => {
@@ -186,7 +212,11 @@ function EOApp1() {
 
 					<div className="row" style={{ marginLeft: "70px" }}>
 						<div className="col-md-6">
-							<button type="button" style={{ border: "0" }}>
+							<button
+								type="button"
+								style={{ border: "0" }}
+								onClick={() => rejectApplication(applicantInformationData.uid)}
+							>
 								<span>
 									<FontAwesomeIcon icon={faSquareXmark} style={{ marginRight: "8px" }} />
 								</span>
@@ -195,7 +225,11 @@ function EOApp1() {
 						</div>
 
 						<div className="col-md-6">
-							<button type="button" style={{ border: "0" }}>
+							<button
+								type="button"
+								style={{ border: "0" }}
+								onClick={() => approveForPetitioning(applicantInformationData.uid)}
+							>
 								<span>
 									<FontAwesomeIcon icon={faSquareCheck} style={{ marginRight: "8px" }} />
 								</span>

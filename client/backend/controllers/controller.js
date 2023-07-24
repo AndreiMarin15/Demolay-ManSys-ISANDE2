@@ -640,6 +640,31 @@ const controller = {
 		});
 	},
 
+	generateMemberId: async (req, res) => {
+		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, async (members) => {
+			if (members.length > 1 && members) {
+				let highestId = members[0].memberId;
+				await members.forEach((member) => {
+					if (parseInt(member.memberId) > parseInt(highestId)) {
+						highestId = member.memberId;
+					}
+				});
+				console.log(`MemberID1: ${(highestId + 1).toString()}`)
+				res.send((highestId + 1).toString());
+				// eslint-disable-next-line eqeqeq
+			} else if (members.length == 1 && members) {
+				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`)
+				res.send((members[0].applicantId + 1).toString());
+			} else {
+				const currentDate = new Date();
+				const currentMonth = currentDate.getMonth() + 1;
+				const currentYear = currentDate.getFullYear().toString().slice(-2);
+				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`)
+				res.send(currentMonth.toString().padStart(2, '0') + currentYear.toString() + "00001");
+			}
+		});
+	},
+
 	getCurrentUser: async (req, res) => {
 		res.send(session);
 	},
@@ -717,6 +742,20 @@ const controller = {
 				res.send(applications);
 			});
 	},
+
+	approveForPetitioning: async (req, res) => {
+		db.updateOne(Application, { _id: req.body.applicationId }, { status: req.body.status }, (application) => {
+			console.log(application);
+			res.send(req.body.applicationId);
+		});
+	},
+
+	rejectApplication: async (req, res) => {
+		db.updateOne(Application, { _id: req.body.applicationId }, { status: req.body.status }, (application) => {
+			console.log(application);
+			res.send(req.body.applicationId);
+		});
+	}
 };
 
 module.exports = controller;

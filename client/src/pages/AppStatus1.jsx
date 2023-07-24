@@ -7,7 +7,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function AppStatus1() {
-
 	let { id } = useParams();
 
 	const [formData, setFormData] = useState({
@@ -15,23 +14,60 @@ function AppStatus1() {
 		chapter: "",
 		dateCreated: "",
 		status: "",
+		memberId: ""
 	});
 
+	const [applicantInformationData, setApplicantInformation] = useState({
+		uid: "",
+		applicationId: "",
+		fullName: "",
+		age: "",
+		contact: "",
+		firstLineSigner: "",
+		otherDetails: "",
+	});
+	function calculateAge(dateString) {
+		var birthday = new Date(dateString);
+		var ageDifMs = Date.now() - birthday.getTime();
+		var ageDate = new Date(ageDifMs); // miliseconds from epoch
+		return Math.abs(ageDate.getUTCFullYear() - 1970);
+	}
 	useEffect(() => {
 		async function fetchData() {
 			const application = await axios.get(`http://localhost:5000/getStatus1/${id}`);
+			const applicationInfo = await axios.get(`http://localhost:5000/applications/${id}`)
+			const memberId = await axios.get(`http://localhost:5000/generateMemberId`)
 
+			console.log(applicationInfo)
 			setFormData({
 				...formData,
 				applicantId: application.data.applicantId,
 				chapter: application.data.chapter,
 				dateCreated: application.data.dateCreated,
 				status: application.data.status,
+				memberId: memberId.data
+			});
+
+			setApplicantInformation({
+				...applicantInformationData,
+				uid: applicationInfo.data[0]._id,
+				applicationId: applicationInfo.data[0].applicantId,
+				fullName: applicationInfo.data[0].givenName + " " + applicationInfo.data[0].lastName,
+				age: calculateAge(applicationInfo.data[0].birthdate),
+				contact: applicationInfo.data[0].mobile,
+				firstLineSigner: applicationInfo.data[0].firstLineSigner ? applicationInfo.data[0].firstLineSigner : "N/A",
+				otherDetails: applicationInfo.data[0].notes ? applicationInfo.data[0].notes : "N/A",
 			});
 		}
 		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	const redirect = () => {
+		window.location.href = `/appform4/${applicantInformationData.uid}`;
+	};
+	
+
 	return (
 		/* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
 		<div className="container container-fluid ">
@@ -46,8 +82,41 @@ function AppStatus1() {
 			<div className="row" style={{ marginLeft: "40px" }}>
 				<div className="col-md-7">
 					{/* Content for the left column */}
-					<h2>Left Column</h2>
-					<p>This is where the applicant's submitted application form will go.</p>
+					<h2 className="text-center" style={{ marginLeft: "-40px" }}>
+						Applicant Information
+					</h2>
+					<table className="info-table" style={{ marginLeft: "130px" }}>
+						<tr>
+							<td>Full Name</td>
+							<td> {applicantInformationData.fullName  ? applicantInformationData.fullName : "N/A"} </td>
+						</tr>
+
+						<tr>
+							<td>Age:</td>
+							<td>{applicantInformationData.age ? applicantInformationData.age : "N/A"}</td>
+						</tr>
+
+						<tr>
+							<td>Contact:</td>
+							<td>{applicantInformationData.contact  ? applicantInformationData.contact : "N/A" }</td>
+						</tr>
+
+						<tr>
+							<td>First Line Signer:</td>
+							<td>{applicantInformationData.firstLineSigner  ? applicantInformationData.firstLineSigner : "N/A"}</td>
+						</tr>
+
+						<tr>
+							<td>Other Details:</td>
+							<td>{applicantInformationData.otherDetails  ? applicantInformationData.otherDetails : "N/A" }</td>
+						</tr>
+					</table>
+
+					<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
+						<button type="submit" className="btn custom" onClick={redirect}>
+							View Full Application
+						</button>
+					</div>
 				</div>
 				<div className="col-md-1">
 					{/* Vertical line or divider */}
@@ -97,12 +166,30 @@ function AppStatus1() {
 								</td>
 							</tr>
 						)}
+
+						{formData.status === "Rejected" && (
+							<tr>
+								<td>Status:</td>
+								<td>
+									{" "}
+									<p className="text-center" id="status-rejected">
+										Rejected
+									</p>
+								</td>
+							</tr>
+						)}
 					</table>
 
 					{formData.status === "In Review" && (
 						<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
 							Your application is currently in review by an investigation committee. <br />
 							Expect results within 5 days.
+						</p>
+					)}
+
+					{formData.status === "Rejected" && (
+						<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
+							We regret to inform you that upon evaluation, <br /> your application was rejected. 
 						</p>
 					)}
 
@@ -125,7 +212,7 @@ function AppStatus1() {
 							>
 								<tr>
 									<td style={{ padding: "8px" }}>
-										<b>Member ID:</b> 2092034911{" "}
+										<b>Member ID:</b> {formData.memberId}{" "}
 									</td>
 								</tr>
 							</table>
@@ -140,12 +227,10 @@ function AppStatus1() {
 								</label>
 								<input type="file" className="form-control" id="uploadProof" />
 							</div>
-
 						</>
 					)}
 				</div>
 			</div>
-			
 		</div>
 	);
 }
