@@ -14,7 +14,7 @@
 }
 
 #leftNavbar:hover {
-  color: #350059;
+  color: #efb015;
 }
 
 h3 {
@@ -40,7 +40,7 @@ h4 {
 
 .tab-button.active {
   text-decoration: underline;
-  color: #350059;
+  color: #efb015;
 }
 
 .tab-content {
@@ -219,6 +219,21 @@ margin-left: 2px;
 .plus-btn:after {
   transform: translate(-50%, -50%);
 }
+
+.fill-btn {
+  background-color: #350059;
+  font-family: "Open Sans";
+  border: none;
+  color: white;
+  font-weight: 700;
+  border-radius: 5px;
+  transition-duration: 0.1s;
+}
+
+.sent-btn {
+  font-size: 12px;
+}
+
 
 
 

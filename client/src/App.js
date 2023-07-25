@@ -57,6 +57,9 @@ import TurnoverCA1 from "./pages/Turnover/TurnoverCA1";
 import TurnoverNO1 from "./pages/Turnover/TurnoverNO1";
 import TurnoverNO2 from "./pages/Turnover/TurnoverNO2";
 import TurnoverNO3 from "./pages/Turnover/TurnoverNO3";
+import TurnoverNO4 from "./pages/Turnover/TurnoverNO4";
+import TurnoverDashboard2 from "./pages/Turnover/TurnoverDashboard2";
+import TurnoverTF6Approval from "./pages/Turnover/TurnoverTF6Approval";
 
 import Header from "./components/Header";
 
@@ -118,6 +121,9 @@ function App() {
         <Route path="turnoverNO1" element ={<TurnoverNO1/>}/>
         <Route path="turnoverNO2" element ={<TurnoverNO2/>}/>
         <Route path="turnoverNO3" element ={<TurnoverNO3/>}/>
+        <Route path="turnoverNO4" element ={<TurnoverNO4/>}/>
+        <Route path="turnoverDashboard2" element ={<TurnoverDashboard2/>}/>
+        <Route path="turnoverTF6Approval" element ={<TurnoverTF6Approval/>}/>
 
       </Routes>
     </>

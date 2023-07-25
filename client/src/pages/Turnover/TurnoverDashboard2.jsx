@@ -27,7 +27,9 @@ const openTab = (event, tabId) => {
 
 
 function TurnoverDashboard1() {
+
    {/* Default tab on load */}
+
    useEffect(() => {
       document.getElementById("tab1").style.display = "block";
    }, []);
@@ -76,7 +78,9 @@ function TurnoverDashboard1() {
                   </button>
                </div>
                <div className="tabs-container">
+
                   {/* Tab Headers */}
+
                   <div className="tab-header">
                      <button
                         className="tab-button active"
@@ -97,47 +101,25 @@ function TurnoverDashboard1() {
                         Submitted
                      </button>
                   </div>
+
                   {/* Tabs Content 1 */}
+
                   <div id="tab1" className="tab-content active">
                      <div className="boxContainer">
                         <div className="boxRow">
                            <div className="box">
-                              <h4>Certificate of Complete Turnover</h4>
-                              <p>Form/Report Desc</p>
-                              <input type="checkbox"/>
-                              <button className="fill-btn"> FILL IN </button>
-                           </div>
-                           <div className="box">
                               <h4>Term and Financial Report</h4>
                               <p>Form/Report Desc</p>
+                              <p className="sent-btn"> Sent by Edwardo Rafael on April 16, 2023</p>
                               <input type="checkbox"/>
-                              <button className="fill-btn"> FILL IN</button>
+                              <button className="fill-btn"> REVIEW </button>
                            </div>
-                           <div className="box">
-                              <h4>Membership Report (Form 10)</h4>
-                              <p>Form/Report Desc</p>
-                              <input type="checkbox"/>
-                              <button className="fill-btn"> FILL IN</button>
-                           </div>
-                        </div>
-                        <div className="boxRow">
                            <div className="box">
                               <h4>New Officers Report (Form 15)</h4>
                               <p>Form/Report Desc</p>
+                              <p className="sent-btn"> Sent by Edwardo Rafael on April 16, 2023</p>
                               <input type="checkbox"/>
-                              <button className="fill-btn"> FILL IN</button>
-                           </div>
-                           <div className="box">
-                              <h4>Report on Historical Records, Official Files and Assets, and Properties</h4>
-                              <p>Form/Report Desc</p>
-                              <input type="checkbox"/>
-                              <button className="fill-btn"> FILL IN</button>
-                           </div>
-                           <div className="box">
-                              <h4>Certification of Advisory Council Members</h4>
-                              <p>Form/Report Desc</p>
-                              <input type="checkbox"/>
-                              <button className="fill-btn"> FILL IN</button>
+                              <button className="fill-btn"> REVIEW </button>
                            </div>
                         </div>
                      </div>
@@ -161,7 +143,7 @@ function TurnoverDashboard1() {
                <div className="d-flex justify-content-center">
                   <Link to="/turnoverDashboard1">
                      <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
-                        SUBMIT
+                        SEND
                      </button>
                   </Link>
                </div>

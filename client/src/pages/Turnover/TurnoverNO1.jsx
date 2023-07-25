@@ -39,7 +39,7 @@ function TurnoverNO1() {
 
       <br />
 
-      <div class="d-flex justify-content-center align-items-center mb-3">
+      <div class="text-center mb-3">
         <p>
           The report covers Term <u> A </u> of DeMolay Year <u> 2023 </u> beginning <u> January 7, 2023 </u> and ending{" "}
           <u> August 5, 2023 </u>
