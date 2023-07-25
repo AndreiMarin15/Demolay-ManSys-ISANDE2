@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 const RenderTableData = () => {
    const tableData = [

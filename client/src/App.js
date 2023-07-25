@@ -42,7 +42,7 @@ import EventsValidation from './pages/Events/EventsValidation-Advisor';
 import EventsProof from './pages/Events/EventsProof-Advisor';
 import EventsPaymentValidation from './pages/Events/EventsPaymentValidation-Admin';
 
-import TurnoverDashboard1 from "./pages/Turnover/TurnoverDashboard1";
+import TurnoverDashboardScribe from "./pages/Turnover/TurnoverDashboard1-Scribe";
 import TurnoverTF1 from "./pages/Turnover/TurnoverTF1";
 import TurnoverTF2 from "./pages/Turnover/TurnoverTF2";
 import TurnoverTF3 from "./pages/Turnover/TurnoverTF3";
@@ -58,7 +58,7 @@ import TurnoverNO1 from "./pages/Turnover/TurnoverNO1";
 import TurnoverNO2 from "./pages/Turnover/TurnoverNO2";
 import TurnoverNO3 from "./pages/Turnover/TurnoverNO3";
 import TurnoverNO4 from "./pages/Turnover/TurnoverNO4";
-import TurnoverDashboard2 from "./pages/Turnover/TurnoverDashboard2";
+import TurnoverDashboardOfficer from "./pages/Turnover/TurnoverDashboard1-Officer";
 import TurnoverTF6Approval from "./pages/Turnover/TurnoverTF6Approval";
 
 import Header from "./components/Header";
@@ -106,7 +106,7 @@ function App() {
         <Route path="eventsProof" element ={<EventsProof/>}/>
         <Route path="eventsPaymentValidation" element ={<EventsPaymentValidation/>}/>
 
-        <Route path="turnoverDashboard1" element ={<TurnoverDashboard1/>}/>
+        <Route path="turnoverDashboardScribe" element ={<TurnoverDashboardScribe/>}/>
         <Route path="turnoverTF1" element ={<TurnoverTF1/>}/>
         <Route path="turnoverTF2" element ={<TurnoverTF2/>}/>
         <Route path="turnoverTF3" element ={<TurnoverTF3/>}/>
@@ -122,7 +122,7 @@ function App() {
         <Route path="turnoverNO2" element ={<TurnoverNO2/>}/>
         <Route path="turnoverNO3" element ={<TurnoverNO3/>}/>
         <Route path="turnoverNO4" element ={<TurnoverNO4/>}/>
-        <Route path="turnoverDashboard2" element ={<TurnoverDashboard2/>}/>
+        <Route path="turnoverDashboardOfficer" element ={<TurnoverDashboardOfficer/>}/>
         <Route path="turnoverTF6Approval" element ={<TurnoverTF6Approval/>}/>
 
       </Routes>
