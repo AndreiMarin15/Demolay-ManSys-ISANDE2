@@ -5,6 +5,7 @@ import { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faFilter } from "@fortawesome/free-solid-svg-icons";
 
+
 const RenderTableData = () => {
    const tableData = [
       ["1", "Attendance", "Validated", "1st"],
@@ -254,6 +255,7 @@ function EventsHome() {
          </div>
       </div>
    );
+
 }
 
 export default EventsHome;

@@ -166,6 +166,16 @@ hr {
   margin-left: 5px;
 }
 
+.darkorange-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ff8743;
+  margin-right: 8px;
+  margin-left: 5px;
+}
+
 .custom-add {
   background-color: var(--purple-pri);
   font-family: "Open Sans";
@@ -180,4 +190,34 @@ hr {
   border-radius: 5px;
   transition-duration: 0.1s;
   cursor: pointer;
+}
+
+.btn-return {
+  background-color: #7c7c7c;
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  display: inline-block;
+  margin: 15px 2px;
+  border-radius: 5px;
+  transition-duration: 0.1s;
+  cursor: pointer;
+}
+
+.btn-text {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.btn-text:hover {
+  color: #261d82;
+}
+
+.btn-text:active {
+  color: #261d82;
 }

@@ -11,36 +11,36 @@
   justify-content: center;
   text-align: center;
 }
-  
+
 #homechild {
-    width: 100%;
-    height: 50px;
-    margin: 0 auto;
-    padding-top: 30px;
-    text-align: center;
-  }
+  width: 100%;
+  height: 50px;
+  margin: 0 auto;
+  padding-top: 30px;
+  text-align: center;
+}
 
 #big {
   padding-bottom: 0px;
 }
 
 label {
-    display: inline-block;
-    margin-right: 20px;
-    margin-bottom: 15px;
-    width: 100px;
-    text-align: right;
-  }
+  display: inline-block;
+  margin-right: 20px;
+  margin-bottom: 15px;
+  width: 100px;
+  text-align: right;
+}
 
 form {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 15px;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
 }
 
 input {
-  font-family: 'Open Sans';
+  font-family: "Open Sans";
   width: 50%;
   padding: 4px 10px;
   box-sizing: border-box;

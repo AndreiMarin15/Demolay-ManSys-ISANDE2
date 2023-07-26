@@ -4,6 +4,9 @@ const Schema = mongoose.Schema;
 
 const applicationSchema = new Schema(
     {
+        applicantId: String,
+        applicantPassword: String,
+
         applicationId: String,
         regionId: String,
         chapterId: String,
@@ -12,11 +15,13 @@ const applicationSchema = new Schema(
         middleName: String,
         memberID: String,
 
+        photo: String,
+
         streetAddress: String,
         apt: String,
         brgy: String,
         city: String,
-        state: String,
+        province: String,
         memberRegion: String,
         zipCode: Number,
 
@@ -37,7 +42,7 @@ const applicationSchema = new Schema(
 
         appliedInAnotherChapter: Boolean,
         chapterApplied: String,
-        year: Number,
+        yearApplied: Number,
         status: String,
 
         relativeName: String,
@@ -58,7 +63,9 @@ const applicationSchema = new Schema(
         parentRelationship: String,
         parentEmail: String,
         parentMobile: String,
-        parentApproved: Boolean
+        parentApproved: Boolean,
+
+        dateCreated: Date
         
     }
 )

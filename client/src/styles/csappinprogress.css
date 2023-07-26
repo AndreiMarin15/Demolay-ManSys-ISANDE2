@@ -1,0 +1,23 @@
+@import "base.css";
+
+.app-table {
+  border: 1px solid black;
+}
+
+.app-table td {
+  border: 1px solid black;
+}
+
+td.checkbox-cell {
+  width: 0;
+  white-space: nowrap;
+}
+
+td.checkbox-cell .form-check {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: auto;
+  margin: 0;
+}
