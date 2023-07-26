@@ -696,18 +696,13 @@ const onChangeMeritBar = (e) => {
                }
 
                 {/* Buttons */}
-                <div className="d-flex justify-content-between mt-4">
-                    <Link to="/turnoverTF1">
-                        <button type="button" id="back-btn">
-                            BACK
-                        </button>
-                    </Link>
-                    <Link to="/turnoverTF3">
-                        <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
-                            SUBMIT
-                        </button>
-                    </Link>
-                </div>
+               <div className="d-flex justify-content-between mt-4">
+                  <Link to="/turnoverTF3">
+                     <button type="button" className="primary-btn" value="SUBMIT">
+                        SUBMIT
+                     </button>
+                  </Link>
+               </div>
             </div>
         </div>
       )

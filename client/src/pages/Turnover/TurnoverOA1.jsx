@@ -139,12 +139,12 @@ function TurnoverOA1() {
          
          <div className="d-flex justify-content-between mt-4">
             <Link to="/turnoverTF3">
-               <button type="button" id="back-btn">
+               <button type="button" className="primary-btn">
                   BACK
                </button>
             </Link>
             <Link to="/turnoverTF5">
-               <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+               <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
                   SEND
                </button>
             </Link>

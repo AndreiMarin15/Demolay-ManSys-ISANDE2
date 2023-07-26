@@ -53,7 +53,7 @@ import EventsValidation from "./pages/Events/EventsValidation-Advisor";
 import EventsProof from "./pages/Events/EventsProof-Advisor";
 import EventsPaymentValidation from "./pages/Events/EventsPaymentValidation-Admin";
 
-import TurnoverDashboard1 from "./pages/Turnover/TurnoverDashboard1";
+import TurnoverDashboardScribe from "./pages/Turnover/TurnoverDashboard1-Scribe";
 import TurnoverTF1 from "./pages/Turnover/TurnoverTF1";
 import TurnoverTF2 from "./pages/Turnover/TurnoverTF2";
 import TurnoverTF3 from "./pages/Turnover/TurnoverTF3";
@@ -62,6 +62,15 @@ import TurnoverTF5 from "./pages/Turnover/TurnoverTF5";
 import TurnoverTF6 from "./pages/Turnover/TurnoverTF6";
 import TurnoverM1 from "./pages/Turnover/TurnoverM1";
 import TurnoverOA1 from "./pages/Turnover/TurnoverOA1";
+import TurnoverHR1 from "./pages/Turnover/TurnoverHR1";
+import TurnoverHR2 from "./pages/Turnover/TurnoverHR2";
+import TurnoverCA1 from "./pages/Turnover/TurnoverCA1";
+import TurnoverNO1 from "./pages/Turnover/TurnoverNO1";
+import TurnoverNO2 from "./pages/Turnover/TurnoverNO2";
+import TurnoverNO3 from "./pages/Turnover/TurnoverNO3";
+import TurnoverNO4 from "./pages/Turnover/TurnoverNO4";
+import TurnoverDashboardOfficer from "./pages/Turnover/TurnoverDashboard1-Officer";
+import TurnoverTF6Approval from "./pages/Turnover/TurnoverTF6Approval";
 
 import Circular1 from "./pages/Circular/Circular1";
 import Circular2 from "./pages/Circular/Circular2";
@@ -75,6 +84,7 @@ function App() {
     <>
       <Header />
       <Routes>
+
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />
@@ -141,15 +151,24 @@ function App() {
             path="eventsPaymentValidation"
             element={<EventsPaymentValidation />}
           />
-          <Route path="turnoverDashboard1" element={<TurnoverDashboard1 />} />
-          <Route path="turnoverTF1" element={<TurnoverTF1 />} />
-          <Route path="turnoverTF2" element={<TurnoverTF2 />} />
-          <Route path="turnoverTF3" element={<TurnoverTF3 />} />
-          <Route path="turnoverTF4" element={<TurnoverTF4 />} />
-          <Route path="turnoverTF5" element={<TurnoverTF5 />} />
-          <Route path="turnoverTF6" element={<TurnoverTF6 />} />
-          <Route path="turnoverM1" element={<TurnoverM1 />} />
-          <Route path="turnoverOA1" element={<TurnoverOA1 />} />
+        <Route path="turnoverDashboardScribe" element ={<TurnoverDashboardScribe/>}/>
+        <Route path="turnoverTF1" element ={<TurnoverTF1/>}/>
+        <Route path="turnoverTF2" element ={<TurnoverTF2/>}/>
+        <Route path="turnoverTF3" element ={<TurnoverTF3/>}/>
+        <Route path="turnoverTF4" element ={<TurnoverTF4/>}/>
+        <Route path="turnoverTF5" element ={<TurnoverTF5/>}/>
+        <Route path="turnoverTF6" element ={<TurnoverTF6/>}/>
+        <Route path="turnoverM1" element ={<TurnoverM1/>}/>
+        <Route path="turnoverOA1" element ={<TurnoverOA1/>}/>
+        <Route path="turnoverHR1" element ={<TurnoverHR1/>}/>
+        <Route path="turnoverHR2" element ={<TurnoverHR2/>}/>
+        <Route path="turnoverCA1" element ={<TurnoverCA1/>}/>
+        <Route path="turnoverNO1" element ={<TurnoverNO1/>}/>
+        <Route path="turnoverNO2" element ={<TurnoverNO2/>}/>
+        <Route path="turnoverNO3" element ={<TurnoverNO3/>}/>
+        <Route path="turnoverNO4" element ={<TurnoverNO4/>}/>
+        <Route path="turnoverDashboardOfficer" element ={<TurnoverDashboardOfficer/>}/>
+        <Route path="turnoverTF6Approval" element ={<TurnoverTF6Approval/>}/>
           <Route path="eventsValidation" element={<EventsValidation />} />
           <Route path="eventsProof" element={<EventsProof />} />
           <Route
@@ -161,6 +180,7 @@ function App() {
           <Route path="circular3" element={<Circular3 />} />
           <Route path="cscircular" element={<CSCircular />} />
         </Route>
+
       </Routes>
     </>
   );

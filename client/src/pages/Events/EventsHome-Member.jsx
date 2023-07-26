@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 
 const RenderTableData = () => {
@@ -22,7 +24,9 @@ const RenderTableData = () => {
             <td>{col3}</td>
             <td>{col4}</td>
             <td>
-               <button>View</button>
+               <button type="submit" form="submit" className="primary-btn" value="VIEW">
+                  VIEW
+               </button>
             </td>
          </tr>
       );
@@ -234,14 +238,14 @@ function EventsHome() {
                <div className="d-flex justify-content-center mt-4">
                   <div className="mr-2">
                      <Link to="/eventsHome">
-                        <button type="button" form="button" id="primary-btn" value="PREVIOUS">
+                        <button type="button" form="button" className="primary-btn" value="PREVIOUS">
                            PREVIOUS
                         </button>
                      </Link>
                   </div>
                   <div className="ms-2">
                      <Link to="/appform1">
-                        <button type="button" form="button" id="primary-btn" value="NEXT">
+                        <button type="button" form="button" className="primary-btn" value="NEXT">
                            NEXT
                         </button>
                      </Link>

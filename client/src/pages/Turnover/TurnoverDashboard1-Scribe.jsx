@@ -4,6 +4,8 @@ import "../../styles/Turnover.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faFilter } from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
    var tabContents = document.getElementsByClassName("tab-content");
@@ -62,7 +64,17 @@ function TurnoverDashboard1() {
             {/* Second Column */}
 
             <div className="col-md-8">
-               <h1>Reports</h1>
+               <div className="d-flex justify-content-between align-items-center mb-3">
+                  <h1> Reports </h1>
+                  <input
+                     type="text"
+                     className="form-control form-control-sm"
+                     placeholder="Search"
+                  />
+                  <button type="button" className="filterbtn">
+                     <FontAwesomeIcon icon={faFilter} />
+                  </button>
+               </div>
                <div className="tabs-container">
                   {/* Tab Headers */}
                   <div className="tab-header">
@@ -93,19 +105,19 @@ function TurnoverDashboard1() {
                               <h4>Certificate of Complete Turnover</h4>
                               <p>Form/Report Desc</p>
                               <input type="checkbox"/>
-                              <button>Fill in</button>
+                              <button className="fill-btn"> FILL IN </button>
                            </div>
                            <div className="box">
                               <h4>Term and Financial Report</h4>
                               <p>Form/Report Desc</p>
                               <input type="checkbox"/>
-                              <button>Fill in</button>
+                              <button className="fill-btn"> FILL IN</button>
                            </div>
                            <div className="box">
                               <h4>Membership Report (Form 10)</h4>
                               <p>Form/Report Desc</p>
                               <input type="checkbox"/>
-                              <button>Fill in</button>
+                              <button className="fill-btn"> FILL IN</button>
                            </div>
                         </div>
                         <div className="boxRow">
@@ -113,19 +125,19 @@ function TurnoverDashboard1() {
                               <h4>New Officers Report (Form 15)</h4>
                               <p>Form/Report Desc</p>
                               <input type="checkbox"/>
-                              <button>Fill in</button>
+                              <button className="fill-btn"> FILL IN</button>
                            </div>
                            <div className="box">
                               <h4>Report on Historical Records, Official Files and Assets, and Properties</h4>
                               <p>Form/Report Desc</p>
                               <input type="checkbox"/>
-                              <button>Fill in</button>
+                              <button className="fill-btn"> FILL IN</button>
                            </div>
                            <div className="box">
                               <h4>Certification of Advisory Council Members</h4>
                               <p>Form/Report Desc</p>
                               <input type="checkbox"/>
-                              <button>Fill in</button>
+                              <button className="fill-btn"> FILL IN</button>
                            </div>
                         </div>
                      </div>
@@ -148,7 +160,7 @@ function TurnoverDashboard1() {
 
                <div className="d-flex justify-content-center">
                   <Link to="/turnoverDashboard1">
-                     <button type="submit" form="submit" id="primary-btn" value="SUBMIT">
+                     <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
                         SUBMIT
                      </button>
                   </Link>

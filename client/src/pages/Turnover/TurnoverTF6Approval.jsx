@@ -6,7 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
   
-function TurnoverTF6 () {
+function TurnoverTF6Approval () {
 
    return(
    <div className="container">
@@ -251,26 +251,35 @@ function TurnoverTF6 () {
                   </div>
                </div>
             </div>
-        </div>
+         </div>
 
         {/* Button */}
 
-        <div className="d-flex justify-content-between mt-4">
-            <Link to="/turnoverTF5">
+         <div className="d-flex justify-content-between mt-4">
+            <Link to="/turnoverDashboard2">
                <button type="button" className="primary-btn">
                   BACK
                </button>
             </Link>
-            <Link to="/turnoverTF1">
-               <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
-                  SEND
-               </button>
-            </Link>
-        </div>
-    </div>)
+
+            <div className="d-flex justify-content-between">
+               <Link to="/turnoverTF1">
+                  <button type="submit" form="submit" className="primary-btn" value="DISAPPROVE">
+                     DISAPPROVE
+                  </button>
+               </Link>
+               <Link to="/turnoverTF1">
+                  <button type="submit" form="submit" className="primary-btn" value="APPROVE">
+                     APPROVE
+                  </button>
+               </Link>
+            </div>
+         </div>
+
+   </div>)
 }
 
-export default TurnoverTF6;
+export default TurnoverTF6Approval;
 
 
 
