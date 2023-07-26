@@ -32,7 +32,10 @@ function EOApp1() {
 		const searchString = e.target.value;
 		const regex = new RegExp(searchString, "i");
 		const filteredApplications = await applicationData.applications.filter((applicant) => {
-			if (regex.test(applicant.givenName) || regex.test(applicant.lastName) || regex.test(applicant.applicantId)) {
+			if (
+				applicant.status !== "Approved" &&
+				(regex.test(applicant.givenName) || regex.test(applicant.lastName) || regex.test(applicant.applicantId))
+			) {
 				return true;
 			} else {
 				return false;
@@ -51,7 +54,13 @@ function EOApp1() {
 			setApplicationData({
 				...applicationData,
 				applications: applications.data,
-				filteredApplications: applications.data,
+				filteredApplications: applications.data.filter(applicant => {
+					if (applicant.status !== "Approved") {
+						return true;
+					} else {
+						return false;
+					}
+				}),
 			});
 
 			setApplicantInformation({
@@ -107,8 +116,8 @@ function EOApp1() {
 		};
 
 		axios.post("http://localhost:5000/rejectApplication", rejection).then((result) => {
-				alert(`Rejected Application: ${applicantInformationData.applicationId}`);
-			})
+			alert(`Rejected Application: ${applicantInformationData.applicationId}`);
+		});
 	};
 
 	const redirect = () => {

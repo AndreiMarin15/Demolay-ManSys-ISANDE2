@@ -600,6 +600,16 @@ const controller = {
 			});
 	},
 
+	getChaptersById: async (req, res) => {
+		Chapters.find({}, { chapterID: 1, name: 1 })
+			.sort({ chapterID: 1 })
+			.collation({ locale: "en_US", numericOrdering: true })
+			.then((result) => {
+				console.log(result);
+				res.send(result);
+			});
+	},
+
 	getProvinces: async (req, res) => {
 		Provinces.find({}, { name: 1, provinceID: 1 })
 			.sort({ name: 1 })
@@ -649,18 +659,18 @@ const controller = {
 						highestId = member.memberId;
 					}
 				});
-				console.log(`MemberID1: ${(highestId + 1).toString()}`)
+				console.log(`MemberID1: ${(highestId + 1).toString()}`);
 				res.send((highestId + 1).toString());
 				// eslint-disable-next-line eqeqeq
 			} else if (members.length == 1 && members) {
-				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`)
+				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`);
 				res.send((members[0].applicantId + 1).toString());
 			} else {
 				const currentDate = new Date();
 				const currentMonth = currentDate.getMonth() + 1;
 				const currentYear = currentDate.getFullYear().toString().slice(-2);
-				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`)
-				res.send(currentMonth.toString().padStart(2, '0') + currentYear.toString() + "00001");
+				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`);
+				res.send(currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
 			}
 		});
 	},
@@ -719,7 +729,7 @@ const controller = {
 		db.findOne(
 			Application,
 			{ _id: applicationId },
-			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1 },
+			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1, petStatus: 1 },
 			(application) => {
 				db.findOne(Chapters, { chapterID: application.chapterId }, { name: 1 }, (chapter) => {
 					const toSend = {
@@ -727,6 +737,7 @@ const controller = {
 						chapter: chapter.name,
 						dateCreated: application.dateCreated,
 						status: application.status,
+						petStatus: application.petStatus
 					};
 					console.log(toSend);
 					res.send(toSend);
@@ -743,6 +754,14 @@ const controller = {
 			});
 	},
 
+	getPetitionedApplications: async (req, res) => {
+		Application.find({petStatus: "Approved"}, {})
+		.sort({ applicantId: -1 })
+		.then((applications) => {
+			res.send(applications);
+		});
+	},
+
 	approveForPetitioning: async (req, res) => {
 		db.updateOne(Application, { _id: req.body.applicationId }, { status: req.body.status }, (application) => {
 			console.log(application);
@@ -755,6 +774,19 @@ const controller = {
 			console.log(application);
 			res.send(req.body.applicationId);
 		});
+	},
+
+	updatePetition: async (req, res) => {
+		db.updateOne(Application, { _id: req.body.applicationId }, { petStatus: req.body.petStatus }, (application) => {
+			console.log(application);
+			res.send(req.body.applicationId);
+		});
+	},
+
+	submitProofOfPayment: async (req, res) => {
+		db.updateOne(Application, {_id: req.body.applicationId}, {proofOfPayment: req.body.proofOfPayment}, application => {
+			res.send(req.body.applicationId)
+		})
 	}
 };
 

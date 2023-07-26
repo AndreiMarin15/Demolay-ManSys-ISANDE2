@@ -65,7 +65,11 @@ const applicationSchema = new Schema(
         parentMobile: String,
         parentApproved: Boolean,
 
-        dateCreated: Date
+        dateCreated: Date,
+
+        petStatus: String,
+        
+        proofOfPayment: String
         
     }
 )
