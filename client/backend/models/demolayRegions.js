@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const regionSchema = new Schema({
+const dmlyRegionSchema = new Schema({
   regionID: String,
   regionName: String,
-  regionDesc: String,
+  phIslandGrp: String,
+  phRegion: String,
 });
 
-const Regions = mongoose.model("Regions", regionSchema);
+const Regions = mongoose.model("Regions", dmlyRegionSchema);
 module.exports = Regions;

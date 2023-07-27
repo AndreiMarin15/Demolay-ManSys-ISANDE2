@@ -1,0 +1,212 @@
+[
+  {
+    "regionID": 0,
+    "regionName": "Region NCR-A (NCR-A)",
+    "phIslandGrp": "luzon",
+    "phRegion": "130000000"
+  },
+  {
+    "regionID": 1,
+    "regionName": "Region NCR-B (NCR-B)",
+    "phIslandGrp": "luzon",
+    "phRegion": "130000000"
+  },
+  {
+    "regionID": 2,
+    "regionName": "Region 1-A (Cordillera)",
+    "phIslandGrp": "luzon",
+    "phRegion": "140000000"
+  },
+  {
+    "regionID": 3,
+    "regionName": "Region 1-B (Pangasinan-La Union)",
+    "phIslandGrp": "luzon",
+    "phRegion": "010000000"
+  },
+  {
+    "regionID": 4,
+    "regionName": "Region 1-C (Ilocos)",
+    "phIslandGrp": "luzon",
+    "phRegion": "010000000"
+  },
+  {
+    "regionID": 5,
+    "regionName": "Region 2-A (Isabela)",
+    "phIslandGrp": "luzon",
+    "phRegion": "020000000"
+  },
+  {
+    "regionID": 6,
+    "regionName": "Region 2-B (Nueva Vizcaya-Quirino)",
+    "phIslandGrp": "luzon",
+    "phRegion": "020000000"
+  },
+  {
+    "regionID": 7,
+    "regionName": "Region 2-C (Cagayan)",
+    "phIslandGrp": "luzon",
+    "phRegion": "020000000"
+  },
+  {
+    "regionID": 8,
+    "regionName": "Region 3-A (Bataan)",
+    "phIslandGrp": "luzon",
+    "phRegion": "030000000"
+  },
+  {
+    "regionID": 9,
+    "regionName": "Region 3-B (Zambales)",
+    "phIslandGrp": "luzon",
+    "phRegion": "030000000"
+  },
+  {
+    "regionID": 10,
+    "regionName": "Region 3-C (Nueva Ecija)",
+    "phIslandGrp": "luzon",
+    "phRegion": "030000000"
+  },
+  {
+    "regionID": 11,
+    "regionName": "Region 3-D (Bulacan)",
+    "phIslandGrp": "luzon",
+    "phRegion": "030000000"
+  },
+  {
+    "regionID": 12,
+    "regionName": "Region 3-E (Pampanga)",
+    "phIslandGrp": "luzon",
+    "phRegion": "030000000"
+  },
+  {
+    "regionID": 13,
+    "regionName": "Region 4-A (Cavite)",
+    "phIslandGrp": "luzon",
+    "phRegion": "040000000"
+  },
+  {
+    "regionID": 14,
+    "regionName": "Region 4-B (Laguna)",
+    "phIslandGrp": "luzon",
+    "phRegion": "040000000"
+  },
+  {
+    "regionID": 15,
+    "regionName": "Region 4-C (Quezon)",
+    "phIslandGrp": "luzon",
+    "phRegion": "040000000"
+  },
+  {
+    "regionID": 16,
+    "regionName": "Region 4-D (Batangas)",
+    "phIslandGrp": "luzon",
+    "phRegion": "040000000"
+  },
+  {
+    "regionID": 17,
+    "regionName": "Region 4-E (Mindoro)",
+    "phIslandGrp": "luzon",
+    "phRegion": "170000000"
+  },
+  {
+    "regionID": 18,
+    "regionName": "Region 4-F (Palawan)",
+    "phIslandGrp": "luzon",
+    "phRegion": "170000000"
+  },
+  {
+    "regionID": 19,
+    "regionName": "Region 5 (Bicol)",
+    "phIslandGrp": "luzon",
+    "phRegion": "050000000"
+  },
+  {
+    "regionID": 20,
+    "regionName": "Region 6-A (Panay)",
+    "phIslandGrp": "visayas",
+    "phRegion": "060000000"
+  },
+  {
+    "regionID": 21,
+    "regionName": "Region 6-B (Negros)",
+    "phIslandGrp": "visayas",
+    "phRegion": "060000000"
+  },
+  {
+    "regionID": 22,
+    "regionName": "Region 7-A (Cebu)",
+    "phIslandGrp": "visayas",
+    "phRegion": "070000000"
+  },
+  {
+    "regionID": 23,
+    "regionName": "Region 7-B (Bohol-Siquijor)",
+    "phIslandGrp": "visayas",
+    "phRegion": "070000000"
+  },
+  {
+    "regionID": 24,
+    "regionName": "Region 8 (Leyte-Samar)",
+    "phIslandGrp": "visayas",
+    "phRegion": "080000000"
+  },
+  {
+    "regionID": 25,
+    "regionName": "Region 9-A North (Zamboanga North)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "090000000"
+  },
+  {
+    "regionID": 26,
+    "regionName": "Region 9-A South (Zamboanga South)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "090000000"
+  },
+  {
+    "regionID": 27,
+    "regionName": "Region 9-B (ZamBaSulTa)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "150000000"
+  },
+  {
+    "regionID": 28,
+    "regionName": "Region 10-A (Misamis Oriental-Bukidnon)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "100000000"
+  },
+  {
+    "regionID": 29,
+    "regionName": "Region 10-B (Misamis Occidental)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "100000000"
+  },
+  {
+    "regionID": 30,
+    "regionName": "Region 11-A (Davao)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "110000000"
+  },
+  {
+    "regionID": 31,
+    "regionName": "Region 11-B (North Cotabato)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "120000000"
+  },
+  {
+    "regionID": 32,
+    "regionName": "Region 11-C (SOCCKSARGEN)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "120000000"
+  },
+  {
+    "regionID": 33,
+    "regionName": "Region 12 (Lanao)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "100000000"
+  },
+  {
+    "regionID": 34,
+    "regionName": "Region 13 (Agusan)",
+    "phIslandGrp": "mindanao",
+    "phRegion": "160000000"
+  }
+]

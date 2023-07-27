@@ -20,21 +20,15 @@ router.post("/createMember", controller.createMember);
 router.post("/createAdvisor", controller.createAdvisor);
 router.post("/createAdmin", controller.createAdmin);
 
+router.post("/newTermReport", controller.newTF);
+router.post("/updateTurnover", controller.updateTurnover);
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
 router.get("/getChapters/:regionId", controller.getChapters);
 router.get("/getAllChapters/", controller.getAllChapters);
-router.get("/getProvinces", controller.getProvinces);
-router.get("/getCities/:provinceID", controller.getCities);
 router.get("/generateID", controller.generateApplicantID);
 router.get("/getStatus1/:id", controller.getAppStatus1);
-
-router.get("/getApplications", controller.getApplications)
-
 router.get("/applications/:id", controller.getApplication);
-
 router.get("/getCurrentUser", controller.getCurrentUser);
-
-
 
 module.exports = router;
