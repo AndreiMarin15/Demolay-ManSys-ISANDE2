@@ -153,7 +153,8 @@ function CSCircular() {
             <div className="col">
               <div class="list-group">
                 {/*ONE ROW STARTS HERE */}
-                <a
+                <Link
+                  to="/cscircular2"
                   href="#"
                   class="list-group-item list-group-item-action"
                   aria-current="true"
@@ -185,9 +186,10 @@ function CSCircular() {
                       View
                     </small>
                   </div>
-                </a>
+                </Link>
                 {/*ONE ROW ENDS HERE */}
-                <a
+                <Link
+                  to="/cscircular2"
                   href="#"
                   class="list-group-item list-group-item-action"
                   aria-current="true"
@@ -219,8 +221,9 @@ function CSCircular() {
                       View
                     </small>
                   </div>
-                </a>
-                <a
+                </Link>
+                <Link
+                  to="/cscircular2"
                   href="#"
                   class="list-group-item list-group-item-action"
                   aria-current="true"
@@ -248,8 +251,9 @@ function CSCircular() {
                       View
                     </small>
                   </div>
-                </a>
-                <a
+                </Link>
+                <Link
+                  to="/cscircular2"
                   href="#"
                   class="list-group-item list-group-item-action"
                   aria-current="true"
@@ -277,7 +281,7 @@ function CSCircular() {
                       View
                     </small>
                   </div>
-                </a>
+                </Link>
                 <a
                   href="#"
                   class="list-group-item list-group-item-action"
