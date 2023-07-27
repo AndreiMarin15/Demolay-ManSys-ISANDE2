@@ -241,7 +241,7 @@ function AppStatus1() {
 						</p>
 					)}
 
-					{formData.status === "Rejected" && (
+					{(formData.status === "Rejected" || formData.petStatus === "Rejected") && (
 						<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
 							We regret to inform you that upon evaluation, <br /> your application was rejected.
 						</p>

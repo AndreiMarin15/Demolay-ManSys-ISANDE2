@@ -46,5 +46,9 @@ router.get("/applications/:id", controller.getApplication);
 router.get("/getCurrentUser", controller.getCurrentUser);
 
 
+router.get("/getForm10", controller.getForm10);
+router.post("/updateForm10/:form10Id", controller.updateForm10)
+
+
 
 module.exports = router;

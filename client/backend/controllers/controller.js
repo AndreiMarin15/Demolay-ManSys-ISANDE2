@@ -8,6 +8,7 @@ const bcrypt = require("bcrypt");
 const Accounts = require("../models/accounts.js");
 const Member = require("../models/members.js");
 const AdvisoryCouncils = require("../models/advisoryCouncils.js");
+const Form10 = require("../models/form10.js");
 
 let session = {};
 
@@ -737,7 +738,7 @@ const controller = {
 						chapter: chapter.name,
 						dateCreated: application.dateCreated,
 						status: application.status,
-						petStatus: application.petStatus
+						petStatus: application.petStatus,
 					};
 					console.log(toSend);
 					res.send(toSend);
@@ -755,11 +756,11 @@ const controller = {
 	},
 
 	getPetitionedApplications: async (req, res) => {
-		Application.find({petStatus: "Approved"}, {})
-		.sort({ applicantId: -1 })
-		.then((applications) => {
-			res.send(applications);
-		});
+		Application.find({ petStatus: "Approved" }, {})
+			.sort({ applicantId: -1 })
+			.then((applications) => {
+				res.send(applications);
+			});
 	},
 
 	approveForPetitioning: async (req, res) => {
@@ -784,10 +785,62 @@ const controller = {
 	},
 
 	submitProofOfPayment: async (req, res) => {
-		db.updateOne(Application, {_id: req.body.applicationId}, {proofOfPayment: req.body.proofOfPayment}, application => {
-			res.send(req.body.applicationId)
-		})
-	}
+		db.updateOne(
+			Application,
+			{ _id: req.body.applicationId },
+			{ proofOfPayment: req.body.proofOfPayment },
+			(application) => {
+				res.send(req.body.applicationId);
+			}
+		);
+	},
+
+	getForm10: async (req, res) => {
+		const currentYear = new Date().getFullYear().toString();
+		const currentMonth = new Date().getMonth() + 1;
+		let currentTerm = 0;
+		if (currentMonth >= 1 && currentMonth <= 4) {
+			currentTerm = 1;
+		} else if (currentMonth >= 5 && currentMonth <= 8) {
+			currentTerm = 2;
+		} else if (currentMonth >= 9 && currentMonth <= 12) {
+			currentTerm = 3;
+		}
+		const form10Id = `${currentYear}${currentTerm}001`;
+		const form10s = await Form10.find({ form10Id: { $regex: `${currentYear}${currentTerm}` } });
+		if (form10s.length === 0) {
+			const newForm10 = new Form10({
+				form10Id,
+				idDate: new Date().toISOString(),
+				ddDate: new Date().toISOString(),
+				initiatedMembers: [],
+			});
+			await newForm10.save();
+			res.status(200).send(newForm10);
+		} else {
+			const highestForm10Id = Math.max(...form10s.map((form10) => parseInt(form10.form10Id)));
+			if (form10s[0].initiatedMembers.length < 10) {
+				res.status(200).send(form10s[0]);
+			} else {
+				const newForm10 = new Form10({
+					form10Id: `${parseInt(highestForm10Id) + 1}`,
+					idDate: new Date().toISOString(),
+					ddDate: new Date().toISOString(),
+					initiatedMembers: [],
+				});
+				await newForm10.save();
+				res.status(200).send(newForm10);
+			}
+		}
+	},
+
+	updateForm10: async (req, res) => {
+		const form10Id = req.params.form10Id;
+
+		Form10.updateOne({ form10Id: form10Id }, { initiatedMembers: req.body.updatedMembers }, {}).then((updated) => {
+			res.send(updated);
+		});
+	},
 };
 
 module.exports = controller;

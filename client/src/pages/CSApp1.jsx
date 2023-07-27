@@ -84,11 +84,47 @@ function CSApp1() {
 			firstLineSigner: application.firstLineSigner ? application.firstLineSigner : "N/A",
 			otherDetails: application.notes ? application.notes : "N/A",
 			photo: application.photo,
-      proofOfPayment: application.proofOfPayment
+			proofOfPayment: application.proofOfPayment,
 		});
 	};
 
-  const styles = {
+	const addToForm10 = async () => {
+		const form10 = await axios.get("http://localhost:5000/getForm10");
+		console.log(form10);
+
+		if (!form10.data.initiatedMembers.includes(applicantInformationData.applicationId)) {
+			form10.data.initiatedMembers.push(applicantInformationData.applicationId);
+
+			const updated = { updatedMembers: form10.data.initiatedMembers };
+			console.log(form10.data.initiatedMembers);
+			console.log(updated);
+			axios.post(`http://localhost:5000/updateForm10/${form10.data.form10Id}`, updated).then((result) => {
+				alert(`Applicant ${applicantInformationData.applicationId} added to Form 10 ${form10.data.form10Id}`);
+			});
+		} else {
+			alert(
+				`Applicant ${applicantInformationData.applicationId} is already in Form 10 ${form10.data.form10Id}. Kindly submit the Form10 to finalize their application.`
+			);
+		}
+
+		//	const index = applicationData.applications.findIndex(
+		//		(member) => member.applicationId === applicantInformationData.applicationId
+		//	);
+		//	if (index !== -1) {
+		//		applicationData.applications.splice(index, 1);
+		//		await applicationData.applications.save();
+		//	}
+		//
+		//	const index2 = applicationData.filteredApplications.findIndex(
+		//		(member) => member.applicationId === applicantInformationData.applicationId
+		//	);
+		//	if (index2 !== -1) {
+		//		applicationData.filteredApplications.splice(index2, 1);
+		//		await applicationData.filteredApplications.save();
+		//	}
+	};
+
+	const styles = {
 		maxWidth: "200px",
 		maxHeight: "200px",
 		objectFit: "contain",
@@ -152,8 +188,6 @@ function CSApp1() {
 										</tr>
 									);
 								})}
-
-								
 							</tbody>
 						</table>
 					</div>
@@ -213,7 +247,7 @@ function CSApp1() {
 								<tr>
 									<td>ID Picture:</td>
 									<td>
-                  {applicantInformationData.photo ? (
+										{applicantInformationData.photo ? (
 											<img src={applicantInformationData.photo} alt="img" style={styles} />
 										) : (
 											<p></p>
@@ -223,22 +257,22 @@ function CSApp1() {
 								<tr>
 									<td>Proof of Payment:</td>
 									<td>
-                  {applicantInformationData.photo ? (
+										{applicantInformationData.proofOfPayment ? (
 											<img src={applicantInformationData.proofOfPayment} alt="img" style={styles} />
 										) : (
-											<p></p>
+											<p>Not yet uploaded</p>
 										)}
 									</td>
 								</tr>
 								<tr>
 									<td>Admin Status:</td>
 									<td>
-                  {applicantInformationData.proofOfPayment ? (
-													<span className="green-circle"></span>
-												) : (
-													<span className="red-circle"></span>
-												)}
-												{applicantInformationData.proofOfPayment ? "Paid" : "Not Paid"}
+										{applicantInformationData.proofOfPayment ? (
+											<span className="green-circle"></span>
+										) : (
+											<span className="red-circle"></span>
+										)}
+										{applicantInformationData.proofOfPayment ? "Paid" : "Not Paid"}
 									</td>
 								</tr>
 							</tbody>
@@ -246,12 +280,16 @@ function CSApp1() {
 					</div>
 
 					<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
-						<Link to="/appform4">
-							<button type="submit" className="btn custom">
-								FORM 10
-								<FontAwesomeIcon icon={faArrowRight} style={{ color: "#ffffff", marginLeft: "10px" }} />
-							</button>
-						</Link>
+						<button
+							type="submit"
+							className="btn custom"
+							onClick={() => {
+								addToForm10();
+							}}
+						>
+							FORM 10
+							<FontAwesomeIcon icon={faArrowRight} style={{ color: "#ffffff", marginLeft: "10px" }} />
+						</button>
 					</div>
 					<br />
 					<br />

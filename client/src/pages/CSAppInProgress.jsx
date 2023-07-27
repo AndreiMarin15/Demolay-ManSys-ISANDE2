@@ -131,7 +131,7 @@ function CSAppInProgress() {
 
 		axios.post("http://localhost:5000/updatePetition", rejection).then((result) => {
 			console.log(result.data);
-			alert(`Approved Petition: ${applicantInformationData.applicationId}`);
+			alert(`Rejected Petition: ${applicantInformationData.applicationId}`);
 		});
 	};
 
@@ -291,7 +291,7 @@ function CSAppInProgress() {
 					<br />
 					<div className="row" style={{ marginLeft: "70px" }}>
 						<div className="col-md-6">
-							<button type="button" style={{ border: "0" }}>
+							<button type="button" style={{ border: "0" }} onClick={() => {rejectApplication(applicantInformationData.uid)}}>
 								<span>
 									<FontAwesomeIcon icon={faSquareXmark} style={{ marginRight: "8px" }} />
 								</span>
