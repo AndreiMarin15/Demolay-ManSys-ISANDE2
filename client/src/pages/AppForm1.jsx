@@ -13,6 +13,7 @@ function Appform1() {
   });
 
   let triggers = useRef(0);
+
   useEffect(() => {
     async function fetchData() {
       axios.get("http://localhost:5000/getRegions").then(async (res1) => {
@@ -30,7 +31,7 @@ function Appform1() {
           chapters: res2.data.map((res) => {
             return {
               name: res.name,
-              id: res.chapterId,
+              id: res.chapterID,
             };
           }),
 
@@ -79,7 +80,6 @@ function Appform1() {
       regionId: formData.regionId,
       chapterId: formData.chapterId,
     };
-    console.log(application);
 
     console.log(application);
 

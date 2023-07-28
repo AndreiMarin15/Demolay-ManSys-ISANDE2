@@ -277,34 +277,84 @@ const controller = {
     });
   },
 
-  newTF: async (req, res) => {
-    const termReport = {
-      chapterID: req.body.chapterData.chapter,
-      year: req.body.chapterData.year,
-      term: req.body.chapterData.term,
-      startTerm: req.body.chapterData.startTerm,
-      endTerm: req.body.chapterData.endTerm,
+  updateTF: async (req, res) => {
+    const form1ID = req.params.id;
 
-      totalMembers: req.body.membershipData.totalMembers,
-      initiated: req.body.membershipData.initiated,
-      affiliated: req.body.membershipData.affiliated,
-      totalGains: req.body.membershipData.totalGains,
-      majority: req.body.membershipData.majority,
-      transferred: req.body.membershipData.transferred,
-      deaths: req.body.membershipData.deaths,
-      resigned: req.body.membershipData.resigned,
-      expelled: req.body.membershipData.expelled,
-      totalLoss: req.body.membershipData.totalLoss,
-      totalNetMembers: req.body.membershipData.totalNetMembers,
+    const termReport = {
+      chapterID: req.body.userData.chapterID,
+      year: req.body.formData.year,
+      term: req.body.formData.term,
+      startTerm: req.body.formData.startTerm,
+      endTerm: req.body.formData.endTerm,
+
+      totalMembers: req.body.formData.totalMembers,
+      initiated: req.body.formData.initiated,
+      affiliated: req.body.formData.affiliated,
+      totalGains: req.body.formData.totalGains,
+      majority: req.body.formData.majority,
+      transferred: req.body.formData.transferred,
+      deaths: req.body.formData.deaths,
+      resigned: req.body.formData.resigned,
+      expelled: req.body.formData.expelled,
+      totalLoss: req.body.formData.totalLoss,
+      totalNetMembers: req.body.formData.totalNetMembers,
     };
 
-    await db.insertOne(TermReport, termReport, (result) => {
-      console.log(result._id);
-      res.send(result._id);
+    db.findOne(TermReport, { _id: form1ID }, {}, (existingTF) => {
+      if (existingTF) {
+        db.updateOne(TermReport, { _id: form1ID }, termReport, (result) => {
+          if (result) {
+            // Successfully updated the document
+            res.json({
+              success: true,
+              message: "Term Report updated successfully",
+            });
+          } else {
+            // Failed to update the document
+            res.json({
+              success: false,
+              message: "Failed to update Term Report",
+            });
+          }
+        });
+      } else {
+        db.insertOne(TermReport, termReport, (result) => {
+          if (result) {
+            // Successfully created the new document
+            res.json({
+              success: true,
+              message: "Turnover created successfully",
+            });
+          } else {
+            // Failed to create the new document
+            res.json({ success: false, message: "Failed to create turnover" });
+          }
+        });
+      }
     });
   },
 
-  saveTF: async (req, res) => {},
+  getTurnoverReports: async (req, res) => {
+    const chapterID = req.params.chapterID;
+    const currentTerm = req.params.currentTerm;
+
+    db.findOne(
+      TurnoverStatus,
+      { chapterID: chapterID, termID: currentTerm },
+      {},
+      (result) => {
+        res.send(result);
+      }
+    );
+  },
+
+  getForm1: async (req, res) => {
+    const form1ID = req.params.id;
+
+    db.findOne(TermReport, { _id: form1ID }, {}, (result) => {
+      res.send(result);
+    });
+  },
 
   updateTurnover: async (req, res) => {
     const update = { [req.body.fieldToUpdate]: req.body.updateValue };
@@ -523,6 +573,13 @@ const controller = {
         res.send(result);
       }
     );
+  },
+
+  getChapterByID: async (req, res) => {
+    const chapterID = req.params.chapter;
+    db.findOne(Chapters, { chapterID: chapterID }, {}, (result) => {
+      res.send(result);
+    });
   },
 
   getAllChapters: async (req, res) => {

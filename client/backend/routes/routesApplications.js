@@ -20,8 +20,14 @@ router.post("/createMember", controller.createMember);
 router.post("/createAdvisor", controller.createAdvisor);
 router.post("/createAdmin", controller.createAdmin);
 
-router.post("/newTermReport", controller.newTF);
+router.post("/updateTF/:id", controller.updateTF);
 router.post("/updateTurnover", controller.updateTurnover);
+router.get("/getChapterByID/:chapter", controller.getChapterByID);
+router.get(
+  "/getTurnoverReports/:chapterID/:currentTerm",
+  controller.getTurnoverReports
+);
+router.get("/getForm1/:id", controller.getForm1);
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
 router.get("/getChapters/:regionId", controller.getChapters);

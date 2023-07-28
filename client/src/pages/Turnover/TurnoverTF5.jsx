@@ -10,29 +10,38 @@ function TurnoverTF5() {
   const location = useLocation();
   const prevPageProps = location.state;
 
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? null);
+
   const handleNextButtonClick = () => {
     // Calculate dynamic values
     const totalGains =
-      prevPageProps.membershipData.initiated +
-      prevPageProps.membershipData.affiliated;
+      prevPageProps.formData.initiated + prevPageProps.formData.affiliated;
     const totalLoss =
-      prevPageProps.membershipData.majority +
-      prevPageProps.membershipData.transferred +
-      prevPageProps.membershipData.deaths +
-      prevPageProps.membershipData.resigned +
-      prevPageProps.membershipData.expelled;
+      prevPageProps.formData.majority +
+      prevPageProps.formData.transferred +
+      prevPageProps.formData.deaths +
+      prevPageProps.formData.resigned +
+      prevPageProps.formData.expelled;
     const totalNetMembers =
-      prevPageProps.membershipData.totalMembers + totalGains - totalLoss;
+      prevPageProps.formData.totalMembers + totalGains - totalLoss;
 
     navigate("/turnovertf6", {
       state: {
-        ...prevPageProps,
-        membershipData: {
-          ...prevPageProps.membershipData, // Include existing properties from prevPageProps
-          totalGains,
-          totalLoss,
-          totalNetMembers,
-        },
+        userData: prevPageProps.userData,
+        chapterData: prevPageProps.chapterData,
+        form1ID: prevPageProps.form1ID,
+        formData: formData,
+      },
+    });
+  };
+
+  const handleBackButtonClick = () => {
+    navigate("/turnovertf2", {
+      state: {
+        userData: prevPageProps.userData,
+        chapterData: prevPageProps.chapterData,
+        form1ID: prevPageProps.form1ID,
+        formData: formData,
       },
     });
   };
@@ -200,11 +209,10 @@ function TurnoverTF5() {
       {/* Button */}
 
       <div className="d-flex justify-content-between mt-4">
-        <Link to="/turnoverTF2">
-          <button type="button" id="back-btn">
-            BACK
-          </button>
-        </Link>
+        <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+          BACK
+        </button>
+
         <button
           type="submit"
           form="submit"

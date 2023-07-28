@@ -28,11 +28,47 @@ function TurnoverDashboard1() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  console.log(prevPageProps);
+  //sample init data
+  const [userData, setUserData] = useState({
+    userID: "0118-27061",
+    name: "Philip Tolentino",
+    position: "Scribe",
+    chapterID: "45",
+  });
+
+  const [chapterData, setChapterData] = useState({});
+
+  const [turnoverData, setTurnoverData] = useState({
+    turnoverStatusID: "",
+    form1ID: "",
+  });
 
   useEffect(() => {
+    axios
+      .get(`http://localhost:5000/getChapterByID/${userData.chapterID}`)
+      .then(async (res1) => {
+        const res2 = await axios.get(
+          `http://localhost:5000/getTurnoverReports/${userData.chapterID}/${res1.data.currentTerm}`
+        );
+        setChapterData(res1.data);
+        setTurnoverData({
+          turnoverStatusID: res2.data._id,
+          form1ID: res2.data.form1ID,
+        });
+      });
+
     document.getElementById("tab1").style.display = "block";
   }, []);
+
+  const handleForm1Click = () => {
+    navigate("/turnovertf1", {
+      state: {
+        userData: userData,
+        chapterData: chapterData,
+        form1ID: turnoverData.form1ID,
+      },
+    });
+  };
 
   return (
     <div className="container">
@@ -43,8 +79,10 @@ function TurnoverDashboard1() {
 
         <div className="col-md-2">
           <div className="row align-items-center mt-3 text-center">
-            <h3>Edwardo Rafael</h3>
-            <p>Chapter Scribe, Abad Santos #1</p>
+            <h3>{userData.name}</h3>
+            <p>
+              {userData.position}, {chapterData.name}
+            </p>
             <hr />
           </div>
           <div className="row align-items-left">
@@ -108,12 +146,14 @@ function TurnoverDashboard1() {
                     <input type="checkbox" />
                     <button>Fill in</button>
                   </div>
-                  <div className="box">
-                    <h4>Term and Financial Report</h4>
-                    <p>Form/Report Desc</p>
-                    <input type="checkbox" />
-                    <button>Fill in</button>
-                  </div>
+                  {turnoverData.form1ID && (
+                    <div className="box">
+                      <h4>Term and Financial Report</h4>
+                      <p>Form/Report Desc</p>
+                      <input type="checkbox" />
+                      <button onClick={handleForm1Click}>Fill in</button>
+                    </div>
+                  )}
                   <div className="box">
                     <h4>Membership Report (Form 10)</h4>
                     <p>Form/Report Desc</p>

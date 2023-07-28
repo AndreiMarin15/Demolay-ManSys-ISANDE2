@@ -12,17 +12,30 @@ function TurnoverTF6() {
 
   console.log(prevPageProps);
 
+  const handleBackButtonClick = () => {
+    navigate("/turnovertf5", {
+      state: {
+        userData: prevPageProps.userData,
+        chapterData: prevPageProps.chapterData,
+        form1ID: prevPageProps.form1ID,
+        formData: formData,
+      },
+    });
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:5000/newTermReport", prevPageProps)
+      .post(
+        `http://localhost:5000/updateTF/${prevPageProps.form1ID}`,
+        prevPageProps
+      )
       .then((res) => {
         console.log("termReportID: " + res.data);
 
         const turnoverUpdate = {
-          chapterID: prevPageProps.chapterData.chapter,
-          termID:
-            prevPageProps.chapterData.year + prevPageProps.chapterData.term,
+          chapterID: prevPageProps.userData.chapterID,
+          termID: prevPageProps.formData.year + prevPageProps.formData.term,
           fieldToUpdate: "form1ID",
           updateValue: res.data,
         };
@@ -298,11 +311,9 @@ function TurnoverTF6() {
       {/* Button */}
 
       <div className="d-flex justify-content-between mt-4">
-        <Link to="/turnoverTF5">
-          <button type="button" id="back-btn">
-            BACK
-          </button>
-        </Link>
+        <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+          BACK
+        </button>
         <button
           type="submit"
           form="submit"

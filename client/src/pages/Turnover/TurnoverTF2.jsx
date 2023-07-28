@@ -10,20 +10,37 @@ function TurnoverTF2() {
   const location = useLocation();
   const prevPageProps = location.state;
 
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? null);
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+    console.log(formData);
+  };
+
   const handleNextButtonClick = () => {
     navigate("/turnovertf5", {
       state: {
-        ...prevPageProps,
-        membershipData: {
-          totalMembers: 53,
-          initiated: 13,
-          affiliated: 3,
-          majority: 5,
-          transferred: 1,
-          deaths: 0,
-          resigned: 2,
-          expelled: 2,
-        },
+        userData: prevPageProps.userData,
+        chapterData: prevPageProps.chapterData,
+        form1ID: prevPageProps.form1ID,
+        formData: formData,
+      },
+    });
+  };
+
+  const handleBackButtonClick = () => {
+    navigate("/turnovertf1", {
+      state: {
+        userData: prevPageProps.userData,
+        chapterData: prevPageProps.chapterData,
+        form1ID: prevPageProps.form1ID,
+        formData: formData,
       },
     });
   };
@@ -78,7 +95,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="53"
+                onChange={onChange}
+                value={formData.totalMembers}
                 readOnly
               />
             </div>
@@ -97,7 +115,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="13"
+                onChange={onChange}
+                value={formData.initiated}
                 readOnly
               />
             </div>
@@ -116,7 +135,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="3"
+                onChange={onChange}
+                value={formData.affiliated}
                 readOnly
               />
             </div>
@@ -135,7 +155,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="16"
+                onChange={onChange}
+                value={formData.initiated + formData.affiliated}
                 readOnly
               />
             </div>
@@ -154,7 +175,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="5"
+                onChange={onChange}
+                value={formData.majority}
                 readOnly
               />
             </div>
@@ -173,7 +195,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="1"
+                onChange={onChange}
+                value={formData.transferred}
                 readOnly
               />
             </div>
@@ -193,7 +216,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="0"
+                onChange={onChange}
+                value={formData.deaths}
                 readOnly
               />
             </div>
@@ -209,7 +233,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="2"
+                onChange={onChange}
+                value={formData.resigned}
                 readOnly
               />
             </div>
@@ -225,7 +250,8 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="2"
+                onChange={onChange}
+                value={formData.expelled}
                 readOnly
               />
             </div>
@@ -244,7 +270,14 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="10"
+                onChange={onChange}
+                value={
+                  formData.majority +
+                  formData.transferred +
+                  formData.resigned +
+                  formData.deaths +
+                  formData.expelled
+                }
                 readOnly
               />
             </div>
@@ -263,7 +296,12 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="59"
+                onChange={onChange}
+                value={
+                  formData.totalMembers +
+                  formData.totalGains -
+                  formData.totalLoss
+                }
                 readOnly
               />
             </div>
@@ -273,11 +311,9 @@ function TurnoverTF2() {
         {/* Button */}
 
         <div className="d-flex justify-content-between mt-4">
-          <Link to="/turnoverTF1">
-            <button type="button" id="back-btn">
-              BACK
-            </button>
-          </Link>
+          <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+            BACK
+          </button>
           <button
             type="submit"
             form="submit"

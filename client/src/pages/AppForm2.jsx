@@ -4,10 +4,12 @@ import "../styles/appform2.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-
 const API_REGION = "https://psgc.gitlab.io/api/regions/";
 const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
+const API_NCR_DISTRICTS =
+  "https://psgc.gitlab.io/api/regions/130000000/districts/";
 const API_CITY = "https://psgc.gitlab.io/api/cities-municipalities/";
+const API_BRGY = "https://psgc.gitlab.io/api/barangays/";
 
 function Appform2() {
   const [photoData, setPhoto] = useState({
@@ -17,10 +19,12 @@ function Appform2() {
   const [formData, setFormData] = useState({
     cities: [],
     provinces: [],
+    districts: [],
     regions: [],
     religions: [],
     years: [],
     chapters: [],
+    barangays: [],
 
     lastName: "",
     givenName: "",
@@ -77,38 +81,55 @@ function Appform2() {
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const [provincesByRegion, setProvincesByRegion] = useState([]);
   const [citiesByProvince, setCitiesByProvince] = useState([]);
+  const [barangaysByCity, setBarangaysByCity] = useState([]);
 
   let { applicationId } = useParams();
 
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
     try {
-      const [regionsResponse, provincesResponse, citiesResponse] =
-        await Promise.all([
-          axios.get(API_REGION),
-          axios.get(API_PROVINCE),
-          axios.get(API_CITY),
-        ]);
+      const [
+        regionsResponse,
+        provincesResponse,
+        districtsResponse,
+        citiesResponse,
+        barangaysResponse,
+      ] = await Promise.all([
+        axios.get(API_REGION),
+        axios.get(API_PROVINCE),
+        axios.get(API_NCR_DISTRICTS),
+        axios.get(API_CITY),
+        axios.get(API_BRGY),
+      ]);
 
       setFormData({
         ...formData,
 
         regions: regionsResponse.data,
-        provinces: provincesResponse.data.sort((a,b) => a.name.localeCompare(b.name)),
-        cities: citiesResponse.data.sort((a,b) => a.name.localeCompare(b.name)),
+
+        provinces: provincesResponse.data.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+
+        districts: districtsResponse.data,
+
+        cities: citiesResponse.data.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
+
+        barangays: barangaysResponse.data.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        ),
       });
 
-      console.log(
-        formData.regions,
-        formData.provinces,
-        formData.cities
-      );
+      console.log(formData.regions, formData.provinces, formData.cities);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -116,28 +137,28 @@ function Appform2() {
 
   const handleRegionChange = (e) => {
     const regionId = e.target.value;
+
     setFormData({
       ...formData,
       memberRegion: regionId,
     });
+
     setSelectedRegion(regionId);
 
-    const filteredProvinces = formData.provinces.filter(
-      (province) => province.regionCode === regionId
-    );
-    setProvincesByRegion(filteredProvinces);
+    if (regionId == "130000000") {
+      setProvincesByRegion(formData.districts);
+    } else {
+      const filteredProvinces = formData.provinces.filter(
+        (province) => province.regionCode === regionId
+      );
+      setProvincesByRegion(filteredProvinces);
+    }
 
     // Reset selected province and cities when region changes
     setSelectedProvince("");
     setCitiesByProvince([]);
 
     // If no provinces in the selected region, filter cities by region
-    if (filteredProvinces.length === 0) {
-      const filteredCitiesByRegion = formData.cities.filter(
-        (city) => city.regionCode === regionId
-      );
-      setCitiesByProvince(filteredCitiesByRegion);
-    }
   };
 
   const handleProvinceChange = (e) => {
@@ -149,9 +170,14 @@ function Appform2() {
     setSelectedProvince(provinceId);
 
     const filteredCities = formData.cities.filter(
-      (city) => city.provinceCode === provinceId
+      (city) =>
+        city.provinceCode === provinceId || city.districtCode == provinceId
     );
     setCitiesByProvince(filteredCities);
+
+    // Reset selected city and barangays when province changes
+    setSelectedCity("");
+    setBarangaysByCity([]);
   };
 
   const onChange = (e) => {
@@ -166,11 +192,20 @@ function Appform2() {
   };
 
   const onChangeCity = (e) => {
+    const cityId = e.target.value;
+
     setFormData({
       ...formData,
-      city: e.target.value,
+      city: cityId,
     });
-    console.log(formData);
+
+    setSelectedCity(cityId);
+
+    const filteredBarangays = formData.barangays.filter(
+      (barangay) =>
+        barangay.cityCode === cityId || barangay.municipalityCode === cityId
+    );
+    setBarangaysByCity(filteredBarangays);
   };
 
   const onSubmit = (e) => {
@@ -254,7 +289,7 @@ function Appform2() {
 
         <div className="col-md-6">
           <h1 className="position-absolute end-0">
-            [Chapter chosen from previous page]
+            [Chapter name from previous page]
           </h1>
         </div>
       </div>
@@ -377,6 +412,7 @@ function Appform2() {
                 onChange={handleRegionChange}
                 value={formData.memberRegion}
               >
+                <option value={null}>Select Region</option>
                 {formData.regions.map(function (region) {
                   return (
                     <option key={region.code} value={region.code}>
@@ -430,30 +466,27 @@ function Appform2() {
 
           <div className="col-md-3">
             <div className="row mb-3">
-              {selectedRegion && (
-                <>
-                  <label
-                    for="inputProvince"
-                    className="col-md-4 col-form-label text-right"
-                  >
-                    State/Province
-                  </label>
-                  <select
-                    className="form-select form-control"
-                    id="province"
-                    onChange={handleProvinceChange}
-                    value={formData.province}
-                  >
-                    {provincesByRegion.map(function (province) {
-                      return (
-                        <option key={province.code} value={province.code}>
-                          {province.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </>
-              )}
+              <label
+                for="inputProvince"
+                className="col-md-4 col-form-label text-right"
+              >
+                Province/District
+              </label>
+              <select
+                className="form-select form-control"
+                id="province"
+                onChange={handleProvinceChange}
+                value={formData.province}
+              >
+                <option value={null}>Select Province/District</option>
+                {provincesByRegion.map(function (province) {
+                  return (
+                    <option key={province.code} value={province.code}>
+                      {province.name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
           </div>
         </div>
@@ -464,48 +497,48 @@ function Appform2() {
                 for="inputBrgy"
                 className="col-md-4 col-form-label text-right"
               >
-                Barangay/District
+                Barangay
               </label>
-              <input
-                type="text"
-                className="form-control"
+              <select
+                className="form-select form-control"
                 id="brgy"
-                placeholder="Malate"
                 onChange={onChange}
                 value={formData.brgy}
-              />
+              >
+                <option value={null}>Select Barangay</option>
+                {barangaysByCity.map((barangay) => (
+                  <option key={barangay.code} value={barangay.code}>
+                    {barangay.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
           <div className="col-md-3">
             <div className="row mb-3">
-              {selectedRegion &&
-                // eslint-disable-next-line eqeqeq
-                (selectedProvince || provincesByRegion == 0) && (
-                  <>
-                    <label
-                      for="inputCity"
-                      className="col-md-4 col-form-label text-right"
-                    >
-                      City
-                    </label>
-                    <select
-                      className="form-select form-control"
-                      id="inputCity"
-                      placeholder="New York City"
-                      onChange={onChangeCity}
-                      value={formData.city}
-                    >
-                      {citiesByProvince.map(function (city) {
-                        return (
-                          <option key={city.code} value={city.code}>
-                            {city.name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </>
-                )}
+              <label
+                for="inputCity"
+                className="col-md-4 col-form-label text-right"
+              >
+                City/Municipality
+              </label>
+              <select
+                className="form-select form-control"
+                id="inputCity"
+                placeholder="New York City"
+                onChange={onChangeCity}
+                value={formData.city}
+              >
+                <option value={null}>Select City/Municipality</option>
+                {citiesByProvince.map(function (city) {
+                  return (
+                    <option key={city.code} value={city.code}>
+                      {city.name}
+                    </option>
+                  );
+                })}
+              </select>
             </div>
           </div>
         </div>
