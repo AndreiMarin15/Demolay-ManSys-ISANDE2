@@ -841,6 +841,18 @@ const controller = {
 			res.send(updated);
 		});
 	},
+
+	retrieveForm10: async (req, res) => {
+		const form10Id = req.params.form10Id
+
+		db.findOne(Form10, {form10Id: form10Id}, {}, result => {
+			res.send(result)
+		})
+	},
+
+	retrieveInitiatedMembers: async (req, res) => {
+		
+	}
 };
 
 module.exports = controller;

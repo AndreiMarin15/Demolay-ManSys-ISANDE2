@@ -29,26 +29,22 @@ router.get("/getProvinces", controller.getProvinces);
 router.get("/getCities/:provinceID", controller.getCities);
 router.get("/generateID", controller.generateApplicantID);
 router.get("/getStatus1/:id", controller.getAppStatus1);
-router.get("/generateMemberId", controller.generateMemberId)
-router.get("/petitionedApplications", controller.getPetitionedApplications)
+router.get("/generateMemberId", controller.generateMemberId);
+router.get("/petitionedApplications", controller.getPetitionedApplications);
 
+router.post("/approveApplication", controller.approveForPetitioning);
+router.post("/rejectApplication", controller.rejectApplication);
+router.post("/updatePetition", controller.updatePetition);
 
-router.post("/approveApplication", controller.approveForPetitioning)
-router.post("/rejectApplication", controller.rejectApplication)
-router.post("/updatePetition", controller.updatePetition)
+router.post("/submitProofOfPayment", controller.submitProofOfPayment);
 
-router.post("/submitProofOfPayment", controller.submitProofOfPayment)
-
-router.get("/getApplications", controller.getApplications)
+router.get("/getApplications", controller.getApplications);
 
 router.get("/applications/:id", controller.getApplication);
 
 router.get("/getCurrentUser", controller.getCurrentUser);
 
-
 router.get("/getForm10", controller.getForm10);
-router.post("/updateForm10/:form10Id", controller.updateForm10)
-
-
+router.post("/updateForm10/:form10Id", controller.updateForm10);
 
 module.exports = router;

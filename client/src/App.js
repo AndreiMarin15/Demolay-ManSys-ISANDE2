@@ -114,6 +114,7 @@ function App() {
           <Route path="csappinprogress" element={<CSAppInProgress />} />
           <Route path="csform10" element={<CSForm10 />} />
           <Route path="csform10sum" element={<CSForm10Sum />} />
+          <Route path="csform10sum/:form10Id" element={<CSForm10Sum />} />
           <Route path="csapppending" element={<CSAppPending />} />
           {/* </Route> */}
           <Route path="caapprejected" element={<CAAppRejected />} />

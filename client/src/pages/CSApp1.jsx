@@ -100,11 +100,14 @@ function CSApp1() {
 			console.log(updated);
 			axios.post(`http://localhost:5000/updateForm10/${form10.data.form10Id}`, updated).then((result) => {
 				alert(`Applicant ${applicantInformationData.applicationId} added to Form 10 ${form10.data.form10Id}`);
+				window.location.href = `/csform10sum/${form10.data.form10Id}`;
 			});
 		} else {
 			alert(
 				`Applicant ${applicantInformationData.applicationId} is already in Form 10 ${form10.data.form10Id}. Kindly submit the Form10 to finalize their application.`
 			);
+
+			window.location.href = `/csform10sum/${form10.data.form10Id}`;
 		}
 
 		//	const index = applicationData.applications.findIndex(
