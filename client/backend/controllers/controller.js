@@ -651,31 +651,6 @@ const controller = {
 		});
 	},
 
-	generateMemberId: async (req, res) => {
-		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, async (members) => {
-			if (members.length > 1 && members) {
-				let highestId = members[0].memberId;
-				await members.forEach((member) => {
-					if (parseInt(member.memberId) > parseInt(highestId)) {
-						highestId = member.memberId;
-					}
-				});
-				console.log(`MemberID1: ${(highestId + 1).toString()}`);
-				res.send((highestId + 1).toString());
-				// eslint-disable-next-line eqeqeq
-			} else if (members.length == 1 && members) {
-				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`);
-				res.send((members[0].applicantId + 1).toString());
-			} else {
-				const currentDate = new Date();
-				const currentMonth = currentDate.getMonth() + 1;
-				const currentYear = currentDate.getFullYear().toString().slice(-2);
-				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`);
-				res.send(currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
-			}
-		});
-	},
-
 	getCurrentUser: async (req, res) => {
 		res.send(session);
 	},
@@ -843,16 +818,142 @@ const controller = {
 	},
 
 	retrieveForm10: async (req, res) => {
-		const form10Id = req.params.form10Id
+		const form10Id = req.params.form10Id;
 
-		db.findOne(Form10, {form10Id: form10Id}, {}, result => {
-			res.send(result)
-		})
+		db.findOne(Form10, { form10Id: form10Id }, {}, (result) => {
+			res.send(result);
+		});
 	},
 
 	retrieveInitiatedMembers: async (req, res) => {
-		
-	}
+		const form10Id = req.params.form10Id;
+
+		db.findOne(Form10, { form10Id: form10Id }, {}, (result) => {
+			const applicants = result.initiatedMembers;
+
+			Application.find({ applicantId: { $in: applicants } }, {}).then((applications) => {
+				res.send(applications);
+			});
+		});
+	},
+
+	generateMemberId: async (req, res) => {
+		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, async (members) => {
+			if (members.length > 1 && members) {
+				let highestId = members[0].memberId;
+				await members.forEach((member) => {
+					if (parseInt(member.memberId) > parseInt(highestId)) {
+						highestId = member.memberId;
+					}
+				});
+				console.log(`MemberID1: ${(highestId + 1).toString()}`);
+				res.send((highestId + 1).toString());
+				// eslint-disable-next-line eqeqeq
+			} else if (members.length == 1 && members) {
+				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`);
+				res.send((members[0].applicantId + 1).toString());
+			} else {
+				const currentDate = new Date();
+				const currentMonth = currentDate.getMonth() + 1;
+				const currentYear = currentDate.getFullYear().toString().slice(-2);
+				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`);
+				res.send(currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
+			}
+		});
+	},
+
+	createAccountsForInitiatedMembers: async (req, res) => {
+		const toInitiate = req.body.toInitiate;
+		let initiatedMembers = [];
+		let getMemberId = "";
+		let started = false;
+		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, (members) => {
+			toInitiate.forEach((applicant) => {
+				if (members.length === 0) {
+					if (!started) {
+						const currentDate = new Date();
+						const currentMonth = currentDate.getMonth() + 1;
+						const currentYear = currentDate.getFullYear().toString().slice(-2);
+						console.log("FIRST ID", currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
+						getMemberId = currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001";
+						started = true;
+					} else {
+						getMemberId = (parseInt(getMemberId) + 1).toString();
+					}
+				} else {
+					if (members.length > 1 && members) {
+						let highestId = members[0].memberId;
+						members.forEach((member) => {
+							if (parseInt(member.memberId) > parseInt(highestId)) {
+								highestId = member.memberId;
+							}
+						});
+						if (!started) {
+							getMemberId = (parseInt(highestId) + 1).toString();
+							started = true;
+						} else {
+							getMemberId = (parseInt(getMemberId) + 1).toString();
+						}
+						// eslint-disable-next-line eqeqeq
+					} else if (members.length == 1 && members) {
+						if (!started) {
+							getMemberId = (parseInt(members[0].memberId) + 1).toString();
+							started = true
+						} else {
+							getMemberId = (parseInt(getMemberId) + 1).toString();
+						}
+					}
+				}
+
+				//	if (members.length > 1 && members) {
+				//		let highestId = members[0].memberId;
+				//		members.forEach((member) => {
+				//			if (parseInt(member.memberId) > parseInt(highestId)) {
+				//				highestId = member.memberId;
+				//			}
+				//		});
+				//
+				//		getMemberId = (parseInt(highestId) + 1).toString();
+				//		// eslint-disable-next-line eqeqeq
+				//	} else if (members.length == 1 && members) {
+				//		getMemberId = (parseInt(members[0].memberId) + 1).toString();
+				//	} else {
+				//		const currentDate = new Date();
+				//		const currentMonth = currentDate.getMonth() + 1;
+				//		const currentYear = currentDate.getFullYear().toString().slice(-2);
+				//
+				//		getMemberId = currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001";
+				//	}
+
+				let finalizedMember = new Member({
+					memberId: getMemberId,
+					password: applicant.applicantPassword,
+					lastName: applicant.lastName,
+					givenName: applicant.givenName,
+					middleName: applicant.middleName,
+					birthdate: applicant.birthdate,
+					chapterId: applicant.chapterId,
+					email: applicant.email,
+					mobile: applicant.mobile,
+					homeAddress: applicant.streetAddress,
+					facebookLink: applicant.facebook,
+					photo: applicant.photo,
+					position: "Member",
+				});
+
+				db.insertOne(Member, finalizedMember, (mem) => {
+					if (mem) {
+						console.log(finalizedMember.memberId, finalizedMember.givenName);
+					} else {
+						console.log("MEM: ", mem);
+						console.log("did not insert: ", finalizedMember.memberId);
+					}
+				});
+			});
+		});
+
+		res.send(initiatedMembers);
+	},
 };
 
 module.exports = controller;

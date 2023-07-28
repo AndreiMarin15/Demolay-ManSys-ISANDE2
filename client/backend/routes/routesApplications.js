@@ -36,6 +36,9 @@ router.post("/approveApplication", controller.approveForPetitioning);
 router.post("/rejectApplication", controller.rejectApplication);
 router.post("/updatePetition", controller.updatePetition);
 
+router.get("/retrieveInitiatedMembers/:form10Id", controller.retrieveInitiatedMembers)
+router.post("/acceptForm10", controller.createAccountsForInitiatedMembers)
+
 router.post("/submitProofOfPayment", controller.submitProofOfPayment);
 
 router.get("/getApplications", controller.getApplications);

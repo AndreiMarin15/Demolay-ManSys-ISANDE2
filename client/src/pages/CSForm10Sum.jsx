@@ -12,11 +12,91 @@ const right = <FontAwesomeIcon icon={faArrowRight} />;
 const left = <FontAwesomeIcon icon={faArrowLeft} />;
 
 function CSForm10Sum() {
+	let { form10Id } = useParams();
+
+	const [applicants, setApplicants] = useState({
+		applicants: [],
+	});
+
+	const [applicantInformationData, setApplicantInformation] = useState({
+		uid: "",
+		applicationId: "",
+		lastName: "",
+		givenName: "",
+		middleName: "",
+		email: "",
+		
+		contact: "",
+		firstLineSigner: "",
+		otherDetails: "",
+		photo: "",
+		proofOfPayment: "",
+	});
+
+	useEffect(() => {
+		axios.get(`http://localhost:5000/retrieveInitiatedMembers/${form10Id}`).then((result) => {
+			setApplicants({
+				applicants: result.data,
+			});
+
+			console.log("1", result);
+			console.log("2", applicants.applicants);
+
+			setApplicantInformation({
+				uid: result.data[0]._id,
+				applicationId: result.data[0].applicantId,
+				lastName: result.data[0].lastName,
+				givenName: result.data[0].givenName,
+				middleName: result.data[0].middleName,
+				email: result.data[0].email,
+				contact: result.data[0].mobile,
+				firstLineSigner: result.data[0].firstLineSigner ? result.data[0].firstLineSigner : "N/A",
+				otherDetails: result.data[0].notes ? result.data[0].notes : "N/A",
+				photo: result.data[0].photo,
+				proofOfPayment: result.data[0].proofOfPayment,
+			});
+		});
+	}, []);
+
+	const changeInformation = (application) => {
+		console.log(application);
+		setApplicantInformation({
+			...applicantInformationData,
+			uid: application._id,
+			applicationId: application.applicantId,
+			lastName: application.lastName,
+			givenName: application.givenName,
+			middleName: application.middleName,
+			email: application.email,
+			contact: application.mobile,
+			firstLineSigner: application.firstLineSigner ? application.firstLineSigner : "N/A",
+			otherDetails: application.notes ? application.notes : "N/A",
+			photo: application.photo,
+			proofOfPayment: application.proofOfPayment,
+		});
+	};
+
+	const submitForm10 = async () => {
+		const initiate = {
+			toInitiate: applicants.applicants
+		}
+
+		axios.post("http://localhost:5000/acceptForm10", initiate).then(result => {
+			alert("Form 10 Accepted and Applicants Initiated")
+		})
+	}
+
+	const styles = {
+		maxWidth: "200px",
+		maxHeight: "200px",
+		objectFit: "contain",
+	};
+
 	return (
 		<div className="container container-fluid ">
 			<div className="row">
 				<div className="col-md-12">
-					<h1>Form 10</h1>
+					<h1>Form 10: {form10Id}</h1>
 				</div>
 			</div>
 
@@ -36,97 +116,22 @@ function CSForm10Sum() {
 									<th>#</th>
 									<th>Applicant Name</th>
 									<th>View</th>
-									<th>Return</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>John Doe</td>
-									<td>
-										<a href="facebook.com">View Details</a>
-									</td>
-									<td>
-										<button type="submit" className="btn custom-add">
-											<FontAwesomeIcon icon={faArrowLeft} style={{ color: "#ffffff", marginRight: "8px" }} />
-											Return
-										</button>
-									</td>
-								</tr>
-
-								<tr>
-									<td>2</td>
-									<td>Joe Alwyn</td>
-
-									<td>
-										<a href="facebook.com">View Details</a>
-									</td>
-									<td>
-										<button type="submit" className="btn custom-add">
-											<FontAwesomeIcon icon={faArrowLeft} style={{ color: "#ffffff", marginRight: "8px" }} />
-											Return
-										</button>
-									</td>
-								</tr>
-
-								<tr>
-									<td>3</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-
-								<tr>
-									<td>4</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-
-								<tr>
-									<td>5</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>8</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>9</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>10</td>
-									<td></td>
-
-									<td></td>
-									<td></td>
-								</tr>
+								{applicants.applicants.map(function (applicant) {
+									return (
+										<tr key={applicant.applicantId}>
+											<td>{applicant.applicantId}</td>
+											<td>{applicant.givenName} {applicant.lastName}</td>
+											<td>
+												<button className="btn custom-add" onClick={() => changeInformation(applicant)}>
+													View
+												</button>
+											</td>
+										</tr>
+									);
+								})}
 							</tbody>
 						</table>
 					</div>
@@ -141,37 +146,37 @@ function CSForm10Sum() {
 						<table className="info-table" style={{ marginLeft: "130px" }}>
 							<tr>
 								<td>ID Number:</td>
-								<td>2092034911</td>
+								<td>{applicantInformationData.applicationId}</td>
 							</tr>
 
 							<tr>
 								<td>Last Name:</td>
-								<td>Doe</td>
+								<td>{applicantInformationData.lastName}</td>
 							</tr>
 
 							<tr>
 								<td>Given Name:</td>
-								<td>John</td>
+								<td>{applicantInformationData.givenName}</td>
 							</tr>
 
 							<tr>
 								<td>Middle Name:</td>
-								<td>Almacen</td>
+								<td>{applicantInformationData.middleName}</td>
 							</tr>
 
 							<tr>
 								<td>Email:</td>
-								<td>johndoe@gmail.com</td>
+								<td>{applicantInformationData.email}</td>
 							</tr>
 
 							<tr>
 								<td>First-line Signer:</td>
-								<td>Juan Dela Cruz</td>
+								<td>{applicantInformationData.firstLineSigner}</td>
 							</tr>
 
 							<tr>
 								<td>Other Details:</td>
-								<td>Notes</td>
+								<td>{applicantInformationData.otherDetails}</td>
 							</tr>
 						</table>
 					</div>
@@ -184,31 +189,43 @@ function CSForm10Sum() {
 								<tr>
 									<td>ID Picture:</td>
 									<td>
-										<a href="http://facebook.com">Doe-Picture.png</a>
+										{applicantInformationData.photo ? (
+											<img src={applicantInformationData.photo} alt="img" style={styles} />
+										) : (
+											<p></p>
+										)}
 									</td>
 								</tr>
 								<tr>
 									<td>Proof of Payment:</td>
 									<td>
-										<a href="http://facebook.com">Doe-Payment.png</a>
+									{applicantInformationData.proofOfPayment ? (
+											<img src={applicantInformationData.proofOfPayment} alt="img" style={styles} />
+										) : (
+											<p>Not yet uploaded</p>
+										)}
 									</td>
 								</tr>
 								<tr>
 									<td>Admin Status:</td>
 									<td>
-										<span className="green-circle"></span>
-										Paid
+									{applicantInformationData.proofOfPayment ? (
+													<span className="green-circle"></span>
+												) : (
+													<span className="red-circle"></span>
+												)}
+												{applicantInformationData.proofOfPayment ? "Paid" : "Not Paid"}
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 					<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
-						<Link to="/appform4">
-							<button type="submit" className="btn custom">
-								SUBMIT
+						
+							<button className="btn custom" onClick={() => {submitForm10()}}>
+								ACCEPT FORM 10
 							</button>
-						</Link>
+						
 					</div>
 					<br />
 					<br />
