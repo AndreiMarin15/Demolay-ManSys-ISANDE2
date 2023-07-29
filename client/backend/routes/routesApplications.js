@@ -25,8 +25,6 @@ router.get("/getRegions", controller.getRegions);
 router.get("/getChapters/:regionId", controller.getChapters);
 router.get("/getAllChapters/", controller.getAllChapters);
 router.get("/getAllChaptersById/", controller.getChaptersById);
-router.get("/getProvinces", controller.getProvinces);
-router.get("/getCities/:provinceID", controller.getCities);
 router.get("/generateID", controller.generateApplicantID);
 router.get("/getStatus1/:id", controller.getAppStatus1);
 router.get("/generateMemberId", controller.generateMemberId);
@@ -36,8 +34,11 @@ router.post("/approveApplication", controller.approveForPetitioning);
 router.post("/rejectApplication", controller.rejectApplication);
 router.post("/updatePetition", controller.updatePetition);
 
-router.get("/retrieveInitiatedMembers/:form10Id", controller.retrieveInitiatedMembers)
-router.post("/acceptForm10", controller.createAccountsForInitiatedMembers)
+router.get(
+  "/retrieveInitiatedMembers/:form10Id",
+  controller.retrieveInitiatedMembers
+);
+router.post("/acceptForm10", controller.createAccountsForInitiatedMembers);
 
 router.post("/submitProofOfPayment", controller.submitProofOfPayment);
 
@@ -49,5 +50,14 @@ router.get("/getCurrentUser", controller.getCurrentUser);
 
 router.get("/getForm10", controller.getForm10);
 router.post("/updateForm10/:form10Id", controller.updateForm10);
+
+router.post("/updateTF/:id", turnoverController.updateTF);
+router.post("/updateTurnover", turnoverController.updateTurnover);
+router.get("/getChapterByID/:chapter", controller.getChapterByID);
+router.get(
+  "/getTurnoverReports/:chapterID/:currentTerm",
+  turnoverController.getTurnoverReports
+);
+router.get("/getForm1/:id", turnoverController.getForm1);
 
 module.exports = router;
