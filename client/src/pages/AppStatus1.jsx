@@ -9,12 +9,17 @@ import { useEffect, useState } from "react";
 function AppStatus1() {
 	let { id } = useParams();
 
+	const [photoData, setPhoto] = useState({
+		photo: "",
+	});
+
 	const [formData, setFormData] = useState({
 		applicantId: "",
 		chapter: "",
 		dateCreated: "",
 		status: "",
-		memberId: ""
+		petStatus: "",
+		memberId: "",
 	});
 
 	const [applicantInformationData, setApplicantInformation] = useState({
@@ -35,17 +40,18 @@ function AppStatus1() {
 	useEffect(() => {
 		async function fetchData() {
 			const application = await axios.get(`http://localhost:5000/getStatus1/${id}`);
-			const applicationInfo = await axios.get(`http://localhost:5000/applications/${id}`)
-			const memberId = await axios.get(`http://localhost:5000/generateMemberId`)
+			const applicationInfo = await axios.get(`http://localhost:5000/applications/${id}`);
+			const memberId = await axios.get(`http://localhost:5000/generateMemberId`);
 
-			console.log(applicationInfo)
+			console.log(applicationInfo);
 			setFormData({
 				...formData,
 				applicantId: application.data.applicantId,
 				chapter: application.data.chapter,
 				dateCreated: application.data.dateCreated,
 				status: application.data.status,
-				memberId: memberId.data
+				petStatus: application.data.petStatus ? application.data.petStatus : "In Progress",
+				memberId: memberId.data,
 			});
 
 			setApplicantInformation({
@@ -66,7 +72,45 @@ function AppStatus1() {
 	const redirect = () => {
 		window.location.href = `/appform4/${applicantInformationData.uid}`;
 	};
-	
+
+	const handleImageUpload = async (e) => {
+		const file = e.target.files[0];
+		const base64 = await convertToBase64(file);
+
+		setPhoto({
+			...photoData,
+			photo: base64,
+		});
+
+		console.log(photoData);
+	};
+
+	function convertToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const fileReader = new FileReader();
+
+			fileReader.readAsDataURL(file);
+			fileReader.onload = () => {
+				resolve(fileReader.result);
+			};
+			fileReader.onerror = (error) => {
+				reject(error);
+			};
+		});
+	}
+
+	const submitProofOfPayment = () => {
+		
+
+		const update = {
+			proofOfPayment: photoData.photo,
+			applicationId: applicantInformationData.uid
+		}
+
+		axios.post("http://localhost:5000/submitProofOfPayment", update).then(res => {
+			alert("Submitted Proof of Payment. Kindly wait for Scribe Approval")
+		})
+	}
 
 	return (
 		/* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
@@ -88,7 +132,7 @@ function AppStatus1() {
 					<table className="info-table" style={{ marginLeft: "130px" }}>
 						<tr>
 							<td>Full Name</td>
-							<td> {applicantInformationData.fullName  ? applicantInformationData.fullName : "N/A"} </td>
+							<td> {applicantInformationData.fullName ? applicantInformationData.fullName : "N/A"} </td>
 						</tr>
 
 						<tr>
@@ -98,17 +142,17 @@ function AppStatus1() {
 
 						<tr>
 							<td>Contact:</td>
-							<td>{applicantInformationData.contact  ? applicantInformationData.contact : "N/A" }</td>
+							<td>{applicantInformationData.contact ? applicantInformationData.contact : "N/A"}</td>
 						</tr>
 
 						<tr>
 							<td>First Line Signer:</td>
-							<td>{applicantInformationData.firstLineSigner  ? applicantInformationData.firstLineSigner : "N/A"}</td>
+							<td>{applicantInformationData.firstLineSigner ? applicantInformationData.firstLineSigner : "N/A"}</td>
 						</tr>
 
 						<tr>
 							<td>Other Details:</td>
-							<td>{applicantInformationData.otherDetails  ? applicantInformationData.otherDetails : "N/A" }</td>
+							<td>{applicantInformationData.otherDetails ? applicantInformationData.otherDetails : "N/A"}</td>
 						</tr>
 					</table>
 
@@ -145,7 +189,7 @@ function AppStatus1() {
 
 						{formData.status === "In Review" && (
 							<tr>
-								<td>Status:</td>
+								<td>EO Status:</td>
 								<td>
 									{" "}
 									<p className="text-center" id="status-review">
@@ -156,20 +200,30 @@ function AppStatus1() {
 						)}
 
 						{formData.status === "Approved" && (
-							<tr>
-								<td>Status:</td>
-								<td>
-									{" "}
-									<p className="text-center" id="app-status">
-										Approved
-									</p>
-								</td>
-							</tr>
+							<>
+								<tr>
+									<td>EO Status:</td>
+									<td>
+										{" "}
+										<p className="text-center" id="app-status">
+											Approved
+										</p>
+									</td>
+								</tr>
+
+								<tr>
+									<td>Petition Status:</td>
+									<td>
+										{" "}
+										<p className="text-center"> {formData.petStatus} </p>
+									</td>
+								</tr>
+							</>
 						)}
 
 						{formData.status === "Rejected" && (
 							<tr>
-								<td>Status:</td>
+								<td>EO Status:</td>
 								<td>
 									{" "}
 									<p className="text-center" id="status-rejected">
@@ -187,13 +241,13 @@ function AppStatus1() {
 						</p>
 					)}
 
-					{formData.status === "Rejected" && (
+					{(formData.status === "Rejected" || formData.petStatus === "Rejected") && (
 						<p className="text-center" id="desc" style={{ marginLeft: "-80px" }}>
-							We regret to inform you that upon evaluation, <br /> your application was rejected. 
+							We regret to inform you that upon evaluation, <br /> your application was rejected.
 						</p>
 					)}
 
-					{formData.status === "Approved" && (
+					{formData.status === "Approved" && formData.petStatus === "Approved" && (
 						<>
 							<hr
 								style={{
@@ -225,7 +279,19 @@ function AppStatus1() {
 								<label for="uploadProof" className="col-form-label text-right">
 									Proof of Payment:
 								</label>
-								<input type="file" className="form-control" id="uploadProof" />
+								<input
+								type="file"
+								className="form-control"
+								id="photo"
+								accept=".jpeg, .png, .jpg"
+								onChange={handleImageUpload}
+							/>
+							</div>
+
+							<div className="row">
+								<button type="submit" className="btn btn-primary" onClick={submitProofOfPayment}>
+									SUBMIT
+								</button>
 							</div>
 						</>
 					)}

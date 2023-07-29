@@ -7,15 +7,14 @@ const memberSchema = new Schema(
 		memberId: {
 			type: String,
 			required: true,
-			unique: true,
-			trim: true,
+			
+			
 		},
 
 		password: {
 			type: String,
 			required: true,
-			unique: false,
-			trim: false,
+			
 		},
 
 		lastName: String,
@@ -27,8 +26,6 @@ const memberSchema = new Schema(
 		suffix: String,
 
 		birthdate: Date,
-
-		age: Number,
 
 		chapterId: String,
 

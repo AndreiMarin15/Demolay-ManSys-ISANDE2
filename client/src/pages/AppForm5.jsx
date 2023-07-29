@@ -6,6 +6,8 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 
 function Appform5() {
+	let { applicationId } = useParams();
+
 	const [formData, setFormData] = useState({
 		applicantId: "",
 		status: "In Review",
@@ -14,6 +16,11 @@ function Appform5() {
 	const [passwordData, setPassword] = useState({
 		applicantPassword: "",
 		passwordConfirm: "",
+	});
+
+	const [applicantAge, setAge] = useState({
+		birthdate: "",
+		age: "",
 	});
 
 	// TODO: Generate applicant ID
@@ -33,6 +40,27 @@ function Appform5() {
 		}
 		fetchData();
 	}, [formData]);
+
+	useEffect(() => {
+		async function fetchAge() {
+			let application = await axios.get(`http://localhost:5000/applications/${applicationId}`);
+
+			let age = calculateAge(application.data.birthdate);
+
+			setAge({
+				...applicantAge,
+				birthdate: application.data.birthdate,
+				age: age,
+			});
+		}
+	}, []);
+
+	function calculateAge(dateString) {
+		var birthday = new Date(dateString);
+		var ageDifMs = Date.now() - birthday.getTime();
+		var ageDate = new Date(ageDifMs); // miliseconds from epoch
+		return Math.abs(ageDate.getUTCFullYear() - 1970);
+	}
 
 	const onChangePassword = (e) => {
 		setPassword({
@@ -61,7 +89,6 @@ function Appform5() {
 		});
 	};
 
-	let { applicationId } = useParams();
 	const onSubmit = (e) => {
 		e.preventDefault();
 		const currentDate = new Date();
@@ -71,21 +98,39 @@ function Appform5() {
 		console.log(formattedDate);
 
 		if (passwordData.applicantPassword === passwordData.passwordConfirm) {
-			const applicationUpdate = {
-				applicantId: formData.applicantId,
-				applicantPassword: passwordData.applicantPassword,
-				status: formData.status,
-				dateCreated: currentDate
-			};
+			if (applicantAge.age > 17 || applicantAge.age < 17) {
+				const applicationUpdate = {
+					applicantId: formData.applicantId,
+					applicantPassword: passwordData.applicantPassword,
+					status: "In Progress",
+					dateCreated: currentDate,
+				};
 
-			console.log(applicationUpdate);
-			console.log(applicationId);
+				console.log(applicationUpdate);
+				console.log(applicationId);
 
-			axios.post(`http://localhost:5000/newApplication5/${applicationId}`, applicationUpdate).then((res) => {
-				console.log(res.data);
-				alert("Application Submited")
-				window.location.href = `/appstatus1/${applicationId}`;
-			});
+				axios.post(`http://localhost:5000/newApplication5/${applicationId}`, applicationUpdate).then((res) => {
+					console.log(res.data);
+					alert("Application Submited");
+					window.location.href = `/appstatus1/${applicationId}`;
+				});
+			} else {
+				const applicationUpdate = {
+					applicantId: formData.applicantId,
+					applicantPassword: passwordData.applicantPassword,
+					status: "Approved",
+					dateCreated: currentDate,
+				};
+
+				console.log(applicationUpdate);
+				console.log(applicationId);
+
+				axios.post(`http://localhost:5000/newApplication5/${applicationId}`, applicationUpdate).then((res) => {
+					console.log(res.data);
+					alert("Application Submited");
+					window.location.href = `/appstatus1/${applicationId}`;
+				});
+			}
 		} else {
 			alert(`Passwords don't match. Please try again.`);
 		}

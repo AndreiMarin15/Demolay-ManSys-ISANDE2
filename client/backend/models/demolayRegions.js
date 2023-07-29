@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const regionSchema = new Schema({
   regionID: String,
   regionName: String,
-  regionDesc: String,
+  phIslandGrp: String,
+  phRegion: String,
 });
 
 const Regions = mongoose.model("Regions", regionSchema);
