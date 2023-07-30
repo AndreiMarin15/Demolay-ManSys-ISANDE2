@@ -7,30 +7,25 @@ const memberSchema = new Schema(
 		memberId: {
 			type: String,
 			required: true,
-			unique: true,
-			trim: true,
-			minlength: 3,
+			
+			
 		},
 
 		password: {
 			type: String,
 			required: true,
-			unique: false,
-			trim: false,
-			minlength: 6,
+			
 		},
 
 		lastName: String,
 
-		firstName: String,
+		givenName: String,
 
 		middleName: String,
 
 		suffix: String,
 
 		birthdate: Date,
-
-		age: Number,
 
 		chapterId: String,
 
@@ -45,6 +40,12 @@ const memberSchema = new Schema(
 		facebookLink: String,
 
 		photo: String,
+
+		demolayDegreeDate: String,
+
+		initiatoryDegreeDate: String,
+
+		position: String,
 	},
 	{
 		timestamps: true,

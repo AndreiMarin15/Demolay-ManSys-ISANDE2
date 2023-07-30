@@ -11,201 +11,295 @@ import { useEffect, useState } from "react";
 const element = <FontAwesomeIcon icon={faArrowRight} />;
 
 function CSApp1() {
-  return (
-    <div className="container container-fluid ">
-      <div className="row">
-        <div className="col-md-12">
-          <h1>Approved Applications</h1>
-        </div>
-      </div>
+	const [applicationData, setApplicationData] = useState({
+		applications: [],
+		filteredApplications: [],
+	});
 
-      <hr />
+	const [applicantInformationData, setApplicantInformation] = useState({
+		uid: "",
+		applicationId: "",
+		lastName: "",
+		givenName: "",
+		middleName: "",
+		email: "",
+		age: "",
+		contact: "",
+		firstLineSigner: "",
+		otherDetails: "",
+		photo: "",
+		proofOfPayment: "",
+	});
 
-      <div className="row" style={{ marginLeft: "35px" }}>
-        <div className="col-md-5">
-          {/* Content for the left column */}
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Search"
-            />
-            <div className="input-group-append">
-              <button type="button" className="filterbtn">
-                <FontAwesomeIcon icon={faFilter} />
-              </button>
-            </div>
-          </div>
-          <br />
-          <div className="table-responsive">
-            <table className="table table-bordered-custom">
-              <thead className="thead-custom">
-                <tr>
-                  <th>#</th>
-                  <th>Applicant Name</th>
-                  <th>Status</th>
-                  <th>View</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>John Doe</td>
-                  <td>
-                    <span className="green-circle"></span>
-                    Paid
-                  </td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
+	useEffect(() => {
+		const fetchData = () => {
+			axios.get("http://localhost:5000/petitionedApplications").then(async (applications) => {
+				console.log(applications.data);
+				setApplicationData({
+					...applicationData,
+					applications: applications.data,
+					filteredApplications: applications.data,
+				});
 
-                <tr>
-                  <td>2</td>
-                  <td>Joe Alwyn</td>
-                  <td>
-                    <span className="red-circle"></span>
-                    Not Paid
-                  </td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
+				setApplicantInformation({
+					...applicantInformationData,
+					uid: applications.data[0]._id,
+					applicationId: applications.data[0].applicantId,
+					lastName: applications.data[0].lastName,
+					givenName: applications.data[0].givenName,
+					middleName: applications.data[0].middleName,
+					email: applications.data[0].email,
+					age: calculateAge(applications.data[0].birthdate),
+					contact: applications.data[0].mobile,
+					firstLineSigner: applications.data[0].firstLineSigner ? applications.data[0].firstLineSigner : "N/A",
+					otherDetails: applications.data[0].notes ? applications.data[0].notes : "N/A",
+					photo: applications.data[0].photo,
+					proofOfPayment: applications.data[0].proofOfPayment ? applications.data[0].proofOfPayment : "",
+				});
+			});
+		};
 
-                <tr>
-                  <td>3</td>
-                  <td>Nick Jonas</td>
-                  <td>
-                    <span className="orange-circle"></span>
-                    To Verify
-                  </td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
+		fetchData();
+	}, []);
 
-                <tr>
-                  <td>4</td>
-                  <td>Peter Parker</td>
-                  <td>
-                    <span className="orange-circle"></span>
-                    To Verify
-                  </td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
+	function calculateAge(dateString) {
+		var birthday = new Date(dateString);
+		var ageDifMs = Date.now() - birthday.getTime();
+		var ageDate = new Date(ageDifMs); // miliseconds from epoch
+		return Math.abs(ageDate.getUTCFullYear() - 1970);
+	}
 
-                <tr>
-                  <td>5</td>
-                  <td>Harry Styles</td>
-                  <td>
-                    <span className="green-circle"></span>
-                    Paid
-                  </td>
-                  <td>
-                    <a href="facebook.com">View Application</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="col-md-1">
-          {/* Vertical line or divider */}
-          <div className="vertical-line"></div>
-        </div>
-        <div className="col-md-6 justify-content-center">
-          <h2 className="text-center" style={{ marginLeft: "-40px" }}>
-            Applicant Information
-          </h2>
-          <div className="table-responsive">
-            <table className="info-table" style={{ marginLeft: "130px" }}>
-              <tr>
-                <td>ID Number:</td>
-                <td>2092034911</td>
-              </tr>
+	const changeInformation = (application) => {
+		console.log(application);
+		setApplicantInformation({
+			...applicantInformationData,
+			uid: application._id,
+			applicationId: application.applicantId,
+			lastName: application.lastName,
+			givenName: application.givenName,
+			middleName: application.middleName,
+			email: application.email,
+			age: calculateAge(application.birthdate),
+			contact: application.mobile,
+			firstLineSigner: application.firstLineSigner ? application.firstLineSigner : "N/A",
+			otherDetails: application.notes ? application.notes : "N/A",
+			photo: application.photo,
+			proofOfPayment: application.proofOfPayment,
+		});
+	};
 
-              <tr>
-                <td>Last Name:</td>
-                <td>Doe</td>
-              </tr>
+	const addToForm10 = async () => {
+		const form10 = await axios.get("http://localhost:5000/getForm10");
+		console.log(form10);
 
-              <tr>
-                <td>Given Name:</td>
-                <td>John</td>
-              </tr>
+		if (!form10.data.initiatedMembers.includes(applicantInformationData.applicationId)) {
+			form10.data.initiatedMembers.push(applicantInformationData.applicationId);
 
-              <tr>
-                <td>Middle Name:</td>
-                <td>Almacen</td>
-              </tr>
+			const updated = { updatedMembers: form10.data.initiatedMembers };
+			console.log(form10.data.initiatedMembers);
+			console.log(updated);
+			axios.post(`http://localhost:5000/updateForm10/${form10.data.form10Id}`, updated).then((result) => {
+				alert(`Applicant ${applicantInformationData.applicationId} added to Form 10 ${form10.data.form10Id}`);
+				window.location.href = `/csform10sum/${form10.data.form10Id}`;
+			});
+		} else {
+			alert(
+				`Applicant ${applicantInformationData.applicationId} is already in Form 10 ${form10.data.form10Id}. Kindly submit the Form10 to finalize their application.`
+			);
 
-              <tr>
-                <td>Email:</td>
-                <td>johndoe@gmail.com</td>
-              </tr>
+			window.location.href = `/csform10sum/${form10.data.form10Id}`;
+		}
 
-              <tr>
-                <td>First-line Signer:</td>
-                <td>Juan Dela Cruz</td>
-              </tr>
+		//	const index = applicationData.applications.findIndex(
+		//		(member) => member.applicationId === applicantInformationData.applicationId
+		//	);
+		//	if (index !== -1) {
+		//		applicationData.applications.splice(index, 1);
+		//		await applicationData.applications.save();
+		//	}
+		//
+		//	const index2 = applicationData.filteredApplications.findIndex(
+		//		(member) => member.applicationId === applicantInformationData.applicationId
+		//	);
+		//	if (index2 !== -1) {
+		//		applicationData.filteredApplications.splice(index2, 1);
+		//		await applicationData.filteredApplications.save();
+		//	}
+	};
 
-              <tr>
-                <td>Other Details:</td>
-                <td>Notes</td>
-              </tr>
-            </table>
-          </div>
+	const styles = {
+		maxWidth: "200px",
+		maxHeight: "200px",
+		objectFit: "contain",
+	};
 
-          <br />
-          <br />
-          <div className="table-responsive">
-            <table className="small-table" style={{ marginLeft: "130px" }}>
-              <tbody>
-                <tr>
-                  <td>ID Picture:</td>
-                  <td>
-                    <a href="http://facebook.com">Doe-Picture.png</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Proof of Payment:</td>
-                  <td>
-                    <a href="http://facebook.com">Doe-Payment.png</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Admin Status:</td>
-                  <td>
-                    <span className="green-circle"></span>
-                    Paid
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+	return (
+		<div className="container container-fluid ">
+			<div className="row">
+				<div className="col-md-12">
+					<h1>Approved Applications</h1>
+				</div>
+			</div>
 
-          <div
-            className="col-12 text-center"
-            style={{ marginLeft: "-30px", marginTop: "20px" }}
-          >
-            <Link to="/appform4">
-              <button type="submit" className="btn custom">
-                FORM 10
-                <FontAwesomeIcon
-                  icon={faArrowRight}
-                  style={{ color: "#ffffff", marginLeft: "10px" }}
-                />
-              </button>
-            </Link>
-          </div>
-          <br />
-          <br />
-        </div>
-      </div>
-    </div>
-  );
+			<hr />
+
+			<div className="row" style={{ marginLeft: "35px" }}>
+				<div className="col-md-5">
+					{/* Content for the left column */}
+					<div className="input-group mb-3">
+						<input type="text" className="form-control form-control-sm" placeholder="Search" />
+						<div className="input-group-append">
+							<button type="button" className="filterbtn">
+								<FontAwesomeIcon icon={faFilter} />
+							</button>
+						</div>
+					</div>
+					<br />
+					<div className="table-responsive">
+						<table className="table table-bordered-custom">
+							<thead className="thead-custom">
+								<tr>
+									<th>#</th>
+									<th>Applicant Name</th>
+									<th>Status</th>
+									<th>View</th>
+								</tr>
+							</thead>
+							<tbody>
+								{applicationData.filteredApplications.map(function (application) {
+									return (
+										<tr key={application.applicantId}>
+											<td>{application.applicantId}</td>
+											<td>
+												{" "}
+												{application.givenName} {application.lastName}{" "}
+											</td>
+											<td>
+												{application.proofOfPayment ? (
+													<span className="green-circle"></span>
+												) : (
+													<span className="red-circle"></span>
+												)}
+												{application.proofOfPayment ? "Paid" : "Not Paid"}
+											</td>
+											<td>
+												<button className="btn btn-primary" onClick={() => changeInformation(application)}>
+													{" "}
+													View
+												</button>
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div className="col-md-1">
+					{/* Vertical line or divider */}
+					<div className="vertical-line"></div>
+				</div>
+				<div className="col-md-6 justify-content-center">
+					<h2 className="text-center" style={{ marginLeft: "-40px" }}>
+						Applicant Information
+					</h2>
+					<div className="table-responsive">
+						<table className="info-table" style={{ marginLeft: "130px" }}>
+							<tr>
+								<td>ID Number:</td>
+								<td>{applicantInformationData.applicationId}</td>
+							</tr>
+
+							<tr>
+								<td>Last Name:</td>
+								<td>{applicantInformationData.lastName}</td>
+							</tr>
+
+							<tr>
+								<td>Given Name:</td>
+								<td>{applicantInformationData.givenName}</td>
+							</tr>
+
+							<tr>
+								<td>Middle Name:</td>
+								<td>{applicantInformationData.middleName}</td>
+							</tr>
+
+							<tr>
+								<td>Email:</td>
+								<td>{applicantInformationData.email}</td>
+							</tr>
+
+							<tr>
+								<td>First-line Signer:</td>
+								<td>{applicantInformationData.firstLineSigner}</td>
+							</tr>
+
+							<tr>
+								<td>Other Details:</td>
+								<td>{applicantInformationData.otherDetails}</td>
+							</tr>
+						</table>
+					</div>
+
+					<br />
+					<br />
+					<div className="table-responsive">
+						<table className="small-table" style={{ marginLeft: "130px" }}>
+							<tbody>
+								<tr>
+									<td>ID Picture:</td>
+									<td>
+										{applicantInformationData.photo ? (
+											<img src={applicantInformationData.photo} alt="img" style={styles} />
+										) : (
+											<p></p>
+										)}
+									</td>
+								</tr>
+								<tr>
+									<td>Proof of Payment:</td>
+									<td>
+										{applicantInformationData.proofOfPayment ? (
+											<img src={applicantInformationData.proofOfPayment} alt="img" style={styles} />
+										) : (
+											<p>Not yet uploaded</p>
+										)}
+									</td>
+								</tr>
+								<tr>
+									<td>Admin Status:</td>
+									<td>
+										{applicantInformationData.proofOfPayment ? (
+											<span className="green-circle"></span>
+										) : (
+											<span className="red-circle"></span>
+										)}
+										{applicantInformationData.proofOfPayment ? "Paid" : "Not Paid"}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div className="col-12 text-center" style={{ marginLeft: "-30px", marginTop: "20px" }}>
+						<button
+							type="submit"
+							className="btn custom"
+							onClick={() => {
+								addToForm10();
+							}}
+						>
+							FORM 10
+							<FontAwesomeIcon icon={faArrowRight} style={{ color: "#ffffff", marginLeft: "10px" }} />
+						</button>
+					</div>
+					<br />
+					<br />
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default CSApp1;

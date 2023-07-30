@@ -1,0 +1,109 @@
+@import "base.css";
+
+.circ-cont {
+  border: 1px solid black;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.desc-cont {
+  border: 1px solid black;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.small {
+  font-size: smaller;
+}
+
+.form-check-label {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.circ-options {
+  margin-top: 20px;
+}
+
+.circ-col {
+  margin-right: -60px;
+}
+
+.form-check {
+  margin-left: -18px;
+}
+
+.circ-btn {
+  background-color: #261d82;
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-size: 15px;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 5px;
+  transition-duration: 0.1s;
+  cursor: pointer;
+  width: auto;
+}
+
+.circ-btn:hover {
+  background-color: #5952a7;
+  color: white;
+  border: 1px solid #261d82;
+}
+
+.circ-desc {
+  color: rgb(85, 85, 85);
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+  font-family: "Open Sans";
+}
+
+.horizontal-line {
+  height: 1px;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.heading4 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.circ-table {
+  font-family: "Open Sans";
+}
+.circ-table th {
+  background-color: rgb(241, 241, 241);
+  color: rgb(79, 79, 79);
+}
+
+.circ-table td {
+  width: 25px;
+}
+
+.circ-table th:nth-child(3),
+td:nth-child(3),
+td:nth-child(4) {
+  text-align: center;
+}
+
+.circtable-btn {
+  background-color: rgb(23, 23, 135);
+  font-family: "Open Sans";
+  font-weight: 700;
+  font-size: 12px;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 5px;
+  transition-duration: 0.1s;
+  cursor: pointer;
+  width: 0 auto;
+}

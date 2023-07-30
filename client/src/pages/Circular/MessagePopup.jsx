@@ -1,0 +1,68 @@
+import { Link } from "react-router-dom";
+import "../../styles/messagepopup.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+
+import ConfirmMessage from "./ConfirmMessage.jsx"; // Import the new popup component
+
+const MessagePopup = ({ showPopup, onSendClick, onClosePopup }) => {
+  if (!showPopup) return null;
+
+  return (
+    <div>
+      <div className="message-popup-overlay" onClick={onClosePopup} />
+      <div className="message-popup">
+        <div className="message-popup-close" onClick={onClosePopup}>
+          &times;
+        </div>
+        <div className="message-popup-header">
+          <div className="message-popup-header-blue">
+            <div className="message-popup-header-content">
+              <span>
+                <FontAwesomeIcon
+                  icon={faPaperPlane}
+                  style={{ color: "#ffffff", marginRight: "15px" }}
+                />
+              </span>
+              Send to: Ambrosio Flores
+            </div>
+          </div>
+          <div className="message-popup-subject">
+            {" "}
+            <span className="text-muted">Subject:</span> Circular Reminder
+          </div>
+        </div>
+        <hr className="message-line" />
+        <div className="message-popup-body">
+          {/* Your compose message content here */}
+          <textarea
+            rows="10"
+            className="form-control message-popup-textarea"
+            placeholder="Type your message..."
+          />
+        </div>
+        <div className="message-popup-actions">
+          <div className="message-popup-buttons-left">
+            <button className="btn btn-secondary message-popup-button">
+              Link Circular
+            </button>
+            <button className="btn btn-secondary message-popup-button">
+              Add Signature
+            </button>
+          </div>
+          <div className="message-popup-buttons-right">
+            <button
+              className="btn btn-secondary message-send-button"
+              onClick={onSendClick}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MessagePopup;

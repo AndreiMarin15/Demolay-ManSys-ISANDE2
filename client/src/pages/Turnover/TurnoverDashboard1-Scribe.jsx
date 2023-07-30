@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Turnover.css";
 import { useParams } from "react-router-dom";
@@ -18,31 +18,81 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
-   var tabContents = document.getElementsByClassName("tab-content");
+  var tabContents = document.getElementsByClassName("tab-content");
 
-   for (var i = 0; i < tabContents.length; i++) {
-      tabContents[i].style.display = "none";
-   }
+  for (var i = 0; i < tabContents.length; i++) {
+    tabContents[i].style.display = "none";
+  }
 
-   var tabButtons = document.getElementsByClassName("tab-button");
+  var tabButtons = document.getElementsByClassName("tab-button");
 
-   for (var i = 0; i < tabButtons.length; i++) {
-      tabButtons[i].classList.remove("active");
-   }
+  for (var i = 0; i < tabButtons.length; i++) {
+    tabButtons[i].classList.remove("active");
+  }
 
-   document.getElementById(tabId).style.display = "block";
+  document.getElementById(tabId).style.display = "block";
 
-   event.currentTarget.classList.add("active");
+  event.currentTarget.classList.add("active");
 };
 
-
 function TurnoverDashboard1() {
-   {/* Default tab on load */}
-   useEffect(() => {
-      document.getElementById("tab1").style.display = "block";
-   }, []);
 
-   return (
+  const navigate = useNavigate();
+  const location = useLocation();
+  const prevPageProps = location.state;
+
+  //sample init data
+  const [userData, setUserData] = useState({
+    userID: "0118-27061",
+    name: "Philip Tolentino",
+    position: "Scribe",
+    chapterID: "45",
+  });
+
+  const [chapterData, setChapterData] = useState({});
+
+  const [turnoverData, setTurnoverData] = useState({
+    turnoverStatusID: "",
+    form1ID: "",
+  });
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/getChapterByID/${userData.chapterID}`)
+      .then(async (res1) => {
+        const res2 = await axios.get(
+          `http://localhost:5000/getTurnoverReports/${userData.chapterID}/${res1.data.currentTerm}`
+        );
+        setChapterData(res1.data);
+        setTurnoverData({
+          turnoverStatusID: res2.data._id,
+          form1ID: res2.data.form1ID,
+        });
+      });
+
+    {
+      /* Add fetch userData for current user from members and return id, name, position, chapter */
+    }
+
+    document.getElementById("tab1").style.display = "block";
+  }, []);
+
+
+
+
+
+  const handleForm1Click = () => {
+    navigate("/turnovertf1", {
+      state: {
+        userData: userData,
+        chapterData: chapterData,
+        form1ID: turnoverData.form1ID,
+      },
+    });
+  };
+
+  return (
+    
       <div className="container">
          <h1>Home</h1>
          <hr/>
@@ -230,34 +280,58 @@ function TurnoverDashboard1() {
                            </div>
                         </div>
                      </div>
+
                   </div>
-
-                  {/* Tabs Content 2 */}
-
-                  <div id="tab2" className="tab-content">
-                     <p>This is the content for Tab 2.</p>
+                  <div className="box">
+                    <h4>
+                      Report on Historical Records, Official Files and Assets,
+                      and Properties
+                    </h4>
+                    <p>Form/Report Desc</p>
+                    <input type="checkbox" />
+                    <button className="fill-btn"> FILL IN</button>
                   </div>
-
-                  {/* Tabs Content 3 */}
-
-                  <div id="tab3" className="tab-content">
-                     <p>This is the content for Tab 3.</p>
+                  <div className="box">
+                    <h4>Certification of Advisory Council Members</h4>
+                    <p>Form/Report Desc</p>
+                    <input type="checkbox" />
+                    <button className="fill-btn"> FILL IN</button>
                   </div>
-               </div>
-               
-               {/* Submit Button */}
-
-               <div className="d-flex justify-content-center">
-                  <Link to="/turnoverDashboard1">
-                     <button type="submit" form="submit" className="primary-btn" value="SUBMIT">
-                        SUBMIT
-                     </button>
-                  </Link>
-               </div>
+                </div>
+              </div>
             </div>
-         </div>
+
+            {/* Tabs Content 2 */}
+
+            <div id="tab2" className="tab-content">
+              <p>This is the content for Tab 2.</p>
+            </div>
+
+            {/* Tabs Content 3 */}
+
+            <div id="tab3" className="tab-content">
+              <p>This is the content for Tab 3.</p>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+
+          <div className="d-flex justify-content-center">
+            <Link to="">
+              <button
+                type="submit"
+                form="submit"
+                className="primary-btn"
+                value="SUBMIT"
+              >
+                SUBMIT
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
-   );
+    </div>
+  );
 }
 
 export default TurnoverDashboard1;
