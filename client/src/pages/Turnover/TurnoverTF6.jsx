@@ -10,14 +10,14 @@ function TurnoverTF6() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  console.log(prevPageProps);
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? {});
 
   const handleBackButtonClick = () => {
     navigate("/turnovertf5", {
       state: {
         userData: prevPageProps.userData,
         chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        turnoverID: prevPageProps.turnoverID,
         formData: formData,
       },
     });
@@ -27,30 +27,17 @@ function TurnoverTF6() {
     e.preventDefault();
     axios
       .post(
-        `http://localhost:5000/updateTF/${prevPageProps.form1ID}`,
+        `http://localhost:5000/updateTF/${prevPageProps.formData._id}`,
         prevPageProps
       )
       .then((res) => {
-        console.log("termReportID: " + res.data);
+        console.log("TermReport updated: " + res.data);
 
-        const turnoverUpdate = {
-          chapterID: prevPageProps.userData.chapterID,
-          termID: prevPageProps.formData.year + prevPageProps.formData.term,
-          fieldToUpdate: "form1ID",
-          updateValue: res.data,
-        };
-
-        axios
-          .post("http://localhost:5000/updateTurnover", turnoverUpdate)
-          .then((res1) => {
-            navigate("/turnoverDashboard1", {
-              state: {
-                turnoverReports: res1.data,
-              },
-            });
-          });
+        navigate("/turnoverDashboardscribe");
       });
   };
+
+  console.log(prevPageProps);
 
   return (
     <div className="container">
@@ -66,22 +53,19 @@ function TurnoverTF6() {
 
       {/* Progress Line */}
 
-      <div class="progress-line">
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-      </div>
-
-      <div class="progress-labels">
-        <div class="progress-label">Chapter Information</div>
-        <div class="progress-label">Membership Survey</div>
-        <div class="progress-label">Supreme Council Fees</div>
-        <div class="progress-label">Updated Directory of Active Members</div>
-        <div class="progress-label">Financial Report</div>
-        <div class="progress-label">Signatories</div>
+      <div className="progress-container">
+        <div className="progress-line">
+          <div className="progress-circle "></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle active"></div>
+        </div>
+        <div className="progress-labels">
+          <div className="progress-label">Chapter Information</div>
+          <div className="progress-label">Membership Survey</div>
+          <div className="progress-label">Financial Report</div>
+          <div className="progress-label">Signatories</div>
+        </div>
       </div>
       <br />
       <div className="row">

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 //let Application = require("../models/applications");
 const controller = require("../controllers/controller");
-
+const turnoverController = require("../controllers/turnoverController");
 //router.route("/").get((req, res) => {
 //	// Application.find()
 //	// 	.then((applications) => res.json(applications))
@@ -51,13 +51,23 @@ router.get("/getCurrentUser", controller.getCurrentUser);
 router.get("/getForm10", controller.getForm10);
 router.post("/updateForm10/:form10Id", controller.updateForm10);
 
+router.post("/newTF", turnoverController.newTF);
 router.post("/updateTF/:id", turnoverController.updateTF);
+router.get("/getForm1/:id", turnoverController.getForm1);
+
+router.post("/newTurnover", turnoverController.newTurnover);
 router.post("/updateTurnover", turnoverController.updateTurnover);
+
 router.get("/getChapterByID/:chapter", controller.getChapterByID);
 router.get(
   "/getTurnoverReports/:chapterID/:currentTerm",
   turnoverController.getTurnoverReports
 );
-router.get("/getForm1/:id", turnoverController.getForm1);
+
+router.get("/getForm15/:id", turnoverController.getForm15);
+
+router.get("/getAllMembers/:chapterID", turnoverController.getAllMembers);
+
+router.post("/updateF15/:id", turnoverController.updateF15);
 
 module.exports = router;

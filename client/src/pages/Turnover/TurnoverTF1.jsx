@@ -18,44 +18,56 @@ function TurnoverTF1() {
     scheduleOfMeetings: "",
     timeOfMeetings: "",
     venueOfMeetings: "",
-    reportedBy: prevPageProps?.userData?.name,
-    position: prevPageProps?.userData?.position,
+    reportedBy: prevPageProps.userData.name,
+    position: prevPageProps.userData.position,
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/getForm1/${prevPageProps.form1ID}`)
-      .then((res1) => {
-        setFormData({
-          ...formData,
-          term: res1.data.term,
-          year: res1.data.year,
-          startTerm: new Date(res1.data.startTerm).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-          endTerm: new Date(res1.data.endTerm).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-          totalMembers: res1.data.totalMembers,
-          initiated: res1.data.initiated,
-          affiliated: res1.data.affiliated,
-          majority: res1.data.majority,
-          transferred: res1.data.transferred,
-          deaths: res1.data.deaths,
-          resigned: res1.data.resigned,
-          expelled: res1.data.expelled,
-          totalGains: res1.data.totalGains,
-          totalLoss: res1.data.totalLoss,
-          totalNetMembers: res1.data.totalNetMembers,
-        });
-      });
-  }, []);
+    if (prevPageProps.formData._id !== "") {
+      const totalGains =
+        prevPageProps.formData.initiated + prevPageProps.formData.affiliated;
+      const totalLoss =
+        prevPageProps.formData.majority +
+        prevPageProps.formData.transferred +
+        prevPageProps.formData.deaths +
+        prevPageProps.formData.resigned +
+        prevPageProps.formData.expelled;
+      const totalNetMembers =
+        prevPageProps.formData.totalMembers + totalGains - totalLoss;
 
-  console.log(prevPageProps);
+      setFormData({
+        ...formData,
+        term: prevPageProps.formData.term,
+        year: prevPageProps.formData.year,
+        startTerm: new Date(
+          prevPageProps.formData.startTerm
+        ).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        endTerm: new Date(prevPageProps.formData.endTerm).toLocaleDateString(
+          "en-US",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }
+        ),
+        totalMembers: prevPageProps.formData.totalMembers,
+        initiated: prevPageProps.formData.initiated,
+        affiliated: prevPageProps.formData.affiliated,
+        majority: prevPageProps.formData.majority,
+        transferred: prevPageProps.formData.transferred,
+        deaths: prevPageProps.formData.deaths,
+        resigned: prevPageProps.formData.resigned,
+        expelled: prevPageProps.formData.expelled,
+        totalGains: totalGains,
+        totalLoss: totalLoss,
+        totalNetMembers: totalNetMembers,
+      });
+    }
+  }, []);
 
   const onChange = (e) => {
     setFormData((prev) => {
@@ -65,7 +77,6 @@ function TurnoverTF1() {
 
       return helper;
     });
-    console.log(formData);
   };
 
   const handleNextButtonClick = () => {
@@ -73,7 +84,7 @@ function TurnoverTF1() {
       state: {
         userData: prevPageProps.userData,
         chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        turnoverID: prevPageProps.turnoverID,
         formData: formData,
       },
     });
@@ -93,22 +104,21 @@ function TurnoverTF1() {
 
       {/* Progress Line */}
 
-      <div class="progress-line">
-        <div class="progress-circle active"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
+      <div className="progress-container">
+        <div className="progress-line">
+          <div className="progress-circle active"></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle"></div>
+        </div>
+        <div className="progress-labels">
+          <div className="progress-label">Chapter Information</div>
+          <div className="progress-label">Membership Survey</div>
+          <div className="progress-label">Financial Report</div>
+          <div className="progress-label">Signatories</div>
+        </div>
       </div>
-      <div class="progress-labels">
-        <div class="progress-label">Chapter Information</div>
-        <div class="progress-label">Membership Survey</div>
-        <div class="progress-label">Supreme Council Fees</div>
-        <div class="progress-label">Updated Directory of Active Members</div>
-        <div class="progress-label">Financial Report</div>
-        <div class="progress-label">Signatories</div>
-      </div>
+
       <br />
       <div className="row">
         <p> Confirm if all details presented below are correct. </p>

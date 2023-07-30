@@ -10,26 +10,14 @@ function TurnoverTF5() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  const [formData, setFormData] = useState(prevPageProps?.formData ?? null);
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? {});
 
   const handleNextButtonClick = () => {
-    // Calculate dynamic values
-    const totalGains =
-      prevPageProps.formData.initiated + prevPageProps.formData.affiliated;
-    const totalLoss =
-      prevPageProps.formData.majority +
-      prevPageProps.formData.transferred +
-      prevPageProps.formData.deaths +
-      prevPageProps.formData.resigned +
-      prevPageProps.formData.expelled;
-    const totalNetMembers =
-      prevPageProps.formData.totalMembers + totalGains - totalLoss;
-
     navigate("/turnovertf6", {
       state: {
         userData: prevPageProps.userData,
         chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        turnoverID: prevPageProps.turnoverID,
         formData: formData,
       },
     });
@@ -40,7 +28,7 @@ function TurnoverTF5() {
       state: {
         userData: prevPageProps.userData,
         chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        turnoverID: prevPageProps.turnoverID,
         formData: formData,
       },
     });
@@ -61,22 +49,19 @@ function TurnoverTF5() {
 
       {/* Progress Line */}
 
-      <div class="progress-line">
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle"></div>
-      </div>
-
-      <div class="progress-labels">
-        <div class="progress-label">Chapter Information</div>
-        <div class="progress-label">Membership Survey</div>
-        <div class="progress-label">Supreme Council Fees</div>
-        <div class="progress-label">Updated Directory of Active Members</div>
-        <div class="progress-label">Financial Report</div>
-        <div class="progress-label">Signatories</div>
+      <div className="progress-container">
+        <div className="progress-line">
+          <div className="progress-circle "></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle active"></div>
+          <div className="progress-circle"></div>
+        </div>
+        <div className="progress-labels">
+          <div className="progress-label">Chapter Information</div>
+          <div className="progress-label">Membership Survey</div>
+          <div className="progress-label">Financial Report</div>
+          <div className="progress-label">Signatories</div>
+        </div>
       </div>
       <br />
       <h2> Bank Account Details </h2>

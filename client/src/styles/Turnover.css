@@ -79,9 +79,9 @@ h4 {
 
 .progress-line-3 {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
-  width: 60%; 
+  width: 60%;
   margin: 0 auto;
   position: relative;
 }
@@ -134,10 +134,9 @@ h4 {
   font-size: 12px;
 }
 
-
 .progress-label {
   text-align: center;
-  flex-basis: calc(100% / 6 - 10px);
+  flex-basis: calc(100% / 1 - 10px);
 }
 
 .progress-label-3 {
@@ -152,7 +151,7 @@ h4 {
   left: 0;
   right: 0;
   height: 2px;
-  background-color: #ccc; 
+  background-color: #ccc;
   z-index: -1;
 }
 
@@ -163,24 +162,24 @@ h4 {
   left: 0;
   right: 0;
   height: 2px;
-  background-color: #ccc; 
+  background-color: #ccc;
   z-index: -1;
 }
 
 .readonly-input {
-  background-color: #dfdddd; 
-  color: #000000; 
+  background-color: #dfdddd;
+  color: #000000;
   cursor: not-allowed;
 }
 
 .checkbox-wrapper {
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .checkbox-text {
-vertical-align: middle;
-margin-left: 2px; 
+  vertical-align: middle;
+  margin-left: 2px;
 }
 
 .plus-btn {
@@ -188,14 +187,14 @@ margin-left: 2px;
   background-color: #350059;
   font-family: "Open Sans";
   font-weight: 700;
-  width: 20px; 
-  height: 20px; 
+  width: 20px;
+  height: 20px;
   border: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px; 
+  font-size: 14px;
   color: white;
   transition-duration: 0.1s;
   cursor: pointer;
@@ -233,10 +232,3 @@ margin-left: 2px;
 .sent-btn {
   font-size: 12px;
 }
-
-
-
-
-
-
-
