@@ -5,7 +5,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faFilter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileText,
+  faFilter,
+  faEye,
+  faCircleUser,
+  faMagnifyingGlass,
+  faBullhorn,
+  faFileLines,
+  faAddressBook,
+  faAddressCard,
+} from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
    var tabContents = document.getElementsByClassName("tab-content");
@@ -42,18 +52,78 @@ function TurnoverDashboard1() {
 
             {/* First Column */}
 
-            <div className="col-md-2">
-               <div className="row align-items-center mt-3 text-center">
-                  <h3>Edwardo Rafael</h3>
-                  <p>Chapter Scribe, Abad Santos #1</p>
-                  <hr/>
+            <div className="col-md-3">
+               {/* Content for the left column */}
+               <div
+                  className="row justify-content-center"
+                  style={{
+                  marginTop: "10px",
+                  marginLeft: "50px",
+                  }}
+               >
+                  <FontAwesomeIcon
+                  icon={faCircleUser}
+                  style={{ fontSize: "150px" }}
+                  />
+                  <div className="text-center">
+                     <h5 className="name">Edwardo Rafael</h5>
+                     <small class="text-muted">
+                        Chapter Scribe, Jose Abad Santos #1
+                     </small>
+                     <hr className="hori-line" />
+                  </div>
                </div>
-               <div className="row align-items-left">
-                  <a href="/turnoverDashboard1" id="leftNavbar">Circulars</a>
-                  <a href="/turnoverDashboard1" id="leftNavbar">For Review</a>
-                  <a href="/turnoverDashboard1" id="leftNavbar">Reports</a>
-                  <a href="/turnoverDashboard1" id="leftNavbar">Directory</a>
-                  <a href="/turnoverDashboard1" id="leftNavbar">Chapter Profile</a>
+
+               <div className="text-start" style={{ marginLeft: "100px" }}>
+                  <button className="btn-text" type="button" style={{ border: "0" }}>
+                     <span>
+                        <FontAwesomeIcon
+                           icon={faBullhorn}
+                           style={{ marginRight: "8px" }}
+                        />
+                     </span>
+                     Circulars
+                  </button>
+                  <br />
+                  <button className="btn-text" type="button" style={{ border: "0" }}>
+                     <span>
+                        <FontAwesomeIcon
+                           icon={faMagnifyingGlass}
+                           style={{ marginRight: "8px" }}
+                        />
+                     </span>
+                     For Review
+                  </button>
+                  <br />
+                  <button className="btn-text" type="button" style={{ border: "0" }}>
+                     <span>
+                        <FontAwesomeIcon
+                           icon={faFileLines}
+                           style={{ marginRight: "8px" }}
+                        />
+                     </span>
+                     Reports
+                  </button>
+                  <br />
+                  <button className="btn-text" type="button" style={{ border: "0" }}>
+                     <span>
+                        <FontAwesomeIcon
+                           icon={faAddressBook}
+                           style={{ marginRight: "8px" }}
+                        />
+                     </span>
+                     Directory
+                  </button>
+                  <br />
+                  <button className="btn-text" type="button" style={{ border: "0" }}>
+                  <span>
+                     <FontAwesomeIcon
+                        icon={faAddressCard}
+                        style={{ marginRight: "8px" }}
+                     />
+                  </span>
+                  Chapter Profile
+                  </button>
                </div>
             </div>
 
@@ -65,18 +135,33 @@ function TurnoverDashboard1() {
 
             {/* Second Column */}
 
-            <div className="col-md-8">
+            <div  className="col-md-8 justify-content-center"
+                  style={{ marginLeft: "-60px" }}
+            >
                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <h1> Reports </h1>
-                  <input
-                     type="text"
-                     className="form-control form-control-sm"
-                     placeholder="Search"
-                  />
-                  <button type="button" className="filterbtn">
-                     <FontAwesomeIcon icon={faFilter} />
-                  </button>
+                  <h1>
+                     <span>
+                     <FontAwesomeIcon
+                     icon={faFileText}
+                     style={{ marginRight: "15px" }}
+                     />
+                     </span>
+                     Reports
+                  </h1>
+                  <div className="d-flex justify-content-end mb-2">
+                     <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search"
+                     />
+                     <div className="input-group-append">
+                        <button type="button" className="filterbtn">
+                           <FontAwesomeIcon icon={faFilter} />
+                        </button>
+                     </div>
+                  </div>
                </div>
+
                <div className="tabs-container">
 
                   {/* Tab Headers */}

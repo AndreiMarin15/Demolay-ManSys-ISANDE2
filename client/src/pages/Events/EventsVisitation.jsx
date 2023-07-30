@@ -145,8 +145,8 @@ function EventsVisitation () {
             
             <div className="d-flex justify-content-between mt-4">
                <Link to="/eventsHome">
-                  <button type="button" className="back-btn">
-                     HOME
+                  <button type="button" className="primary-btn">
+                     BACK
                   </button>
                </Link>
                <Link to="/turnoverTF3">
