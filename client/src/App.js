@@ -80,6 +80,7 @@ import CSCircular2 from "./pages/Circular/CSCircular2";
 import MemberCircular from "./pages/Circular/MemberCircular";
 import MemberCircular2 from "./pages/Circular/MemberCircular2";
 import Inbox from "./pages/Circular/Inbox";
+import SendCircular from "./pages/Circular/SendCircular";
 
 import Header from "./components/Header";
 
@@ -193,6 +194,7 @@ function App() {
           <Route path="membercircular" element={<MemberCircular />} />
           <Route path="membercircular2" element={<MemberCircular2 />} />
           <Route path="inbox" element={<Inbox />} />
+          <Route path="sendcircular" element={<SendCircular />} />
         </Route>
       </Routes>
     </>
