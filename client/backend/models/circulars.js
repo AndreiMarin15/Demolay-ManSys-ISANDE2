@@ -4,10 +4,12 @@ const Schema = mongoose.Schema
 const circularsSchema = new Schema({
     circularText: String,
     subject: String,
-    grandMaster: String,
+    
     dateReleased: String,
     timeReleased: String,
-    releasedBy: String
+    releasedBy: String,
+    releasedById: String,
+    readBy: []
 })
 
 const Circulars = mongoose.model("Circulars", circularsSchema)

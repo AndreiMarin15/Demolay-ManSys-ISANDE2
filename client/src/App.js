@@ -191,6 +191,7 @@ function App() {
           <Route path="circular3" element={<Circular3 />} />
           <Route path="cscircular" element={<CSCircular />} />
           <Route path="cscircular2" element={<CSCircular2 />} />
+          <Route path="cscircular2/:circularId" element={<CSCircular2 />} />
           <Route path="membercircular" element={<MemberCircular />} />
           <Route path="membercircular2" element={<MemberCircular2 />} />
           <Route path="inbox" element={<Inbox />} />

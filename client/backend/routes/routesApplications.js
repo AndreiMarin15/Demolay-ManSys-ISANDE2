@@ -62,5 +62,10 @@ router.get(
 router.get("/getForm1/:id", turnoverController.getForm1);
 
 router.get("/getCirculars", controller.getCirculars)
+router.get("/getCircular/:circularId", controller.getCircularById)
+
+router.post("/newCircular", controller.newCircular)
+
+router.get("/getMembers", controller.getMembers)
 
 module.exports = router;

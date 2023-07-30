@@ -704,11 +704,44 @@ const controller = {
 		res.send(initiatedMembers);
 	},
 
-  getCirculars: async (req, res) => {
-    const circulars = await Circulars.find({}, {}).sort({dateReleased: -1, timeReleased: -1})
+	getCirculars: async (req, res) => {
+		const circulars = await Circulars.find({}, {}).sort({ dateReleased: -1, timeReleased: -1 });
+		
+		res.send(circulars);
+	},
 
-    res.send(circulars)
-  }
+	getCircularById: async (req, res) => {
+		const circular = await Circulars.findOne({_id: req.params.circularId}, {})
+
+		res.send(circular)
+	},
+
+	
+
+	newCircular: async (req, res) => {
+		const circular = req.body.circular;
+
+		const toInsert = {
+			subject: circular.subject || "",
+			circularText: circular.circularText || "",
+			dateReleased: circular.dateReleased,
+			timeReleased: circular.timeReleased,
+			releasedBy: session?.userName || "GrandMaster",
+			releasedById: session?.userId || "GrandMaster",
+			readBy: []
+
+		};
+
+		db.insertOne(Circulars, toInsert, (circular) => {
+			res.send(circular._id);
+		});
+	},
+
+	getMembers: async (req, res) => {
+		const members = await Member.find({}, {}).sort({memberId: 1})
+
+		res.send(members)
+	}
 };
 
 module.exports = controller;

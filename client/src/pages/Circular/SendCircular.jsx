@@ -21,28 +21,32 @@ const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function SendCircular() {
 	const [showPopup, setShowPopup] = useState(false);
-  const [circulars, setCirculars] = useState({
-    circulars: [],
-  })
+	const [circulars, setCirculars] = useState({
+		circulars: [],
+		refresh: 0,
+	});
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const circs = await axios.get("http://localhost:5000/getCirculars")
+	useEffect(() => {
+		const fetchData = async () => {
+			const circs = await axios.get("http://localhost:5000/getCirculars");
 
-      setCirculars({
-        circulars: circs.data
-      })
-    }
+			setCirculars({
+				circulars: circs.data,
+			});
+		};
 
-    fetchData()
-    console.log(circulars.circulars)
-  }, [])
+		fetchData();
+	}, [circulars.refresh]);
 
 	const handleReminderClick = () => {
 		setShowPopup(true);
 	};
 
 	const handleClosePopup = () => {
+		setCirculars({
+			...circulars,
+			refresh: circulars.refresh + 1,
+		});
 		setShowPopup(false);
 	};
 	return (
@@ -143,136 +147,44 @@ function SendCircular() {
 					<div className="row" style={{ marginTop: "10px", marginLeft: "20px" }}>
 						<div className="col">
 							<div class="list-group">
-								{/*ONE ROW STARTS HERE */}
-								<Link to="/cscircular2" href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div className="row">
-										<div className="col-md-1 date-time">
-											<p className="circ-date">
-												<b>
-													Today <br /> 03:05
-												</b>
-											</p>
-										</div>
-										<div className="col-md-11">
-											<h3 class="mb-1 circ-bold">Lorem Ipsum</h3>
-											<p class="text-muted">
-												<b>
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-													labore et dolore magna aliqua.
-												</b>
-											</p>
-										</div>
-									</div>
-									<div class="d-flex w-100 justify-content-end">
-										<small class="view-btn">
-											<span style={{ margin: "5px" }}>
-												<FontAwesomeIcon icon={faEye} />
-											</span>
-											View
-										</small>
-									</div>
-								</Link>
-								{/*ONE ROW ENDS HERE */}
-								<Link to="/cscircular2" href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div className="row">
-										<div className="col-md-1 date-time">
-											<p className="circ-date">
-												<b>
-													Today <br /> 03:05
-												</b>
-											</p>
-										</div>
-										<div className="col-md-11">
-											<h3 class="mb-1  circ-bold">Lorem Ipsum</h3>
-											<p class="text-muted">
-												<b>
-													Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-													labore et dolore magna aliqua.
-												</b>
-											</p>
-										</div>
-									</div>
-									<div class="d-flex w-100 justify-content-end">
-										<small class="view-btn">
-											<span style={{ margin: "5px" }}>
-												<FontAwesomeIcon icon={faEye} />
-											</span>
-											View
-										</small>
-									</div>
-								</Link>
-								<Link to="/cscircular2" href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div className="row">
-										<div className="col-md-1 date-time">
-											<p className="circ-date">
-												Today <br /> 03:05
-											</p>
-										</div>
-										<div className="col-md-11">
-											<h3 class="mb-1">Lorem Ipsum</h3>
-											<p class="text-muted">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-												labore et dolore magna aliqua.
-											</p>
-										</div>
-									</div>
-									<div class="d-flex w-100 justify-content-end">
-										<small class="view-btn">
-											<span style={{ margin: "5px" }}>
-												<FontAwesomeIcon icon={faEye} />
-											</span>
-											View
-										</small>
-									</div>
-								</Link>
-								<Link to="/cscircular2" href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div className="row">
-										<div className="col-md-1 date-time">
-											<p className="circ-date">
-												Today <br /> 03:05
-											</p>
-										</div>
-										<div className="col-md-11">
-											<h3 class="mb-1">Lorem Ipsum</h3>
-											<p class="text-muted">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-												labore et dolore magna aliqua.
-											</p>
-										</div>
-									</div>
-									<div class="d-flex w-100 justify-content-end">
-										<small class="view-btn">
-											<span style={{ margin: "5px" }}>
-												<FontAwesomeIcon icon={faEye} />
-											</span>
-											View
-										</small>
-									</div>
-								</Link>
-								<a href="#" class="list-group-item list-group-item-action" aria-current="true">
-									<div className="row">
-										<div className="col-md-1 date-time">
-											<p className="circ-date">
-												Today <br /> 03:05
-											</p>
-										</div>
-										<div className="col-md-11">
-											<h3 class="mb-1">Lorem Ipsum</h3>
-											<p class="text-muted">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-												labore et dolore magna aliqua.
-											</p>
-										</div>
-									</div>
-									<div class="d-flex w-100 justify-content-end">
-										<small class="view-btn">
-											<span style={{ margin: "5px" }}>
-												<FontAwesomeIcon icon={faEye} />
-											</span>
-											View
-										</small>
-									</div>
-								</a>
+								{circulars.circulars.map(function (circular) {
+									return (
+										<Link
+											to={`/cscircular2/${circular._id}`}
+											href="#"
+											class="list-group-item list-group-item-action"
+											aria-current="true"
+										>
+											<div className="row" key={circular._id}>
+												<div className="col-md-1 date-time">
+													<p className="circ-date">
+														<b>
+															{circular.dateReleased} <br /> {circular.timeReleased}
+														</b>
+													</p>
+												</div>
+												<div className="col-md-11">
+													<h3 class="mb-1 circ-bold">{circular.subject}</h3>
+													<p class="text-muted">
+														<b>
+															{circular.circularText.length > 100
+																? circular.circularText.slice(0, 100) + "..."
+																: circular.circularText}
+														</b>
+													</p>
+												</div>
+											</div>
+											<div class="d-flex w-100 justify-content-end">
+												<small class="view-btn">
+													<span style={{ margin: "5px" }}>
+														<FontAwesomeIcon icon={faEye} />
+													</span>
+													View
+												</small>
+											</div>
+										</Link>
+									);
+								})}
 							</div>
 						</div>
 					</div>
