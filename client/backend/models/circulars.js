@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const circularsSchema = new Schema({
-    circularID: String,
-    circularNo: String,
+    circularText: String,
     subject: String,
     grandMaster: String,
-    dateReleased: Date,
+    dateReleased: String,
+    timeReleased: String,
     releasedBy: String
 })
 

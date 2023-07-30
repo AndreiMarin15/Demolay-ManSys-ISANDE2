@@ -75,7 +75,7 @@ function Home() {
 						APPLY NOW
 					</button>
 				</Link>
-
+				<br />
 				<Link to="/Login">
 					<span>Already have an account?</span>
 				</Link>

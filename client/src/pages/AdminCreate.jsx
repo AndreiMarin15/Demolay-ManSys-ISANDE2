@@ -82,6 +82,8 @@ function AdminCreate() {
 				console.log(res.data);
 				alert("Admin Account Created");
 			});
+		} else if(formData.position == 4){
+			const grandMaster = {}
 		}
 	};
 
@@ -103,6 +105,10 @@ function AdminCreate() {
 						key: "Admin",
 						value: 3,
 					},
+					{
+						key: "Grand Master",
+						value: 4
+					}
 				],
 				chapters: chap.data.map((chapter) => {
 					return {

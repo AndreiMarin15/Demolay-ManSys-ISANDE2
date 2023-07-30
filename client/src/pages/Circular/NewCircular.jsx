@@ -7,7 +7,16 @@ import { useState } from "react";
 import ConfirmMessage from "./ConfirmMessage.jsx"; // Import the new popup component
 
 const NewCircular = ({ showPopup, onSendClick, onClosePopup }) => {
-  if (!showPopup) return null;
+
+  const [circularDetails, setDetails] = useState({
+    subject: "",
+    text: "",
+    senderName: "",
+    senderId: "",
+    dateAndTimeSent: ""
+  })
+
+  if (!showPopup) {return null};
 
   return (
     <div>
@@ -30,7 +39,8 @@ const NewCircular = ({ showPopup, onSendClick, onClosePopup }) => {
           </div>
           <div className="message-popup-subject">
             {" "}
-            <span className="text-muted">Subject:</span> Circular Subject
+            <span className="text-muted">Subject:  </span>  
+            <input type="text" placeholder="Circular Subject" style={{border: "none", width: "700px"}} />
           </div>
         </div>
         <hr className="message-line" />
