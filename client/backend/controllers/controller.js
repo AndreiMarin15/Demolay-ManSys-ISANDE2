@@ -1,13 +1,14 @@
 const Application = require("../models/applications.js");
-const Provinces = require("../models/provinces.js");
-const Cities = require("../models/cities.js");
 const Chapters = require("../models/chapters.js");
-const Regions = require("../models/regions.js");
+const Regions = require("../models/demolayRegions.js");
 const db = require("../models/db.js");
 const bcrypt = require("bcrypt");
 const Accounts = require("../models/accounts.js");
 const Member = require("../models/members.js");
 const AdvisoryCouncils = require("../models/advisoryCouncils.js");
+const Form10 = require("../models/form10.js");
+const fs = require("fs");
+const Circulars = require("../models/circulars.js");
 
 let session = {};
 
@@ -280,9 +281,9 @@ const controller = {
 	},
 
 	checkAndInitDB: async (req, res) => {
+		const path = require("path");
+
 		try {
-			const provinceCount = await Provinces.countDocuments();
-			const cityCount = await Cities.countDocuments();
 			const regionCount = await Regions.countDocuments();
 			const chapterCount = await Chapters.countDocuments();
 			const adminCheck = await Accounts.findOne({ accountId: "admin" }); // db.findOne(Accounts, { accountId: "admin" }, {}, (cb) => {return cb});
@@ -301,276 +302,34 @@ const controller = {
 				);
 			}
 
-			if (provinceCount === 0) {
-				// If empty, initialize Provinces data
-
-				const initialProvinces = [
-					{
-						provinceID: 0,
-						name: "Metro Manila",
-					},
-
-					{
-						provinceID: 1,
-						name: "Cavite",
-					},
-
-					{
-						provinceID: 2,
-						name: "Laguna",
-					},
-				];
-
-				await Provinces.insertMany(initialProvinces);
-			}
-
-			if (cityCount === 0) {
-				// If empty, initialize Cities data
-
-				const initialCities = [
-					{
-						cityID: 0,
-						provinceID: 0,
-						name: "Manila City",
-					},
-
-					{
-						cityID: 1,
-						provinceID: 0,
-						name: "Quezon City",
-					},
-
-					{
-						cityID: 2,
-						provinceID: 0,
-						name: "Makati City",
-					},
-
-					{
-						cityID: 3,
-						provinceID: 0,
-						name: "Pasig City",
-					},
-
-					{
-						cityID: 4,
-						provinceID: 0,
-						name: "Parañaque City",
-					},
-
-					{
-						cityID: 5,
-						provinceID: 0,
-						name: "Las Piñas City",
-					},
-
-					{
-						cityID: 6,
-						provinceID: 1,
-						name: "Dasmariñas City",
-					},
-
-					{
-						cityID: 7,
-						provinceID: 1,
-						name: "Tanza City",
-					},
-
-					{
-						cityID: 8,
-						provinceID: 2,
-						name: "San Pablo City",
-					},
-
-					{
-						cityID: 9,
-						provinceID: 2,
-						name: "San Pedro City",
-					},
-				];
-
-				await Cities.insertMany(initialCities);
-			}
-
 			if (regionCount === 0) {
 				// If empty, initialize DeMolay Regions data
 
-				const initialRegions = [
-					{
-						regionID: 0,
-						regionName: "Region NCR-A",
-						regionDesc: "NCR-A",
-					},
+				try {
+					const dmlyRegionsData = fs.readFileSync(path.join(__dirname, "dmlyRegionsData.json"), "utf8");
+					const dmlyRegions = JSON.parse(dmlyRegionsData);
 
-					{
-						regionID: 1,
-						regionName: "Region NCR-B",
-						regionDesc: "NCR-B",
-					},
-
-					{
-						regionID: 2,
-						regionName: "Region 4-A",
-						regionDesc: "Cavite",
-					},
-
-					{
-						regionID: 3,
-						regionName: "Region 4-B",
-						regionDesc: "Laguna",
-					},
-				];
-
-				await Regions.insertMany(initialRegions);
+					// Insert the DeMolay Regions array into the database
+					await Regions.insertMany(dmlyRegions);
+					console.log("DeMolay Regions inserted successfully.");
+				} catch (error) {
+					console.error("Error inserting regions:", error);
+				}
 			}
 
 			if (chapterCount === 0) {
 				// If empty, initialize Chapters data
 
-				const initialChapters = [
-					{
-						chapterID: 0,
-						name: "Jose Abad Santos Chapter No. 1",
-						chapterNumber: 1,
-						sponsor: "Masonic Senior DeMolay Club",
-						memberCount: 40,
-						meetingDate: "1st Sundays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Philippine DeMolay Youth Center, 1440 San Marcelino St., Ermita, Manila City",
-						email: "",
-						website: "",
-						regionID: 0,
-					},
+				try {
+					const chapterData = fs.readFileSync(path.join(__dirname, "chaptersData.json"), "utf8");
+					const chapters = JSON.parse(chapterData);
 
-					{
-						chapterID: 1,
-						name: "Loyalty Chapter No. 3",
-						chapterNumber: 3,
-						sponsor: "Luzon Bodies A.&A.S.R.",
-						memberCount: 45,
-						meetingDate: "2nd Sundays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Philippine DeMolay Youth Center, 1440 San Marcelino St., Ermita, Manila City",
-						email: "",
-						website: "",
-						regionID: 0,
-					},
-
-					{
-						chapterID: 2,
-						name: "Ambrosio A. Flores Chapter No. 45",
-						chapterNumber: 45,
-						sponsor:
-							"Norberto S. Amoranto Memorial Masonic Lodge No. 358 F.&A.M., Capitol City Masonic Lodge No. 174 F.&A.M.",
-						memberCount: 42,
-						meetingDate: "2nd Sundays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Capitol Masonic Temple, Diliman, Quezon City",
-						email: "",
-						website: "",
-						regionID: 0,
-					},
-
-					{
-						chapterID: 3,
-						name: "Gen. Douglas MacArthur Chapter No. 12",
-						chapterNumber: 12,
-						sponsor: "Manila Mt. Lebanon Masonic Lodge No.1",
-						memberCount: 33,
-						meetingDate: "2nd Saturdays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Scottish Rite Temple, Taft, Manila City",
-						email: "",
-						website: "",
-						regionID: 1,
-					},
-
-					{
-						chapterID: 4,
-						name: "A. Mabini Chapter No. 37",
-						chapterNumber: 37,
-						sponsor: "BF Parañaque Masonic Club",
-						memberCount: 43,
-						meetingDate: "1st Sundays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "King Solomon's Garden, Leonardo Da Vinci St., BF Resort Village, Las Piñas City",
-						email: "",
-						website: "",
-						regionID: 1,
-					},
-
-					{
-						chapterID: 5,
-						name: "Katarungan Centennial Chapter No. 101",
-						chapterNumber: 101,
-						sponsor: "Katarungan Masonic Lodge No. 450 F.&A.M.",
-						memberCount: 48,
-						meetingDate: "2nd Sundays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Arzo Hotel Makati, 1086 Rodriguez Ave., Bangkal, Makati City",
-						email: "",
-						website: "",
-						regionID: 1,
-					},
-
-					{
-						chapterID: 6,
-						name: "Dasmariñas Chapter No. 92",
-						chapterNumber: 92,
-						sponsor: "Dasmariñas Lodge No. 346 F.&.AM.",
-						memberCount: 70,
-						meetingDate: "2nd Saturdays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Dasmariñas Lodge No. 346 F.&A.M., Mango Village",
-						email: "",
-						website: "",
-						regionID: 2,
-					},
-
-					{
-						chapterID: 7,
-						name: "Tanza Chapter No. 108",
-						chapterNumber: 108,
-						sponsor: "Saint Augustine Masonic Lodge No. 300 F.&A.M.",
-						memberCount: 87,
-						meetingDate: "2nd Saturdays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Saint Augustine Masonic Lodge No. 300 F.&A.M., Retirees Vill-2, Tanza, Calabarzon",
-						email: "",
-						website: "",
-						regionID: 2,
-					},
-
-					{
-						chapterID: 8,
-						name: "Werner P. Schetelig Chapter No. 27",
-						chapterNumber: 27,
-						sponsor: "Malinaw Lodge No. 25 F.&.AM.",
-						memberCount: 32,
-						meetingDate: "4th Saturdays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "Malinaw Lodge No. 25 F.&.AM., San Pablo City",
-						email: "",
-						website: "",
-						regionID: 3,
-					},
-
-					{
-						chapterID: 9,
-						name: "San Pedro Chapter No. 57",
-						chapterNumber: 57,
-						sponsor: "San Pedro Lodge No. 292 F.&A.M.",
-						memberCount: 25,
-						meetingDate: "4th Saturdays",
-						meetingTime: "02:00 PM",
-						meetingVenue: "San Pedro Lodge No. 292 F.&A.M., Silcas Subdivision, Martinez, Biñan, Laguna",
-						email: "",
-						website: "",
-						regionID: 3,
-					},
-				];
-
-				await Chapters.insertMany(initialChapters);
+					// Insert the chapters array into the database
+					await Chapters.insertMany(chapters);
+					console.log("Chapters inserted successfully.");
+				} catch (error) {
+					console.error("Error inserting chapters:", error);
+				}
 			}
 		} catch (error) {
 			console.error("Error checking or initializing data:", error);
@@ -591,6 +350,13 @@ const controller = {
 		});
 	},
 
+	getChapterByID: async (req, res) => {
+		const chapterID = req.params.chapter;
+		db.findOne(Chapters, { chapterID: chapterID }, {}, (result) => {
+			res.send(result);
+		});
+	},
+
 	getAllChapters: async (req, res) => {
 		Chapters.find({}, { chapterID: 1, name: 1 })
 			.sort({ name: 1 })
@@ -600,20 +366,12 @@ const controller = {
 			});
 	},
 
-	getProvinces: async (req, res) => {
-		Provinces.find({}, { name: 1, provinceID: 1 })
-			.sort({ name: 1 })
+	getChaptersById: async (req, res) => {
+		Chapters.find({}, { chapterID: 1, name: 1 })
+			.sort({ chapterID: 1 })
+			.collation({ locale: "en_US", numericOrdering: true })
 			.then((result) => {
-				res.send(result);
-			});
-	},
-
-	getCities: async (req, res) => {
-		const provinceID = req.params.provinceID;
-
-		Cities.find({ provinceID: provinceID }, { name: 1, cityID: 1, provinceID: 1 })
-			.sort({ name: 1 })
-			.then((result) => {
+				console.log(result);
 				res.send(result);
 			});
 	},
@@ -636,31 +394,6 @@ const controller = {
 				const currentYear = new Date().getFullYear();
 
 				res.send((currentYear.toString() + "0000").toString());
-			}
-		});
-	},
-
-	generateMemberId: async (req, res) => {
-		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, async (members) => {
-			if (members.length > 1 && members) {
-				let highestId = members[0].memberId;
-				await members.forEach((member) => {
-					if (parseInt(member.memberId) > parseInt(highestId)) {
-						highestId = member.memberId;
-					}
-				});
-				console.log(`MemberID1: ${(highestId + 1).toString()}`)
-				res.send((highestId + 1).toString());
-				// eslint-disable-next-line eqeqeq
-			} else if (members.length == 1 && members) {
-				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`)
-				res.send((members[0].applicantId + 1).toString());
-			} else {
-				const currentDate = new Date();
-				const currentMonth = currentDate.getMonth() + 1;
-				const currentYear = currentDate.getFullYear().toString().slice(-2);
-				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`)
-				res.send(currentMonth.toString().padStart(2, '0') + currentYear.toString() + "00001");
 			}
 		});
 	},
@@ -719,7 +452,7 @@ const controller = {
 		db.findOne(
 			Application,
 			{ _id: applicationId },
-			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1 },
+			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1, petStatus: 1 },
 			(application) => {
 				db.findOne(Chapters, { chapterID: application.chapterId }, { name: 1 }, (chapter) => {
 					const toSend = {
@@ -727,6 +460,7 @@ const controller = {
 						chapter: chapter.name,
 						dateCreated: application.dateCreated,
 						status: application.status,
+						petStatus: application.petStatus,
 					};
 					console.log(toSend);
 					res.send(toSend);
@@ -737,6 +471,14 @@ const controller = {
 
 	getApplications: async (req, res) => {
 		Application.find({}, {})
+			.sort({ applicantId: -1 })
+			.then((applications) => {
+				res.send(applications);
+			});
+	},
+
+	getPetitionedApplications: async (req, res) => {
+		Application.find({ petStatus: "Approved" }, {})
 			.sort({ applicantId: -1 })
 			.then((applications) => {
 				res.send(applications);
@@ -755,6 +497,250 @@ const controller = {
 			console.log(application);
 			res.send(req.body.applicationId);
 		});
+	},
+
+	updatePetition: async (req, res) => {
+		db.updateOne(Application, { _id: req.body.applicationId }, { petStatus: req.body.petStatus }, (application) => {
+			console.log(application);
+			res.send(req.body.applicationId);
+		});
+	},
+
+	submitProofOfPayment: async (req, res) => {
+		db.updateOne(
+			Application,
+			{ _id: req.body.applicationId },
+			{ proofOfPayment: req.body.proofOfPayment },
+			(application) => {
+				res.send(req.body.applicationId);
+			}
+		);
+	},
+
+	getForm10: async (req, res) => {
+		const currentYear = new Date().getFullYear().toString();
+		const currentMonth = new Date().getMonth() + 1;
+		let currentTerm = 0;
+		if (currentMonth >= 1 && currentMonth <= 4) {
+			currentTerm = 1;
+		} else if (currentMonth >= 5 && currentMonth <= 8) {
+			currentTerm = 2;
+		} else if (currentMonth >= 9 && currentMonth <= 12) {
+			currentTerm = 3;
+		}
+		const form10Id = `${currentYear}${currentTerm}001`;
+		const form10s = await Form10.find({
+			form10Id: { $regex: `${currentYear}${currentTerm}` },
+		});
+		if (form10s.length === 0) {
+			const newForm10 = new Form10({
+				form10Id,
+				idDate: new Date().toISOString(),
+				ddDate: new Date().toISOString(),
+				initiatedMembers: [],
+			});
+			await newForm10.save();
+			res.status(200).send(newForm10);
+		} else {
+			const highestForm10Id = Math.max(...form10s.map((form10) => parseInt(form10.form10Id)));
+			if (form10s[0].initiatedMembers.length < 10) {
+				res.status(200).send(form10s[0]);
+			} else {
+				const newForm10 = new Form10({
+					form10Id: `${parseInt(highestForm10Id) + 1}`,
+					idDate: new Date().toISOString(),
+					ddDate: new Date().toISOString(),
+					initiatedMembers: [],
+				});
+				await newForm10.save();
+				res.status(200).send(newForm10);
+			}
+		}
+	},
+
+	updateForm10: async (req, res) => {
+		const form10Id = req.params.form10Id;
+
+		Form10.updateOne({ form10Id: form10Id }, { initiatedMembers: req.body.updatedMembers }, {}).then((updated) => {
+			res.send(updated);
+		});
+	},
+
+	retrieveForm10: async (req, res) => {
+		const form10Id = req.params.form10Id;
+
+		db.findOne(Form10, { form10Id: form10Id }, {}, (result) => {
+			res.send(result);
+		});
+	},
+
+	retrieveInitiatedMembers: async (req, res) => {
+		const form10Id = req.params.form10Id;
+
+		db.findOne(Form10, { form10Id: form10Id }, {}, (result) => {
+			const applicants = result.initiatedMembers;
+
+			Application.find({ applicantId: { $in: applicants } }, {}).then((applications) => {
+				res.send(applications);
+			});
+		});
+	},
+
+	generateMemberId: async (req, res) => {
+		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, async (members) => {
+			if (members.length > 1 && members) {
+				let highestId = members[0].memberId;
+				await members.forEach((member) => {
+					if (parseInt(member.memberId) > parseInt(highestId)) {
+						highestId = member.memberId;
+					}
+				});
+				console.log(`MemberID1: ${(highestId + 1).toString()}`);
+				res.send((highestId + 1).toString());
+				// eslint-disable-next-line eqeqeq
+			} else if (members.length == 1 && members) {
+				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`);
+				res.send((members[0].applicantId + 1).toString());
+			} else {
+				const currentDate = new Date();
+				const currentMonth = currentDate.getMonth() + 1;
+				const currentYear = currentDate.getFullYear().toString().slice(-2);
+				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`);
+				res.send(currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
+			}
+		});
+	},
+
+	createAccountsForInitiatedMembers: async (req, res) => {
+		const toInitiate = req.body.toInitiate;
+		let initiatedMembers = [];
+		let getMemberId = "";
+		let started = false;
+		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, (members) => {
+			toInitiate.forEach((applicant) => {
+				if (members.length === 0) {
+					if (!started) {
+						const currentDate = new Date();
+						const currentMonth = currentDate.getMonth() + 1;
+						const currentYear = currentDate.getFullYear().toString().slice(-2);
+						console.log("FIRST ID", currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
+						getMemberId = currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001";
+						started = true;
+					} else {
+						getMemberId = (parseInt(getMemberId) + 1).toString();
+					}
+				} else {
+					if (members.length > 1 && members) {
+						let highestId = members[0].memberId;
+						members.forEach((member) => {
+							if (parseInt(member.memberId) > parseInt(highestId)) {
+								highestId = member.memberId;
+							}
+						});
+						if (!started) {
+							getMemberId = (parseInt(highestId) + 1).toString();
+							started = true;
+						} else {
+							getMemberId = (parseInt(getMemberId) + 1).toString();
+						}
+						// eslint-disable-next-line eqeqeq
+					} else if (members.length == 1 && members) {
+						if (!started) {
+							getMemberId = (parseInt(members[0].memberId) + 1).toString();
+							started = true;
+						} else {
+							getMemberId = (parseInt(getMemberId) + 1).toString();
+						}
+					}
+				}
+
+				//	if (members.length > 1 && members) {
+				//		let highestId = members[0].memberId;
+				//		members.forEach((member) => {
+				//			if (parseInt(member.memberId) > parseInt(highestId)) {
+				//				highestId = member.memberId;
+				//			}
+				//		});
+				//
+				//		getMemberId = (parseInt(highestId) + 1).toString();
+				//		// eslint-disable-next-line eqeqeq
+				//	} else if (members.length == 1 && members) {
+				//		getMemberId = (parseInt(members[0].memberId) + 1).toString();
+				//	} else {
+				//		const currentDate = new Date();
+				//		const currentMonth = currentDate.getMonth() + 1;
+				//		const currentYear = currentDate.getFullYear().toString().slice(-2);
+				//
+				//		getMemberId = currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001";
+				//	}
+
+				let finalizedMember = new Member({
+					memberId: getMemberId,
+					password: applicant.applicantPassword,
+					lastName: applicant.lastName,
+					givenName: applicant.givenName,
+					middleName: applicant.middleName,
+					birthdate: applicant.birthdate,
+					chapterId: applicant.chapterId,
+					email: applicant.email,
+					mobile: applicant.mobile,
+					homeAddress: applicant.streetAddress,
+					facebookLink: applicant.facebook,
+					photo: applicant.photo,
+					position: "Member",
+				});
+
+				db.insertOne(Member, finalizedMember, (mem) => {
+					if (mem) {
+						console.log(finalizedMember.memberId, finalizedMember.givenName);
+					} else {
+						console.log("MEM: ", mem);
+						console.log("did not insert: ", finalizedMember.memberId);
+					}
+				});
+			});
+		});
+
+		res.send(initiatedMembers);
+	},
+
+	getCirculars: async (req, res) => {
+		const circulars = await Circulars.find({}, {}).sort({ dateReleased: -1, timeReleased: -1 });
+		
+		res.send(circulars);
+	},
+
+	getCircularById: async (req, res) => {
+		const circular = await Circulars.findOne({_id: req.params.circularId}, {})
+
+		res.send(circular)
+	},
+
+	
+
+	newCircular: async (req, res) => {
+		const circular = req.body.circular;
+
+		const toInsert = {
+			subject: circular.subject || "",
+			circularText: circular.circularText || "",
+			dateReleased: circular.dateReleased,
+			timeReleased: circular.timeReleased,
+			releasedBy: session?.userName || "GrandMaster",
+			releasedById: session?.userId || "GrandMaster",
+			readBy: []
+
+		};
+
+		db.insertOne(Circulars, toInsert, (circular) => {
+			res.send(circular._id);
+		});
+	},
+
+	getMembers: async (req, res) => {
+		const members = await Member.find({}, {}).sort({memberId: 1})
+
+		res.send(members)
 	}
 };
 

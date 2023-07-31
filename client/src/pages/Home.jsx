@@ -66,6 +66,7 @@ function Home() {
           </p>{" "}
         </div>
 
+
         <Link to="/About">
           <button class="btn btn-outline-warning" value="LEARN MORE">
             LEARN MORE
@@ -83,6 +84,7 @@ function Home() {
       </div>
     </div>
   );
+
 }
 
 export default Home;

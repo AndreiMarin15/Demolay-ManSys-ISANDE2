@@ -32,7 +32,7 @@ const db = {
 				return cb(res);
 			})
 			.catch((err) => {
-				if (err) return cb(false);
+				if (err) return cb(err);
 			});
 	},
 

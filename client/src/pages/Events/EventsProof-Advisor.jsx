@@ -4,7 +4,7 @@ import "../../styles/Events.css";
 import { Component } from "react";
 
 const RenderTableData = () => {
-   const tableData = [["1", "Manila", "3 White, 5 Red, 1 Purple", "P1,000"]];
+   const tableData = [["1", "Athletic", "3 White, 5 Red, 1 Purple", "P1,000"]];
 
    return tableData.map((rowData, index) => {
       const [col1, col2, col3, col4] = rowData;
@@ -99,8 +99,8 @@ function EventsProof() {
                   <thead>
                      <tr>
                         <th>No.</th>
-                        <th>Name of Requester</th>
                         <th>Requested Merit Bar</th>
+                        <th>Quantity</th>
                         <th>Amount</th>
                      </tr>
                   </thead>

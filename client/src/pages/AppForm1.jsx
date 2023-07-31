@@ -30,7 +30,7 @@ function Appform1() {
           chapters: res2.data.map((res) => {
             return {
               name: res.name,
-              id: res.chapterId,
+              id: res.chapterID,
             };
           }),
 
