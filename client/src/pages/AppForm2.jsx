@@ -24,7 +24,9 @@ function Appform2() {
     religions: [],
     years: [],
     chapters: [],
+
     barangays: [],
+
 
     lastName: "",
     givenName: "",
@@ -81,10 +83,12 @@ function Appform2() {
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
+
   const [selectedCity, setSelectedCity] = useState("");
   const [provincesByRegion, setProvincesByRegion] = useState([]);
   const [citiesByProvince, setCitiesByProvince] = useState([]);
   const [barangaysByCity, setBarangaysByCity] = useState([]);
+
 
   let { applicationId } = useParams();
 
@@ -95,6 +99,7 @@ function Appform2() {
 
   const fetchData = async () => {
     try {
+
       const [
         regionsResponse,
         provincesResponse,
@@ -109,10 +114,12 @@ function Appform2() {
         axios.get(API_BRGY),
       ]);
 
+
       setFormData({
         ...formData,
 
         regions: regionsResponse.data,
+
 
         provinces: provincesResponse.data.sort((a, b) =>
           a.name.localeCompare(b.name)
@@ -127,6 +134,7 @@ function Appform2() {
         barangays: barangaysResponse.data.sort((a, b) =>
           a.name.localeCompare(b.name)
         ),
+
       });
 
       console.log(formData.regions, formData.provinces, formData.cities);
@@ -143,6 +151,7 @@ function Appform2() {
       memberRegion: regionId,
     });
 
+
     setSelectedRegion(regionId);
 
     if (regionId == "130000000") {
@@ -154,11 +163,20 @@ function Appform2() {
       setProvincesByRegion(filteredProvinces);
     }
 
+
     // Reset selected province and cities when region changes
     setSelectedProvince("");
     setCitiesByProvince([]);
 
     // If no provinces in the selected region, filter cities by region
+
+    if (filteredProvinces.length === 0) {
+      const filteredCitiesByRegion = formData.cities.filter(
+        (city) => city.regionCode === regionId
+      );
+      setCitiesByProvince(filteredCitiesByRegion);
+    }
+
   };
 
   const handleProvinceChange = (e) => {
@@ -170,6 +188,7 @@ function Appform2() {
     setSelectedProvince(provinceId);
 
     const filteredCities = formData.cities.filter(
+
       (city) =>
         city.provinceCode === provinceId || city.districtCode == provinceId
     );
@@ -178,6 +197,7 @@ function Appform2() {
     // Reset selected city and barangays when province changes
     setSelectedCity("");
     setBarangaysByCity([]);
+
   };
 
   const onChange = (e) => {
@@ -192,6 +212,7 @@ function Appform2() {
   };
 
   const onChangeCity = (e) => {
+
     const cityId = e.target.value;
 
     setFormData({
@@ -206,6 +227,7 @@ function Appform2() {
         barangay.cityCode === cityId || barangay.municipalityCode === cityId
     );
     setBarangaysByCity(filteredBarangays);
+
   };
 
   const onSubmit = (e) => {
@@ -412,7 +434,9 @@ function Appform2() {
                 onChange={handleRegionChange}
                 value={formData.memberRegion}
               >
+
                 <option value={null}>Select Region</option>
+
                 {formData.regions.map(function (region) {
                   return (
                     <option key={region.code} value={region.code}>
@@ -466,27 +490,32 @@ function Appform2() {
 
           <div className="col-md-3">
             <div className="row mb-3">
-              <label
-                for="inputProvince"
-                className="col-md-4 col-form-label text-right"
-              >
-                Province/District
-              </label>
-              <select
-                className="form-select form-control"
-                id="province"
-                onChange={handleProvinceChange}
-                value={formData.province}
-              >
-                <option value={null}>Select Province/District</option>
-                {provincesByRegion.map(function (province) {
-                  return (
-                    <option key={province.code} value={province.code}>
-                      {province.name}
-                    </option>
-                  );
-                })}
-              </select>
+
+              {selectedRegion && (
+                <>
+                  <label
+                    for="inputProvince"
+                    className="col-md-4 col-form-label text-right"
+                  >
+                    State/Province
+                  </label>
+                  <select
+                    className="form-select form-control"
+                    id="province"
+                    onChange={handleProvinceChange}
+                    value={formData.province}
+                  >
+                    {provincesByRegion.map(function (province) {
+                      return (
+                        <option key={province.code} value={province.code}>
+                          {province.name}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </>
+              )}
+
             </div>
           </div>
         </div>
@@ -499,46 +528,50 @@ function Appform2() {
               >
                 Barangay/District
               </label>
-              <select
-                className="form-select form-control"
+
+              <input
+                type="text"
+                className="form-control"
                 id="brgy"
+                placeholder="Malate"
                 onChange={onChange}
                 value={formData.brgy}
-              >
-                <option value={null}>Select Barangay</option>
-                {barangaysByCity.map((barangay) => (
-                  <option key={barangay.code} value={barangay.code}>
-                    {barangay.name}
-                  </option>
-                ))}
-              </select>
+              />
+
             </div>
           </div>
 
           <div className="col-md-3">
             <div className="row mb-3">
-              <label
-                for="inputCity"
-                className="col-md-4 col-form-label text-right"
-              >
-                City/Municipality
-              </label>
-              <select
-                className="form-select form-control"
-                id="inputCity"
-                placeholder="New York City"
-                onChange={onChangeCity}
-                value={formData.city}
-              >
-                <option value={null}>Select City/Municipality</option>
-                {citiesByProvince.map(function (city) {
-                  return (
-                    <option key={city.code} value={city.code}>
-                      {city.name}
-                    </option>
-                  );
-                })}
-              </select>
+
+              {selectedRegion &&
+                // eslint-disable-next-line eqeqeq
+                (selectedProvince || provincesByRegion == 0) && (
+                  <>
+                    <label
+                      for="inputCity"
+                      className="col-md-4 col-form-label text-right"
+                    >
+                      City
+                    </label>
+                    <select
+                      className="form-select form-control"
+                      id="inputCity"
+                      placeholder="New York City"
+                      onChange={onChangeCity}
+                      value={formData.city}
+                    >
+                      {citiesByProvince.map(function (city) {
+                        return (
+                          <option key={city.code} value={city.code}>
+                            {city.name}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </>
+                )}
+
             </div>
           </div>
         </div>
@@ -795,11 +828,13 @@ function Appform2() {
           </div>
         </div>
 
-        <div className="col-12">
+
+        <div className="col-md-2 float-end">
           <input
             type="submit"
             value="Next"
-            className="btn btn-primary float-end"
+            className="btn btn-primary justify-content-end"
+
           />
         </div>
       </form>
