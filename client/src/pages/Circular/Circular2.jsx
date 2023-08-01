@@ -219,19 +219,19 @@ function Circular2() {
 	};
 
 	const disseminateCirculars = () => {
-		const today = getCurrentDate()
+		const today = getCurrentDate();
 		setDetails({
 			...circularDetails,
 			isDisseminated: true,
-			disseminatedDate: today
+			disseminatedDate: today,
 		});
 		console.log(circularDetails.disseminateTo);
 		const disseminate = {
 			disseminateTo: circularDetails.disseminateTo,
-			disseminatedDate: today
+			disseminatedDate: today,
 		};
 
-		axios.post(`http://localhost:5000/disseminateCircular/${circularId}`, disseminate)
+		axios.post(`http://localhost:5000/disseminateCircular/${circularId}`, disseminate);
 	};
 
 	return (

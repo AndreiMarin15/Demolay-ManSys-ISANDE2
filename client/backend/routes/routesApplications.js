@@ -48,6 +48,7 @@ router.get("/getApplications", controller.getApplications);
 router.get("/applications/:id", controller.getApplication);
 
 router.get("/getCurrentUser", controller.getCurrentUser);
+router.get("/getUser/:memberId", controller.getCurrentMember);
 
 router.get("/getForm10", controller.getForm10);
 router.post("/updateForm10/:form10Id", controller.updateForm10);
@@ -60,6 +61,7 @@ router.get("/getForm1/:id", turnoverController.getForm1);
 
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);
+router.get("/getCircularsByUser/:memberId", controller.getCircularsByUser);
 
 router.post("/newCircular", controller.newCircular);
 

@@ -196,6 +196,7 @@ function App() {
           <Route path="membercircular" element={<MemberCircular />} />
           <Route path="membercircular2" element={<MemberCircular2 />} />
           <Route path="inbox" element={<Inbox />} />
+          <Route path="inbox/:memberId" element={<Inbox />} />
           <Route path="sendcircular" element={<SendCircular />} />
         </Route>
       </Routes>

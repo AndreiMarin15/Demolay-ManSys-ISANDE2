@@ -98,7 +98,7 @@ const NewCircular = ({ showPopup, onSendClick, onClosePopup }) => {
 						rows="10"
 						className="form-control message-popup-textarea"
 						placeholder="Type your message..."
-            style={{ whiteSpace: 'pre-wrap' }}
+						style={{ whiteSpace: "pre-wrap" }}
 						onChange={onChangeContent}
 					/>
 				</div>
