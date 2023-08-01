@@ -9,6 +9,9 @@ const AdvisoryCouncils = require("../models/advisoryCouncils.js");
 const Form10 = require("../models/form10.js");
 const fs = require("fs");
 const Circulars = require("../models/circulars.js");
+const ChapterScribe = require("../models/chapterScribe.js");
+const GrandMaster = require("../models/grandMaster.js");
+const ExecutiveOfficer = require("../models/executiveOfficer.js");
 
 let session = {};
 
@@ -258,6 +261,113 @@ const controller = {
 			db.insertOne(Accounts, admin, (result) => {
 				res.send(result._id);
 			});
+		});
+	},
+
+	createEO: async (req, res) => {
+		const data = req.body;
+
+		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
+			const admin = {
+				accountId: data.userId,
+				password: hash,
+				accountType: 0,
+
+				lastName: data.lastName,
+				givenName: data.givenName,
+				middleName: data.middleName,
+
+				email: data.email,
+			};
+
+			db.insertOne(ExecutiveOfficer, admin, (result) => {
+				res.send(result._id);
+			});
+		});
+	},
+
+	createScribe: async (req, res) => {
+		const data = req.body;
+
+		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
+			const admin = {
+				accountId: data.userId,
+				password: hash,
+				accountType: 0,
+
+				lastName: data.lastName,
+				givenName: data.givenName,
+				middleName: data.middleName,
+
+				chapterId: data.chapterId,
+
+				email: data.email,
+			};
+
+			db.insertOne(ChapterScribe, admin, (result) => {
+				res.send(result._id);
+			});
+		});
+	},
+
+	createGrandmaster: async (req, res) => {
+		const data = req.body;
+
+		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
+			const admin = {
+				accountId: data.userId,
+				password: hash,
+				accountType: 0,
+
+				lastName: data.lastName,
+				givenName: data.givenName,
+				middleName: data.middleName,
+
+				email: data.email,
+			};
+
+			db.insertOne(GrandMaster, admin, (result) => {
+				res.send(result._id);
+			});
+		});
+	},
+
+	getEOs: async (req, res) => {
+		const ids = await ExecutiveOfficer.find({}, { _id: 1 });
+
+		res.send(ids);
+	},
+
+	getAdvisoryCouncil: async (req, res) => {
+		const ids = await AdvisoryCouncils.find({}, { _id: 1 });
+
+		res.send(ids);
+	},
+
+	getChapterScribes: async (req, res) => {
+		const ids = await ChapterScribe.find({}, { _id: 1 });
+
+		res.send(ids);
+	},
+
+	getMemberIDs: async (req, res) => {
+		const ids = await Member.find({}, { _id: 1 });
+
+		res.send(ids);
+	},
+
+	disseminateCircular: async (req, res) => {
+		const disseminateTo = req.body.disseminateTo;
+		const dissemindatedDate = req.body.disseminatedDate;
+		console.log(req.params.circularId);
+		console.log(disseminateTo);
+		console.log(dissemindatedDate);
+		Circulars.updateOne(
+			{ _id: req.params.circularId },
+			{ disseminateTo: disseminateTo, isDisseminated: true, disseminatedDate: dissemindatedDate }
+		).then((result) => {
+			console.log(result);
+			res.send(result);
 		});
 	},
 
@@ -706,17 +816,15 @@ const controller = {
 
 	getCirculars: async (req, res) => {
 		const circulars = await Circulars.find({}, {}).sort({ dateReleased: -1, timeReleased: -1 });
-		
+
 		res.send(circulars);
 	},
 
 	getCircularById: async (req, res) => {
-		const circular = await Circulars.findOne({_id: req.params.circularId}, {})
+		const circular = await Circulars.findOne({ _id: req.params.circularId }, {});
 
-		res.send(circular)
+		res.send(circular);
 	},
-
-	
 
 	newCircular: async (req, res) => {
 		const circular = req.body.circular;
@@ -728,8 +836,7 @@ const controller = {
 			timeReleased: circular.timeReleased,
 			releasedBy: session?.userName || "GrandMaster",
 			releasedById: session?.userId || "GrandMaster",
-			readBy: []
-
+			readBy: [],
 		};
 
 		db.insertOne(Circulars, toInsert, (circular) => {
@@ -738,10 +845,10 @@ const controller = {
 	},
 
 	getMembers: async (req, res) => {
-		const members = await Member.find({}, {}).sort({memberId: 1})
+		const members = await Member.find({}, {}).sort({ memberId: 1 });
 
-		res.send(members)
-	}
+		res.send(members);
+	},
 };
 
 module.exports = controller;

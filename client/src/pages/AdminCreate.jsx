@@ -83,7 +83,50 @@ function AdminCreate() {
 				alert("Admin Account Created");
 			});
 		} else if(formData.position == 4){
-			const grandMaster = {}
+			const grandMaster = {
+				lastName: formData.lastName,
+				givenName: formData.givenName,
+				middleName: formData.middleName,
+				userId: formData.userId,
+				email: formData.email,
+				initialPassword: formData.initialPassword,
+			}
+
+			axios.post(`http://localhost:5000/createGrandMaster/`, grandMaster).then((res) => {
+				console.log(res.data);
+				alert("Grand Master Account Created");
+			});
+		} else if(formData.position == 5){
+			const chapterScribe = {
+				lastName: formData.lastName,
+				givenName: formData.givenName,
+				middleName: formData.middleName,
+				userId: formData.userId,
+				email: formData.email,
+				chapterId: advisoryCouncilData.assignedChapterId,
+				initialPassword: formData.initialPassword,
+			}
+
+			axios.post(`http://localhost:5000/createScribe/`, chapterScribe).then((res) => {
+				console.log(res.data);
+				alert("Chapter Scribe Account Created");
+			});
+		}
+
+		else if(formData.position == 6){
+			const executiveOfficer = {
+				lastName: formData.lastName,
+				givenName: formData.givenName,
+				middleName: formData.middleName,
+				userId: formData.userId,
+				email: formData.email,
+				initialPassword: formData.initialPassword,
+			}
+
+			axios.post(`http://localhost:5000/createEO/`, executiveOfficer).then((res) => {
+				console.log(res.data);
+				alert("Chapter Scribe Account Created");
+			});
 		}
 	};
 
@@ -108,6 +151,14 @@ function AdminCreate() {
 					{
 						key: "Grand Master",
 						value: 4
+					},
+					{
+						key: "Chapter Scribe",
+						value: 5
+					},
+					{
+						key: "Executive Officer",
+						value: 6
 					}
 				],
 				chapters: chap.data.map((chapter) => {
@@ -405,7 +456,7 @@ function AdminCreate() {
 
 				{
 					// eslint-disable-next-line eqeqeq
-					formData.position == 2 && (
+					(formData.position == 2 || formData.position == 5) && (
 						<>
 							<div className="row">
 								<div className="col-md-4">

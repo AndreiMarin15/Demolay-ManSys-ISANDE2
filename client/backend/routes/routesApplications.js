@@ -20,6 +20,9 @@ router.post("/login", controller.login);
 router.post("/createMember", controller.createMember);
 router.post("/createAdvisor", controller.createAdvisor);
 router.post("/createAdmin", controller.createAdmin);
+router.post("/createScribe", controller.createScribe);
+router.post("/createGrandMaster", controller.createGrandmaster);
+
 
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
@@ -35,10 +38,7 @@ router.post("/approveApplication", controller.approveForPetitioning);
 router.post("/rejectApplication", controller.rejectApplication);
 router.post("/updatePetition", controller.updatePetition);
 
-router.get(
-  "/retrieveInitiatedMembers/:form10Id",
-  controller.retrieveInitiatedMembers
-);
+router.get("/retrieveInitiatedMembers/:form10Id", controller.retrieveInitiatedMembers);
 router.post("/acceptForm10", controller.createAccountsForInitiatedMembers);
 
 router.post("/submitProofOfPayment", controller.submitProofOfPayment);
@@ -55,17 +55,21 @@ router.post("/updateForm10/:form10Id", controller.updateForm10);
 router.post("/updateTF/:id", turnoverController.updateTF);
 router.post("/updateTurnover", turnoverController.updateTurnover);
 router.get("/getChapterByID/:chapter", controller.getChapterByID);
-router.get(
-  "/getTurnoverReports/:chapterID/:currentTerm",
-  turnoverController.getTurnoverReports
-);
+router.get("/getTurnoverReports/:chapterID/:currentTerm", turnoverController.getTurnoverReports);
 router.get("/getForm1/:id", turnoverController.getForm1);
 
-router.get("/getCirculars", controller.getCirculars)
-router.get("/getCircular/:circularId", controller.getCircularById)
+router.get("/getCirculars", controller.getCirculars);
+router.get("/getCircular/:circularId", controller.getCircularById);
 
-router.post("/newCircular", controller.newCircular)
+router.post("/newCircular", controller.newCircular);
 
-router.get("/getMembers", controller.getMembers)
+router.get("/getMembers", controller.getMembers);
+
+router.get("/getEOs", controller.getEOs)
+router.get("/getMemberIDs", controller.getMemberIDs)
+router.get("/getAdvisoryCouncil", controller.getMemberIDs)
+router.get("/getChapterScribes", controller.getMemberIDs)
+
+router.post("/disseminateCircular/:circularId", controller.disseminateCircular)
 
 module.exports = router;

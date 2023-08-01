@@ -188,6 +188,7 @@ function App() {
           />
           <Route path="circular1" element={<Circular1 />} />
           <Route path="circular2" element={<Circular2 />} />
+          <Route path="circular2/:circularId" element={<Circular2 />} />
           <Route path="circular3" element={<Circular3 />} />
           <Route path="cscircular" element={<CSCircular />} />
           <Route path="cscircular2" element={<CSCircular2 />} />

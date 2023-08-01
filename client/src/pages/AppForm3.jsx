@@ -508,7 +508,7 @@ function Appform3() {
 						</Link>
 					</div>
 
-					<div className="col-md-4"/>
+					<div className="col-md-4" />
 
 					<div className="col-md-2 float-end">
 						<input type="submit" value="Next" className="btn btn-primary justify-content-end" />
