@@ -8,14 +8,11 @@ const turnoverStatusSchema = new Schema({
   form1Approved: Boolean,
   form15ID: String,
   form15Approved: Boolean,
-  form16ID: String,
-  form16Approved: Boolean,
   assetsID: String,
   assetsApproved: Boolean,
   advisoryID: String,
   advisoryApproved: Boolean,
-  advisorApproval: Boolean,
-  executiveOfficerCertification: String,
+  eoCertification: Boolean,
   isComplete: Boolean,
 });
 

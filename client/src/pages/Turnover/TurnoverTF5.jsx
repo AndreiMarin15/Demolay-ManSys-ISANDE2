@@ -10,26 +10,12 @@ function TurnoverTF5() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  const [formData, setFormData] = useState(prevPageProps?.formData ?? null);
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? {});
 
   const handleNextButtonClick = () => {
-    // Calculate dynamic values
-    const totalGains =
-      prevPageProps.formData.initiated + prevPageProps.formData.affiliated;
-    const totalLoss =
-      prevPageProps.formData.majority +
-      prevPageProps.formData.transferred +
-      prevPageProps.formData.deaths +
-      prevPageProps.formData.resigned +
-      prevPageProps.formData.expelled;
-    const totalNetMembers =
-      prevPageProps.formData.totalMembers + totalGains - totalLoss;
-
     navigate("/turnovertf6", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -38,9 +24,7 @@ function TurnoverTF5() {
   const handleBackButtonClick = () => {
     navigate("/turnovertf2", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -51,32 +35,27 @@ function TurnoverTF5() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Term and Financial Report </h1>
-        <Link to="/turnoverTF5">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="submit" form="submit" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
       <hr />
 
       {/* Progress Line */}
 
-      <div class="progress-line">
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle"></div>
-      </div>
-
-      <div class="progress-labels">
-        <div class="progress-label">Chapter Information</div>
-        <div class="progress-label">Membership Survey</div>
-        <div class="progress-label">Supreme Council Fees</div>
-        <div class="progress-label">Updated Directory of Active Members</div>
-        <div class="progress-label">Financial Report</div>
-        <div class="progress-label">Signatories</div>
+      <div className="progress-container">
+        <div className="progress-line">
+          <div className="progress-circle "></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle active"></div>
+          <div className="progress-circle"></div>
+        </div>
+        <div className="progress-labels">
+          <div className="progress-label">Chapter Information</div>
+          <div className="progress-label">Membership Survey</div>
+          <div className="progress-label">Financial Report</div>
+          <div className="progress-label">Signatories</div>
+        </div>
       </div>
       <br />
       <h2> Bank Account Details </h2>
@@ -148,6 +127,7 @@ function TurnoverTF5() {
                 className="form-control"
                 id="cashinbank"
                 placeholder="Cash in Bank"
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -164,6 +144,7 @@ function TurnoverTF5() {
                 className="form-control"
                 id="ar"
                 placeholder="Accounts Receivables"
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -180,6 +161,7 @@ function TurnoverTF5() {
                 className="form-control"
                 id="ap"
                 placeholder="Accounts Payables"
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -195,7 +177,11 @@ function TurnoverTF5() {
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="fprojects">
+              <select
+                className="form-select form-control"
+                id="fprojects"
+                disabled={prevPageProps.userData.position !== "Scribe"}
+              >
                 <option>Event One</option>
                 <option>Event Two</option>
                 <option>Event Three</option>
@@ -208,11 +194,17 @@ function TurnoverTF5() {
       {/* Button */}
 
       <div className="d-flex justify-content-between mt-4">
-        <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+        <button
+          className="primary-btn"
+          type="button"
+          id="back-btn"
+          onClick={handleBackButtonClick}
+        >
           BACK
         </button>
 
         <button
+          className="primary-btn"
           type="submit"
           form="submit"
           id="primary-btn"

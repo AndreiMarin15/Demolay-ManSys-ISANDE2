@@ -10,25 +10,12 @@ function TurnoverTF2() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  const [formData, setFormData] = useState(prevPageProps?.formData ?? null);
-
-  const onChange = (e) => {
-    setFormData((prev) => {
-      let helper = { ...prev };
-
-      helper[`${e.target.id}`] = e.target.value;
-
-      return helper;
-    });
-    console.log(formData);
-  };
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? {});
 
   const handleNextButtonClick = () => {
     navigate("/turnovertf5", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -37,9 +24,7 @@ function TurnoverTF2() {
   const handleBackButtonClick = () => {
     navigate("/turnovertf1", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -50,31 +35,27 @@ function TurnoverTF2() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Term and Financial Report </h1>
-        <Link to="/turnoverTF2">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="submit" form="submit" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
       <hr />
 
       {/* Progress Line */}
 
-      <div class="progress-line">
-        <div class="progress-circle active"></div>
-        <div class="progress-circle active"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-      </div>
-      <div class="progress-labels">
-        <div class="progress-label">Chapter Information</div>
-        <div class="progress-label">Membership Survey</div>
-        <div class="progress-label">Supreme Council Fees</div>
-        <div class="progress-label">Updated Directory of Active Members</div>
-        <div class="progress-label">Financial Report</div>
-        <div class="progress-label">Signatories</div>
+      <div className="progress-container">
+        <div className="progress-line">
+          <div className="progress-circle "></div>
+          <div className="progress-circle active"></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle"></div>
+        </div>
+        <div className="progress-labels">
+          <div className="progress-label">Chapter Information</div>
+          <div className="progress-label">Membership Survey</div>
+          <div className="progress-label">Financial Report</div>
+          <div className="progress-label">Signatories</div>
+        </div>
       </div>
       <br />
       <div className="row">
@@ -151,7 +132,7 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value={formData.initiated + formData.affiliated}
+                value={formData.totalGains}
                 readOnly
               />
             </div>
@@ -260,13 +241,7 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value={
-                  formData.majority +
-                  formData.transferred +
-                  formData.resigned +
-                  formData.deaths +
-                  formData.expelled
-                }
+                value={formData.totalLoss}
                 readOnly
               />
             </div>
@@ -285,30 +260,7 @@ function TurnoverTF2() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="59"
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="row align-items-center mt-3">
-            <div className="col-md-5">
-              <label
-                htmlFor="transferredmembers"
-                className="col-form-label text-left"
-              >
-                Transferred Members:
-              </label>
-            </div>
-            <div className="col-md-7">
-              <input
-                type="text"
-                className="form-control readonlyinput"
-                value={
-                  formData.totalMembers +
-                  formData.totalGains -
-                  formData.totalLoss
-                }
+                value={formData.totalNetMembers}
                 readOnly
               />
             </div>
@@ -318,10 +270,16 @@ function TurnoverTF2() {
         {/* Button */}
 
         <div className="d-flex justify-content-between mt-4">
-          <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+          <button
+            className="primary-btn"
+            type="button"
+            id="back-btn"
+            onClick={handleBackButtonClick}
+          >
             BACK
           </button>
           <button
+            className="primary-btn"
             type="submit"
             form="submit"
             id="primary-btn"

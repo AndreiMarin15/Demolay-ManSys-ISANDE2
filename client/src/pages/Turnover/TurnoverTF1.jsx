@@ -18,44 +18,97 @@ function TurnoverTF1() {
     scheduleOfMeetings: "",
     timeOfMeetings: "",
     venueOfMeetings: "",
-    reportedBy: prevPageProps?.userData?.name,
-    position: prevPageProps?.userData?.position,
+    reportedBy: "",
+    position: "",
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/getForm1/${prevPageProps.form1ID}`)
-      .then((res1) => {
-        setFormData({
-          ...formData,
-          term: res1.data.term,
-          year: res1.data.year,
-          startTerm: new Date(res1.data.startTerm).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-          endTerm: new Date(res1.data.endTerm).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }),
-          totalMembers: res1.data.totalMembers,
-          initiated: res1.data.initiated,
-          affiliated: res1.data.affiliated,
-          majority: res1.data.majority,
-          transferred: res1.data.transferred,
-          deaths: res1.data.deaths,
-          resigned: res1.data.resigned,
-          expelled: res1.data.expelled,
-          totalGains: res1.data.totalGains,
-          totalLoss: res1.data.totalLoss,
-          totalNetMembers: res1.data.totalNetMembers,
-        });
-      });
-  }, []);
+    if (prevPageProps.formData.form1ID !== "") {
+      const totalGains =
+        prevPageProps.formData.initiated + prevPageProps.formData.affiliated;
+      const totalLoss =
+        prevPageProps.formData.majority +
+        prevPageProps.formData.transferred +
+        prevPageProps.formData.deaths +
+        prevPageProps.formData.resigned +
+        prevPageProps.formData.expelled;
+      const totalNetMembers =
+        prevPageProps.formData.totalMembers + totalGains - totalLoss;
 
-  console.log(prevPageProps);
+      setFormData({
+        ...formData,
+        form1ID: prevPageProps.formData.form1ID,
+        term: prevPageProps.formData.term,
+        year: prevPageProps.formData.year,
+        startTerm: new Date(
+          prevPageProps.formData.startTerm
+        ).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        endTerm: new Date(prevPageProps.formData.endTerm).toLocaleDateString(
+          "en-US",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          }
+        ),
+        totalMembers: prevPageProps.formData.totalMembers,
+        initiated: prevPageProps.formData.initiated,
+        affiliated: prevPageProps.formData.affiliated,
+        majority: prevPageProps.formData.majority,
+        transferred: prevPageProps.formData.transferred,
+        deaths: prevPageProps.formData.deaths,
+        resigned: prevPageProps.formData.resigned,
+        expelled: prevPageProps.formData.expelled,
+        totalGains: totalGains,
+        totalLoss: totalLoss,
+        totalNetMembers: totalNetMembers,
+
+        reportedBy: prevPageProps.formData.reportedBy,
+        position: prevPageProps.formData.position,
+
+        bankID: prevPageProps.formData.bankID,
+        cashInBank: prevPageProps.formData.cashInBank,
+        accountsReceivable: prevPageProps.formData.accountsReceivable,
+        accountsPayable: prevPageProps.formData.accountsPayable,
+
+        masterCouncilor: prevPageProps.formData.masterCouncilor,
+        statusMasterCouncilor: prevPageProps.formData.statusMasterCouncilor,
+        dateSignedMasterCouncilor:
+          prevPageProps.formData.dateSignedMasterCouncilor,
+
+        chapterScribe: prevPageProps.formData.chapterScribe,
+        statusChapterScribe: prevPageProps.formData.statusChapterScribe,
+        dateSignedChapterScribe: prevPageProps.formData.dateSignedChapterScribe,
+
+        chapterAdvisor: prevPageProps.formData.chapterAdvisor,
+        statusChapterAdvisor: prevPageProps.formData.statusChapterAdvisor,
+        dateSignedChapterAdvisor:
+          prevPageProps.formData.dateSignedChapterAdvisor,
+
+        advisoryCouncilChairman: prevPageProps.formData.advisoryCouncilChairman,
+        statusAdvisoryCouncilChairman:
+          prevPageProps.formData.statusAdvisoryCouncilChairman,
+        dateSignedAdvisoryCouncilChairman:
+          prevPageProps.formData.dateSignedAdvisoryCouncilChairman,
+
+        chapterAdvisor: prevPageProps.formData.chapterAdvisor,
+        statusChapterAdvisor: prevPageProps.formData.statusChapterAdvisor,
+        dateSignedChapterAdvisor:
+          prevPageProps.formData.dateSignedChapterAdvisor,
+        advisoryCouncilChairman: prevPageProps.formData.advisoryCouncilChairman,
+        statusAdvisoryCouncilChairman:
+          prevPageProps.formData.statusAdvisoryCouncilChairman,
+        dateSignedAdvisoryCouncilChairman:
+          prevPageProps.formData.dateSignedAdvisoryCouncilChairman,
+      });
+
+      console.log(formData);
+    }
+  }, []);
 
   const onChange = (e) => {
     setFormData((prev) => {
@@ -65,15 +118,12 @@ function TurnoverTF1() {
 
       return helper;
     });
-    console.log(formData);
   };
 
   const handleNextButtonClick = () => {
     navigate("/turnovertf2", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form1ID: prevPageProps.form1ID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -83,32 +133,29 @@ function TurnoverTF1() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Term and Financial Report </h1>
-        <Link to="/turnoverTF1">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="submit" form="submit" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
       <hr />
 
       {/* Progress Line */}
 
-      <div class="progress-line">
-        <div class="progress-circle active"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
-        <div class="progress-circle"></div>
+      <div className="progress-container">
+        <div className="progress-line">
+          <div className="progress-circle active"></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle"></div>
+          <div className="progress-circle"></div>
+        </div>
+        <div className="progress-labels">
+          <div className="progress-label">Chapter Information</div>
+          <div className="progress-label">Membership Survey</div>
+          <div className="progress-label">Financial Report</div>
+          <div className="progress-label">Signatories</div>
+        </div>
       </div>
-      <div class="progress-labels">
-        <div class="progress-label">Chapter Information</div>
-        <div class="progress-label">Membership Survey</div>
-        <div class="progress-label">Supreme Council Fees</div>
-        <div class="progress-label">Updated Directory of Active Members</div>
-        <div class="progress-label">Financial Report</div>
-        <div class="progress-label">Signatories</div>
-      </div>
+
       <br />
       <div className="row">
         <p> Confirm if all details presented below are correct. </p>
@@ -128,6 +175,7 @@ function TurnoverTF1() {
                 id="term"
                 onChange={onChange}
                 value={formData.term}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               >
                 <option>A</option>
                 <option>B</option>
@@ -147,6 +195,7 @@ function TurnoverTF1() {
                 id="year"
                 onChange={onChange}
                 value={formData.year}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               >
                 <option>2022</option>
                 <option>2023</option>
@@ -231,9 +280,10 @@ function TurnoverTF1() {
             <div className="col-md-6">
               <input
                 type="text"
-                className="form-control"
+                className="form-control readonly-input"
                 id="time"
                 placeholder="Enter Time"
+                readOnly
               />
             </div>
           </div>
@@ -247,9 +297,10 @@ function TurnoverTF1() {
             <div className="col-md-6">
               <input
                 type="text"
-                className="form-control"
+                className="form-control readonly-input"
                 id="venue"
                 placeholder="Enter Venue"
+                readOnly
               />
             </div>
           </div>
@@ -268,7 +319,7 @@ function TurnoverTF1() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value={prevPageProps.userData.name}
+                value={formData.reportedBy}
                 readOnly
               />
             </div>
@@ -284,7 +335,7 @@ function TurnoverTF1() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value={prevPageProps.userData.position}
+                value={formData.position}
                 readOnly
               />
             </div>
@@ -295,6 +346,7 @@ function TurnoverTF1() {
 
         <div className="d-flex justify-content-end mt-3">
           <button
+            className="primary-btn"
             type="submit"
             form="submit"
             id="primary-btn"

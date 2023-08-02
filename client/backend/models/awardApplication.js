@@ -47,21 +47,23 @@ const visitationAwardSchema = new Schema({});
 const applicationSchema = new Schema({
   applicantID: String,
   attendance: [attendanceEntrySchema],
-  athletic: [[athleticAwardSchema]],
-  civicService: [[civicServiceAwardSchema]],
-  conclave: [[conclaveAwardSchema]],
-  fineArts: [[fineArtsAwardSchema]],
-  fundRaising: [[fundRaisingAwardSchema]],
-  installing: [[installingAwardSchema]],
-  journalism: [[journalismAwardSchema]],
-  masonicAttendance: [[masonicAttendanceAwardSchema]],
-  masonicService: [[masonicServiceAwardSchema]],
-  merit: [[meritAwardSchema]],
-  petitions: [[petitionsAwardSchema]],
-  religion: [[religionAwardSchema]],
-  ritual: [[ritualAwardSchema]],
-  scholastics: [[scholasticsAwardSchema]],
-  visitation: [[visitationAwardSchema]],
+
+  athletic: [athleticAwardSchema],
+  civicService: [civicServiceAwardSchema],
+  conclave: [conclaveAwardSchema],
+  fineArts: [fineArtsAwardSchema],
+  fundRaising: [fundRaisingAwardSchema],
+  installing: [installingAwardSchema],
+  journalism: [journalismAwardSchema],
+  masonicAttendance: [masonicAttendanceAwardSchema],
+  masonicService: [masonicServiceAwardSchema],
+  merit: [meritAwardSchema],
+  petitions: [petitionsAwardSchema],
+  religion: [religionAwardSchema],
+  ritual: [ritualAwardSchema],
+  scholastics: [scholasticsAwardSchema],
+  visitation: [visitationAwardSchema],
+
 });
 
 const awardApplication = mongoose.model("awardApplication", applicationSchema);

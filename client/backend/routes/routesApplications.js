@@ -52,11 +52,33 @@ router.get("/getUser/:memberId", controller.getCurrentMember);
 router.get("/getForm10", controller.getForm10);
 router.post("/updateForm10/:form10Id", controller.updateForm10);
 
+router.post("/newTF", turnoverController.newTF);
 router.post("/updateTF/:id", turnoverController.updateTF);
+router.get("/getForm1/:id", turnoverController.getForm1);
+
+router.post("/newF15", turnoverController.newF15);
+router.post("/updateF15/:id", turnoverController.updateF15);
+router.get("/getForm15/:id", turnoverController.getForm15);
+
+router.post("/newAR", turnoverController.newAR);
+router.post("/updateAR/:id", turnoverController.updateAR);
+router.get("/getAR/:id", turnoverController.getAR);
+
+router.post("/newAdvisory", turnoverController.newAdvisory);
+router.post("/updateAdvisory/:id", turnoverController.updateAdvisory);
+router.get("/getAdvisory/:id", turnoverController.getAdvisory);
+
+router.post("/newTurnover", turnoverController.newTurnover);
 router.post("/updateTurnover", turnoverController.updateTurnover);
+
+  router.get(
+  "/getTurnoverReports/:chapterID/:currentTerm",
+  turnoverController.getTurnoverReports
+);
 router.get("/getChapterByID/:chapter", controller.getChapterByID);
 router.get("/getTurnoverReports/:chapterID/:currentTerm", turnoverController.getTurnoverReports);
 router.get("/getForm1/:id", turnoverController.getForm1);
+
 
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);

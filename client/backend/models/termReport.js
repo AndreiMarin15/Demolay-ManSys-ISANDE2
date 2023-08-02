@@ -20,6 +20,9 @@ const termReportSchema = new Schema({
   totalLoss: Number,
   totalNetMembers: Number,
 
+  reportedBy: String,
+  position: String,
+
   bankID: String,
   cashInBank: Number,
   accountsReceivable: Number,
