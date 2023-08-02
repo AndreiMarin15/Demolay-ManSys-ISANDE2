@@ -4,9 +4,15 @@ import "../styles/appform5.css";
 import { Component } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 
+const eye = <FontAwesomeIcon icon={faEye} />;
+const eyeSlash = <FontAwesomeIcon icon={faEyeSlash} />;
+
 function AdminCreate() {
+	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState({
 		positions: [],
 		chapters: [],
@@ -54,13 +60,13 @@ function AdminCreate() {
 		} else if (formData.position == 2) {
 			// advisory
 			const advisory = {
-				lastName: 			formData.lastName,
-				givenName: 			formData.givenName,
-				middleName: 		formData.middleName,
-				userId: 			formData.userId,
-				initialPassword: 	formData.initialPassword,
-				email: 				formData.email,
-				assignedChapterId: 	advisoryCouncilData.assignedChapterId,
+				lastName: formData.lastName,
+				givenName: formData.givenName,
+				middleName: formData.middleName,
+				userId: formData.userId,
+				initialPassword: formData.initialPassword,
+				email: formData.email,
+				assignedChapterId: advisoryCouncilData.assignedChapterId,
 			};
 
 			axios.post(`http://localhost:5000/createAdvisor/`, advisory).then((res) => {
@@ -82,7 +88,7 @@ function AdminCreate() {
 				console.log(res.data);
 				alert("Admin Account Created");
 			});
-		} else if(formData.position == 4){
+		} else if (formData.position == 4) {
 			const grandMaster = {
 				lastName: formData.lastName,
 				givenName: formData.givenName,
@@ -90,13 +96,13 @@ function AdminCreate() {
 				userId: formData.userId,
 				email: formData.email,
 				initialPassword: formData.initialPassword,
-			}
+			};
 
 			axios.post(`http://localhost:5000/createGrandMaster/`, grandMaster).then((res) => {
 				console.log(res.data);
 				alert("Grand Master Account Created");
 			});
-		} else if(formData.position == 5){
+		} else if (formData.position == 5) {
 			const chapterScribe = {
 				lastName: formData.lastName,
 				givenName: formData.givenName,
@@ -105,15 +111,13 @@ function AdminCreate() {
 				email: formData.email,
 				chapterId: advisoryCouncilData.assignedChapterId,
 				initialPassword: formData.initialPassword,
-			}
+			};
 
 			axios.post(`http://localhost:5000/createScribe/`, chapterScribe).then((res) => {
 				console.log(res.data);
 				alert("Chapter Scribe Account Created");
 			});
-		}
-
-		else if(formData.position == 6){
+		} else if (formData.position == 6) {
 			const executiveOfficer = {
 				lastName: formData.lastName,
 				givenName: formData.givenName,
@@ -121,7 +125,7 @@ function AdminCreate() {
 				userId: formData.userId,
 				email: formData.email,
 				initialPassword: formData.initialPassword,
-			}
+			};
 
 			axios.post(`http://localhost:5000/createEO/`, executiveOfficer).then((res) => {
 				console.log(res.data);
@@ -150,16 +154,16 @@ function AdminCreate() {
 					},
 					{
 						key: "Grand Master",
-						value: 4
+						value: 4,
 					},
 					{
 						key: "Chapter Scribe",
-						value: 5
+						value: 5,
 					},
 					{
 						key: "Executive Officer",
-						value: 6
-					}
+						value: 6,
+					},
 				],
 				chapters: chap.data.map((chapter) => {
 					return {
@@ -339,15 +343,31 @@ function AdminCreate() {
 							<label for="initialPassword" className="col-md-4 col-form-label text-right">
 								Initial Password
 							</label>
-							<input
-								class="form-control"
-								id="initialPassword"
-								autoComplete="off"
-								type="password"
-								placeholder="Password"
-								onChange={onChange}
-								value={formData.initialPassword}
-							/>{" "}
+							<div className="col-md-8">
+								<div style={{ position: "relative" }}>
+									<input
+										className="form-control"
+										type={showPassword ? "text" : "password"}
+										placeholder="Password"
+										onChange={onChange}
+										value={formData.initialPassword}
+									/>
+									<button
+										type="button"
+										style={{
+											position: "absolute",
+											right: "10px",
+											top: "50%",
+											transform: "translateY(-50%)",
+											cursor: "pointer",
+										}}
+										onClick={() => setShowPassword(!showPassword)}
+									>
+										{" "}
+										{showPassword ? eyeSlash : eye}
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
 
