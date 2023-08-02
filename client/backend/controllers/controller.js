@@ -454,8 +454,8 @@ const controller = {
 
 	getChapters: async (req, res) => {
 		const regionId = req.params.regionId;
-		console.log(regionId);
-		db.findMany(Chapters, { regionID: regionId }, { chapterID: 1, name: 1, regionID: 1 }, (result) => {
+		console.log(regionId);	
+		db.findMany(Chapters, { phRegion: regionId }, { phRegion: 1, name: 1, regionID: 1 }, (result) => {
 			res.send(result);
 		});
 	},

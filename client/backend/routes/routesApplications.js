@@ -23,7 +23,6 @@ router.post("/createAdmin", controller.createAdmin);
 router.post("/createScribe", controller.createScribe);
 router.post("/createGrandMaster", controller.createGrandmaster);
 
-
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
 router.get("/getChapters/:regionId", controller.getChapters);
@@ -67,11 +66,11 @@ router.post("/newCircular", controller.newCircular);
 
 router.get("/getMembers", controller.getMembers);
 
-router.get("/getEOs", controller.getEOs)
-router.get("/getMemberIDs", controller.getMemberIDs)
-router.get("/getAdvisoryCouncil", controller.getMemberIDs)
-router.get("/getChapterScribes", controller.getMemberIDs)
+router.get("/getEOs", controller.getEOs);
+router.get("/getMemberIDs", controller.getMemberIDs);
+router.get("/getAdvisoryCouncil", controller.getMemberIDs);
+router.get("/getChapterScribes", controller.getMemberIDs);
 
-router.post("/disseminateCircular/:circularId", controller.disseminateCircular)
+router.post("/disseminateCircular/:circularId", controller.disseminateCircular);
 
 module.exports = router;

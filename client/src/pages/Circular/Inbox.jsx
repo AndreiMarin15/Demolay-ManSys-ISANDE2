@@ -96,6 +96,7 @@ function Inbox() {
 							<h5 className="name">{currentUser?.givenName || " "} {currentUser?.lastName || " "}</h5>
 							<small class="text-muted">Active DeMolay, {userChapter.name}</small>
 							<hr className="hori-line" />
+							
 						</div>
 					</div>
 
