@@ -1,3 +1,4 @@
+/* Circular1.css */
 @import "base.css";
 
 .list-group-item {
@@ -6,11 +7,11 @@
   margin: 8px;
 }
 
-.list-group-item:nth-child(odd) {
+.list-group-item:nth-of-type(odd) {
   border-top: 1px solid #000000;
 }
 
-.list-group-item:nth-child(even) {
+.list-group-item:nth-of-type(even) {
   border-top: 1px solid #000000;
 }
 

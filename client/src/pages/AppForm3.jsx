@@ -500,7 +500,7 @@ function Appform3() {
 				</form>
 
 				<div className="row">
-					<div className="col-6">
+					<div className="col-md-6">
 						<Link to="/appform2">
 							<button type="submit" className="btn btn-primary float-start">
 								Back
@@ -508,8 +508,10 @@ function Appform3() {
 						</Link>
 					</div>
 
-					<div className="col-6">
-						<input type="submit" value="Next" className="btn btn-primary float-end" />
+					<div className="col-md-4" />
+
+					<div className="col-md-2 float-end">
+						<input type="submit" value="Next" className="btn btn-primary justify-content-end" />
 					</div>
 				</div>
 			</form>

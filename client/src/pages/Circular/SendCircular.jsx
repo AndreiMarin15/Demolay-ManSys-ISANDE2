@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../../styles/base.css";
-import "../../styles/circular1.css";
+import "../../styles/cscircular.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faBullhorn,
@@ -15,30 +15,40 @@ import { Component } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import NewCircular from "./NewCircular.jsx";
 
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
-function Circular1() {
+function SendCircular() {
+	const [showPopup, setShowPopup] = useState(false);
 	const [circulars, setCirculars] = useState({
 		circulars: [],
-		circulars2: [],
 		refresh: 0,
 	});
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const circs = await axios.get("http://localhost:5000/getCirculars");
-			const midPoint = Math.ceil(circs.data.length / 2);
 
 			setCirculars({
-				circulars: circs.data.filter((_, i) => i % 2 === 0),
-				circulars2: circs.data.filter((_, i) => i % 2 === 1),
+				circulars: circs.data,
 			});
 		};
 
 		fetchData();
 	}, [circulars.refresh]);
 
+	const handleReminderClick = () => {
+		setShowPopup(true);
+	};
+
+	const handleClosePopup = () => {
+		setCirculars({
+			...circulars,
+			refresh: circulars.refresh + 1,
+		});
+		setShowPopup(false);
+	};
 	return (
 		<div className="container container-fluid ">
 			<div className="row">
@@ -61,8 +71,8 @@ function Circular1() {
 					>
 						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
 						<div className="text-center">
-							<h5 className="name">Bea Lim</h5>
-							<small class="text-muted">Executive Director, Jose Abad Santos #1</small>
+							<h5 className="name">Miguel Lim</h5>
+							<small class="text-muted">Grand Master</small>
 							<hr className="hori-line" />
 						</div>
 					</div>
@@ -124,95 +134,55 @@ function Circular1() {
 						</div>
 					</div>
 
-					<div className="row" style={{ marginTop: "20px", marginLeft: "50px" }}>
+					<NewCircular showPopup={showPopup} onClosePopup={handleClosePopup} onSendClick={() => {}} />
+
+					<div className="row" style={{ marginTop: "10px", marginLeft: "30px" }}>
+						<div className="d-flex justify-content-end">
+							<button className="btn" type="button" onClick={handleReminderClick}>
+								New Circular
+							</button>
+						</div>
+					</div>
+
+					<div className="row" style={{ marginTop: "10px", marginLeft: "20px" }}>
 						<div className="col">
 							<div class="list-group">
 								{circulars.circulars.map(function (circular) {
 									return (
-										<>
-											<a
-												href={`/circular2/${circular._id}`}
-												class="list-group-item list-group-item-action "
-												aria-current="true"
-											>
-												<div class="d-flex w-100 justify-content-end" key={circular._id}>
-													<small class="text-muted">
-														{" "}
-														{circular.disseminatedDate ? (
-															<span className="green-circle"></span>
-														) : (
-															<span className="darkorange-circle"></span>
-														)}
-														{circular.disseminatedDate
-															? `Disseminated on ${circular.disseminatedDate}`
-															: "For Dissemination"}
-													</small>
+										<Link
+											to={`/cscircular2/${circular._id}`}
+											href="#"
+											class="list-group-item list-group-item-action"
+											aria-current="true"
+										>
+											<div className="row" key={circular._id}>
+												<div className="col-md-1 date-time">
+													<p className="circ-date">
+														<b>
+															{circular.dateReleased} <br /> {circular.timeReleased}
+														</b>
+													</p>
 												</div>
-												<h3 class="mb-1">
-													{circular.subject.length > 20 ? circular.subject.slice(0, 20) + "..." : circular.subject}
-												</h3>
-
-												<p class="text-muted">
-													{circular.circularText.length > 150
-														? circular.circularText.slice(0, 150) + "..."
-														: circular.circularText}
-												</p>
-												<div class="d-flex w-100 justify-content-end">
-													<small class="view-btn">
-														<span style={{ margin: "5px" }}>
-															<FontAwesomeIcon icon={faEye} />
-														</span>
-														View
-													</small>
+												<div className="col-md-11">
+													<h3 class="mb-1 circ-bold">{circular.subject}</h3>
+													<p class="text-muted">
+														<b>
+															{circular.circularText.length > 100
+																? circular.circularText.slice(0, 100) + "..."
+																: circular.circularText}
+														</b>
+													</p>
 												</div>
-											</a>
-										</>
-									);
-								})}
-							</div>
-						</div>
-						<div className="col">
-							<div class="list-group">
-								{circulars.circulars2.map(function (circular) {
-									return (
-										<>
-											<a
-												href={`/circular2/${circular._id}`}
-												class="list-group-item list-group-item-action "
-												aria-current="true"
-											>
-												<div class="d-flex w-100 justify-content-end">
-													<small class="text-muted">
-														{" "}
-														{circular.disseminatedDate ? (
-															<span className="green-circle"></span>
-														) : (
-															<span className="darkorange-circle"></span>
-														)}
-														{circular.disseminatedDate
-															? `Disseminated on ${circular.disseminatedDate}`
-															: "For Dissemination"}
-													</small>
-												</div>
-												<h3 class="mb-1">
-													{circular.subject.length > 20 ? circular.subject.slice(0, 20) + "..." : circular.subject}
-												</h3>
-
-												<p class="text-muted">
-													{circular.circularText.length > 150
-														? circular.circularText.slice(0, 150) + "..."
-														: circular.circularText}
-												</p>
-												<div class="d-flex w-100 justify-content-end">
-													<small class="view-btn">
-														<span style={{ margin: "5px" }}>
-															<FontAwesomeIcon icon={faEye} />
-														</span>
-														View
-													</small>
-												</div>
-											</a>
-										</>
+											</div>
+											<div class="d-flex w-100 justify-content-end">
+												<small class="view-btn">
+													<span style={{ margin: "5px" }}>
+														<FontAwesomeIcon icon={faEye} />
+													</span>
+													View
+												</small>
+											</div>
+										</Link>
 									);
 								})}
 							</div>
@@ -224,4 +194,4 @@ function Circular1() {
 	);
 }
 
-export default Circular1;
+export default SendCircular;

@@ -47,6 +47,7 @@ const visitationAwardSchema = new Schema({});
 const applicationSchema = new Schema({
   applicantID: String,
   attendance: [attendanceEntrySchema],
+
   athletic: [athleticAwardSchema],
   civicService: [civicServiceAwardSchema],
   conclave: [conclaveAwardSchema],
@@ -62,6 +63,7 @@ const applicationSchema = new Schema({
   ritual: [ritualAwardSchema],
   scholastics: [scholasticsAwardSchema],
   visitation: [visitationAwardSchema],
+
 });
 
 const awardApplication = mongoose.model("awardApplication", applicationSchema);

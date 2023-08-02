@@ -6,30 +6,39 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRight,
-  faFilter,
-  faLariSign,
+
+	faFileText,
+	faFilter,
+	faEye,
+	faCircleUser,
+	faMagnifyingGlass,
+	faBullhorn,
+	faFileLines,
+	faAddressBook,
+	faAddressCard,
+
 } from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
-  var tabContents = document.getElementsByClassName("tab-content");
+	var tabContents = document.getElementsByClassName("tab-content");
 
-  for (var i = 0; i < tabContents.length; i++) {
-    tabContents[i].style.display = "none";
-  }
+	for (var i = 0; i < tabContents.length; i++) {
+		tabContents[i].style.display = "none";
+	}
 
-  var tabButtons = document.getElementsByClassName("tab-button");
+	var tabButtons = document.getElementsByClassName("tab-button");
 
-  for (var i = 0; i < tabButtons.length; i++) {
-    tabButtons[i].classList.remove("active");
-  }
+	for (var i = 0; i < tabButtons.length; i++) {
+		tabButtons[i].classList.remove("active");
+	}
 
-  document.getElementById(tabId).style.display = "block";
+	document.getElementById(tabId).style.display = "block";
 
-  event.currentTarget.classList.add("active");
+	event.currentTarget.classList.add("active");
 };
 
 function TurnoverDashboard1() {
+
   const navigate = useNavigate();
   const location = useLocation();
   const prevPageProps = location.state;
@@ -788,6 +797,7 @@ function TurnoverDashboard1() {
       </div>
     </div>
   );
+
 }
 
 export default TurnoverDashboard1;

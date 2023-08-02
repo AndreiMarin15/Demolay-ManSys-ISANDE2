@@ -5,7 +5,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faFilter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFileText,
+  faFilter,
+  faEye,
+  faCircleUser,
+  faMagnifyingGlass,
+  faBullhorn,
+  faFileLines,
+  faAddressBook,
+  faAddressCard,
+} from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
   var tabContents = document.getElementsByClassName("tab-content");
@@ -271,6 +281,7 @@ function TurnoverDashboard1() {
             scribeNotebook: res1.data.scribeNotebook,
             treasNotebook: res1.data.treasNotebook,
 
+
             advisoryCouncilChairman: res1.data.advisoryCouncilChairman,
             statusAdvisoryCouncilChairman:
               res1.data.statusAdvisoryCouncilChairman,
@@ -426,6 +437,7 @@ function TurnoverDashboard1() {
               >
                 Submitted
               </button>
+
             </div>
 
             {/* Tabs Content 1 */}
@@ -540,10 +552,12 @@ function TurnoverDashboard1() {
               </div>
             </div>
 
+
             {/* Tabs Content 2 */}
 
             <div id="tab2" className="tab-content">
               <p>This is the content for Tab 2.</p>
+
             </div>
 
             {/* Tabs Content 3 */}

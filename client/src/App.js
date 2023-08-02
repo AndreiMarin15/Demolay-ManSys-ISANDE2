@@ -77,6 +77,10 @@ import Circular2 from "./pages/Circular/Circular2";
 import Circular3 from "./pages/Circular/Circular3";
 import CSCircular from "./pages/Circular/CSCircular";
 import CSCircular2 from "./pages/Circular/CSCircular2";
+import MemberCircular from "./pages/Circular/MemberCircular";
+import MemberCircular2 from "./pages/Circular/MemberCircular2";
+import Inbox from "./pages/Circular/Inbox";
+import SendCircular from "./pages/Circular/SendCircular";
 
 import Header from "./components/Header";
 
@@ -184,9 +188,16 @@ function App() {
           />
           <Route path="circular1" element={<Circular1 />} />
           <Route path="circular2" element={<Circular2 />} />
+          <Route path="circular2/:circularId" element={<Circular2 />} />
           <Route path="circular3" element={<Circular3 />} />
           <Route path="cscircular" element={<CSCircular />} />
           <Route path="cscircular2" element={<CSCircular2 />} />
+          <Route path="cscircular2/:circularId" element={<CSCircular2 />} />
+          <Route path="membercircular" element={<MemberCircular />} />
+          <Route path="membercircular2" element={<MemberCircular2 />} />
+          <Route path="inbox" element={<Inbox />} />
+          <Route path="inbox/:memberId" element={<Inbox />} />
+          <Route path="sendcircular" element={<SendCircular />} />
         </Route>
       </Routes>
     </>
