@@ -68,7 +68,7 @@ function Appform1() {
 
 	const onChangeChapter = (e) => {
 		setFormData({
-			...formData,
+			...formData, 
 			chapterId: e.target.value,
 		});
 	};
