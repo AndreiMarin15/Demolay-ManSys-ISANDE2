@@ -10,14 +10,7 @@ import axios from "axios";
 
 
 const ViewCircular = ({ showPopup, circular, onClosePopup }) => {
-	const [circularDetails, setDetails] = useState({
-		subject: circular.subject,
-		content: circular.circularText,
-		senderName: "",
-		senderId: "",
-		dateSent: "",
-		timeSent: "",
-	});
+	
 
 	if (!showPopup) {
 		return null;
@@ -57,11 +50,7 @@ const ViewCircular = ({ showPopup, circular, onClosePopup }) => {
 						);
 					})}
 				</div>
-				<div className="message-popup-actions justify-content-end">
-					<div className="message-popup-buttons-right">
-						<button className="btn btn-secondary message-send-button">Send</button>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	);

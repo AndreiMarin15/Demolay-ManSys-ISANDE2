@@ -56,12 +56,13 @@ function Inbox() {
 			const circs = memberId
 				? await axios.get(`http://localhost:5000/getCircularsByUser/${memberId}`)
 				: await axios.get(`http://localhost:5000/getCirculars`);
-			const user = await axios.get(`http://localhost:5000/getUser/${memberId}`)
-			const chapter = await axios.get(`http://localhost:5000/getChapterByID/${user.data.chapterId}`)
-			console.log(user.data.chapterId)
-			console.log(chapter.data)
-			setCurrentUser(user.data)
-			setChapter(chapter.data)
+
+		//	const user = await axios.get(`http://localhost:5000/getUser/${memberId}`)
+		//	const chapter = await axios.get(`http://localhost:5000/getChapterByID/${user.data.chapterId}`)
+		//	console.log(user.data.chapterId)
+		//	console.log(chapter.data)
+		//	setCurrentUser(user.data)
+		//	setChapter(chapter.data)
 			setCirculars({
 				circulars: circs.data,
 			});

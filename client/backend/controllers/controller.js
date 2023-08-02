@@ -512,10 +512,10 @@ const controller = {
 		res.send(session);
 	},
 
-	getCurrentMember: async(req, res) => {
-		const member = await Member.findOne({_id: req.params.memberId}, {})
-		console.log(member ? member : "none")
-		res.send(member)
+	getCurrentMember: async (req, res) => {
+		const member = await Member.findOne({ _id: req.params.memberId }, {});
+		console.log(member ? member : "none");
+		res.send(member);
 	},
 
 	login: async (req, res) => {
@@ -827,8 +827,11 @@ const controller = {
 	},
 
 	getCircularsByUser: async (req, res) => {
-		const circulars = await Circulars.find({disseminateTo: {$elemMatch: { _id: req.params.memberId } } }, {}).sort({ dateReleased: -1, timeReleased: -1 });
-		console.log(circulars)
+		const circulars = await Circulars.find({ disseminateTo: { $elemMatch: { _id: req.params.memberId } } }, {}).sort({
+			dateReleased: -1,
+			timeReleased: -1,
+		});
+		console.log(circulars);
 		res.send(circulars);
 	},
 
