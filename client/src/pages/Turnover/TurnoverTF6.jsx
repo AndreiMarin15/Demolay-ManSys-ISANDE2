@@ -15,9 +15,7 @@ function TurnoverTF6() {
   const handleBackButtonClick = () => {
     navigate("/turnovertf5", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        turnoverID: prevPageProps.turnoverID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -25,16 +23,239 @@ function TurnoverTF6() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        `http://localhost:5000/updateTF/${prevPageProps.formData._id}`,
-        prevPageProps
-      )
-      .then((res) => {
-        console.log("TermReport updated: " + res.data);
 
-        navigate("/turnoverDashboardscribe");
-      });
+    if (prevPageProps.userData.position === "Scribe") {
+      axios
+        .post(
+          `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+          prevPageProps
+        )
+        .then((res) => {
+          const updateApproval = {
+            chapterScribe: prevPageProps.userData.userID,
+            statusChapterScribe: "Approved",
+            dateSignedChapterScribe: new Date(),
+          };
+
+          const props = {
+            ...prevPageProps,
+            updateApproval: updateApproval,
+          };
+
+          axios.post(
+            `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+            props
+          );
+
+          if (prevPageProps.approved === false) {
+            if (
+              updateApproval.statusChapterScribe === "Approved" &&
+              prevPageProps.formData.statusMasterCouncilor === "Approved" &&
+              prevPageProps.formData.statusChapterAdvisor === "Approved" &&
+              prevPageProps.formData.statusAdvisoryCouncilChairman ===
+                "Approved"
+            ) {
+              const turnoverUpdate = {
+                chapterID: prevPageProps.userData.chapterID,
+                termID: prevPageProps.chapterData.currentTerm,
+                fieldToUpdate: "form1Approved",
+                updateValue: true,
+              };
+
+              axios.post(
+                "http://localhost:5000/updateTurnover",
+                turnoverUpdate
+              );
+            }
+          }
+
+          navigate("/turnoverDashboardscribe");
+        });
+    } else {
+      if (prevPageProps.userData.position === "Master Councilor") {
+        if (prevPageProps.formData.statusMasterCouncilor === "Approved") {
+          alert("Already approved.");
+        } else {
+          const updateApproval = {
+            masterCouncilor: prevPageProps.userData.userID,
+            statusMasterCouncilor: "Approved",
+            dateSignedMasterCouncilor: new Date(),
+          };
+
+          const props = {
+            ...prevPageProps,
+            updateApproval: updateApproval,
+          };
+
+          axios.post(
+            `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+            props
+          );
+
+          if (prevPageProps.approved === false) {
+            if (
+              updateApproval.statusMasterCouncilor === "Approved" &&
+              prevPageProps.formData.statusChapterScribe === "Approved" &&
+              prevPageProps.formData.statusChapterAdvisor === "Approved" &&
+              prevPageProps.formData.statusAdvisoryCouncilChairman ===
+                "Approved"
+            ) {
+              const turnoverUpdate = {
+                chapterID: prevPageProps.userData.chapterID,
+                termID: prevPageProps.chapterData.currentTerm,
+                fieldToUpdate: "form1Approved",
+                updateValue: true,
+              };
+
+              axios.post(
+                "http://localhost:5000/updateTurnover",
+                turnoverUpdate
+              );
+            }
+          }
+        }
+      } else {
+        if (prevPageProps.userData.position === "Chapter Advisor") {
+          if (prevPageProps.formData.statusChapterAdvisor === "Approved") {
+            alert("Already approved.");
+          } else {
+            const updateApproval = {
+              chapterAdvisor: prevPageProps.userData.userID,
+              statusChapterAdvisor: "Approved",
+              dateSignedChapterAdvisor: new Date(),
+            };
+
+            const props = {
+              ...prevPageProps,
+              updateApproval: updateApproval,
+            };
+
+            axios.post(
+              `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+              props
+            );
+
+            if (prevPageProps.approved === false) {
+              if (
+                updateApproval.statusChapterAdvisor === "Approved" &&
+                prevPageProps.formData.statusAdvisoryCouncilChairman ===
+                  "Approved" &&
+                prevPageProps.formData.statusChapterScribe === "Approved" &&
+                prevPageProps.formData.statusMasterCouncilor === "Approved"
+              ) {
+                const turnoverUpdate = {
+                  chapterID: prevPageProps.userData.chapterID,
+                  termID: prevPageProps.chapterData.currentTerm,
+                  fieldToUpdate: "form1Approved",
+                  updateValue: true,
+                };
+
+                axios.post(
+                  "http://localhost:5000/updateTurnover",
+                  turnoverUpdate
+                );
+              }
+            }
+          }
+        } else if (
+          prevPageProps.userData.position === "Advisory Council Chairman"
+        ) {
+          if (
+            prevPageProps.formData.statusAdvisoryCouncilChairman === "Approved"
+          ) {
+            alert("Already approved.");
+          } else {
+            const updateApproval = {
+              advisoryCouncilChairman: prevPageProps.userData.userID,
+              statusAdvisoryCouncilChairman: "Approved",
+              dateSignedAdvisoryCouncilChairman: new Date(),
+            };
+
+            const props = {
+              ...prevPageProps,
+              updateApproval: updateApproval,
+            };
+
+            axios.post(
+              `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+              props
+            );
+
+            if (prevPageProps.approved === false) {
+              if (
+                updateApproval.statusAdvisoryCouncilChairman === "Approved" &&
+                prevPageProps.formData.statusChapterAdvisor === "Approved" &&
+                prevPageProps.formData.statusChapterScribe === "Approved" &&
+                prevPageProps.formData.statusMasterCouncilor === "Approved"
+              ) {
+                const turnoverUpdate = {
+                  chapterID: prevPageProps.userData.chapterID,
+                  termID: prevPageProps.chapterData.currentTerm,
+                  fieldToUpdate: "form1Approved",
+                  updateValue: true,
+                };
+
+                axios.post(
+                  "http://localhost:5000/updateTurnover",
+                  turnoverUpdate
+                );
+              }
+            }
+          }
+        }
+        navigate("/turnoverdashboardofficer");
+      }
+    }
+  };
+
+  const handleDisapprove = (e) => {
+    e.preventDefault();
+
+    if (prevPageProps.userData.position === "Chapter Advisor") {
+      if (prevPageProps.formData.statusChapterAdvisor === "Approved") {
+        alert("Already approved.");
+      } else {
+        const updateApproval = {
+          chapterAdvisor: prevPageProps.userData.userID,
+          statusChapterAdvisor: "For Revisions",
+          dateSignedChapterAdvisor: new Date(),
+        };
+
+        const props = {
+          ...prevPageProps,
+          updateApproval: updateApproval,
+        };
+
+        axios.post(
+          `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+          props
+        );
+      }
+    } else if (
+      prevPageProps.userData.position === "Advisory Council Chairman"
+    ) {
+      if (prevPageProps.formData.statusAdvisoryCouncilChairman === "Approved") {
+        alert("Already approved.");
+      } else {
+        const updateApproval = {
+          advisoryCouncilChairman: prevPageProps.userData.userID,
+          statusAdvisoryCouncilChairman: "For Revisions",
+          dateSignedAdvisoryCouncilChairman: new Date(),
+        };
+
+        const props = {
+          ...prevPageProps,
+          updateApproval: updateApproval,
+        };
+
+        axios.post(
+          `http://localhost:5000/updateTF/${prevPageProps.formData.form1ID}`,
+          props
+        );
+      }
+    }
+    alert("Disapproved: Waiting for revisions.");
+    navigate("/turnoverdashboardofficer");
   };
 
   console.log(prevPageProps);
@@ -43,11 +264,9 @@ function TurnoverTF6() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Term and Financial Report </h1>
-        <Link to="/turnoverTF5">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="submit" form="submit" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
       <hr />
 
@@ -167,7 +386,7 @@ function TurnoverTF6() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="Not applicable"
+                value={prevPageProps.formData.statusMasterCouncilor}
                 readOnly
               />
             </div>
@@ -186,7 +405,7 @@ function TurnoverTF6() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="Not applicable"
+                value={prevPageProps.formData.statusChapterScribe}
                 readOnly
               />
             </div>
@@ -207,7 +426,7 @@ function TurnoverTF6() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="Not applicable"
+                value={prevPageProps.formData.statusAdvisoryCouncilChairman}
                 readOnly
               />
             </div>
@@ -226,7 +445,7 @@ function TurnoverTF6() {
               <input
                 type="text"
                 className="form-control readonly-input"
-                value="Not applicable"
+                value={prevPageProps.formData.statusChapterAdvisor}
                 readOnly
               />
             </div>
@@ -247,9 +466,9 @@ function TurnoverTF6() {
             </div>
             <div className="col-md-8">
               <input
-                type="text"
+                type="date"
                 className="form-control readonly-input"
-                value="Date"
+                value={prevPageProps.formData.dateSignedMasterCouncilor}
                 readOnly
               />
             </div>
@@ -266,9 +485,9 @@ function TurnoverTF6() {
             </div>
             <div className="col-md-8">
               <input
-                type="text"
+                type="date"
                 className="form-control readonly-input"
-                value="Date"
+                value={prevPageProps.formData.dateSignedChapterScribe}
                 readOnly
               />
             </div>
@@ -287,9 +506,9 @@ function TurnoverTF6() {
             </div>
             <div className="col-md-8">
               <input
-                type="text"
+                type="date"
                 className="form-control readonly-input"
-                value="Date"
+                value={prevPageProps.formData.dateSignedAdvisoryCouncilChairman}
                 readOnly
               />
             </div>
@@ -306,9 +525,9 @@ function TurnoverTF6() {
             </div>
             <div className="col-md-8">
               <input
-                type="text"
+                type="date"
                 className="form-control readonly-input"
-                value="Date"
+                value={prevPageProps.formData.dateSignedChapterAdvisor}
                 readOnly
               />
             </div>
@@ -319,18 +538,70 @@ function TurnoverTF6() {
       {/* Button */}
 
       <div className="d-flex justify-content-between mt-4">
-        <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+        <button
+          className="primary-btn"
+          type="button"
+          id="back-btn"
+          onClick={handleBackButtonClick}
+        >
           BACK
         </button>
-        <button
-          type="submit"
-          form="submit"
-          id="primary-btn"
-          value="SUBMIT"
-          onClick={onSubmit}
-        >
-          SEND
-        </button>
+
+        {prevPageProps.userData.position === "Scribe" ||
+          (prevPageProps.userData.position === "Master Councilor" &&
+            prevPageProps.approved === false && (
+              <button
+                className="primary-btn"
+                type="submit"
+                form="submit"
+                id="primary-btn"
+                value="SUBMIT"
+                onClick={onSubmit}
+              >
+                SIGN
+              </button>
+            ))}
+
+        {(prevPageProps.userData.position === "Chapter Advisor" ||
+          prevPageProps.userData.position === "Advisory Council Chairman") &&
+          prevPageProps.approved === false && (
+            <div className="d-flex justify-content-between">
+              <button
+                type="submit"
+                form="submit"
+                className="primary-btn"
+                value="DISAPPROVE"
+                onClick={handleDisapprove}
+              >
+                DISAPPROVE
+              </button>
+              <button
+                type="submit"
+                form="submit"
+                className="primary-btn"
+                value="APPROVE"
+                onClick={onSubmit}
+              >
+                APPROVE
+              </button>
+            </div>
+          )}
+
+        {(prevPageProps.userData.position === "Executive Officer" ||
+          prevPageProps.approved === true) && (
+          <button
+            className="primary-btn"
+            type="submit"
+            form="submit"
+            id="primary-btn"
+            value="SUBMIT"
+            onClick={() => {
+              navigate("/turnoverdashboardofficer");
+            }}
+          >
+            RETURN TO DASHBOARD
+          </button>
+        )}
       </div>
     </div>
   );

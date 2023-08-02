@@ -15,9 +15,7 @@ function TurnoverTF2() {
   const handleNextButtonClick = () => {
     navigate("/turnovertf5", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        turnoverID: prevPageProps.turnoverID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -26,9 +24,7 @@ function TurnoverTF2() {
   const handleBackButtonClick = () => {
     navigate("/turnovertf1", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        turnoverID: prevPageProps.turnoverID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -39,11 +35,9 @@ function TurnoverTF2() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Term and Financial Report </h1>
-        <Link to="/turnoverTF2">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="submit" form="submit" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
       <hr />
 
@@ -276,10 +270,16 @@ function TurnoverTF2() {
         {/* Button */}
 
         <div className="d-flex justify-content-between mt-4">
-          <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+          <button
+            className="primary-btn"
+            type="button"
+            id="back-btn"
+            onClick={handleBackButtonClick}
+          >
             BACK
           </button>
           <button
+            className="primary-btn"
             type="submit"
             form="submit"
             id="primary-btn"

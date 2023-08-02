@@ -12,8 +12,7 @@ const turnoverStatusSchema = new Schema({
   assetsApproved: Boolean,
   advisoryID: String,
   advisoryApproved: Boolean,
-  advisorApproval: Boolean,
-  eoCertification: String,
+  eoCertification: Boolean,
   isComplete: Boolean,
 });
 

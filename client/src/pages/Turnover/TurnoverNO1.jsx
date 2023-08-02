@@ -10,6 +10,42 @@ function TurnoverNO1() {
   const navigate = useNavigate();
   const prevPageProps = location.state;
 
+  const [formData, setFormData] = useState({
+    term: "",
+    year: "",
+    electDate: "",
+    installDate: "",
+    officers: [],
+  });
+
+  useEffect(() => {
+    if (prevPageProps.formData.form15ID !== "") {
+      setFormData({
+        ...formData,
+
+        form15ID: prevPageProps.formData.form15ID,
+        term: prevPageProps.formData.term,
+        year: prevPageProps.formData.year,
+        electDate: prevPageProps.formData.electDate,
+        installDate: prevPageProps.formData.installDate,
+
+        officers: prevPageProps.formData.officers,
+
+        advisoryCouncilChairman: prevPageProps.formData.advisoryCouncilChairman,
+        statusAdvisoryCouncilChairman:
+          prevPageProps.formData.statusAdvisoryCouncilChairman,
+        dateSignedAdvisoryCouncilChairman:
+          prevPageProps.formData.dateSignedAdvisoryCouncilChairman,
+        chapterAdvisor: prevPageProps.formData.chapterAdvisor,
+        statusChapterAdvisor: prevPageProps.formData.statusChapterAdvisor,
+        dateSignedChapterAdvisor:
+          prevPageProps.formData.dateSignedChapterAdvisor,
+      });
+
+      console.log(formData);
+    }
+  }, []);
+
   const [rows, setRows] = useState(1);
 
   const handleAddRow = () => {
@@ -29,53 +65,11 @@ function TurnoverNO1() {
   const handleNextButtonClick = () => {
     navigate("/turnoverno2", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form15ID: prevPageProps.form15ID,
-        formData: prevPageProps.formData ? prevPageProps.formData : formData,
+        ...prevPageProps,
+        formData: formData,
       },
     });
   };
-
-  const [formData, setFormData] = useState({
-    term: "",
-    year: "",
-    electDate: "",
-    installDate: "",
-    officers: [],
-  });
-
-  useEffect(() => {
-    console.log(prevPageProps);
-    if (prevPageProps.form15ID) {
-      axios
-        .get(`http://localhost:5000/getForm15/${prevPageProps.form15ID}`)
-        .then((res1) => {
-          setFormData({
-            ...formData,
-            term: res1.data.term,
-            year: res1.data.year,
-            electDate: new Date(res1.data.electDate).toLocaleDateString(
-              "en-US",
-              {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }
-            ),
-            installDate: new Date(res1.data.installDate).toLocaleDateString(
-              "en-US",
-              {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              }
-            ),
-            officers: res1.data.officers,
-          });
-        });
-    }
-  }, []);
 
   return (
     <div className="container">
@@ -163,8 +157,9 @@ function TurnoverNO1() {
                 type="date"
                 className="form-control"
                 id="electDate"
-                placeholder="Input date of election"
+                value={formData.electDate}
                 onChange={onChange}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -183,8 +178,9 @@ function TurnoverNO1() {
                 type="date"
                 className="form-control"
                 id="installDate"
-                placeholder="Input date of installation"
+                value={formData.installDate}
                 onChange={onChange}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>

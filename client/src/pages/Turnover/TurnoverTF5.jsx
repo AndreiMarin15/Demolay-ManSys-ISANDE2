@@ -15,9 +15,7 @@ function TurnoverTF5() {
   const handleNextButtonClick = () => {
     navigate("/turnovertf6", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        turnoverID: prevPageProps.turnoverID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -26,9 +24,7 @@ function TurnoverTF5() {
   const handleBackButtonClick = () => {
     navigate("/turnovertf2", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        turnoverID: prevPageProps.turnoverID,
+        ...prevPageProps,
         formData: formData,
       },
     });
@@ -39,11 +35,9 @@ function TurnoverTF5() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Term and Financial Report </h1>
-        <Link to="/turnoverTF5">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="submit" form="submit" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
       <hr />
 
@@ -133,6 +127,7 @@ function TurnoverTF5() {
                 className="form-control"
                 id="cashinbank"
                 placeholder="Cash in Bank"
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -149,6 +144,7 @@ function TurnoverTF5() {
                 className="form-control"
                 id="ar"
                 placeholder="Accounts Receivables"
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -165,6 +161,7 @@ function TurnoverTF5() {
                 className="form-control"
                 id="ap"
                 placeholder="Accounts Payables"
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -180,7 +177,11 @@ function TurnoverTF5() {
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="fprojects">
+              <select
+                className="form-select form-control"
+                id="fprojects"
+                disabled={prevPageProps.userData.position !== "Scribe"}
+              >
                 <option>Event One</option>
                 <option>Event Two</option>
                 <option>Event Three</option>
@@ -193,11 +194,17 @@ function TurnoverTF5() {
       {/* Button */}
 
       <div className="d-flex justify-content-between mt-4">
-        <button type="button" id="back-btn" onClick={handleBackButtonClick}>
+        <button
+          className="primary-btn"
+          type="button"
+          id="back-btn"
+          onClick={handleBackButtonClick}
+        >
           BACK
         </button>
 
         <button
+          className="primary-btn"
           type="submit"
           form="submit"
           id="primary-btn"

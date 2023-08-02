@@ -13,6 +13,13 @@ const form15Schema = new Schema({
       memberId: String,
     },
   ],
+  advisoryCouncilChairman: String,
+  statusAdvisoryCouncilChairman: String,
+  dateSignedAdvisoryCouncilChairman: Date,
+
+  chapterAdvisor: String,
+  statusChapterAdvisor: String,
+  dateSignedChapterAdvisor: Date,
 });
 
 const Form15 = mongoose.model("Form15", form15Schema);

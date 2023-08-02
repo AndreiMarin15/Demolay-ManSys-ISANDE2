@@ -54,12 +54,14 @@ function TurnoverDashboard1() {
     assetsApproved: false,
     advisoryID: "",
     advisoryApproved: false,
-    advisorApproval: false,
     eoCertification: false,
     isComplete: false,
   });
 
   useEffect(() => {
+    {
+      /* Add fetch userData for current user from members and return id, name, position, chapter */
+    }
     async function getTurnoverReports() {
       axios
         .get(`http://localhost:5000/getChapterByID/${userData.chapterID}`)
@@ -72,6 +74,7 @@ function TurnoverDashboard1() {
           if (res2.data !== "") {
             console.log("TURNOVER REPORTS EXISTS: ", res2.data);
             setTurnoverData({
+              ...turnoverData,
               turnoverStatusID: res2.data._id,
               form1ID: res2.data.form1ID,
               form1Approved: res2.data.form1Approved,
@@ -81,14 +84,12 @@ function TurnoverDashboard1() {
               assetsApproved: res2.data.assetsApproved,
               advisoryID: res2.data.advisoryID,
               advisoryApproved: res2.data.advisoryApproved,
-              advisorApproval: res2.data.advisorApproval,
               eoCertification: res2.data.eoCertification,
               isComplete: res2.data.isComplete,
             });
           } else {
             console.log(
-              `NO EXISTING TURNOVER REPORTS FOR TERM ${res1.data.currentTerm}: `,
-              res2.data
+              `NO EXISTING TURNOVER REPORTS FOR TERM ${res1.data.currentTerm}: `
             );
             const newTurnover = {
               chapterID: userData.chapterID,
@@ -98,16 +99,17 @@ function TurnoverDashboard1() {
               .post(`http://localhost:5000/newTurnover`, newTurnover)
               .then((res3) => {
                 setTurnoverData({
+                  ...turnoverData,
                   turnoverStatusID: res3.data._id,
                 });
               });
           }
         });
     }
-    {
-      /* Add fetch userData for current user from members and return id, name, position, chapter */
-    }
+
     getTurnoverReports();
+
+    console.log(turnoverData);
 
     document.getElementById("tab1").style.display = "block";
   }, []);
@@ -119,6 +121,7 @@ function TurnoverDashboard1() {
         .get(`http://localhost:5000/getForm1/${turnoverData.form1ID}`)
         .then((res1) => {
           const form1Data = {
+            form1ID: turnoverData.form1ID,
             term: res1.data.term,
             year: res1.data.year,
             startTerm: new Date(res1.data.startTerm).toLocaleDateString(
@@ -145,6 +148,44 @@ function TurnoverDashboard1() {
             totalGains: res1.data.totalGains,
             totalLoss: res1.data.totalLoss,
             totalNetMembers: res1.data.totalNetMembers,
+
+            reportedBy: res1.data.reportedBy,
+            position: res1.data.position,
+
+            bankID: res1.data.bankID,
+            cashInBank: res1.data.cashInBank,
+            accountsReceivable: res1.data.accountsReceivable,
+            accountsPayable: res1.data.accountsPayable,
+
+            masterCouncilor: res1.data.masterCouncilor,
+            statusMasterCouncilor: res1.data.statusMasterCouncilor,
+            dateSignedMasterCouncilor: new Date(
+              res1.data.dateSignedMasterCouncilor
+            )
+              .toISOString()
+              .split("T")[0],
+
+            chapterScribe: res1.data.chapterScribe,
+            statusChapterScribe: res1.data.statusChapterScribe,
+            dateSignedChapterScribe: new Date(res1.data.dateSignedChapterScribe)
+              .toISOString()
+              .split("T")[0],
+
+            chapterAdvisor: res1.data.chapterAdvisor,
+            statusChapterAdvisor: res1.data.statusChapterAdvisor,
+            dateSignedChapterAdvisor: new Date(
+              res1.data.dateSignedChapterAdvisor
+            )
+              .toISOString()
+              .split("T")[0],
+            advisoryCouncilChairman: res1.data.advisoryCouncilChairman,
+            statusAdvisoryCouncilChairman:
+              res1.data.statusAdvisoryCouncilChairman,
+            dateSignedAdvisoryCouncilChairman: new Date(
+              res1.data.dateSignedAdvisoryCouncilChairman
+            )
+              .toISOString()
+              .split("T")[0],
           };
 
           navigate("/turnovertf1", {
@@ -153,6 +194,7 @@ function TurnoverDashboard1() {
               chapterData: chapterData,
               turnoverID: turnoverData.turnoverStatusID,
               formData: form1Data,
+              approved: turnoverData.form1Approved,
             },
           });
         });
@@ -176,6 +218,30 @@ function TurnoverDashboard1() {
         totalGains: 0,
         totalLoss: 0,
         totalNetMembers: 0,
+
+        reportedBy: userData.name,
+        position: userData.position,
+
+        bankID: "",
+        cashInBank: 0,
+        accountsReceivable: 0,
+        accountsPayable: 0,
+
+        masterCouncilor: "",
+        statusMasterCouncilor: "Pending",
+        dateSignedMasterCouncilor: new Date(),
+
+        chapterScribe: userData.userID,
+        statusChapterScribe: "Pending",
+        dateSignedChapterScribe: new Date(),
+
+        chapterAdvisor: "",
+        statusChapterAdvisor: "Pending",
+        dateSignedChapterAdvisor: new Date(),
+
+        advisoryCouncilChairman: "",
+        statusAdvisoryCouncilChairman: "Pending",
+        dateSignedAdvisoryCouncilChairman: new Date(),
       };
 
       axios.post(`http://localhost:5000/newTF`, newForm1).then((res) => {
@@ -194,6 +260,7 @@ function TurnoverDashboard1() {
             chapterData: chapterData,
             turnoverID: turnoverData.turnoverStatusID,
             formData: res.data,
+            approved: turnoverData.form1Approved,
           },
         });
       });
@@ -201,14 +268,279 @@ function TurnoverDashboard1() {
   };
 
   const handleForm15Click = () => {
-    navigate("/turnoverno1", {
-      state: {
-        userData: userData,
-        chapterData: chapterData,
-        turnoverID: turnoverData.turnoverStatusID,
-        form15ID: turnoverData.form15ID,
-      },
-    });
+    if (turnoverData.form15ID !== "") {
+      console.log("EXISTING FORM 15: ", turnoverData.form15ID);
+      axios
+        .get(`http://localhost:5000/getForm15/${turnoverData.form15ID}`)
+        .then((res1) => {
+          const form15Data = {
+            form15ID: turnoverData.form15ID,
+            term: res1.data.term,
+            year: res1.data.year,
+            electDate: new Date(res1.data.electDate)
+              .toISOString()
+              .split("T")[0],
+            installDate: new Date(res1.data.installDate)
+              .toISOString()
+              .split("T")[0],
+            officers: res1.data.officers,
+
+            advisoryCouncilChairman: res1.data.advisoryCouncilChairman,
+            statusAdvisoryCouncilChairman:
+              res1.data.statusAdvisoryCouncilChairman,
+            dateSignedAdvisoryCouncilChairman: new Date(
+              res1.data.dateSignedAdvisoryCouncilChairman
+            )
+              .toISOString()
+              .split("T")[0],
+
+            chapterAdvisor: res1.data.chapterAdvisor,
+            statusChapterAdvisor: res1.data.statusChapterAdvisor,
+            dateSignedChapterAdvisor: new Date(
+              res1.data.dateSignedChapterAdvisor
+            )
+              .toISOString()
+              .split("T")[0],
+          };
+
+          navigate("/turnoverno1", {
+            state: {
+              userData: userData,
+              chapterData: chapterData,
+              turnoverID: turnoverData.turnoverStatusID,
+              formData: form15Data,
+              approved: turnoverData.form15Approved,
+            },
+          });
+        });
+    } else {
+      console.log("NO EXISTING NEW OFFICERS REPORT");
+      // mock data
+      const newForm15 = {
+        chapterID: userData.chapterID,
+        term: "A",
+        year: "2022",
+        electDate: new Date(),
+        installDate: new Date(),
+        officers: [],
+        advisoryCouncilChairman: "",
+        statusAdvisoryCouncilChairman: "Pending",
+        dateSignedAdvisoryCouncilChairman: new Date(),
+
+        chapterAdvisor: "",
+        statusChapterAdvisor: "Pending",
+        dateSignedChapterAdvisor: new Date(),
+      };
+
+      axios.post(`http://localhost:5000/newF15`, newForm15).then((res) => {
+        const turnoverUpdate = {
+          chapterID: userData.chapterID,
+          termID: chapterData.currentTerm,
+          fieldToUpdate: "form15ID",
+          updateValue: res.data._id,
+        };
+
+        axios.post("http://localhost:5000/updateTurnover", turnoverUpdate);
+
+        navigate("/turnoverno1", {
+          state: {
+            userData: userData,
+            chapterData: chapterData,
+            turnoverID: turnoverData.turnoverStatusID,
+            formData: res.data,
+            approved: turnoverData.form15Approved,
+          },
+        });
+      });
+    }
+  };
+
+  const handleAssetClick = () => {
+    if (turnoverData.assetsID !== "") {
+      console.log("EXISTING ASSETS REPORT: ", turnoverData.assetsID);
+      axios
+        .get(`http://localhost:5000/getAR/${turnoverData.assetsID}`)
+        .then((res1) => {
+          const arData = {
+            assetsID: turnoverData.assetsID,
+            year: res1.data.year,
+            term: res1.data.term,
+            senBook: res1.data.senBook,
+            crown: res1.data.crown,
+            blackRobes: res1.data.blackRobes,
+            whiteRobes: res1.data.whiteRobes,
+            altarCloth: res1.data.altarCloth,
+            bible: res1.data.bible,
+            candleStands: res1.data.candleStands,
+            candleLights: res1.data.candleLights,
+            banner: res1.data.banner,
+            charterLT: res1.data.charterLT,
+            ballotBox: res1.data.ballotBox,
+            scribeNotebook: res1.data.scribeNotebook,
+            treasNotebook: res1.data.treasNotebook,
+
+            advisoryCouncilChairman: res1.data.advisoryCouncilChairman,
+            statusAdvisoryCouncilChairman:
+              res1.data.statusAdvisoryCouncilChairman,
+            dateSignedAdvisoryCouncilChairman: new Date(
+              res1.data.dateSignedAdvisoryCouncilChairman
+            )
+              .toISOString()
+              .split("T")[0],
+
+            chapterAdvisor: res1.data.chapterAdvisor,
+            statusChapterAdvisor: res1.data.statusChapterAdvisor,
+            dateSignedChapterAdvisor: new Date(
+              res1.data.dateSignedChapterAdvisor
+            )
+              .toISOString()
+              .split("T")[0],
+          };
+
+          navigate("/turnoverhr1", {
+            state: {
+              userData: userData,
+              chapterData: chapterData,
+              turnoverID: turnoverData.turnoverStatusID,
+              formData: arData,
+              approved: turnoverData.assetsApproved,
+            },
+          });
+        });
+    } else {
+      console.log("NO EXISTING NEW OFFICERS REPORT");
+      // mock data
+      const newAR = {
+        chapterID: userData.chapterID,
+        term: "A",
+        year: "2022",
+        senBook: 1,
+        crown: 1,
+        blackRobes: 19,
+        whiteRobes: 4,
+        altarCloth: 1,
+        bible: 2,
+        candleStands: 7,
+        candleLights: 7,
+        banner: 1,
+        charterLT: 1,
+        ballotBox: 2,
+        scribeNotebook: 1,
+        treasNotebook: 0,
+
+        advisoryCouncilChairman: "",
+        statusAdvisoryCouncilChairman: "Pending",
+        dateSignedAdvisoryCouncilChairman: new Date(),
+
+        chapterAdvisor: "",
+        statusChapterAdvisor: "Pending",
+        dateSignedChapterAdvisor: new Date(),
+      };
+
+      axios.post(`http://localhost:5000/newAR`, newAR).then((res) => {
+        const turnoverUpdate = {
+          chapterID: userData.chapterID,
+          termID: chapterData.currentTerm,
+          fieldToUpdate: "assetsID",
+          updateValue: res.data._id,
+        };
+
+        axios.post("http://localhost:5000/updateTurnover", turnoverUpdate);
+
+        navigate("/turnoverhr1", {
+          state: {
+            userData: userData,
+            chapterData: chapterData,
+            turnoverID: turnoverData.turnoverStatusID,
+            formData: res.data,
+            approved: turnoverData.assetsApproved,
+          },
+        });
+      });
+    }
+  };
+
+  const handleCAClick = () => {
+    if (turnoverData.advisoryID !== "") {
+      console.log("EXISTING ADVISORY REPORT: ", turnoverData.advisoryID);
+      axios
+        .get(`http://localhost:5000/getAdvisory/${turnoverData.advisoryID}`)
+        .then((res1) => {
+          const advisoryData = {
+            term: res1.data.term,
+            year: res1.data.year,
+
+            chairID: res1.data.chairID,
+            chairEmail: res1.data.chairEmail,
+            chairAddress: res1.data.chairAddress,
+            chairPhone: res1.data.chairPhone,
+            chairIsReAppt: res1.data.chairIsReAppt,
+            chairYears: res1.data.chairYears,
+
+            caID: res1.data.caID,
+            caEmail: res1.data.caEmail,
+            caAddress: res1.data.caAddress,
+            caPhone: res1.data.caPhone,
+            caIsReAppt: res1.data.caIsReAppt,
+            caYears: res1.data.caYears,
+          };
+
+          navigate("/turnoverca1", {
+            state: {
+              userData: userData,
+              chapterData: chapterData,
+              turnoverID: turnoverData.turnoverStatusID,
+              formData: advisoryData,
+              advisoryID: turnoverData.advisoryID,
+            },
+          });
+        });
+    } else {
+      console.log("NO EXISTING REPORT");
+      // mock data
+      const newAdvisory = {
+        chapterID: userData.chapterID,
+        term: "A",
+        year: "2022",
+
+        chairID: "",
+        chairEmail: "",
+        chairAddress: "",
+        chairPhone: "",
+        chairIsReAppt: false,
+        chairYears: 0,
+
+        caID: "",
+        caEmail: "",
+        caAddress: "",
+        caPhone: "",
+        caIsReAppt: false,
+        caYears: 0,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAdvisory`, newAdvisory)
+        .then((res) => {
+          const turnoverUpdate = {
+            chapterID: userData.chapterID,
+            termID: chapterData.currentTerm,
+            fieldToUpdate: "advisoryID",
+            updateValue: res.data._id,
+          };
+
+          axios.post("http://localhost:5000/updateTurnover", turnoverUpdate);
+
+          navigate("/turnoverca1", {
+            state: {
+              userData: userData,
+              chapterData: chapterData,
+              turnoverID: turnoverData.turnoverStatusID,
+              formData: res.data,
+              advisoryID: res.data._id,
+            },
+          });
+        });
+    }
   };
 
   return (
@@ -222,7 +554,8 @@ function TurnoverDashboard1() {
           <div className="row align-items-center mt-3 text-center">
             <h3>{userData.name}</h3>
             <p>
-              {userData.position}, {chapterData.name}
+              {userData.position}, <br />
+              {chapterData.name}
             </p>
             <hr />
           </div>
@@ -291,49 +624,134 @@ function TurnoverDashboard1() {
             <div id="tab1" className="tab-content active">
               <div className="boxContainer">
                 <div className="boxRow">
-                  <div className="box">
-                    <h4>Certificate of Complete Turnover</h4>
-                    <p>Form/Report Desc</p>
-                    <input type="checkbox" />
-                    <button className="fill-btn"> FILL IN </button>
-                  </div>
                   {/*turnoverData.form1ID && ()*/}
                   <div className="box">
                     <h4>Term and Financial Report</h4>
-                    <p>Form/Report Desc</p>
-                    <input type="checkbox" />
                     <button className="fill-btn" onClick={handleForm1Click}>
-                      {" "}
-                      FILL IN
+                      {turnoverData.form1ID === "" || null
+                        ? "CREATE"
+                        : turnoverData.form1Approved
+                        ? "REVIEW"
+                        : "EDIT"}
                     </button>
+                    <br />
+
+                    {turnoverData.form1Approved ? (
+                      <span className="badge text-bg-success mt-3">
+                        Approved
+                      </span>
+                    ) : turnoverData.form1ID === "" ? (
+                      <span className="badge text-bg-secondary mt-3">
+                        No Report Yet
+                      </span>
+                    ) : turnoverData.form1ID !== "" &&
+                      !turnoverData.form1Approved ? (
+                      <span className="badge text-bg-warning mt-3">
+                        Pending Approval
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    {turnoverData.eoCertification && (
+                      <span className="badge text-bg-info ms-2">Certified</span>
+                    )}
+                  </div>
+                  <div className="box">
+                    <h4>New Officers Report (Form 15)</h4>
+                    <button className="fill-btn" onClick={handleForm15Click}>
+                      {turnoverData.form15ID === ""
+                        ? "CREATE"
+                        : turnoverData.form15Approved
+                        ? "REVIEW"
+                        : "EDIT"}
+                    </button>
+                    <br />
+                    {turnoverData.form15Approved ? (
+                      <span className="badge text-bg-success mt-3">
+                        Approved
+                      </span>
+                    ) : turnoverData.form15ID === "" ? (
+                      <span className="badge text-bg-secondary mt-3">
+                        No Report Yet
+                      </span>
+                    ) : turnoverData.form15ID !== "" &&
+                      !turnoverData.form15Approved ? (
+                      <span className="badge text-bg-warning mt-3">
+                        Pending Approval
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    {turnoverData.eoCertification && (
+                      <span className="badge text-bg-info ms-2">Certified</span>
+                    )}
                   </div>
                 </div>
                 <div className="boxRow">
                   {/*turnoverData.form15ID && ()*/}
-                  <div className="box">
-                    <h4>New Officers Report (Form 15)</h4>
-                    <p>Form/Report Desc</p>
-                    <input type="checkbox" />
-                    <button className="fill-btn" onClick={handleForm15Click}>
-                      {" "}
-                      FILL IN
-                    </button>
-                  </div>
 
                   <div className="box">
                     <h4>
-                      Report on Historical Records, Official Files and Assets,
-                      and Properties
+                      Report on Historical Records, Official Files, Assets, &
+                      Properties
                     </h4>
-                    <p>Form/Report Desc</p>
-                    <input type="checkbox" />
-                    <button className="fill-btn"> FILL IN</button>
+                    <button className="fill-btn" onClick={handleAssetClick}>
+                      {turnoverData.assetsID === ""
+                        ? "CREATE"
+                        : turnoverData.assetsApproved
+                        ? "REVIEW"
+                        : "EDIT"}
+                    </button>
+                    <br />
+                    {turnoverData.assetsApproved ? (
+                      <span className="badge text-bg-success mt-3">
+                        Approved
+                      </span>
+                    ) : turnoverData.assetsID === "" ? (
+                      <span className="badge text-bg-secondary mt-3">
+                        No Report Yet
+                      </span>
+                    ) : turnoverData.assetsID !== "" &&
+                      !turnoverData.assetsApproved ? (
+                      <span className="badge text-bg-warning mt-3">
+                        Pending Approval
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    {turnoverData.eoCertification && (
+                      <span className="badge text-bg-info ms-2">Certified</span>
+                    )}
                   </div>
                   <div className="box">
                     <h4>Certification of Advisory Council Members</h4>
-                    <p>Form/Report Desc</p>
-                    <input type="checkbox" />
-                    <button className="fill-btn"> FILL IN</button>
+                    <button className="fill-btn mt-4" onClick={handleCAClick}>
+                      {turnoverData.advisoryID === ""
+                        ? "CREATE"
+                        : turnoverData.advisoryApproved
+                        ? "REVIEW"
+                        : "EDIT"}
+                    </button>
+                    <br />
+                    {turnoverData.advisoryApproved ? (
+                      <span className="badge text-bg-success mt-3">
+                        Approved
+                      </span>
+                    ) : turnoverData.advisoryID === "" ? (
+                      <span className="badge text-bg-secondary mt-3">
+                        No Report Yet
+                      </span>
+                    ) : turnoverData.advisoryID !== "" &&
+                      !turnoverData.advisoryApproved ? (
+                      <span className="badge text-bg-warning mt-3">
+                        Pending Approval
+                      </span>
+                    ) : (
+                      <span />
+                    )}
+                    {turnoverData.eoCertification && (
+                      <span className="badge text-bg-info ms-2">Certified</span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -352,7 +770,7 @@ function TurnoverDashboard1() {
             </div>
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button 
 
           <div className="d-flex justify-content-center">
             <Link to="">
@@ -365,7 +783,7 @@ function TurnoverDashboard1() {
                 SUBMIT
               </button>
             </Link>
-          </div>
+          </div>*/}
         </div>
       </div>
     </div>

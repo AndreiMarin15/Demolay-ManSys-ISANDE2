@@ -10,12 +10,11 @@ function TurnoverNO2() {
   const navigate = useNavigate();
   const prevPageProps = location.state;
 
-  const initialOfficers = prevPageProps?.formData?.officers || [];
-  const initialFormData = prevPageProps?.formData || {};
-
   const [members, setMembers] = useState([]);
-  const [officers, setOfficers] = useState(initialOfficers);
-  const [formData, setFormData] = useState(initialFormData);
+  const [officers, setOfficers] = useState(
+    prevPageProps?.formData?.officers || []
+  );
+  const [formData, setFormData] = useState(prevPageProps?.formData ?? {});
 
   // Fetch organization members' names from the MongoDB database on component mount
   useEffect(() => {
@@ -55,6 +54,15 @@ function TurnoverNO2() {
     "Sentinel",
     "Organist",
   ];
+
+  const marshalIndex = officerPositions.findIndex(
+    (position) => position === "Marshal"
+  );
+  const firstColumnPositions = officerPositions.slice(0, 6);
+  const secondColumnPositions = officerPositions.slice(6, 12);
+  const thirdColumnPositions = officerPositions.slice(12, 18);
+  const fourthColumnPositions = officerPositions.slice(18);
+
   const getSelectedMemberId = (position) => {
     const officer = officers.find((officer) => officer.position === position);
     return officer ? officer.memberId : "";
@@ -94,19 +102,13 @@ function TurnoverNO2() {
 
     // Update the state with the modified officers array
     setOfficers(updatedOfficers);
-    setFormData({
-      ...formData,
-      officers: officers,
-    });
   };
 
   const handleNextButtonClick = () => {
     navigate("/turnoverno4", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form15ID: prevPageProps.form15ID,
-        formData: formData,
+        ...prevPageProps,
+        formData: { ...formData, officers: officers },
       },
     });
   };
@@ -114,10 +116,8 @@ function TurnoverNO2() {
   const handleBackButtonClick = () => {
     navigate("/turnoverno1", {
       state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        form15ID: prevPageProps.form15ID,
-        formData: formData,
+        ...prevPageProps,
+        formData: { ...formData, officers: officers },
       },
     });
   };
@@ -150,23 +150,106 @@ function TurnoverNO2() {
 
       <br />
 
-      <div>
-        {officerPositions.map((position) => (
-          <div key={position}>
-            <label>{position}:</label>
-            <select
-              value={getSelectedMemberId(position) || ""}
-              onChange={(e) => handleDropdownChange(e.target.value, position)}
-            >
-              <option value="">Select {position}</option>
-              {members.map((member) => (
-                <option key={member.memberId} value={member.memberId}>
-                  {member.name}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
+      <div className="d-flex justify-content-between">
+        {/* First column */}
+        <div>
+          {firstColumnPositions.map((position) => (
+            <div key={position} className="mb-4">
+              <label htmlFor={position} className="col-form-label">
+                {position}:
+              </label>
+              <select
+                className="form-select"
+                id={position}
+                value={getSelectedMemberId(position) || ""}
+                onChange={(e) => handleDropdownChange(e.target.value, position)}
+                disabled={prevPageProps.userData.position !== "Scribe"}
+              >
+                <option value="">Select {position}</option>
+                {members.map((member) => (
+                  <option key={member.memberId} value={member.memberId}>
+                    {member.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
+
+        {/* Second column */}
+        <div>
+          {secondColumnPositions.map((position) => (
+            <div key={position} className="mb-4">
+              <label htmlFor={position} className="col-form-label">
+                {position}:
+              </label>
+              <select
+                className="form-select"
+                id={position}
+                value={getSelectedMemberId(position) || ""}
+                onChange={(e) => handleDropdownChange(e.target.value, position)}
+                disabled={prevPageProps.userData.position !== "Scribe"}
+              >
+                <option value="">Select {position}</option>
+                {members.map((member) => (
+                  <option key={member.memberId} value={member.memberId}>
+                    {member.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
+
+        {/* Third column */}
+        <div>
+          {thirdColumnPositions.map((position) => (
+            <div key={position} className="mb-4">
+              <label htmlFor={position} className="col-form-label">
+                {position}:
+              </label>
+              <select
+                className="form-select"
+                id={position}
+                value={getSelectedMemberId(position) || ""}
+                onChange={(e) => handleDropdownChange(e.target.value, position)}
+                disabled={prevPageProps.userData.position !== "Scribe"}
+              >
+                <option value="">Select {position}</option>
+                {members.map((member) => (
+                  <option key={member.memberId} value={member.memberId}>
+                    {member.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
+
+        {/* Fourth column */}
+        <div>
+          {fourthColumnPositions.map((position) => (
+            <div key={position} className="mb-4">
+              <label htmlFor={position} className="col-form-label">
+                {position}:
+              </label>
+              <select
+                className="form-select"
+                id={position}
+                value={getSelectedMemberId(position) || ""}
+                onChange={(e) => handleDropdownChange(e.target.value, position)}
+                disabled={prevPageProps.userData.position !== "Scribe"}
+              >
+                <option value="">Select {position}</option>
+                {members.map((member) => (
+                  <option key={member.memberId} value={member.memberId}>
+                    {member.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="d-flex justify-content-between mt-4">
