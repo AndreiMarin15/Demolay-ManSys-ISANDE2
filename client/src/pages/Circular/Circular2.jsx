@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function Circular2() {
-	const {circularId } = useParams();
+	const { circularId } = useParams();
 	const [circularDetails, setDetails] = useState({
 		subject: "",
 		circularText: "",
@@ -67,7 +67,7 @@ function Circular2() {
 			if (e.target.checked) {
 				setDetails((prev) => ({
 					...prev,
-					disseminateTo: options.members,
+					disseminateTo: options.executiveOfficers,
 				}));
 			}
 		}
@@ -357,10 +357,11 @@ function Circular2() {
 														<input
 															class="form-check-input"
 															type="checkbox"
-															id="checkbox1"
+															id="executiveOfficers"
 															checked={checkBoxTicks.executiveOfficers}
+															onChange={onTickEO}
 														/>
-														<label class="form-check-label" for="checkbox1" onChange={onTickEO}>
+														<label class="form-check-label" for="checkbox1">
 															Executive Officers
 														</label>
 													</div>
@@ -370,7 +371,7 @@ function Circular2() {
 														<input
 															class="form-check-input"
 															type="checkbox"
-															id="checkbox2"
+															id="advisoryCouncil"
 															onChange={onTickAdvisory}
 															checked={checkBoxTicks.advisoryCouncil}
 														/>
@@ -384,7 +385,7 @@ function Circular2() {
 														<input
 															class="form-check-input"
 															type="checkbox"
-															id="checkbox3"
+															id="chapterOfficers"
 															onChange={onTickOfficers}
 															checked={checkBoxTicks.chapterOfficers}
 														/>
@@ -398,7 +399,7 @@ function Circular2() {
 														<input
 															class="form-check-input"
 															type="checkbox"
-															id="checkbox4"
+															id="members"
 															onChange={onTickMembers}
 															checked={checkBoxTicks.members}
 														/>
