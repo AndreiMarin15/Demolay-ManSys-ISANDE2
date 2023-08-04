@@ -37,17 +37,17 @@ function CSCircular() {
 
 			setUser(user.data);
 			setChapter(chapter.data);
-      setCirculars({
-        circulars: circs.data
-      })
-      console.log(circs.data)
-      console.log(user.data._id)
+			setCirculars({
+				circulars: circs.data,
+			});
+			console.log(circs.data);
+			console.log(user.data._id);
 		};
 
 		fetchData();
 	}, []);
 
-  const handleCircularClick = (circular) => {
+	const handleCircularClick = (circular) => {
 		window.location.href = `/cscircular2/${user._id}/${circular._id}`;
 	};
 	return (
@@ -88,14 +88,28 @@ function CSCircular() {
 							Circulars
 						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/csappinprogress/${scribeId}`}}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/csappinprogress/${scribeId}`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 							</span>
 							For Review
 						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/csapp1/${scribeId}`}}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/csapp1/${scribeId}`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 							</span>
@@ -198,7 +212,6 @@ function CSCircular() {
 									);
 								})}
 								{/*ONE ROW ENDS HERE */}
-								
 							</div>
 						</div>
 					</div>
