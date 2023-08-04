@@ -39,7 +39,7 @@ function TurnoverDashboard1() {
   const navigate = useNavigate();
   const location = useLocation();
   const prevPageProps = location.state;
-  const {officerId} = useParams()
+  const { officerId } = useParams();
 
   //sample init data
   const [userData, setUserData] = useState({
@@ -65,12 +65,9 @@ function TurnoverDashboard1() {
     eoCertification: false,
   });
 
-
-
   useEffect(() => {
     async function getTurnoverReports() {
       axios.get("http://localhost:5000/getCurrentUser").then(async (res) => {
-        
         if (res.data.accountType === 0) {
           setUserData({
             ...userData,
@@ -87,8 +84,6 @@ function TurnoverDashboard1() {
             chapterID: res.data.chapterAssigned,
           });
         }
-
-      
 
         axios
           .get(
@@ -439,7 +434,14 @@ function TurnoverDashboard1() {
             </div>
           </div>
           <div className="text-start" style={{ marginLeft: "100px" }}>
-            <button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href =`/eocircular/${userData.userID}`}}>
+            <button
+              className="btn-text"
+              type="button"
+              style={{ border: "0" }}
+              onClick={() => {
+                window.location.href = `/eocircular/${userData.userID}`;
+              }}
+            >
               <span>
                 <FontAwesomeIcon
                   icon={faBullhorn}
@@ -449,23 +451,27 @@ function TurnoverDashboard1() {
               Circulars
             </button>
             <br />
-            <button
-              className="btn-text"
-              type="button"
-              style={{ border: "0" }}
-              onClick={() => {
-                window.location.href = `/eoapp1/${userData.userID}`;
-              }}
-            >
-              <span>
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  style={{ marginRight: "8px" }}
-                />
-              </span>
-              For Review
-            </button>
-            <br />
+            {userData.position === "Executive Officer" && (
+              <>
+                <button
+                  className="btn-text"
+                  type="button"
+                  style={{ border: "0" }}
+                  onClick={() => {
+                    window.location.href = `/eoapp1/${userData.userID}`;
+                  }}
+                >
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      style={{ marginRight: "8px" }}
+                    />
+                  </span>
+                  For Review
+                </button>
+                <br />
+              </>
+            )}
             <button className="btn-text" type="button" style={{ border: "0" }}>
               <span>
                 <FontAwesomeIcon

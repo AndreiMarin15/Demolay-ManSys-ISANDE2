@@ -10,8 +10,8 @@ const Navbar = () => {
       <PrimaryNav>
         <Hamburger />
         <Menu>
-          <MenuLink to="/" activeStyle>
-            Home
+          <MenuLink to="/appform1" activeStyle>
+            Apply Now
           </MenuLink>
           <MenuLink to="https://demolay.ph/what-is-demolay/" activeStyle>
             About DeMolay
