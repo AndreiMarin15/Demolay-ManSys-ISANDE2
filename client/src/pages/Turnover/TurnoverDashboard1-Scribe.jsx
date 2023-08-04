@@ -40,12 +40,14 @@ function TurnoverDashboard1() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  // sample init data
   const [userData, setUserData] = useState({
-    userID: "0118-27061",
-    name: "Philip Tolentino",
+    userID: prevPageProps.scribeID || "0118-27061",
+    name:
+      prevPageProps.userData.givenName +
+        " " +
+        prevPageProps.userData.lastName || "Philip Tolentino",
     position: "Scribe",
-    chapterID: "1",
+    chapterID: prevPageProps.userData.chapterId || "1",
   });
 
   const [chapterData, setChapterData] = useState({});
@@ -64,9 +66,6 @@ function TurnoverDashboard1() {
   });
 
   useEffect(() => {
-    {
-      /* Add fetch userData for current user from members and return id, name, position, chapter */
-    }
     async function getTurnoverReports() {
       axios
         .get(`http://localhost:5000/getChapterByID/${userData.chapterID}`)
@@ -112,8 +111,6 @@ function TurnoverDashboard1() {
     }
 
     getTurnoverReports();
-
-    console.log(turnoverData);
 
     document.getElementById("tab1").style.display = "block";
   }, []);
@@ -207,8 +204,8 @@ function TurnoverDashboard1() {
       // mock data
       const newForm1 = {
         chapterID: userData.chapterID,
-        term: "A",
-        year: "2022",
+        term: "B",
+        year: "2023",
         startTerm: new Date(),
         endTerm: new Date(),
         totalMembers: 30,
@@ -322,8 +319,8 @@ function TurnoverDashboard1() {
       // mock data
       const newForm15 = {
         chapterID: userData.chapterID,
-        term: "A",
-        year: "2022",
+        term: "B",
+        year: "2023",
         electDate: new Date(),
         installDate: new Date(),
         officers: [],
@@ -416,8 +413,8 @@ function TurnoverDashboard1() {
       // mock data
       const newAR = {
         chapterID: userData.chapterID,
-        term: "A",
-        year: "2022",
+        term: "B",
+        year: "2023",
         senBook: 1,
         crown: 1,
         blackRobes: 19,
@@ -504,8 +501,8 @@ function TurnoverDashboard1() {
       // mock data
       const newAdvisory = {
         chapterID: userData.chapterID,
-        term: "A",
-        year: "2022",
+        term: "B",
+        year: "2023",
 
         chairID: "",
         chairEmail: "",
@@ -577,7 +574,14 @@ function TurnoverDashboard1() {
             </div>
           </div>
           <div className="text-start" style={{ marginLeft: "100px" }}>
-            <button className="btn-text" type="button" style={{ border: "0" }}>
+            <button
+              className="btn-text"
+              type="button"
+              style={{ border: "0" }}
+              onClick={() => {
+                window.location.href = `/cscircular/${prevPageProps.scribeID}`;
+              }}
+            >
               <span>
                 <FontAwesomeIcon
                   icon={faBullhorn}
@@ -587,7 +591,14 @@ function TurnoverDashboard1() {
               Circulars
             </button>
             <br />
-            <button className="btn-text" type="button" style={{ border: "0" }}>
+            <button
+              className="btn-text"
+              type="button"
+              style={{ border: "0" }}
+              onClick={() => {
+                window.location.href = `/csappinprogress/${prevPageProps.scribeID}`;
+              }}
+            >
               <span>
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
@@ -597,6 +608,23 @@ function TurnoverDashboard1() {
               For Review
             </button>
             <br />
+            <button
+              className="btn-text"
+              type="button"
+              style={{ border: "0" }}
+              onClick={() => {
+                window.location.href = `/csapp1/${prevPageProps.scribeID}`;
+              }}
+            >
+              <span>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
+              Approve Membership
+            </button>
+            <br />
             <button className="btn-text" type="button" style={{ border: "0" }}>
               <span>
                 <FontAwesomeIcon
@@ -604,27 +632,28 @@ function TurnoverDashboard1() {
                   style={{ marginRight: "8px" }}
                 />
               </span>
-              Reports
+              Forms and Reports
             </button>
             <br />
-            <button className="btn-text" type="button" style={{ border: "0" }}>
+            <button
+              className="btn-text"
+              type="button"
+              style={{ border: "0" }}
+              onClick={() => {
+                navigate("/mychapter", {
+                  state: {
+                    ...prevPageProps,
+                  },
+                });
+              }}
+            >
               <span>
                 <FontAwesomeIcon
                   icon={faAddressBook}
                   style={{ marginRight: "8px" }}
                 />
               </span>
-              Directory
-            </button>
-            <br />
-            <button className="btn-text" type="button" style={{ border: "0" }}>
-              <span>
-                <FontAwesomeIcon
-                  icon={faAddressCard}
-                  style={{ marginRight: "8px" }}
-                />
-              </span>
-              Chapter Profile
+              Chapter Directory
             </button>
           </div>
         </div>

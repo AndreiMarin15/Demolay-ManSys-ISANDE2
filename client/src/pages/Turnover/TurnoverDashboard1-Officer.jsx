@@ -42,11 +42,11 @@ function TurnoverDashboard1() {
 
   //sample init data
   const [userData, setUserData] = useState({
-    userID: "20234009",
+    userID: "",
     name: "Andrei Marin",
-    position: "Executive Officer",
+    position: "Chapter Advisor",
     chapterID: "1",
-    region: "Region NCR-A",
+    region: "Region NCR-B",
   });
 
   const [chapterData, setChapterData] = useState({});
@@ -65,50 +65,68 @@ function TurnoverDashboard1() {
   });
 
   useEffect(() => {
-    {
-      /* Add fetch userData for current user from advisors/execOfficer and return id, name, position, chapter */
-    }
     async function getTurnoverReports() {
-      axios
-        .get(`http://localhost:5000/getChapterByID/${userData.chapterID}`)
-        .then(async (res1) => {
-          setChapterData(res1.data);
+      axios.get("http://localhost:5000/getCurrentUser").then(async (res) => {
+        if (res.data.accountType === 0) {
+          setUserData({
+            ...userData,
+            userID: res.data._id,
+            name: res.data.givenName + " " + res.data.lastName,
+            chapterID: res.data.chapterAssigned,
+            position: "Executive Officer",
+          });
+        } else {
+          setUserData({
+            ...userData,
+            userID: res.data._id,
+            name: res.data.givenName + " " + res.data.lastName,
+            chapterID: res.data.chapterAssigned,
+          });
+        }
 
-          const res2 = await axios.get(
-            `http://localhost:5000/getTurnoverReports/${userData.chapterID}/${res1.data.currentTerm}`
-          );
-          if (res2.data !== "") {
-            console.log("TURNOVER REPORTS EXISTS: ", res2.data);
-            setTurnoverData({
-              turnoverStatusID: res2.data._id,
-              form1ID: res2.data.form1ID,
-              form1Approved: res2.data.form1Approved,
-              form15ID: res2.data.form15ID,
-              form15Approved: res2.data.form15Approved,
-              assetsID: res2.data.assetsID,
-              assetsApproved: res2.data.assetsApproved,
-              advisoryID: res2.data.advisoryID,
-              advisoryApproved: res2.data.advisoryApproved,
-              eoCertification: res2.data.eoCertification,
-            });
-          } else {
-            console.log(
-              `NO EXISTING TURNOVER REPORTS FOR TERM ${res1.data.currentTerm}: `,
-              res2.data
+        axios
+          .get(
+            `http://localhost:5000/getChapterByID/${res.data.chapterAssigned}`
+          )
+          .then(async (res1) => {
+            setChapterData(res1.data);
+
+            const res2 = await axios.get(
+              `http://localhost:5000/getTurnoverReports/${res.data.chapterAssigned}/${res1.data.currentTerm}`
             );
-            const newTurnover = {
-              chapterID: userData.chapterID,
-              termID: res1.data.currentTerm,
-            };
-            axios
-              .post(`http://localhost:5000/newTurnover`, newTurnover)
-              .then((res3) => {
-                setTurnoverData({
-                  turnoverStatusID: res3.data._id,
-                });
+            if (res2.data !== "") {
+              console.log("TURNOVER REPORTS EXISTS: ", res2.data);
+              setTurnoverData({
+                turnoverStatusID: res2.data._id,
+                form1ID: res2.data.form1ID,
+                form1Approved: res2.data.form1Approved,
+                form15ID: res2.data.form15ID,
+                form15Approved: res2.data.form15Approved,
+                assetsID: res2.data.assetsID,
+                assetsApproved: res2.data.assetsApproved,
+                advisoryID: res2.data.advisoryID,
+                advisoryApproved: res2.data.advisoryApproved,
+                eoCertification: res2.data.eoCertification,
               });
-          }
-        });
+            } else {
+              console.log(
+                `NO EXISTING TURNOVER REPORTS FOR TERM ${res1.data.currentTerm}: `,
+                res2.data
+              );
+              const newTurnover = {
+                chapterID: userData.chapterID,
+                termID: res1.data.currentTerm,
+              };
+              axios
+                .post(`http://localhost:5000/newTurnover`, newTurnover)
+                .then((res3) => {
+                  setTurnoverData({
+                    turnoverStatusID: res3.data._id,
+                  });
+                });
+            }
+          });
+      });
     }
 
     getTurnoverReports();
@@ -425,7 +443,14 @@ function TurnoverDashboard1() {
               Circulars
             </button>
             <br />
-            <button className="btn-text" type="button" style={{ border: "0" }}>
+            <button
+              className="btn-text"
+              type="button"
+              style={{ border: "0" }}
+              onClick={() => {
+                window.location.href = `/eoapp1/${userData.userID}`;
+              }}
+            >
               <span>
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
@@ -442,28 +467,31 @@ function TurnoverDashboard1() {
                   style={{ marginRight: "8px" }}
                 />
               </span>
-              Reports
+              Forms and Reports
             </button>
             <br />
-            <button className="btn-text" type="button" style={{ border: "0" }}>
-              <span>
-                <FontAwesomeIcon
-                  icon={faAddressBook}
-                  style={{ marginRight: "8px" }}
-                />
-              </span>
-              Directory
-            </button>
-            <br />
-            <button className="btn-text" type="button" style={{ border: "0" }}>
-              <span>
-                <FontAwesomeIcon
-                  icon={faAddressCard}
-                  style={{ marginRight: "8px" }}
-                />
-              </span>
-              Chapter Profile
-            </button>
+            {userData.position !== "Executive Officer" && (
+              <button
+                className="btn-text"
+                type="button"
+                style={{ border: "0" }}
+                onClick={() => {
+                  navigate("/mychapter", {
+                    state: {
+                      chapterData: chapterData,
+                    },
+                  });
+                }}
+              >
+                <span>
+                  <FontAwesomeIcon
+                    icon={faAddressCard}
+                    style={{ marginRight: "8px" }}
+                  />
+                </span>
+                Chapter Directory
+              </button>
+            )}
           </div>
         </div>
 

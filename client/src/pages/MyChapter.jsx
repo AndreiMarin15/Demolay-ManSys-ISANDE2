@@ -1,8 +1,13 @@
 import "../styles/base.css";
 import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function MyChapter() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const prevPageProps = location.state;
+
   const [activeTab, setActiveTab] = useState("members");
   const [searchText, setSearchText] = useState("");
 
@@ -206,7 +211,7 @@ export default function MyChapter() {
     <>
       <div className="container">
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h1> [My Chapter] </h1>
+          <h1> {prevPageProps.chapterData.name} </h1>
         </div>
 
         <hr />
