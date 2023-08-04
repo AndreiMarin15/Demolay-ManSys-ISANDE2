@@ -464,6 +464,12 @@ const controller = {
       res.send(result);
     });
   },
+
+  getAllChapters: async (req, res) => {
+    db.findMany(Chapters, {}, {}, (result) => {
+      res.send(result);
+    });
+  },
 };
 
 module.exports = controller;

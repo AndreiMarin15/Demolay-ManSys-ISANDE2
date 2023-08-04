@@ -21,7 +21,7 @@ function TurnoverNO2() {
     console.log(prevPageProps);
     const fetchMembers = async () => {
       const membersData = await axios.get(
-        `http://localhost:5000/getAllMembers/1` // ${prevPageProps.userData.chapterID}
+        `http://localhost:5000/getAllMembers/${prevPageProps.userData.chapterID}` // ${prevPageProps.userData.chapterID}
       );
       setMembers(membersData.data);
     };

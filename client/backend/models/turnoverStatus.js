@@ -13,7 +13,6 @@ const turnoverStatusSchema = new Schema({
   advisoryID: String,
   advisoryApproved: Boolean,
   eoCertification: Boolean,
-  isComplete: Boolean,
 });
 
 const TurnoverStatus = mongoose.model("TurnoverStatus", turnoverStatusSchema);

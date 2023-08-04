@@ -40,7 +40,10 @@ router.post("/approveApplication", controller.approveForPetitioning);
 router.post("/rejectApplication", controller.rejectApplication);
 router.post("/updatePetition", controller.updatePetition);
 
-router.get("/retrieveInitiatedMembers/:form10Id", controller.retrieveInitiatedMembers);
+router.get(
+  "/retrieveInitiatedMembers/:form10Id",
+  controller.retrieveInitiatedMembers
+);
 router.post("/acceptForm10", controller.createAccountsForInitiatedMembers);
 
 router.post("/submitProofOfPayment", controller.submitProofOfPayment);
@@ -74,10 +77,22 @@ router.get("/getAdvisory/:id", turnoverController.getAdvisory);
 router.post("/newTurnover", turnoverController.newTurnover);
 router.post("/updateTurnover", turnoverController.updateTurnover);
 
-router.get("/getTurnoverReports/:chapterID/:currentTerm", turnoverController.getTurnoverReports);
+
+router.get(
+  "/getTurnoverReports/:chapterID/:currentTerm",
+  turnoverController.getTurnoverReports
+);
+
 router.get("/getChapterByID/:chapter", controller.getChapterByID);
-router.get("/getTurnoverReports/:chapterID/:currentTerm", turnoverController.getTurnoverReports);
+router.get(
+  "/getTurnoverReports/:chapterID/:currentTerm",
+  turnoverController.getTurnoverReports
+);
 router.get("/getForm1/:id", turnoverController.getForm1);
+
+router.get("/getAllMembers/:id", turnoverController.getAllMembers);
+router.get("/getChapters", turnoverController.getAllChapters);
+
 
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);
