@@ -20,19 +20,23 @@ import NewCircular from "./NewCircular.jsx";
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function SendCircular() {
+	const { grandmasterId } = useParams();
 	const [showPopup, setShowPopup] = useState(false);
 	const [circulars, setCirculars] = useState({
 		circulars: [],
 		refresh: 0,
 	});
+	const [grandMaster, setGrandmaster] = useState({});
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const circs = await axios.get("http://localhost:5000/getCirculars");
-
+			const gm = await axios.get("http://localhost:5000/getCurrentUser");
+			console.log(gm);
 			setCirculars({
 				circulars: circs.data,
 			});
+			setGrandmaster(gm.data);
 		};
 
 		fetchData();
@@ -71,7 +75,9 @@ function SendCircular() {
 					>
 						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
 						<div className="text-center">
-							<h5 className="name">Miguel Lim</h5>
+							<h5 className="name">
+								{grandMaster.givenName} {grandMaster.lastName}
+							</h5>
 							<small class="text-muted">Grand Master</small>
 							<hr className="hori-line" />
 						</div>
@@ -134,7 +140,7 @@ function SendCircular() {
 						</div>
 					</div>
 
-					<NewCircular showPopup={showPopup} onClosePopup={handleClosePopup} onSendClick={() => {}} />
+					<NewCircular showPopup={showPopup} releasedBy={grandMaster} onClosePopup={handleClosePopup} onSendClick={() => {}} />
 
 					<div className="row" style={{ marginTop: "10px", marginLeft: "30px" }}>
 						<div className="d-flex justify-content-end">
@@ -154,6 +160,7 @@ function SendCircular() {
 											href="#"
 											class="list-group-item list-group-item-action"
 											aria-current="true"
+											key={circular._id}
 										>
 											<div className="row" key={circular._id}>
 												<div className="col-md-1 date-time">

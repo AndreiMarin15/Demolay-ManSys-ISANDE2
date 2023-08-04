@@ -7,7 +7,7 @@ import { useState } from "react";
 import ConfirmMessage from "./ConfirmMessage.jsx"; // Import the new popup component
 import axios from "axios";
 
-const NewCircular = ({ showPopup, onSendClick, onClosePopup }) => {
+const NewCircular = ({ showPopup, releasedBy, onClosePopup }) => {
 	const [circularDetails, setDetails] = useState({
 		subject: "",
 		content: "",
@@ -54,6 +54,8 @@ const NewCircular = ({ showPopup, onSendClick, onClosePopup }) => {
 				circularText: circularDetails?.content || "",
 				dateReleased: getCurrentDate(),
 				timeReleased: getCurrentTime(),
+				releasedBy: `${releasedBy.givenName} ${releasedBy.lastName}`,
+				releasedById: `${releasedBy._id}`,
 			},
 		};
 

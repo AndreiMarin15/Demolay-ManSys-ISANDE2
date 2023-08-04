@@ -7,7 +7,7 @@ import { useState } from "react";
 import ConfirmMessage from "./ConfirmMessage.jsx"; // Import the new popup component
 import axios from "axios";
 
-const ViewCircular = ({ showPopup, circular, onClosePopup }) => {
+const ViewMessage = ({ showPopup, message, onClosePopup }) => {
 	if (!showPopup) {
 		return null;
 	}
@@ -31,19 +31,25 @@ const ViewCircular = ({ showPopup, circular, onClosePopup }) => {
 					<div className="message-popup-subject">
 						{" "}
 						<span className="text-muted">Subject: </span>
-						{circular.subject}
+						{message.subject}
 					</div>
 				</div>
 				<hr className="message-line" />
 				<div className="message-popup-body">
 					{/* Your compose message content here */}
-					<p class="text-muted" style={{ whiteSpace: "pre-wrap" }}>
-						{circular.circularText}
+					<p className="text-muted" style={{ whiteSpace: "pre-wrap" }}>
+						{message.message}
 					</p>
+
+					{message.circularLink ? <a href={message.circularLink}>View Cirular</a> : ""}
+                    <br />
+                    {message.sender ? <p className="text-muted" style={{ whiteSpace: "pre-wrap" }}>Regards,</p> : ""}
+                    {message.sender ? <p className="text-muted" style={{ whiteSpace: "pre-wrap" }}>{message.sender}</p> : ""}
+				
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default ViewCircular;
+export default ViewMessage;

@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const session = require("express-session");
-const MongoDBSession = require("connect-mongodb-session")(session);
+const MongoSessionStore = require('connect-mongodb-session')(session);
+
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ limit: "10mb", extended: true, parameterLimit: 5000
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const store = new MongoDBSession({
+const store = new MongoSessionStore({
 	uri: uri,
 	collection: "Sessions",
 });
@@ -26,10 +27,9 @@ const store = new MongoDBSession({
 app.use(
 	session({
 		secret: "database",
+		saveUninitialized: false,
 		resave: false,
-		saveUninitialized: true,
-		store: store,
-		expires: new Date(Date.now() + 864000000),
+		store: store
 	})
 );
 

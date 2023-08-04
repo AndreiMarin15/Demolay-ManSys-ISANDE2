@@ -41,16 +41,16 @@ function Login() {
 			window.location.href = `/appstatus1/${result.data[1]}`;
 			console.log(result.data[1]);
 		} else if (result.data[0] === 0) {
-			window.location.href = `/admincreate/`;
+			window.location.href = `/circular1/${result.data[1]}`;
 			console.log(result.data[1]);
 		} else if (result.data[0] === 2) {
-			window.location.href = `/inbox/${result.data[1]}`;
+			window.location.href = `/membercircular/${result.data[1]}`;
 			console.log(result.data[1]);
 		} else if (result.data[0] === 3) {
-			window.location.href = `/inbox/${result.data[1]}`;
+			window.location.href = `/cscircular/${result.data[1]}`;
 			console.log(result.data[1]);
 		} else if (result.data[0] === 4) {
-			window.location.href = `/inbox/${result.data[1]}`;
+			window.location.href = `/sendcircular/${result.data[1]}`;
 			console.log(result.data[1]);
 		} else if (result.data[0] === -1) {
 			alert("No Account Found");

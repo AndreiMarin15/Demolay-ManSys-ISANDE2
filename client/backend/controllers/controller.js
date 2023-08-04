@@ -266,7 +266,8 @@ const controller = {
 
 	createEO: async (req, res) => {
 		const data = req.body;
-
+		console.log("DATA");
+		console.log(data);
 		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
 			const admin = {
 				accountId: data.userId,
@@ -288,7 +289,8 @@ const controller = {
 
 	createScribe: async (req, res) => {
 		const data = req.body;
-
+		console.log("DATA");
+		console.log(data);
 		bcrypt.hash(data.initialPassword, 10, (err, hash) => {
 			const admin = {
 				accountId: data.userId,
@@ -525,8 +527,9 @@ const controller = {
 			if (bcrypt.compareSync(req.body.password, account.password)) {
 				session = account;
 				session.userType = "admin";
-				session = session;
-				res.send([0, account.accountId]);
+				req.session.authenticated = true;
+				req.session.account = account;
+				res.send([0, account._id]);
 			} else {
 				res.send("WP");
 			}
@@ -538,7 +541,8 @@ const controller = {
 					console.log("RIGHT");
 					session = applicant;
 					session.userType = "Scribe";
-					session = session;
+					req.session.authenticated = true;
+					req.session.account = applicant;
 					res.send([1, applicant._id]);
 				} else {
 					console.log("WRONG");
@@ -551,7 +555,8 @@ const controller = {
 					if (bcrypt.compareSync(req.body.password, member.password)) {
 						session = member;
 						session.userType = "Member";
-						session = session;
+						req.session.authenticated = true;
+						req.session.account = member;
 						res.send([2, member._id]);
 					} else {
 						res.send("WP");
@@ -560,10 +565,11 @@ const controller = {
 					const scribe = await ChapterScribe.findOne({ accountId: req.body.idNumber }, {});
 					if (scribe) {
 						console.log("Scribe");
-						if (bcrypt.compareSync(req.body.password, member.password)) {
+						if (bcrypt.compareSync(req.body.password, scribe.password)) {
 							session = scribe;
 							session.userType = "Scribe";
-							session = session;
+							req.session.authenticated = true;
+							req.session.account = scribe;
 							res.send([3, scribe._id]);
 						} else {
 							res.send("WP");
@@ -575,7 +581,8 @@ const controller = {
 							if (bcrypt.compareSync(req.body.password, grandmaster.password)) {
 								session = grandmaster;
 								session.userType = "GrandMaster";
-								session = session;
+								req.session.authenticated = true;
+								req.session.account = grandmaster;
 								res.send([4, grandmaster._id]);
 							} else {
 								res.send("WP");
@@ -587,7 +594,8 @@ const controller = {
 								if (bcrypt.compareSync(req.body.password, advisoryCouncil.password)) {
 									session = advisoryCouncil;
 									session.userType = "AdvisoryCouncil";
-									session = session;
+									req.session.authenticated = true;
+									req.session.account = advisoryCouncil;
 									res.send([4, advisoryCouncil._id]);
 								} else {
 									res.send("WP");
@@ -604,105 +612,12 @@ const controller = {
 		}
 	},
 
-	login2: async (req, res) => {
-		console.log(`Logging in with ${req.body}`);
-		console.log(req.body);
-		db.findOne(Accounts, { accountId: req.body.idNumber }, {}, (account) => {
-			if (account) {
-				console.log("Account");
-				if (bcrypt.compareSync(req.body.password, account.password)) {
-					session = account;
-					session.userType = "admin";
-					
-					res.send([0, account.accountId]);
-				} else {
-					res.send("WP");
-				}
-			} else {
-				db.findOne(Application, { applicantId: req.body.idNumber }, {}, (applicant) => {
-					// check if applicant exists, if not, check members, and so on
-
-					if (applicant) {
-						console.log("Appli");
-						if (bcrypt.compareSync(req.body.password, applicant.applicantPassword)) {
-							console.log("RIGHT");
-							session = applicant;
-							session.userType = "Scribe";
-							
-							res.send([1, applicant._id]);
-						} else {
-							console.log("WRONG");
-							res.send("WP");
-						}
-					} else {
-						// check members
-						db.findOne(Member, { memberId: req.body.idNumber }, {}, (member) => {
-							if (member) {
-								console.log("Member");
-								if (bcrypt.compareSync(req.body.password, member.password)) {
-									session = member;
-									session.userType = "Member";
-									
-									res.send([2, member._id]);
-								} else {
-									res.send("WP");
-								}
-							} else {
-								db.findOne(ChapterScribe, { accountId: req.body.idNumber }, {}, (scribe) => {
-									if (scribe) {
-										console.log("Scribe");
-										if (bcrypt.compareSync(req.body.password, member.password)) {
-											session = scribe;
-											session.userType = "Scribe";
-											
-											res.send([3, scribe._id]);
-										} else {
-											res.send("WP");
-										}
-									} else {
-										db.findOne(GrandMaster, { accountId: req.body.idNumber }, {}, (grandmaster) => {
-											if (grandmaster) {
-												console.log("GM");
-												if (bcrypt.compareSync(req.body.password, grandmaster.password)) {
-													session = grandmaster;
-													session.userType = "GrandMaster";
-													
-													res.send([4, grandmaster._id]);
-												} else {
-													res.send("WP");
-												}
-											} else {
-												db.findOne(AdvisoryCouncils, { userId: req.body.idNumber }, {}, (advisoryCouncil) => {
-													if (advisoryCouncil) {
-														console.log("AC");
-														if (bcrypt.compareSync(req.body.password, advisoryCouncil.password)) {
-															session = advisoryCouncil;
-															session.userType = "AdvisoryCouncil";
-															
-															res.send([4, advisoryCouncil._id]);
-														} else {
-															res.send("WP");
-														}
-													} else {
-														console.log("None");
-														// no account found
-														res.send([-1, []]);
-													}
-												});
-											}
-										});
-									}
-								});
-							}
-						});
-					}
-				});
-			}
-		});
+	getSession: async (req, res) => {
+		res.send(session);
 	},
 
 	logout: function (req, res) {
-		session.destroy((err) => {
+		req.session.destroy((err) => {
 			if (err) throw err;
 			res.send("/login");
 		});
@@ -1009,6 +924,50 @@ const controller = {
 		const members = await Member.find({}, {}).sort({ memberId: 1 });
 
 		res.send(members);
+	},
+
+	getMembersByChapter: async (req, res) => {
+		const members = await Member.find({ chapterId: req.params.chapterId }, {}).sort({ memberId: 1 });
+
+		res.send(members);
+	},
+
+	updateRead: async (req, res) => {
+		const circularId = req.params.circularId;
+		const memberId = req.params.memberId;
+		const read = req.body.readBy;
+
+		const circular = await Circulars.findOne({ _id: circularId }, {});
+		const array = circular.readBy;
+
+		if (read) {
+			array.push(memberId);
+			console.log(memberId);
+			console.log(array);
+			Circulars.updateOne({ _id: circularId }, { readBy: array }).then((result) => {
+				res.send("Marked as Read");
+			});
+		} else {
+			const index = array.indexOf(memberId);
+			array.splice(index, 1);
+			Circulars.updateOne({ _id: circularId }, { readBy: array }).then((result) => {
+				res.send("Marked as Unread");
+			});
+		}
+	},
+
+	sendMessage: async (req, res) => {
+		const toPush = req.body;
+
+		Member.updateOne({ _id: req.params.memberId }, { $push: { inbox: toPush } }).then((result) => {
+			res.send("Message Sent");
+		});
+	},
+
+	retrieveInbox: async (req, res) => {
+		Member.find({ _id: req.params.id }).then((member) => {
+			res.send(member);
+		});
 	},
 };
 
