@@ -655,7 +655,7 @@ const controller = {
 						dateCreated: application.dateCreated,
 						status: application.status,
 						petStatus: application.petStatus,
-						acceptedId: application.acceptedId
+						acceptedId: application.acceptedId,
 					};
 					console.log(toSend);
 					res.send(toSend);

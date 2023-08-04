@@ -83,6 +83,7 @@ import Inbox from "./pages/Circular/Inbox";
 import SendCircular from "./pages/Circular/SendCircular";
 
 import Header from "./components/Header";
+import EOCircular from "./pages/Circular/EOCircular";
 
 function App() {
 	return (
@@ -168,6 +169,7 @@ function App() {
 					<Route path="turnoverNO3" element={<TurnoverNO3 />} />
 					<Route path="turnoverNO4" element={<TurnoverNO4 />} />
 					<Route path="turnoverDashboardOfficer" element={<TurnoverDashboardOfficer />} />
+					<Route path="turnoverDashboardOfficer/:officerId" element={<TurnoverDashboardOfficer />} />
 					<Route path="turnoverTF6Approval" element={<TurnoverTF6Approval />} />
 					<Route path="eventsValidation" element={<EventsValidation />} />
 					<Route path="eventsProof" element={<EventsProof />} />
@@ -180,7 +182,9 @@ function App() {
 					<Route path="cscircular/:scribeId" element={<CSCircular />} />
 					<Route path="cscircular2/:scribeId/:circularId" element={<CSCircular2 />} />
 					<Route path="membercircular/:memberId" element={<MemberCircular />} />
+					<Route path="eocircular/:eoId" element={<EOCircular />} />
 					<Route path="membercircular2/:memberId/:circularId" element={<MemberCircular2 />} />
+					
 					<Route path="inbox" element={<Inbox />} />
 					<Route path="inbox/:memberId" element={<Inbox />} />
 					<Route path="sendcircular" element={<SendCircular />} />

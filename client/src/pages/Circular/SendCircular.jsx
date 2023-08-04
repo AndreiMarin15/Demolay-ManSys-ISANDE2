@@ -140,7 +140,12 @@ function SendCircular() {
 						</div>
 					</div>
 
-					<NewCircular showPopup={showPopup} releasedBy={grandMaster} onClosePopup={handleClosePopup} onSendClick={() => {}} />
+					<NewCircular
+						showPopup={showPopup}
+						releasedBy={grandMaster}
+						onClosePopup={handleClosePopup}
+						onSendClick={() => {}}
+					/>
 
 					<div className="row" style={{ marginTop: "10px", marginLeft: "30px" }}>
 						<div className="d-flex justify-content-end">
