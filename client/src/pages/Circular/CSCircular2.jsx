@@ -132,20 +132,39 @@ function CSCircular2() {
 					</div>
 
 					<div className="text-start" style={{ marginLeft: "100px" }}>
-						<Link to="/cscircular">
-							<button className="btn-text" type="button" style={{ border: "0" }}>
-								<span>
-									<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
-								</span>
-								Circulars
-							</button>
-						</Link>
+						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/cscircular/${scribeId}`}}>
+							<span>
+								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
+							</span>
+							Circulars
+						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/csappinprogress/${scribeId}`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 							</span>
 							For Review
+						</button>
+						<br />
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/csapp1/${scribeId}`;
+							}}
+						>
+							<span>
+								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
+							</span>
+							Approve Membership
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
