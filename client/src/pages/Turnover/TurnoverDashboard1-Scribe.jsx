@@ -40,12 +40,12 @@ function TurnoverDashboard1() {
   const location = useLocation();
   const prevPageProps = location.state;
 
-  //sample init data
+  // sample init data
   const [userData, setUserData] = useState({
     userID: "0118-27061",
     name: "Philip Tolentino",
     position: "Scribe",
-    chapterID: "45",
+    chapterID: "1",
   });
 
   const [chapterData, setChapterData] = useState({});
