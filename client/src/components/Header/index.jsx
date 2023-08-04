@@ -1,19 +1,19 @@
-import React from 'react'
-import { PrimaryNav, MenuLink, Menu, Hamburger, Login} from './NavElement'
+import React from "react";
+import { PrimaryNav, MenuLink, Menu, Hamburger, Login } from "./NavElement";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Navbar = () => {
   return (
     <>
-  /* TO DO: INSERT LOGO (navlogo.png) EITHER INSIDE NAV BAR OR ABOVE
-       ADD 'LOGIN' BUTTON TO LEAD TO LOGIN SCREEN -- DIFFERS FROM HOME SCREEN */
-
       <PrimaryNav>
         <Hamburger />
         <Menu>
           <MenuLink to="/" activeStyle>
             Home
           </MenuLink>
-          <MenuLink to="/about" activeStyle>
+          <MenuLink to="https://demolay.ph/what-is-demolay/" activeStyle>
             About DeMolay
           </MenuLink>
           <MenuLink to="/contact" activeStyle>
@@ -22,9 +22,21 @@ const Navbar = () => {
           <MenuLink to="/eventsHome" activeStyle>
             Events
           </MenuLink>
+          <MenuLink to="/login" activeStyle>
+            Login
+          </MenuLink>
+          <MenuLink
+            activeStyle
+            onClick={() => {
+              axios.get("http://localhost:5000/logout");
+              window.location.href = `/`;
+            }}
+          >
+            Logout
+          </MenuLink>
         </Menu>
       </PrimaryNav>
     </>
-  )
-}
-export default Navbar
+  );
+};
+export default Navbar;
