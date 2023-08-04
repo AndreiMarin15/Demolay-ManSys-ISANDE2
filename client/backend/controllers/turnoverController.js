@@ -11,6 +11,7 @@ const Form15 = require("../models/form15.js");
 const AssetReport = require("../models/assetsReport.js");
 const AdvisoryReport = require("../models/advisorReport.js");
 const TurnoverStatus = require("../models/turnoverStatus.js");
+const Event = require("../models/events.js");
 const fs = require("fs");
 const AdvisoryCouncils = require("../models/advisoryCouncils.js");
 
@@ -419,6 +420,53 @@ const controller = {
     });
   },
 
+  newEvents: async (req, res) => {
+    const newEvent = {
+      chapterID: req.body.chapterID,
+    };
+
+    db.insertOne(Event, newEvent, (result) => {
+      if (result) {
+        // Successfully created the new document
+        res.send(result);
+      } else {
+        // Failed to create the new document
+        res.json({
+          success: false,
+          message: "Failed to create events document",
+        });
+      }
+    });
+  },
+
+  updateEvents: async (req, res) => {
+    const id = req.params._id;
+
+    const update = {
+      [req.body.fieldToUpdate]: req.body.updateValue,
+    };
+
+    console.log(id, update);
+
+    db.findOne(Event, { _id: id }, {}, () => {
+      db.updateOne(Event, { _id: id }, update, (result) => {
+        if (result) {
+          // Successfully updated the document
+          res.json({
+            success: true,
+            message: "Events document updated successfully",
+          });
+        } else {
+          // Failed to update the document
+          res.json({
+            success: false,
+            message: "Failed to update Events document",
+          });
+        }
+      });
+    });
+  },
+
   getTurnoverReports: async (req, res) => {
     const chapterID = req.params.chapterID;
     const currentTerm = req.params.currentTerm;
@@ -467,6 +515,14 @@ const controller = {
 
   getAllChapters: async (req, res) => {
     db.findMany(Chapters, {}, {}, (result) => {
+      res.send(result);
+    });
+  },
+
+  getEvents: async (req, res) => {
+    const chapterID = req.params.id;
+
+    db.findOne(Event, { chapterID: chapterID }, {}, (result) => {
       res.send(result);
     });
   },

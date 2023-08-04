@@ -94,6 +94,11 @@ router.get("/getAllMembers/:id", turnoverController.getAllMembers);
 router.get("/getChapters", turnoverController.getAllChapters);
 
 
+router.post("/newEvents", turnoverController.newEvents);
+router.post("/updateEvents/:id", turnoverController.updateEvents);
+router.get("/getEvents/:id", turnoverController.getEvents);
+
+
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);
 router.get("/getCircularsByUser/:memberId", controller.getCircularsByUser);
