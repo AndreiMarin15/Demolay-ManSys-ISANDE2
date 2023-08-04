@@ -69,6 +69,10 @@ const applicationSchema = new Schema({
 	petStatus: String,
 
 	proofOfPayment: String,
+
+	accepted: Boolean,
+	acceptedId: String
+	
 });
 
 const Application = mongoose.model("Application", applicationSchema);

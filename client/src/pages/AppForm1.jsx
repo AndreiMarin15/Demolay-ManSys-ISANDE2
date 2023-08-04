@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 
 function Appform1() {
-  const API_REGION = "https://psgc.gitlab.io/api/regions/";
+	const API_REGION = "https://psgc.gitlab.io/api/regions/";
 	const [formData, setFormData] = useState({
 		regionId: "",
 		chapterId: "",
@@ -17,9 +17,9 @@ function Appform1() {
 	useEffect(() => {
 		async function fetchData() {
 			axios.get(API_REGION).then(async (res1) => {
-        console.log(res1)
+				console.log(res1);
 				const res2 = await axios.get(`http://localhost:5000/getChapters/${res1.data[0].code}`);
-        console.log(res2)
+				console.log(res2.data[0].chapterID);
 				setFormData({
 					...formData,
 					regions: res1.data.map((res) => {
@@ -49,11 +49,11 @@ function Appform1() {
 
 	const onChangeRegion = async (e) => {
 		axios.get(`http://localhost:5000/getChapters/${e.target.value}`).then((result) => {
-      console.log(e.target.value)
-      console.log(result)
+			console.log(e.target.value);
+			console.log(result);
+			console.log(result.data[0].chapterID)
 			setFormData({
 				...formData,
-
 				chapters: result.data.map((res) => {
 					return {
 						name: res.name,
@@ -61,14 +61,15 @@ function Appform1() {
 					};
 				}),
 				chapterId: result.data[0].chapterID,
-				regionId: result.data[0].regionID,
+				regionId: result.data[0].phRegion,
 			});
 		});
 	};
 
 	const onChangeChapter = (e) => {
+		console.log(e.target.value)
 		setFormData({
-			...formData, 
+			...formData,
 			chapterId: e.target.value,
 		});
 	};

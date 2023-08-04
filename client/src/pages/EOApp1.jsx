@@ -13,6 +13,7 @@ const reject = <FontAwesomeIcon icon={faSquareXmark} />;
 const approve = <FontAwesomeIcon icon={faSquareCheck} />;
 
 function EOApp1() {
+	const {eoId} = useParams()
 	const [applicationData, setApplicationData] = useState({
 		applications: [],
 		filteredApplications: [],
@@ -121,7 +122,7 @@ function EOApp1() {
 	};
 
 	const redirect = () => {
-		window.location.href = `/appform4/${applicantInformationData.uid}`;
+		window.location.href = `/appform4/${applicantInformationData.uid}/${eoId}`;
 	};
 
 	return (

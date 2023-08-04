@@ -41,20 +41,22 @@ function CSForm10Sum() {
 
 			console.log("1", result);
 			console.log("2", applicants.applicants);
-
-			setApplicantInformation({
-				uid: result.data[0]._id,
-				applicationId: result.data[0].applicantId,
-				lastName: result.data[0].lastName,
-				givenName: result.data[0].givenName,
-				middleName: result.data[0].middleName,
-				email: result.data[0].email,
-				contact: result.data[0].mobile,
-				firstLineSigner: result.data[0].firstLineSigner ? result.data[0].firstLineSigner : "N/A",
-				otherDetails: result.data[0].notes ? result.data[0].notes : "N/A",
-				photo: result.data[0].photo,
-				proofOfPayment: result.data[0].proofOfPayment,
-			});
+			if(result.data.length > 0){
+				setApplicantInformation({
+					uid: result.data[0]._id,
+					applicationId: result.data[0].applicantId,
+					lastName: result.data[0].lastName,
+					givenName: result.data[0].givenName,
+					middleName: result.data[0].middleName,
+					email: result.data[0].email,
+					contact: result.data[0].mobile,
+					firstLineSigner: result.data[0].firstLineSigner ? result.data[0].firstLineSigner : "N/A",
+					otherDetails: result.data[0].notes ? result.data[0].notes : "N/A",
+					photo: result.data[0].photo,
+					proofOfPayment: result.data[0].proofOfPayment,
+				});
+			}
+			
 		});
 	}, []);
 
@@ -74,13 +76,15 @@ function CSForm10Sum() {
 			photo: application.photo,
 			proofOfPayment: application.proofOfPayment,
 		});
+
+		console.log(applicants.applicants)
 	};
 
 	const submitForm10 = async () => {
 		const initiate = {
 			toInitiate: applicants.applicants
 		}
-
+		
 		axios.post("http://localhost:5000/acceptForm10", initiate).then(result => {
 			alert("Form 10 Accepted and Applicants Initiated")
 		})
@@ -119,7 +123,7 @@ function CSForm10Sum() {
 								</tr>
 							</thead>
 							<tbody>
-								{applicants.applicants.map(function (applicant) {
+								{applicants.applicants.length > 0 ? applicants.applicants.map(function (applicant) {
 									return (
 										<tr key={applicant.applicantId}>
 											<td>{applicant.applicantId}</td>
@@ -131,7 +135,7 @@ function CSForm10Sum() {
 											</td>
 										</tr>
 									);
-								})}
+								}) : ""}
 							</tbody>
 						</table>
 					</div>

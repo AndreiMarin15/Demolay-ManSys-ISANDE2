@@ -43,11 +43,14 @@ function CSAppInProgress() {
 						...applicationData,
 						applications: applications.data,
 						filteredApplications: applications.data.filter((applicant) => {
-							if (applicant.status === "Approved") {
+							console.log(applicant)
+							
+							if(!applicant.petStatus === "Approved")
+							{if (applicant.status === "Approved") {
 								return true;
 							} else {
 								return false;
-							}
+							}}
 						}),
 						chapters: chapters.data.map((chapter) => {
 							return {
@@ -276,13 +279,7 @@ function CSAppInProgress() {
 									</td>
 								</tr>
 								
-								<tr>
-									<td>Admin Status:</td>
-									<td>
-										<span className="orange-circle"></span>
-										Petitioning
-									</td>
-								</tr>
+								
 							</tbody>
 						</table>
 					</div>

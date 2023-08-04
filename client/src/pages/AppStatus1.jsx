@@ -41,8 +41,8 @@ function AppStatus1() {
 		async function fetchData() {
 			const application = await axios.get(`http://localhost:5000/getStatus1/${id}`);
 			const applicationInfo = await axios.get(`http://localhost:5000/applications/${id}`);
-			const memberId = await axios.get(`http://localhost:5000/generateMemberId`);
 
+			console.log(application);
 			console.log(applicationInfo);
 			setFormData({
 				...formData,
@@ -51,7 +51,7 @@ function AppStatus1() {
 				dateCreated: application.data.dateCreated,
 				status: application.data.status,
 				petStatus: application.data.petStatus ? application.data.petStatus : "In Progress",
-				memberId: memberId.data,
+				memberId: application.data.acceptedId ? application.data.acceptedId : "Waiting for Approval",
 			});
 
 			setApplicantInformation({
@@ -100,17 +100,15 @@ function AppStatus1() {
 	}
 
 	const submitProofOfPayment = () => {
-		
-
 		const update = {
 			proofOfPayment: photoData.photo,
-			applicationId: applicantInformationData.uid
-		}
+			applicationId: applicantInformationData.uid,
+		};
 
-		axios.post("http://localhost:5000/submitProofOfPayment", update).then(res => {
-			alert("Submitted Proof of Payment. Kindly wait for Scribe Approval")
-		})
-	}
+		axios.post("http://localhost:5000/submitProofOfPayment", update).then((res) => {
+			alert("Submitted Proof of Payment. Kindly wait for Scribe Approval");
+		});
+	};
 
 	return (
 		/* NEED TO CHANGE HEADER -- ADD Log Out AND My Application BUTTONS */
@@ -247,7 +245,58 @@ function AppStatus1() {
 						</p>
 					)}
 
-					{formData.status === "Approved" && formData.petStatus === "Approved" && (
+					{formData.status === "Approved" &&
+						formData.petStatus === "Approved" &&
+						formData.memberId === "Waiting for Approval" && (
+							<>
+								<hr
+									style={{
+										color: "black",
+										height: "1px",
+										marginLeft: "-35px",
+									}}
+								/>
+
+								<table
+									style={{
+										marginLeft: "80px",
+										border: "1px solid black",
+										padding: "50px",
+									}}
+								>
+									<tr>
+										<td style={{ padding: "8px" }}>
+											<b>Member ID:</b> {formData.memberId}{" "}
+										</td>
+									</tr>
+								</table>
+
+								<p className="text-center" id="cont" style={{ marginLeft: "-80px" }}>
+									If you wish to continue, kindly upload your proof of payment below.
+								</p>
+
+								<div className="row" style={{ marginLeft: "80px" }}>
+									<label for="uploadProof" className="col-form-label text-right">
+										Proof of Payment:
+									</label>
+									<input
+										type="file"
+										className="form-control"
+										id="photo"
+										accept=".jpeg, .png, .jpg"
+										onChange={handleImageUpload}
+									/>
+								</div>
+
+								<div className="row">
+									<button type="submit" className="btn btn-primary" onClick={submitProofOfPayment}>
+										SUBMIT
+									</button>
+								</div>
+							</>
+						)}
+
+					{formData.status === "Approved" && formData.petStatus === "Approved" && formData.memberId && (
 						<>
 							<hr
 								style={{
@@ -272,25 +321,15 @@ function AppStatus1() {
 							</table>
 
 							<p className="text-center" id="cont" style={{ marginLeft: "-80px" }}>
-								If you wish to continue, kindly upload your proof of payment below.
+								Congratulations! You are now a member of Demolay Chapter<br></br> {formData.chapter}
 							</p>
 
-							<div className="row" style={{ marginLeft: "80px" }}>
-								<label for="uploadProof" className="col-form-label text-right">
-									Proof of Payment:
-								</label>
-								<input
-								type="file"
-								className="form-control"
-								id="photo"
-								accept=".jpeg, .png, .jpg"
-								onChange={handleImageUpload}
-							/>
-							</div>
-
+							<p className="text-center" id="cont" style={{ marginLeft: "-80px" }}>
+								Please Proceed to Log In using your Member ID <br></br> and the same password that you used in your application
+							</p>
 							<div className="row">
-								<button type="submit" className="btn btn-primary" onClick={submitProofOfPayment}>
-									SUBMIT
+								<button type="submit" className="btn btn-primary" onClick={() => {window.location.href = `/login`}}>
+									Log In
 								</button>
 							</div>
 						</>

@@ -88,11 +88,18 @@ function CSCircular() {
 							Circulars
 						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/csappinprogress/${scribeId}`}}>
 							<span>
 								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 							</span>
 							For Review
+						</button>
+						<br />
+						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/csapp1/${scribeId}`}}>
+							<span>
+								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
+							</span>
+							Approve Membership
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>

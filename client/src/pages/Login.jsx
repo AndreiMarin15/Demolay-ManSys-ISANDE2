@@ -54,6 +54,8 @@ function Login() {
 			console.log(result.data[1]);
 		} else if (result.data[0] === -1) {
 			alert("No Account Found");
+		} else if(result.data[0] === 5){
+			window.location.href = `/eoapp1/${result.data[1]}`
 		} else {
 			console.log("Not Triggered");
 			console.log(result.data[0]);

@@ -101,6 +101,7 @@ function App() {
 					<Route path="appform3/:applicationId" element={<AppForm3 />} />
 					<Route path="appform4" element={<AppForm4 />} />
 					<Route path="appform4/:applicationId" element={<AppForm4 />} />
+					<Route path="appform4/:applicationId/:eoId" element={<AppForm4 />} />
 					<Route path="appform5" element={<AppForm5 />} />
 					<Route path="appform5/:applicationId" element={<AppForm5 />} />
 					<Route path="appstatus1" element={<AppStatus1 />} />
@@ -108,6 +109,7 @@ function App() {
 					<Route path="appstatus2" element={<AppStatus2 />} />
 					<Route path="apppayment" element={<AppPayment />} />
 					<Route path="eoapp1" element={<EOApp1 />} />
+					<Route path="eoapp1/:eoId" element={<EOApp1 />} />
 					{/* protected routes only for Scribe */}
 					{/* <Route
             element={
@@ -115,7 +117,9 @@ function App() {
             }
           > */}
 					<Route path="csapp1" element={<CSApp1 />} />
+					<Route path="csapp1/:scribeId" element={<CSApp1 />} />
 					<Route path="csappinprogress" element={<CSAppInProgress />} />
+					<Route path="csappinprogress/:scribeId" element={<CSAppInProgress />} />
 					<Route path="csform10" element={<CSForm10 />} />
 					<Route path="csform10sum" element={<CSForm10Sum />} />
 					<Route path="csform10sum/:form10Id" element={<CSForm10Sum />} />
@@ -169,18 +173,18 @@ function App() {
 					<Route path="eventsProof" element={<EventsProof />} />
 					<Route path="eventsPaymentValidation" element={<EventsPaymentValidation />} />
 					<Route path="circular1" element={<Circular1 />} />
-          <Route path="circular1/:adminId" element={<Circular1 />} />
+					<Route path="circular1/:adminId" element={<Circular1 />} />
 					<Route path="circular2/:adminId/:circularId" element={<Circular2 />} />
 					<Route path="circular3" element={<Circular3 />} />
 					<Route path="cscircular" element={<CSCircular />} />
-          <Route path="cscircular/:circularId" element={<CSCircular />} />
+					<Route path="cscircular/:scribeId" element={<CSCircular />} />
 					<Route path="cscircular2/:scribeId/:circularId" element={<CSCircular2 />} />
 					<Route path="membercircular/:memberId" element={<MemberCircular />} />
 					<Route path="membercircular2/:memberId/:circularId" element={<MemberCircular2 />} />
 					<Route path="inbox" element={<Inbox />} />
 					<Route path="inbox/:memberId" element={<Inbox />} />
 					<Route path="sendcircular" element={<SendCircular />} />
-          <Route path="sendcircular/:grandmasterId" element={<SendCircular />} />
+					<Route path="sendcircular/:grandmasterId" element={<SendCircular />} />
 				</Route>
 			</Routes>
 		</>

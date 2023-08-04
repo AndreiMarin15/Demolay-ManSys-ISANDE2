@@ -20,6 +20,9 @@ const controller = {
 		const application = {
 			regionId: req.body.regionId,
 			chapterId: req.body.chapterId,
+			accepted: false,
+			memberId: "",
+			acceptedId: "",
 		};
 
 		await db.insertOne(Application, application, (result) => {
@@ -457,7 +460,7 @@ const controller = {
 	getChapters: async (req, res) => {
 		const regionId = req.params.regionId;
 		console.log(regionId);
-		db.findMany(Chapters, { phRegion: regionId }, { phRegion: 1, name: 1, regionID: 1 }, (result) => {
+		db.findMany(Chapters, { phRegion: regionId }, {}, (result) => {
 			res.send(result);
 		});
 	},
@@ -601,9 +604,23 @@ const controller = {
 									res.send("WP");
 								}
 							} else {
-								console.log("None");
-								// no account found
-								res.send([-1, []]);
+								const executiveOfficer = await ExecutiveOfficer.findOne({ accountId: req.body.idNumber }, {});
+								if (executiveOfficer) {
+									console.log("EO");
+									if (bcrypt.compareSync(req.body.password, executiveOfficer.password)) {
+										session = executiveOfficer;
+										session.userType = "Executive Officer";
+										req.session.authenticated = true;
+										req.session.account = executiveOfficer;
+										res.send([5, executiveOfficer._id]);
+									} else {
+										res.send("WP");
+									}
+								} else {
+									console.log("None");
+									// no account found
+									res.send([-1, []]);
+								}
 							}
 						}
 					}
@@ -629,7 +646,7 @@ const controller = {
 		db.findOne(
 			Application,
 			{ _id: applicationId },
-			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1, petStatus: 1 },
+			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1, petStatus: 1, acceptedId: 1 },
 			(application) => {
 				db.findOne(Chapters, { chapterID: application.chapterId }, { name: 1 }, (chapter) => {
 					const toSend = {
@@ -638,6 +655,7 @@ const controller = {
 						dateCreated: application.dateCreated,
 						status: application.status,
 						petStatus: application.petStatus,
+						acceptedId: application.acceptedId
 					};
 					console.log(toSend);
 					res.send(toSend);
@@ -757,7 +775,7 @@ const controller = {
 		db.findOne(Form10, { form10Id: form10Id }, {}, (result) => {
 			const applicants = result.initiatedMembers;
 
-			Application.find({ applicantId: { $in: applicants } }, {}).then((applications) => {
+			Application.find({ applicantId: { $in: applicants }, accepted: "false" || null }, {}).then((applications) => {
 				res.send(applications);
 			});
 		});
@@ -831,26 +849,6 @@ const controller = {
 					}
 				}
 
-				//	if (members.length > 1 && members) {
-				//		let highestId = members[0].memberId;
-				//		members.forEach((member) => {
-				//			if (parseInt(member.memberId) > parseInt(highestId)) {
-				//				highestId = member.memberId;
-				//			}
-				//		});
-				//
-				//		getMemberId = (parseInt(highestId) + 1).toString();
-				//		// eslint-disable-next-line eqeqeq
-				//	} else if (members.length == 1 && members) {
-				//		getMemberId = (parseInt(members[0].memberId) + 1).toString();
-				//	} else {
-				//		const currentDate = new Date();
-				//		const currentMonth = currentDate.getMonth() + 1;
-				//		const currentYear = currentDate.getFullYear().toString().slice(-2);
-				//
-				//		getMemberId = currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001";
-				//	}
-
 				let finalizedMember = new Member({
 					memberId: getMemberId,
 					password: applicant.applicantPassword,
@@ -867,13 +865,21 @@ const controller = {
 					position: "Member",
 				});
 
-				db.insertOne(Member, finalizedMember, (mem) => {
-					if (mem) {
-						console.log(finalizedMember.memberId, finalizedMember.givenName);
-					} else {
-						console.log("MEM: ", mem);
-						console.log("did not insert: ", finalizedMember.memberId);
-					}
+				Application.updateOne(
+					{ _id: applicant._id },
+					{ memberId: getMemberId, accepted: true, acceptedId: getMemberId }
+				).then((result) => {
+					console.log(getMemberId);
+					db.insertOne(Member, finalizedMember, (mem) => {
+						if (mem) {
+							console.log(applicant._id);
+
+							console.log(finalizedMember.memberId, finalizedMember.givenName);
+						} else {
+							console.log("MEM: ", mem);
+							console.log("did not insert: ", finalizedMember.memberId);
+						}
+					});
 				});
 			});
 		});

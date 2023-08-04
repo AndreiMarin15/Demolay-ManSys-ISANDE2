@@ -9,7 +9,7 @@ const API_PROVINCE = "https://psgc.gitlab.io/api/provinces/";
 const API_CITY = "https://psgc.gitlab.io/api/cities-municipalities/";
 
 function Appform4() {
-	let { applicationId } = useParams();
+	let { applicationId, eoId } = useParams();
 
 	const [formData, setFormData] = useState({
 		cities: [],
@@ -232,7 +232,11 @@ function Appform4() {
 
 		window.location.href = `/appform5/${applicationId}`;
 	};
-
+	const styles = {
+		width: "200px",
+		height: "200px",
+		objectFit: "cover",
+	};
 	return (
 		<div className="container container-fluid ">
 			<div className="row">
@@ -276,6 +280,7 @@ function Appform4() {
 								<img
 									src={formData.photo}
 									alt=""
+									style={styles}
 								/> /* pwede gawing label toh para if clinick picture mag iinput @yana */
 							) : (
 								<input type="file" className="form-control" id="photo" accept=".jpeg, .png, .jpg" />
@@ -1049,7 +1054,13 @@ function Appform4() {
 					</div>
 				</div>
 
-				<div className="row">
+				
+
+				{eoId ? (
+					""
+				) : (
+					<>
+					<div className="row">
 					<p className="warning-msg">
 						Please ENSURE that all details for submission are ACCURATE. You will no longer be able to modify the details
 						once submitted.
@@ -1060,10 +1071,11 @@ function Appform4() {
 						{applicationId}
 					</p>
 				</div>
-
-				<div className="col-12 text-center">
-					<input type="submit" value="Submit" className="btn btn-primary" />
-				</div>
+					<div className="col-12 text-center">
+						<input type="submit" value="Submit" className="btn btn-primary" />
+					</div>
+					</>
+				)}
 			</form>
 		</div>
 	);
