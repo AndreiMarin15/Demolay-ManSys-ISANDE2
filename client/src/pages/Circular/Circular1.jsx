@@ -19,21 +19,27 @@ import { useEffect, useState } from "react";
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function Circular1() {
+	const {adminId} = useParams()
 	const [circulars, setCirculars] = useState({
 		circulars: [],
 		circulars2: [],
 		refresh: 0,
 	});
 
+	const [user, setUser] = useState({})
+
 	useEffect(() => {
 		const fetchData = async () => {
 			const circs = await axios.get("http://localhost:5000/getCirculars");
+			const user = await axios.get("http://localhost:5000/getCurrentUser");
 			const midPoint = Math.ceil(circs.data.length / 2);
 
 			setCirculars({
 				circulars: circs.data.filter((_, i) => i % 2 === 0),
 				circulars2: circs.data.filter((_, i) => i % 2 === 1),
 			});
+
+			setUser(user.data)
 		};
 
 		fetchData();
@@ -61,8 +67,8 @@ function Circular1() {
 					>
 						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
 						<div className="text-center">
-							<h5 className="name">Bea Lim</h5>
-							<small class="text-muted">Executive Director, Jose Abad Santos #1</small>
+							<h5 className="name">{user.givenName} {user.lastName}</h5>
+							<small class="text-muted">{user.position ? user.position : "Admin"} {user.chapterId ? user.chapterId : ""}</small>
 							<hr className="hori-line" />
 						</div>
 					</div>
@@ -89,11 +95,11 @@ function Circular1() {
 							Forms and Reports
 						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/adminCreate`}}>
 							<span>
 								<FontAwesomeIcon icon={faAddressBook} style={{ marginRight: "8px" }} />
 							</span>
-							Directory
+							Create Accounts
 						</button>
 					</div>
 				</div>
@@ -131,7 +137,7 @@ function Circular1() {
 									return (
 										<>
 											<a
-												href={`/circular2/${circular._id}`}
+												href={`/circular2/${adminId}/${circular._id}`}
 												class="list-group-item list-group-item-action "
 												aria-current="true"
 											>

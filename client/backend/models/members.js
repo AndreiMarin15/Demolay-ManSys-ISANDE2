@@ -46,6 +46,14 @@ const memberSchema = new Schema(
 		initiatoryDegreeDate: String,
 
 		position: String,
+
+		inbox: [{
+			circularId: String,
+			subject: String,
+			message: String,
+			circularLink: String,
+			sender: String
+		}]
 	},
 	{
 		timestamps: true,

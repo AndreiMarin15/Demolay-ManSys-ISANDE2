@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function Circular2() {
-	const { circularId } = useParams();
+	const {circularId } = useParams();
 	const [circularDetails, setDetails] = useState({
 		subject: "",
 		circularText: "",
@@ -143,14 +143,18 @@ function Circular2() {
 	const onTickMembers = (e) => {
 		if (circularDetails.disseminateTo.length > 0) {
 			if (e.target.checked) {
-				const newDisseminate = circularDetails.disseminateTo.concat(options.members);
-
+				let disseminate = circularDetails.disseminateTo.concat(options.members);
+				const newDisseminate = disseminate.concat(options.chapterOfficers);
+				console.log(newDisseminate);
 				setDetails((prev) => ({
 					...prev,
 					disseminateTo: newDisseminate,
 				}));
 			} else {
-				const filtered = circularDetails.disseminateTo.filter((item) => !options.members.includes(item));
+				const filtered = circularDetails.disseminateTo.filter(
+					(item) => !options.members.includes(item) && !options.chapterOfficers.includes(item)
+				);
+				console.log(filtered);
 				setDetails((prev) => ({
 					...prev,
 					disseminateTo: filtered,
@@ -160,16 +164,18 @@ function Circular2() {
 			if (e.target.checked) {
 				setDetails((prev) => ({
 					...prev,
-					disseminateTo: options.members,
+					disseminateTo: options.members.concat(options.chapterOfficers),
 				}));
 			}
 		}
 		setTicks((prev) => ({
 			...prev,
 			members: e.target.checked,
+			chapterOfficers: e.target.checked,
 		}));
 
-		console.log(options.members);
+		console.log(checkBoxTicks);
+
 		console.log(circularDetails.disseminateTo);
 	};
 
@@ -284,11 +290,18 @@ function Circular2() {
 							Forms and Reports
 						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/adminCreate`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faAddressBook} style={{ marginRight: "8px" }} />
 							</span>
-							Directory
+							Create Accounts
 						</button>
 					</div>
 				</div>
@@ -341,7 +354,12 @@ function Circular2() {
 											<div className="row circ-options">
 												<div class="col circ-col">
 													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="checkbox1" />
+														<input
+															class="form-check-input"
+															type="checkbox"
+															id="checkbox1"
+															checked={checkBoxTicks.executiveOfficers}
+														/>
 														<label class="form-check-label" for="checkbox1" onChange={onTickEO}>
 															Executive Officers
 														</label>
@@ -349,7 +367,13 @@ function Circular2() {
 												</div>
 												<div class="col circ-col">
 													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="checkbox2" onChange={onTickAdvisory} />
+														<input
+															class="form-check-input"
+															type="checkbox"
+															id="checkbox2"
+															onChange={onTickAdvisory}
+															checked={checkBoxTicks.advisoryCouncil}
+														/>
 														<label class="form-check-label" for="checkbox2">
 															Advisory Council
 														</label>
@@ -357,7 +381,13 @@ function Circular2() {
 												</div>
 												<div class="col circ-col">
 													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="checkbox3" onChange={onTickOfficers} />
+														<input
+															class="form-check-input"
+															type="checkbox"
+															id="checkbox3"
+															onChange={onTickOfficers}
+															checked={checkBoxTicks.chapterOfficers}
+														/>
 														<label class="form-check-label" for="checkbox3">
 															Chapter Officers
 														</label>
@@ -365,7 +395,13 @@ function Circular2() {
 												</div>
 												<div class="col circ-col">
 													<div class="form-check">
-														<input class="form-check-input" type="checkbox" id="checkbox4" onChange={onTickMembers} />
+														<input
+															class="form-check-input"
+															type="checkbox"
+															id="checkbox4"
+															onChange={onTickMembers}
+															checked={checkBoxTicks.members}
+														/>
 														<label class="form-check-label" for="checkbox4">
 															Organization Members
 														</label>
