@@ -6,39 +6,36 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-
-	faFileText,
-	faFilter,
-	faEye,
-	faCircleUser,
-	faMagnifyingGlass,
-	faBullhorn,
-	faFileLines,
-	faAddressBook,
-	faAddressCard,
-
+  faFileText,
+  faFilter,
+  faEye,
+  faCircleUser,
+  faMagnifyingGlass,
+  faBullhorn,
+  faFileLines,
+  faAddressBook,
+  faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
-	var tabContents = document.getElementsByClassName("tab-content");
+  var tabContents = document.getElementsByClassName("tab-content");
 
-	for (var i = 0; i < tabContents.length; i++) {
-		tabContents[i].style.display = "none";
-	}
+  for (var i = 0; i < tabContents.length; i++) {
+    tabContents[i].style.display = "none";
+  }
 
-	var tabButtons = document.getElementsByClassName("tab-button");
+  var tabButtons = document.getElementsByClassName("tab-button");
 
-	for (var i = 0; i < tabButtons.length; i++) {
-		tabButtons[i].classList.remove("active");
-	}
+  for (var i = 0; i < tabButtons.length; i++) {
+    tabButtons[i].classList.remove("active");
+  }
 
-	document.getElementById(tabId).style.display = "block";
+  document.getElementById(tabId).style.display = "block";
 
-	event.currentTarget.classList.add("active");
+  event.currentTarget.classList.add("active");
 };
 
 function TurnoverDashboard1() {
-
   const navigate = useNavigate();
   const location = useLocation();
   const prevPageProps = location.state;
@@ -64,7 +61,6 @@ function TurnoverDashboard1() {
     advisoryID: "",
     advisoryApproved: false,
     eoCertification: false,
-    isComplete: false,
   });
 
   useEffect(() => {
@@ -94,7 +90,6 @@ function TurnoverDashboard1() {
               advisoryID: res2.data.advisoryID,
               advisoryApproved: res2.data.advisoryApproved,
               eoCertification: res2.data.eoCertification,
-              isComplete: res2.data.isComplete,
             });
           } else {
             console.log(
@@ -559,31 +554,78 @@ function TurnoverDashboard1() {
       <div className="row">
         {/* First Column */}
 
-        <div className="col-md-2">
-          <div className="row align-items-center mt-3 text-center">
-            <h3>{userData.name}</h3>
-            <p>
-              {userData.position}, <br />
-              {chapterData.name}
-            </p>
-            <hr />
+        <div className="col-md-3">
+          {/* Content for the left column */}
+          <div
+            className="row justify-content-center"
+            style={{
+              marginTop: "10px",
+              marginLeft: "50px",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              style={{ fontSize: "150px" }}
+            />
+            <div className="text-center">
+              <h5 className="name">{userData.name}</h5>
+              <small className="text-muted">
+                {userData.position}, <br />
+                {chapterData.name}
+              </small>
+              <hr className="hori-line" />
+            </div>
           </div>
-          <div className="row align-items-left">
-            <a href="/turnoverDashboard1" id="leftNavbar">
+          <div className="text-start" style={{ marginLeft: "100px" }}>
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faBullhorn}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Circulars
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               For Review
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faFileLines}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Reports
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faAddressBook}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Directory
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faAddressCard}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Chapter Profile
-            </a>
+            </button>
           </div>
         </div>
 
@@ -595,20 +637,37 @@ function TurnoverDashboard1() {
 
         {/* Second Column */}
 
-        <div className="col-md-8">
+        <div
+          className="col-md-8 justify-content-center"
+          style={{ marginLeft: "-60px" }}
+        >
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <h1> Reports </h1>
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Search"
-            />
-            <button type="button" className="filterbtn">
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
+            <h1>
+              <span>
+                <FontAwesomeIcon
+                  icon={faFileText}
+                  style={{ marginRight: "15px" }}
+                />
+              </span>
+              Reports
+            </h1>
+            <div className="d-flex justify-content-end mb-2">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+              />
+              <div className="input-group-append">
+                <button type="button" className="filterbtn">
+                  <FontAwesomeIcon icon={faFilter} />
+                </button>
+              </div>
+            </div>
           </div>
+
           <div className="tabs-container">
             {/* Tab Headers */}
+
             <div className="tab-header">
               <button
                 className="tab-button active"
@@ -797,7 +856,6 @@ function TurnoverDashboard1() {
       </div>
     </div>
   );
-
 }
 
 export default TurnoverDashboard1;

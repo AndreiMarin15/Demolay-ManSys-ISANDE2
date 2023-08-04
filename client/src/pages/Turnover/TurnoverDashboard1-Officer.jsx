@@ -46,6 +46,7 @@ function TurnoverDashboard1() {
     name: "Andrei Marin",
     position: "Executive Officer",
     chapterID: "45",
+    region: "Region NCR-A",
   });
 
   const [chapterData, setChapterData] = useState({});
@@ -61,7 +62,6 @@ function TurnoverDashboard1() {
     advisoryID: "",
     advisoryApproved: false,
     eoCertification: false,
-    isComplete: false,
   });
 
   useEffect(() => {
@@ -90,7 +90,6 @@ function TurnoverDashboard1() {
               advisoryID: res2.data.advisoryID,
               advisoryApproved: res2.data.advisoryApproved,
               eoCertification: res2.data.eoCertification,
-              isComplete: res2.data.isComplete,
             });
           } else {
             console.log(
@@ -115,7 +114,7 @@ function TurnoverDashboard1() {
     getTurnoverReports();
 
     document.getElementById("tab1").style.display = "block";
-  }, []);
+  }, [turnoverData.eoCertification]);
 
   const handleForm1Click = () => {
     if (turnoverData.form1ID !== "") {
@@ -281,7 +280,6 @@ function TurnoverDashboard1() {
             scribeNotebook: res1.data.scribeNotebook,
             treasNotebook: res1.data.treasNotebook,
 
-
             advisoryCouncilChairman: res1.data.advisoryCouncilChairman,
             statusAdvisoryCouncilChairman:
               res1.data.statusAdvisoryCouncilChairman,
@@ -357,7 +355,32 @@ function TurnoverDashboard1() {
     }
   };
 
-  const handleEOCertify = () => {};
+  const handleEOCertify = () => {
+    const result = window.confirm(
+      "You are about to certify these reports and approve the Chapter to proceed with their Installation of Officers. Do you wish to continue?"
+    );
+    if (result) {
+      if (turnoverData.eoCertification === false) {
+        const turnoverUpdate = {
+          chapterID: userData.chapterID,
+          termID: chapterData.currentTerm,
+          fieldToUpdate: "eoCertification",
+          updateValue: true,
+        };
+
+        axios.post("http://localhost:5000/updateTurnover", turnoverUpdate);
+      }
+
+      setTurnoverData({
+        ...turnoverData,
+        eoCertification: true,
+      });
+
+      window.alert(
+        `Certified Reports of Term ${chapterData.currentTerm} ${chapterData.name}.`
+      );
+    }
+  };
 
   return (
     <div className="container">
@@ -366,32 +389,81 @@ function TurnoverDashboard1() {
       <div className="row">
         {/* First Column */}
 
-        <div className="col-md-2">
-          <div className="row align-items-center mt-3 text-center">
-            <h3>{userData.name}</h3>
+        <div className="col-md-3">
+          {/* Content for the left column */}
+          <div
+            className="row justify-content-center"
+            style={{
+              marginTop: "10px",
+              marginLeft: "50px",
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faCircleUser}
+              style={{ fontSize: "150px" }}
+            />
+            <div className="text-center">
+              <h5 className="name">{userData.name}</h5>
 
-            <p>
-              {userData.position}, <br />
-              {chapterData.name}
-            </p>
-            <hr />
+              <small class="text-muted">
+                {userData.position}, <br />
+                {userData.position === "Executive Officer"
+                  ? userData.region
+                  : chapterData.name}
+              </small>
+              <hr className="hori-line" />
+            </div>
           </div>
-          <div className="row align-items-left">
-            <a href="/turnoverDashboard1" id="leftNavbar">
+          <div className="text-start" style={{ marginLeft: "100px" }}>
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faBullhorn}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Circulars
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               For Review
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faFileLines}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Reports
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faAddressBook}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Directory
-            </a>
-            <a href="/turnoverDashboard1" id="leftNavbar">
+            </button>
+            <br />
+            <button className="btn-text" type="button" style={{ border: "0" }}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faAddressCard}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
               Chapter Profile
-            </a>
+            </button>
           </div>
         </div>
 
@@ -403,17 +475,32 @@ function TurnoverDashboard1() {
 
         {/* Second Column */}
 
-        <div className="col-md-8">
+        <div
+          className="col-md-8 justify-content-center"
+          style={{ marginLeft: "-60px" }}
+        >
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <h1> Reports </h1>
-            <input
-              type="text"
-              className="form-control form-control-sm"
-              placeholder="Search"
-            />
-            <button type="button" className="filterbtn">
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
+            <h1>
+              <span>
+                <FontAwesomeIcon
+                  icon={faFileText}
+                  style={{ marginRight: "15px" }}
+                />
+              </span>
+              Reports
+            </h1>
+            <div className="d-flex justify-content-end mb-2">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search"
+              />
+              <div className="input-group-append">
+                <button type="button" className="filterbtn">
+                  <FontAwesomeIcon icon={faFilter} />
+                </button>
+              </div>
+            </div>
           </div>
           <div className="tabs-container">
             {/* Tab Headers */}
@@ -437,7 +524,6 @@ function TurnoverDashboard1() {
               >
                 Submitted
               </button>
-
             </div>
 
             {/* Tabs Content 1 */}
@@ -552,12 +638,10 @@ function TurnoverDashboard1() {
               </div>
             </div>
 
-
             {/* Tabs Content 2 */}
 
             <div id="tab2" className="tab-content">
               <p>This is the content for Tab 2.</p>
-
             </div>
 
             {/* Tabs Content 3 */}
