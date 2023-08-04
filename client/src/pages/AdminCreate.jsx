@@ -18,6 +18,7 @@ function AdminCreate() {
 		chapters: [],
 		position: "",
 		initialPassword: "",
+		confirmPassword: "",
 		email: "",
 		lastName: "",
 		givenName: "",
@@ -39,104 +40,111 @@ function AdminCreate() {
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		if (formData.position == 1) {
-			// member
-			const member = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				initialPassword: formData.initialPassword,
-				email: formData.email,
-				idNumber: memberData.idNumber,
-				chapterId: memberData.chapterId,
-				initiatoryDegreeDate: memberData.initiatoryDegreeDate,
-				demolayDegreeDate: memberData.demolayDegreeDate,
-			};
-
-			axios.post(`http://localhost:5000/createMember/`, member).then((res) => {
-				console.log(res.data);
-				alert("Member Account Created");
-			});
-		} else if (formData.position == 2) {
-			// advisory
-			const advisory = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				userId: formData.userId,
-				initialPassword: formData.initialPassword,
-				email: formData.email,
-				assignedChapterId: advisoryCouncilData.assignedChapterId,
-			};
-
-			axios.post(`http://localhost:5000/createAdvisor/`, advisory).then((res) => {
-				console.log(res.data);
-				alert("Advisor Account Created");
-			});
-		} else if (formData.position == 3) {
-			// admin
-			const admin = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				userId: formData.userId,
-				email: formData.email,
-				initialPassword: formData.initialPassword,
-			};
-
-			axios.post(`http://localhost:5000/createAdmin/`, admin).then((res) => {
-				console.log(res.data);
-				alert("Admin Account Created");
-			});
-		} else if (formData.position == 4) {
-			const grandMaster = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				userId: formData.userId,
-				email: formData.email,
-				initialPassword: formData.initialPassword,
-			};
-
-			axios.post(`http://localhost:5000/createGrandMaster/`, grandMaster).then((res) => {
-				console.log(res.data);
-				alert("Grand Master Account Created");
-			});
-		} else if (formData.position == 5) {
-			const chapterScribe = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				userId: formData.userId,
-				email: formData.email,
-				chapterId: advisoryCouncilData.assignedChapterId,
-				initialPassword: formData.initialPassword,
-			};
-
-			axios.post(`http://localhost:5000/createScribe/`, chapterScribe).then((res) => {
-				console.log(res.data);
-				alert("Chapter Scribe Account Created");
-			});
-		} else if (formData.position == 6) {
-			const executiveOfficer = {
-				lastName: formData.lastName,
-				givenName: formData.givenName,
-				middleName: formData.middleName,
-				userId: formData.userId,
-				email: formData.email,
-				initialPassword: formData.initialPassword,
-			};
-
-			axios.post(`http://localhost:5000/createEO/`, executiveOfficer).then((res) => {
-				console.log(res.data);
-				alert("Chapter Scribe Account Created");
-			});
+		if(formData.initialPassword === formData.confirmPassword){
+			if (formData.position == 1) {
+				// member
+				const member = {
+					lastName: formData.lastName,
+					givenName: formData.givenName,
+					middleName: formData.middleName,
+					initialPassword: formData.initialPassword,
+					email: formData.email,
+					idNumber: memberData.idNumber,
+					chapterId: memberData.chapterId,
+					initiatoryDegreeDate: memberData.initiatoryDegreeDate,
+					demolayDegreeDate: memberData.demolayDegreeDate,
+				};
+	
+				axios.post(`http://localhost:5000/createMember/`, member).then((res) => {
+					console.log(res.data);
+					alert("Member Account Created");
+				});
+			} else if (formData.position == 2) {
+				// advisory
+				const advisory = {
+					lastName: formData.lastName,
+					givenName: formData.givenName,
+					middleName: formData.middleName,
+					userId: formData.userId,
+					initialPassword: formData.initialPassword,
+					email: formData.email,
+					assignedChapterId: advisoryCouncilData.assignedChapterId,
+				};
+	
+				axios.post(`http://localhost:5000/createAdvisor/`, advisory).then((res) => {
+					console.log(res.data);
+					alert("Advisor Account Created");
+				});
+			} else if (formData.position == 3) {
+				// admin
+				const admin = {
+					lastName: formData.lastName,
+					givenName: formData.givenName,
+					middleName: formData.middleName,
+					userId: formData.userId,
+					email: formData.email,
+					initialPassword: formData.initialPassword,
+				};
+	
+				axios.post(`http://localhost:5000/createAdmin/`, admin).then((res) => {
+					console.log(res.data);
+					alert("Admin Account Created");
+				});
+			} else if (formData.position == 4) {
+				const grandMaster = {
+					lastName: formData.lastName,
+					givenName: formData.givenName,
+					middleName: formData.middleName,
+					userId: formData.userId,
+					email: formData.email,
+					initialPassword: formData.initialPassword,
+				};
+	
+				axios.post(`http://localhost:5000/createGrandMaster/`, grandMaster).then((res) => {
+					console.log(res.data);
+					alert("Grand Master Account Created");
+				});
+			} else if (formData.position == 5) {
+				const chapterScribe = {
+					lastName: formData.lastName,
+					givenName: formData.givenName,
+					middleName: formData.middleName,
+					userId: formData.userId,
+					email: formData.email,
+					chapterId: advisoryCouncilData.assignedChapterId,
+					initialPassword: formData.initialPassword,
+				};
+				console.log(chapterScribe);
+	
+				axios.post(`http://localhost:5000/createScribe/`, chapterScribe).then((res) => {
+					console.log(res.data);
+					alert("Chapter Scribe Account Created");
+				});
+			} else if (formData.position == 6) {
+				const executiveOfficer = {
+					lastName: formData.lastName,
+					givenName: formData.givenName,
+					middleName: formData.middleName,
+					userId: formData.userId,
+					email: formData.email,
+					initialPassword: formData.initialPassword,
+				};
+	
+				axios.post(`http://localhost:5000/createEO/`, executiveOfficer).then((res) => {
+					console.log(res.data);
+					alert("Executive Officer Account Created");
+				});
+			}
+		} else {
+			alert("Passwords do not match")
 		}
+		
 	};
 
 	useEffect(() => {
 		async function fetchData() {
 			const chap = await axios.get("http://localhost:5000/getAllChapters");
+			console.log(chap.data)
 			setFormData({
 				...FormData,
 				positions: [
@@ -168,7 +176,7 @@ function AdminCreate() {
 				chapters: chap.data.map((chapter) => {
 					return {
 						key: chapter.name,
-						value: chapter.chapterId,
+						value: chapter.chapterID,
 					};
 				}),
 
@@ -328,7 +336,7 @@ function AdminCreate() {
 							</label>
 							<input
 								autoComplete="off"
-								class="form-control"
+								className="form-control"
 								id="email"
 								type="text"
 								placeholder="email"
@@ -343,31 +351,32 @@ function AdminCreate() {
 							<label for="initialPassword" className="col-md-4 col-form-label text-right">
 								Initial Password
 							</label>
-							<div className="col-md-8">
-								<div style={{ position: "relative" }}>
-									<input
-										className="form-control"
-										type={showPassword ? "text" : "password"}
-										placeholder="Password"
-										onChange={onChange}
-										value={formData.initialPassword}
-									/>
-									<button
-										type="button"
-										style={{
-											position: "absolute",
-											right: "10px",
-											top: "50%",
-											transform: "translateY(-50%)",
-											cursor: "pointer",
-										}}
-										onClick={() => setShowPassword(!showPassword)}
-									>
-										{" "}
-										{showPassword ? eyeSlash : eye}
-									</button>
-								</div>
-							</div>
+							<input
+								autoComplete="off"
+								className="form-control"
+								id="initialPassword"
+								type="password"
+								placeholder="Password"
+								onChange={onChange}
+								value={formData.initialPassword}
+							/>{" "}
+						</div>
+					</div>
+
+					<div className="col-md-4">
+						<div className="row mb-3">
+							<label for="initialPassword" className="col-md-4 col-form-label text-right">
+								Confirm Password
+							</label>
+							<input
+								autoComplete="off"
+								className="form-control"
+								id="confirmPassword"
+								type="password"
+								placeholder="Password"
+								onChange={onChange}
+								value={formData.confirmPassword}
+							/>{" "}
 						</div>
 					</div>
 

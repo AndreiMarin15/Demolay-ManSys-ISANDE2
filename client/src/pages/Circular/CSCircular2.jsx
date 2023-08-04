@@ -20,7 +20,7 @@ import MessagePopup from "./MessagePopup.jsx";
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function CSCircular2() {
-	const { circularId } = useParams();
+	const { scribeId, circularId } = useParams();
 
 	const [showPopup, setShowPopup] = useState(false);
 	const [circularDetails, setDetails] = useState({
@@ -32,12 +32,19 @@ function CSCircular2() {
 		timeReleased: "",
 		readBy: [],
 	});
+	const [clickedMember, setMember] = useState({});
 
 	const [members, setMembers] = useState({
 		members: [],
 	});
 
-	const handleReminderClick = () => {
+	const [user, setUser] = useState({});
+	const [chapter, setChapter] = useState({});
+	const[currentMemberId, setMemberId] = useState("")
+
+	const handleReminderClick = (member, memberId) => {
+		setMember(member);
+		setMemberId(memberId)
 		setShowPopup(true);
 	};
 
@@ -47,8 +54,15 @@ function CSCircular2() {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			const user = await axios.get("http://localhost:5000/getCurrentUser");
 			const circular = await axios.get(`http://localhost:5000/getCircular/${circularId}`);
-			const members = await axios.get(`http://localhost:5000/getMembers`);
+			const chapter = user.data.chapterId
+				? await axios.get(`http://localhost:5000/getChapterByID/${user.data.chapterId}`)
+				: "None";
+			const members = user.data.chapterId
+				? await axios.get(`http://localhost:5000/getMembers/${user.data.chapterId}`)
+				: await axios.get(`http://localhost:5000/getMembers`);
+
 			setDetails({
 				subject: circular.data.subject,
 				circularText: circular.data.circularText,
@@ -58,16 +72,19 @@ function CSCircular2() {
 				timeReleased: circular.data.timeReleased,
 				readBy: circular.data.readBy,
 			});
-
+			setUser(user.data);
 			setMembers({
 				members: members.data,
 			});
+			if (chapter !== "None") {
+				setChapter(chapter.data);
+			}
 		};
 
 		fetchData();
 	}, []);
 
-  const getCurrentDate = () => {
+	const getCurrentDate = () => {
 		var today = new Date();
 		var dd = String(today.getDate()).padStart(2, "0");
 		var mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -77,7 +94,7 @@ function CSCircular2() {
 		return today;
 	};
 
-  const getCurrentTime = () => {
+	const getCurrentTime = () => {
 		var today = new Date();
 		var options = { timeZone: "Asia/Manila", hour: "numeric", minute: "numeric", hour12: true };
 		var time = today.toLocaleString("en-US", options);
@@ -106,27 +123,48 @@ function CSCircular2() {
 					>
 						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
 						<div className="text-center">
-							<h5 className="name">Bea Lim</h5>
-							<small class="text-muted">Executive Director, Jose Abad Santos #1</small>
+							<h5 className="name">
+								{user.givenName} {user.lastName}
+							</h5>
+							<small class="text-muted">{chapter.name ? chapter.name : "Grand Master"}</small>
 							<hr className="hori-line" />
 						</div>
 					</div>
 
 					<div className="text-start" style={{ marginLeft: "100px" }}>
-						<Link to="/cscircular">
-							<button className="btn-text" type="button" style={{ border: "0" }}>
-								<span>
-									<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
-								</span>
-								Circulars
-							</button>
-						</Link>
+						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/cscircular/${scribeId}`}}>
+							<span>
+								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
+							</span>
+							Circulars
+						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/csappinprogress/${scribeId}`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 							</span>
 							For Review
+						</button>
+						<br />
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/csapp1/${scribeId}`;
+							}}
+						>
+							<span>
+								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
+							</span>
+							Approve Membership
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
@@ -181,20 +219,31 @@ function CSCircular2() {
 									</div>
 									<h3 class="mb-1">{circularDetails.subject}</h3>
 									<br />
-									<p class="text-muted">{circularDetails.circularText}</p>
+									<p class="text-muted" style={{ whiteSpace: "pre-wrap" }}>
+										{circularDetails.circularText}
+									</p>
 
 									<hr className="horizontal-line" />
 									<div class="container-fluid">
 										<h4 className="heading4">Circular Status for Members</h4>
-										<small className="text-muted">As of {getCurrentDate()} at {getCurrentTime()}</small>
+										<small className="text-muted">
+											As of {getCurrentDate()} at {getCurrentTime()}
+										</small>
 
-										<MessagePopup showPopup={showPopup} onClosePopup={handleClosePopup} />
+										<MessagePopup
+											showPopup={showPopup}
+											onClosePopup={handleClosePopup}
+											member={clickedMember}
+											circularId={circularId}
+											user={user}
+											memberId={currentMemberId}
+										/>
 										<table className="table circ-table" style={{ marginTop: "20px" }}>
 											<thead className="bg-light">
 												<tr>
 													<th>Member Name</th>
 													<th>Circular Read?</th>
-													<th>Date Read</th>
+
 													<th></th>
 												</tr>
 											</thead>
@@ -206,13 +255,36 @@ function CSCircular2() {
 															<td>
 																{member.givenName} {member.lastName}
 															</td>
-															<td>{circularDetails.readBy.includes(member.memberId) ? <p>Read</p> : <p>Unread</p>}</td>
-															<td>—</td>
 															<td>
-																{circularDetails.readBy.includes(member.memberId) ? (
+																{circularDetails.readBy.includes(member._id.toString()) ? (
+																	<p
+																		style={{
+																			color: "green",
+																		}}
+																	>
+																		Read
+																	</p>
+																) : (
+																	<p
+																		style={{
+																			color: "red",
+																		}}
+																	>
+																		Unread
+																	</p>
+																)}
+															</td>
+
+															<td>
+																{circularDetails.readBy.includes(member._id.toString()) ? (
 																	<p></p>
 																) : (
-																	<button className="circtable-btn" onClick={handleReminderClick}>
+																	<button
+																		className="circtable-btn"
+																		onClick={() => {
+																			handleReminderClick(member, member._id);
+																		}}
+																	>
 																		Remind
 																	</button>
 																)}
@@ -221,13 +293,6 @@ function CSCircular2() {
 													);
 												})}
 
-												<tr>
-													<td>Jane Smith</td>
-													<td>Read</td>
-													<td>07-26-2023</td>
-													<td></td>
-												</tr>
-												
 												{/* Add more rows as needed */}
 											</tbody>
 										</table>

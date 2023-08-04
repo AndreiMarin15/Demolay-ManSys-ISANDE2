@@ -16,7 +16,7 @@ import { Component } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ViewCircular from "./ViewCircular.jsx";
+import ViewMessage from "./ViewMessage.jsx";
 
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
@@ -27,12 +27,13 @@ function Inbox() {
 		refresh: 0,
 	});
 
+	const [messages, setMessages] = useState({
+		messages: [],
+	});
+
 	const [currentUser, setCurrentUser] = useState({});
 	const [userChapter, setChapter] = useState({});
-	const [clickedCircular, setClicked] = useState({
-		circularText: "",
-		subject: "",
-	});
+	const [clickedMessage, setClicked] = useState({});
 	const { memberId } = useParams();
 
 	const handleClosePopup = () => {
@@ -43,33 +44,34 @@ function Inbox() {
 		setShowPopup(false);
 	};
 
-	const handleCircularClick = (circular) => {
-		setClicked({
-			subject: circular.subject,
-			circularText: circular.circularText,
-		});
+	const handleMessageClick = (message) => {
+		setClicked(message);
 		setShowPopup(true);
 	};
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const circs = memberId
-				? await axios.get(`http://localhost:5000/getCircularsByUser/${memberId}`)
-				: await axios.get(`http://localhost:5000/getCirculars`);
-
-		//	const user = await axios.get(`http://localhost:5000/getUser/${memberId}`)
-		//	const chapter = await axios.get(`http://localhost:5000/getChapterByID/${user.data.chapterId}`)
-		//	console.log(user.data.chapterId)
-		//	console.log(chapter.data)
-		//	setCurrentUser(user.data)
-		//	setChapter(chapter.data)
-			setCirculars({
-				circulars: circs.data,
+			const user = await axios.get(`http://localhost:5000/getUser/${memberId}`); // might change to get session
+			const chapter = await axios.get(`http://localhost:5000/getChapterByID/${user.data.chapterId}`);
+			console.log(user.data);
+			console.log(chapter.data);
+			setCurrentUser(user.data);
+			setChapter(chapter.data);
+			setMessages({
+				messages: user.data.inbox,
 			});
+			console.log(user.data.inbox);
 		};
 
 		fetchData();
 	}, []);
+
+	const styles = {
+		borderRadius: "50%",
+		width: "200px",
+		height: "200px",
+		objectFit: "cover",
+	};
 
 	return (
 		<div className="container container-fluid ">
@@ -91,17 +93,30 @@ function Inbox() {
 							marginLeft: "50px",
 						}}
 					>
-						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
+						{currentUser.photo ? (
+							<img src={currentUser.photo} alt="img" style={styles} />
+						) : (
+							<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
+						)}
+
 						<div className="text-center">
-							<h5 className="name">{currentUser?.givenName || " "} {currentUser?.lastName || " "}</h5>
+							<h5 className="name">
+								{currentUser?.givenName || " "} {currentUser?.lastName || " "}
+							</h5>
 							<small class="text-muted">Active DeMolay, {userChapter.name}</small>
 							<hr className="hori-line" />
-							
 						</div>
 					</div>
 
 					<div className="text-start" style={{ marginLeft: "100px" }}>
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/membercircular/${memberId}`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
 							</span>
@@ -171,34 +186,27 @@ function Inbox() {
 						<div className="row" style={{ marginTop: "10px", marginLeft: "20px" }}>
 							<div className="col">
 								<div class="list-group">
-									<ViewCircular
+									<ViewMessage
 										showPopup={showPopup}
 										onClosePopup={handleClosePopup}
-										circular={clickedCircular}
-									></ViewCircular>
+										message={clickedMessage}
+									></ViewMessage>
 
-									{circulars.circulars.map(function (circular) {
+									{messages.messages.map(function (message) {
 										return (
 											<>
 												<div
 													className="row"
-													key={circular._id}
+													key={message._id}
 													onClick={() => {
-														handleCircularClick(circular);
+														handleMessageClick(message);
 													}}
 												>
-													<div className="col-md-1 date-time">
-														<p className="circ-date">
-															<b>{circular.disseminatedDate}</b>
-														</p>
-													</div>
 													<div className="col-md-11">
-														<h3 class="mb-1 circ-bold">{circular.subject}</h3>
+														<h3 class="mb-1 circ-bold">{message.subject}</h3>
 														<p class="text-muted">
 															<b>
-																{circular.circularText.length > 100
-																	? circular.circularText.slice(0, 100) + "..."
-																	: circular.circularText}
+																{message.message.length > 100 ? message.message.slice(0, 100) + "..." : message.message}
 															</b>
 														</p>
 													</div>

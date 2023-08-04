@@ -11,6 +11,8 @@ const turnoverController = require("../controllers/turnoverController");
 //});
 
 // router.get("/login", controller.getIndex);
+router.get("/getSession", controller.getSession);
+
 router.post("/newApplication", controller.newApplication);
 router.post("/newApplication2/:id", controller.newApplication2);
 router.post("/newApplication3/:id", controller.newApplication3);
@@ -22,6 +24,7 @@ router.post("/createAdvisor", controller.createAdvisor);
 router.post("/createAdmin", controller.createAdmin);
 router.post("/createScribe", controller.createScribe);
 router.post("/createGrandMaster", controller.createGrandmaster);
+router.post("/createEO", controller.createEO)
 
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
@@ -74,10 +77,12 @@ router.get("/getAdvisory/:id", turnoverController.getAdvisory);
 router.post("/newTurnover", turnoverController.newTurnover);
 router.post("/updateTurnover", turnoverController.updateTurnover);
 
+
 router.get(
   "/getTurnoverReports/:chapterID/:currentTerm",
   turnoverController.getTurnoverReports
 );
+
 router.get("/getChapterByID/:chapter", controller.getChapterByID);
 router.get(
   "/getTurnoverReports/:chapterID/:currentTerm",
@@ -88,9 +93,11 @@ router.get("/getForm1/:id", turnoverController.getForm1);
 router.get("/getAllMembers/:id", turnoverController.getAllMembers);
 router.get("/getChapters", turnoverController.getAllChapters);
 
+
 router.post("/newEvents", turnoverController.newEvents);
 router.post("/updateEvents/:id", turnoverController.updateEvents);
 router.get("/getEvents/:id", turnoverController.getEvents);
+
 
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);
@@ -99,12 +106,18 @@ router.get("/getCircularsByUser/:memberId", controller.getCircularsByUser);
 router.post("/newCircular", controller.newCircular);
 
 router.get("/getMembers", controller.getMembers);
+router.get("/getMembers/:chapterId", controller.getMembersByChapter);
 
 router.get("/getEOs", controller.getEOs);
 router.get("/getMemberIDs", controller.getMemberIDs);
-router.get("/getAdvisoryCouncil", controller.getMemberIDs);
-router.get("/getChapterScribes", controller.getMemberIDs);
+router.get("/getAdvisoryCouncil", controller.getAdvisoryCouncil);
+router.get("/getChapterScribes", controller.getChapterScribes);
 
 router.post("/disseminateCircular/:circularId", controller.disseminateCircular);
+
+router.post("/updateRead/:memberId/:circularId", controller.updateRead);
+
+router.post("/sendMessage/:memberId", controller.sendMessage)
+router.get("/getInbox/:memberId", controller.retrieveInbox)
 
 module.exports = router;
