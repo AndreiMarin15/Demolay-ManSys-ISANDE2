@@ -19,7 +19,7 @@ let session = {};
 
 const controller = {
   getAllMembers: async (req, res) => {
-    const chapterID = req.params.chapterID;
+    const chapterID = req.params.id;
 
     db.findMany(
       Member,

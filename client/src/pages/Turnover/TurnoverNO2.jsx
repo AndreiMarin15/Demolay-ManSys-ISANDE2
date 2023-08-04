@@ -18,7 +18,6 @@ function TurnoverNO2() {
 
   // Fetch organization members' names from the MongoDB database on component mount
   useEffect(() => {
-    console.log(prevPageProps);
     const fetchMembers = async () => {
       const membersData = await axios.get(
         `http://localhost:5000/getAllMembers/${prevPageProps.userData.chapterID}` // ${prevPageProps.userData.chapterID}

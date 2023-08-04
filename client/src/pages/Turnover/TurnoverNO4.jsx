@@ -387,7 +387,14 @@ function TurnoverNO4() {
               id="primary-btn"
               value="SUBMIT"
               onClick={() => {
-                navigate("/turnoverdashboardofficer");
+                switch (prevPageProps.userData.position) {
+                  case "Scribe": {
+                    navigate("/turnoverdashboardscribe");
+                  }
+                  default: {
+                    navigate("/turnoverdashboardofficer");
+                  }
+                }
               }}
             >
               RETURN TO DASHBOARD
