@@ -69,7 +69,11 @@ function TurnoverTF6() {
             }
           }
 
-          navigate("/turnoverDashboardscribe");
+          navigate("/turnoverDashboardscribe", {
+            state: {
+              ...prevPageProps,
+            },
+          });
         });
     } else {
       if (prevPageProps.userData.position === "Master Councilor") {
@@ -203,8 +207,12 @@ function TurnoverTF6() {
             }
           }
         }
-        navigate("/turnoverdashboardofficer");
       }
+      navigate("/turnoverdashboardofficer", {
+        state: {
+          ...prevPageProps,
+        },
+      });
     }
   };
 
@@ -255,7 +263,11 @@ function TurnoverTF6() {
       }
     }
     alert("Disapproved: Waiting for revisions.");
-    navigate("/turnoverdashboardofficer");
+    navigate("/turnoverdashboardofficer", {
+      state: {
+        ...prevPageProps,
+      },
+    });
   };
 
   console.log(prevPageProps);
@@ -547,20 +559,20 @@ function TurnoverTF6() {
           BACK
         </button>
 
-        {prevPageProps.userData.position === "Scribe" ||
-          (prevPageProps.userData.position === "Master Councilor" &&
-            prevPageProps.approved === false && (
-              <button
-                className="primary-btn"
-                type="submit"
-                form="submit"
-                id="primary-btn"
-                value="SUBMIT"
-                onClick={onSubmit}
-              >
-                SIGN
-              </button>
-            ))}
+        {(prevPageProps.userData.position === "Scribe" ||
+          prevPageProps.userData.position === "Master Councilor") &&
+          prevPageProps.approved === false && (
+            <button
+              className="primary-btn"
+              type="submit"
+              form="submit"
+              id="primary-btn"
+              value="SUBMIT"
+              onClick={onSubmit}
+            >
+              SIGN
+            </button>
+          )}
 
         {(prevPageProps.userData.position === "Chapter Advisor" ||
           prevPageProps.userData.position === "Advisory Council Chairman") &&
@@ -596,13 +608,18 @@ function TurnoverTF6() {
             id="primary-btn"
             value="SUBMIT"
             onClick={() => {
-              switch (prevPageProps.userData.position) {
-                case "Scribe": {
-                  navigate("/turnoverdashboardscribe");
-                }
-                default: {
-                  navigate("/turnoverdashboardofficer");
-                }
+              if (prevPageProps.userData.position === "Scribe") {
+                navigate("/turnoverdashboardscribe", {
+                  state: {
+                    ...prevPageProps,
+                  },
+                });
+              } else {
+                navigate("/turnoverdashboardofficer", {
+                  state: {
+                    ...prevPageProps,
+                  },
+                });
               }
             }}
           >

@@ -142,8 +142,11 @@ function CSCircular() {
               onClick={() => {
                 navigate("/turnoverdashboardscribe", {
                   state: {
-                    scribeID: scribeId,
-                    userData: user,
+                    userData: {
+                      userID: user._id,
+                      name: user.givenName + " " + user.lastName,
+                      chapterID: user.chapterId,
+                    },
                     chapterData: chapter,
                   },
                 });
