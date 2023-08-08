@@ -86,8 +86,9 @@ function Appform2() {
 	const [provincesByRegion, setProvincesByRegion] = useState([]);
 	const [citiesByProvince, setCitiesByProvince] = useState([]);
 	const [barangaysByCity, setBarangaysByCity] = useState([]);
+	const [chapterData, setChapterData] = useState({});
 
-	let { applicationId } = useParams();
+	let { applicationId, chapterId } = useParams();
 
 	useEffect(() => {
 		fetchData();
@@ -105,6 +106,9 @@ function Appform2() {
 					axios.get(API_BRGY),
 				]);
 
+			const chapter = await axios.get(`http://localhost:5000/getChapterByID/${chapterId}`);
+
+			setChapterData(chapter.data)
 			setFormData({
 				...formData,
 
@@ -117,6 +121,8 @@ function Appform2() {
 				cities: citiesResponse.data.sort((a, b) => a.name.localeCompare(b.name)),
 
 				barangays: barangaysResponse.data.sort((a, b) => a.name.localeCompare(b.name)),
+
+				religions: ["Roman Catholic", "Christian", "Iglesia Ni Cristo", "Islam", "Others"]
 			});
 
 			console.log(formData.regions, formData.provinces, formData.cities);
@@ -274,7 +280,7 @@ function Appform2() {
 				</div>
 
 				<div className="col-md-6">
-					<h1 className="position-absolute end-0">[Chapter chosen from previous page]</h1>
+					<h1 className="position-absolute end-0">{chapterId ? chapterData.name : ""}</h1>
 				</div>
 			</div>
 			<hr />
@@ -284,7 +290,7 @@ function Appform2() {
 					<div className="col-md-6">
 						<div className="row mb-3">
 							<label for="inputLast" className="col-md-4 col-form-label text-right">
-								Last Name:
+								Last Name: <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -301,8 +307,9 @@ function Appform2() {
 					<div className="col-md-6">
 						<div className="row mb-3">
 							<label for="uploadID" className="col-md-4 col-form-label text-right">
-								ID (2 x 2) Photo:
+								ID (2 x 2) Photo: <span style={{color: "red"}}>*</span>
 							</label>
+
 							<input
 								type="file"
 								className="form-control"
@@ -317,7 +324,7 @@ function Appform2() {
 					<div className="col-md-6">
 						<div className="row mb-3">
 							<label for="inputGiven" className="col-md-4 col-form-label text-right">
-								Given Name:
+								Given Name: <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -334,7 +341,7 @@ function Appform2() {
 					<div className="col-md-6">
 						<div className="row mb-3">
 							<label for="inputMiddle" className="col-md-4 col-form-label text-right">
-								Middle Name:
+								Middle Name: <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -370,7 +377,7 @@ function Appform2() {
 					<div className="col-md-3">
 						<div className="row mb-3">
 							<label for="inputRegion" className="col-md-4 col-form-label text-right">
-								Region{" "}
+								Region{" "} <span style={{color: "red"}}>*</span>
 							</label>
 							<select
 								className="form-select form-control"
@@ -394,7 +401,7 @@ function Appform2() {
 					<div className="col-md-3">
 						<div className="row mb-3">
 							<label for="inputCity" className="col-md-4 col-form-label text-right">
-								Zip Code{" "}
+								Zip Code{" "} <span style={{color: "red"}}>*</span>
 							</label>
 
 							<input
@@ -430,7 +437,7 @@ function Appform2() {
 							{selectedRegion && (
 								<>
 									<label for="inputProvince" className="col-md-4 col-form-label text-right">
-										State/Province
+										State/Province <span style={{color: "red"}}>*</span>
 									</label>
 									<select
 										className="form-select form-control"
@@ -476,7 +483,7 @@ function Appform2() {
 								(selectedProvince || provincesByRegion == 0) && (
 									<>
 										<label for="inputCity" className="col-md-4 col-form-label text-right">
-											City
+											City <span style={{color: "red"}}>*</span>
 										</label>
 										<select
 											className="form-select form-control"
@@ -505,7 +512,7 @@ function Appform2() {
 					<div className="col-md-4">
 						<div className="row mb-3">
 							<label for="inputEmail" className="col-md-4 col-form-label text-right">
-								Email
+								Email <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="email"
@@ -521,7 +528,7 @@ function Appform2() {
 					<div className="col-md-5">
 						<div className="row mb-3">
 							<label for="inputFB" className="col-md-4 col-form-label text-right">
-								Facebook Name
+								Facebook Name <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -537,7 +544,7 @@ function Appform2() {
 					<div className="col-md-3">
 						<div className="row mb-3">
 							<label for="inputnum" className="col-md-4 col-form-label text-right">
-								Mobile No.
+								Mobile No. <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -554,7 +561,7 @@ function Appform2() {
 					<div className="col-md-4">
 						<div className="row mb-3">
 							<label for="inputBday" className="col-md-4 col-form-label text-right">
-								Birthdate
+								Birthdate <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="date"
@@ -609,7 +616,7 @@ function Appform2() {
 					<div className="col-md-4">
 						<div className="row mb-3">
 							<label for="inputSchool" className="col-md-4 col-form-label text-right">
-								Current School
+								Current School <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -625,7 +632,7 @@ function Appform2() {
 					<div className="col-md-5">
 						<div className="row mb-3">
 							<label for="inputCourse" className="col-md-4 col-form-label text-right">
-								Level/Course
+								Level/Course <span style={{color: "red"}}>*</span>
 							</label>
 							<input
 								type="text"
@@ -657,7 +664,7 @@ function Appform2() {
 				<div className="row">
 					<div className="row mb-3">
 						<label for="schoolAdd" className="col-md-2 col-form-label text-right">
-							School Address
+							School Address <span style={{color: "red"}}>*</span>
 						</label>
 						<input
 							type="text"

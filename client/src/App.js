@@ -98,6 +98,7 @@ function App() {
 					<Route path="appform1" element={<AppForm1 />} />
 					<Route path="appform2" element={<AppForm2 />} /> {/* testing */}
 					<Route path="appform2/:applicationId" element={<AppForm2 />} />
+					<Route path="appform2/:applicationId/:chapterId" element={<AppForm2 />} />
 					<Route path="appform3" element={<AppForm3 />} />
 					<Route path="appform3/:applicationId" element={<AppForm3 />} />
 					<Route path="appform4" element={<AppForm4 />} />

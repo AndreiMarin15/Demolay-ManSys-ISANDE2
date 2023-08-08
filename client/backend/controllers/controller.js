@@ -106,6 +106,8 @@ const controller = {
 			parentEmail: req.body.parentEmail,
 			parentMobile: req.body.parentMobile,
 			parentApproved: req.body.parentApproved,
+
+			parentSignature: req.body.parentSignature
 		};
 
 		console.log(update);

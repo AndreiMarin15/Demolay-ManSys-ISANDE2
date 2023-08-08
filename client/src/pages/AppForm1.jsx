@@ -87,7 +87,7 @@ function Appform1() {
 
 		axios.post("http://localhost:5000/newApplication", application).then((res) => {
 			console.log("data: " + res.data);
-			window.location.href = `/appform2/${res.data}`;
+			window.location.href = `/appform2/${res.data}/${formData.chapterId}`;
 		});
 	};
 

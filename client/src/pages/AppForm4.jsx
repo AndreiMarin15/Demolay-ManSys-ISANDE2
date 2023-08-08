@@ -69,6 +69,8 @@ function Appform4() {
 		parentRelationship: "",
 		parentEmail: "",
 		parentMobile: "",
+
+		
 	});
 
 	useEffect(() => {
@@ -244,9 +246,7 @@ function Appform4() {
 					<h1>Application</h1>
 				</div>
 
-				<div className="col-md-6">
-					<h1 className="position-absolute end-0"> [Chapter] </h1>
-				</div>
+				
 			</div>
 			<hr />
 

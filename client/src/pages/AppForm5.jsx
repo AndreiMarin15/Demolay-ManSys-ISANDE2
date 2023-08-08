@@ -149,7 +149,9 @@ function Appform5() {
 				<div className="col-md-12 conf-message">
 					Your application has been submitted! <br />
 					Please use your assigned Applicant ID below, and set a password for your login credentials to see your
-					application results once available.
+					application results once available. <br />
+
+					<span style={{color: "red"}}>Kindly save your Applicant ID. It will be necessary in order to view your application status.</span>
 				</div>
 			</div>
 

@@ -6,6 +6,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function Appform3() {
+	const [parentSignature, setParentSignature] = useState(String);
+	const [chapterData, setChapter] = useState({})
+
 	const [formData, setFormData] = useState({
 		chapters: [],
 
@@ -35,7 +38,7 @@ function Appform3() {
 		parentApproved: false,
 	});
 
-	let { applicationId } = useParams();
+	let { applicationId, chapterId } = useParams();
 
 	useEffect(() => {
 		axios.get("http://localhost:5000/getAllChapters").then((res1) => {
@@ -112,6 +115,8 @@ function Appform3() {
 			parentEmail: formData.parentEmail,
 			parentMobile: formData.parentMobile,
 			parentApproved: formData.parentApproved,
+
+			parentSignature: parentSignature
 		};
 
 		console.log(applicationUpdate);
@@ -123,6 +128,29 @@ function Appform3() {
 		});
 	};
 
+	const handleImageUpload = async (e) => {
+		const file = e.target.files[0];
+		const base64 = await convertToBase64(file);
+
+		setParentSignature(base64);
+
+		console.log(parentSignature);
+	};
+
+	function convertToBase64(file) {
+		return new Promise((resolve, reject) => {
+			const fileReader = new FileReader();
+
+			fileReader.readAsDataURL(file);
+			fileReader.onload = () => {
+				resolve(fileReader.result);
+			};
+			fileReader.onerror = (error) => {
+				reject(error);
+			};
+		});
+	}
+
 	return (
 		<div className="container container-fluid ">
 			<div className="row">
@@ -131,7 +159,7 @@ function Appform3() {
 				</div>
 
 				<div className="col-md-6">
-					<h1 className="position-absolute end-0"> [Chapter] </h1>
+					<h1 className="position-absolute end-0"> {chapterId ? chapterData.name : ""} </h1>
 				</div>
 			</div>
 			<hr />
@@ -280,7 +308,7 @@ function Appform3() {
 						<div className="col-md-4">
 							<div className="row mb-3">
 								<label for="reference1Name" className="col-md-4 col-form-label text-right">
-									Name
+									Name <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -296,7 +324,7 @@ function Appform3() {
 						<div className="col-md-2">
 							<div className="row mb-3">
 								<label for="reference1Age" className="col-md-4 col-form-label text-right">
-									Age
+									Age <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -312,7 +340,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="reference1Email" className="col-md-4 col-form-label text-right">
-									Email
+									Email <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -328,7 +356,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="reference1Mobile" className="col-md-4 col-form-label text-right">
-									Mobile No.
+									Mobile No. <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -346,7 +374,7 @@ function Appform3() {
 						<div className="col-md-4">
 							<div className="row mb-3">
 								<label for="reference2Name" className="col-md-4 col-form-label text-right">
-									Name
+									Name <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -362,7 +390,7 @@ function Appform3() {
 						<div className="col-md-2">
 							<div className="row mb-3">
 								<label for="referece2Age" className="col-md-4 col-form-label text-right">
-									Age
+									Age <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -378,7 +406,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="reference2Email" className="col-md-4 col-form-label text-right">
-									Email
+									Email <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -394,7 +422,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="reference2Mobile" className="col-md-4 col-form-label text-right">
-									Mobile No.
+									Mobile No. <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -419,7 +447,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="parentName" className="col-md-4 col-form-label text-right">
-									Name
+									Name <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="email"
@@ -435,7 +463,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="parentRelationship" className="col-md-4 col-form-label text-right">
-									Relationship
+									Relationship <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -451,7 +479,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="parentEmail" className="col-md-4 col-form-label text-right">
-									Email
+									Email <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -467,7 +495,7 @@ function Appform3() {
 						<div className="col-md-3">
 							<div className="row mb-3">
 								<label for="parentMobile" className="col-md-4 col-form-label text-right">
-									Mobile No.
+									Mobile No. <span style={{ color: "red" }}>*</span>
 								</label>
 								<input
 									type="text"
@@ -494,6 +522,20 @@ function Appform3() {
 								<label className="form-check-label" for="gridCheck">
 									We, the parent/guardian hereby grant our CONSENT and APPROVE our son/ward in joining DeMolay.
 								</label>
+							</div>
+
+							<div>
+							<label for="uploadID" className="col-md-4 col-form-label text-right">
+									Parent Signature: <span style={{ color: "red" }}>*</span>
+								</label>
+
+								<input
+									type="file"
+									className="form-control"
+									id="photo"
+									accept=".jpeg, .png, .jpg"
+									onChange={handleImageUpload}
+								/>
 							</div>
 						</div>
 					</div>

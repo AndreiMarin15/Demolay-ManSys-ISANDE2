@@ -16,6 +16,8 @@ const applicationSchema = new Schema({
 
 	photo: String,
 
+	parentSignature: String,
+
 	streetAddress: String,
 	apt: String,
 	brgy: String,
