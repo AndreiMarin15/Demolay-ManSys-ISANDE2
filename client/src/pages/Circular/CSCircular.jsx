@@ -10,6 +10,7 @@ import {
   faMagnifyingGlass,
   faFileLines,
   faAddressBook,
+  faPhoneSquare
 } from "@fortawesome/free-solid-svg-icons";
 import { Component } from "react";
 import { useParams } from "react-router-dom";
@@ -135,6 +136,17 @@ function CSCircular() {
               Approve Membership
             </button>
             <br />
+            
+            <button className="btn-text" type="button" style={{ border: "0" }} onClick={( ) => {window.location.href = `/setMeeting/${scribeId}`}}>
+              <span>
+                <FontAwesomeIcon
+                  icon={faPhoneSquare}
+                  style={{ marginRight: "8px" }}
+                />
+              </span>
+              Meetings
+            </button>
+
             <button
               className="btn-text"
               type="button"
@@ -157,6 +169,8 @@ function CSCircular() {
               </span>
               Forms and Reports
             </button>
+
+
             <br />
             <button
               className="btn-text"

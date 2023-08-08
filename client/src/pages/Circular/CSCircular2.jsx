@@ -10,6 +10,7 @@ import {
 	faMagnifyingGlass,
 	faFileLines,
 	faAddressBook,
+	faPhoneSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { Component } from "react";
 import { useParams } from "react-router-dom";
@@ -40,11 +41,11 @@ function CSCircular2() {
 
 	const [user, setUser] = useState({});
 	const [chapter, setChapter] = useState({});
-	const[currentMemberId, setMemberId] = useState("")
+	const [currentMemberId, setMemberId] = useState("");
 
 	const handleReminderClick = (member, memberId) => {
 		setMember(member);
-		setMemberId(memberId)
+		setMemberId(memberId);
 		setShowPopup(true);
 	};
 
@@ -132,7 +133,14 @@ function CSCircular2() {
 					</div>
 
 					<div className="text-start" style={{ marginLeft: "100px" }}>
-						<button className="btn-text" type="button" style={{ border: "0" }} onClick={() => {window.location.href = `/cscircular/${scribeId}`}}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/cscircular/${scribeId}`;
+							}}
+						>
 							<span>
 								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
 							</span>
@@ -165,6 +173,20 @@ function CSCircular2() {
 								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 							</span>
 							Approve Membership
+						</button>
+
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/setMeeting/${scribeId}`;
+							}}
+						>
+							<span>
+								<FontAwesomeIcon icon={faPhoneSquare} style={{ marginRight: "8px" }} />
+							</span>
+							Meetings
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>

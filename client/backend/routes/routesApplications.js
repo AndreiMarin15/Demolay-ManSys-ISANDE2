@@ -120,4 +120,7 @@ router.post("/updateRead/:memberId/:circularId", controller.updateRead);
 router.post("/sendMessage/:memberId", controller.sendMessage)
 router.get("/getInbox/:memberId", controller.retrieveInbox)
 
+router.get("/getMeetings", controller.getAllMeetings)
+router.post("/newMeeting", controller.newMeeting)
+
 module.exports = router;

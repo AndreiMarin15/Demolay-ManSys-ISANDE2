@@ -12,6 +12,7 @@ const Circulars = require("../models/circulars.js");
 const ChapterScribe = require("../models/chapterScribe.js");
 const GrandMaster = require("../models/grandMaster.js");
 const ExecutiveOfficer = require("../models/executiveOfficer.js");
+const Meetings = require("../models/meetings.js");
 
 let session = {};
 
@@ -107,7 +108,7 @@ const controller = {
 			parentMobile: req.body.parentMobile,
 			parentApproved: req.body.parentApproved,
 
-			parentSignature: req.body.parentSignature
+			parentSignature: req.body.parentSignature,
 		};
 
 		console.log(update);
@@ -975,6 +976,20 @@ const controller = {
 	retrieveInbox: async (req, res) => {
 		Member.find({ _id: req.params.id }).then((member) => {
 			res.send(member);
+		});
+	},
+
+	getAllMeetings: async (req, res) => {
+		const meetings = await Meetings.find({}, {}).sort({date: -1}).sort({time: -1});
+
+		res.send(meetings);
+	},
+
+	newMeeting: async (req, res) => {
+		const meeting = req.body;
+
+		db.insertOne(Meetings, meeting, (result) => {
+			res.send(result);
 		});
 	},
 };

@@ -191,6 +191,7 @@ function App() {
 					<Route path="sendcircular" element={<SendCircular />} />
 					<Route path="sendcircular/:grandmasterId" element={<SendCircular />} />
 					<Route path="setmeeting" element={<SetMeeting />} />
+					<Route path="setmeeting/:userId" element={<SetMeeting />} />
 				</Route>
 			</Routes>
 		</>
