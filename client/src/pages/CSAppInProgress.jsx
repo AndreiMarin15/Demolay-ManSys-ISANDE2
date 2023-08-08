@@ -46,7 +46,7 @@ function CSAppInProgress() {
 							console.log(applicant)
 							
 							if(!applicant.petStatus === "Approved")
-							{if (applicant.status === "Approved") {
+							{if (applicant.status === "Approved" || applicant.status == null) {
 								return true;
 							} else {
 								return false;
