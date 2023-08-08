@@ -84,6 +84,7 @@ import SendCircular from "./pages/Circular/SendCircular";
 
 import Header from "./components/Header";
 import EOCircular from "./pages/Circular/EOCircular";
+import SetMeeting from "./pages/Meetings/SetMeeting";
 
 function App() {
 	return (
@@ -189,6 +190,7 @@ function App() {
 					<Route path="inbox/:memberId" element={<Inbox />} />
 					<Route path="sendcircular" element={<SendCircular />} />
 					<Route path="sendcircular/:grandmasterId" element={<SendCircular />} />
+					<Route path="setmeeting" element={<SetMeeting />} />
 				</Route>
 			</Routes>
 		</>
