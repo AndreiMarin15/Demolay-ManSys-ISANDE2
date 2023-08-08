@@ -1,0 +1,19 @@
+.meeting-table th:nth-child(2),
+td:nth-child(2) {
+  text-align: center;
+}
+
+.meeting-table th:nth-child(3),
+td:nth-child(3) {
+  text-align: center;
+}
+
+.row {
+  margin-bottom: 10px;
+  margin-left: -50px;
+}
+
+.set-meeting {
+  width: auto;
+  margin-left: 120px;
+}
