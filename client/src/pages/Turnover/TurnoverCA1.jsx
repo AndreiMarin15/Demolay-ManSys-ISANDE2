@@ -65,16 +65,6 @@ function TurnoverCA1() {
     });
   };
 
-  const handleBackButtonClick = () => {
-    navigate("/turnoverdashboardscribe", {
-      state: {
-        userData: prevPageProps.userData,
-        chapterData: prevPageProps.chapterData,
-        turnoverID: prevPageProps.turnoverID,
-      },
-    });
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -87,7 +77,11 @@ function TurnoverCA1() {
         .then((res) => {
           console.log("Advisory Updated: " + res.data);
 
-          navigate("/turnoverDashboardscribe");
+          navigate("/turnoverDashboardscribe", {
+            state: {
+              ...prevPageProps,
+            },
+          });
         });
     } else if (prevPageProps.userData.position === "Chapter Advisor") {
       if (prevPageProps.approved === false) {
@@ -103,21 +97,23 @@ function TurnoverCA1() {
         alert("Already approved.");
       }
 
-      navigate("/turnoverdashboardofficer");
+      navigate("/turnoverdashboardofficer", {
+        state: {
+          ...prevPageProps,
+        },
+      });
     }
   };
 
-  console.log(formData);
+  console.log(prevPageProps);
 
   return (
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Certification of Advisory Council Members </h1>
-        <Link to="">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
+        <button type="button" className="primary-btn">
+          SAVE AND COMPLETE LATER
+        </button>
       </div>
 
       <hr />
@@ -153,7 +149,7 @@ function TurnoverCA1() {
                 placeholder="Enter Full Name"
                 onChange={onChange}
                 value={formData.chairID}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -175,7 +171,7 @@ function TurnoverCA1() {
                 placeholder="Enter Address"
                 onChange={onChange}
                 value={formData.chairAddress}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -194,7 +190,7 @@ function TurnoverCA1() {
                 placeholder="Enter Email"
                 onChange={onChange}
                 value={formData.chairEmail}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -213,7 +209,7 @@ function TurnoverCA1() {
                 placeholder="Enter Mobile No."
                 onChange={onChange}
                 value={formData.chairPhone}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -234,10 +230,8 @@ function TurnoverCA1() {
                 className="form-select form-control"
                 id="chairIsReAppt"
                 onChange={onChange}
-                value={
-                  formData.chairIsReAppt ? "Re-Appointed" : "Newly Appointed"
-                }
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                value={formData.chairIsReAppt}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               >
                 <option value="" disabled>
                   Select
@@ -260,7 +254,7 @@ function TurnoverCA1() {
                 placeholder="0"
                 onChange={onChange}
                 value={formData.chairYears}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -286,7 +280,7 @@ function TurnoverCA1() {
                 placeholder="Enter Full Name"
                 onChange={onChange}
                 value={formData.caID}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -305,7 +299,7 @@ function TurnoverCA1() {
                 placeholder="Enter Address"
                 onChange={onChange}
                 value={formData.caAddress}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -324,7 +318,7 @@ function TurnoverCA1() {
                 placeholder="Enter Email"
                 onChange={onChange}
                 value={formData.caEmail}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -343,7 +337,7 @@ function TurnoverCA1() {
                 placeholder="Enter Mobile No."
                 onChange={onChange}
                 value={formData.caPhone}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -361,8 +355,8 @@ function TurnoverCA1() {
                 className="form-select form-control"
                 id="caIsReAppt"
                 onChange={onChange}
-                value={formData.caIsReAppt ? "Re-Appointed" : "Newly Appointed"}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                value={formData.caIsReAppt}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               >
                 <option value="" disabled>
                   Select
@@ -385,7 +379,7 @@ function TurnoverCA1() {
                 placeholder="0"
                 onChange={onChange}
                 value={formData.caYears}
-                disabled={prevPageProps.userData.position === "Chapter Advisor"}
+                disabled={prevPageProps.userData.position !== "Scribe"}
               />
             </div>
           </div>
@@ -393,46 +387,96 @@ function TurnoverCA1() {
       </div>
 
       {/* Button */}
-      {prevPageProps.userData.position === "Chapter Advisor" ? (
-        <div className="d-flex">
+      <div className="d-flex justify-content-between mt-4">
+        <button
+          className="primary-btn"
+          type="button"
+          id="back-btn"
+          onClick={() => {
+            if (prevPageProps.userData.position === "Scribe") {
+              navigate("/turnoverdashboardscribe", {
+                state: {
+                  ...prevPageProps,
+                },
+              });
+            } else {
+              navigate("/turnoverdashboardofficer", {
+                state: {
+                  ...prevPageProps,
+                },
+              });
+            }
+          }}
+        >
+          BACK
+        </button>
+
+        {prevPageProps.userData.position === "Scribe" &&
+          prevPageProps.approved === false && (
+            <button
+              className="primary-btn"
+              type="submit"
+              form="submit"
+              id="primary-btn"
+              value="SUBMIT"
+              onClick={onSubmit}
+            >
+              SEND
+            </button>
+          )}
+
+        {(prevPageProps.userData.position === "Chapter Advisor" ||
+          prevPageProps.userData.position === "Advisory Council Chairman") &&
+          prevPageProps.approved === false && (
+            <div className="d-flex justify-content-between">
+              <button
+                type="submit"
+                form="submit"
+                className="primary-btn"
+                value="DISAPPROVE"
+              >
+                DISAPPROVE
+              </button>
+              <button
+                type="submit"
+                form="submit"
+                className="primary-btn"
+                value="APPROVE"
+                onClick={onSubmit}
+              >
+                APPROVE
+              </button>
+            </div>
+          )}
+
+        {(prevPageProps.userData.position === "Executive Officer" ||
+          prevPageProps.approved === true) && (
           <button
+            className="primary-btn"
             type="submit"
             form="submit"
-            className="primary-btn"
-            value="DISAPPROVE"
-          >
-            DISAPPROVE
-          </button>
-          <button
-            type="submit"
-            form="submit"
-            className="primary-btn"
-            value="APPROVE"
-            onClick={onSubmit}
-          >
-            APPROVE
-          </button>
-        </div>
-      ) : (
-        <div className="d-flex justify-content-between mt-4">
-          <button
-            type="button"
-            className="primary-btn"
-            onClick={handleBackButtonClick}
-          >
-            BACK
-          </button>
-          <button
-            type="submit"
-            form="submit"
-            className="primary-btn"
+            id="primary-btn"
             value="SUBMIT"
-            onClick={onSubmit}
+            onClick={() => {
+              if (prevPageProps.userData.position === "Scribe") {
+                navigate("/turnoverdashboardscribe", {
+                  state: {
+                    ...prevPageProps,
+                  },
+                });
+              } else {
+                navigate("/turnoverdashboardofficer", {
+                  state: {
+                    ...prevPageProps,
+                  },
+                });
+              }
+            }}
           >
-            SUBMIT
+            RETURN TO DASHBOARD
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

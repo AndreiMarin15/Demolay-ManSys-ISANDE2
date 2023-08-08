@@ -32,7 +32,11 @@ function TurnoverNO4() {
         )
         .then((res) => {
           console.log("New Officers Updated: " + res.data);
-          navigate("/turnoverDashboardscribe");
+          navigate("/turnoverDashboardscribe", {
+            state: {
+              ...prevPageProps,
+            },
+          });
         });
     } else {
       if (prevPageProps.userData.position === "Chapter Advisor") {
@@ -119,7 +123,11 @@ function TurnoverNO4() {
           }
         }
       }
-      navigate("/turnoverDashboardofficer");
+      navigate("/turnoverDashboardofficer", {
+        state: {
+          ...prevPageProps,
+        },
+      });
     }
   };
 
@@ -171,7 +179,11 @@ function TurnoverNO4() {
         alert("Disapproved: Waiting for revisions.");
       }
     }
-    navigate("/turnoverdashboardofficer");
+    navigate("/turnoverdashboardofficer", {
+      state: {
+        ...prevPageProps,
+      },
+    });
   };
 
   console.log(prevPageProps);
@@ -387,13 +399,18 @@ function TurnoverNO4() {
               id="primary-btn"
               value="SUBMIT"
               onClick={() => {
-                switch (prevPageProps.userData.position) {
-                  case "Scribe": {
-                    navigate("/turnoverdashboardscribe");
-                  }
-                  default: {
-                    navigate("/turnoverdashboardofficer");
-                  }
+                if (prevPageProps.userData.position === "Scribe") {
+                  navigate("/turnoverdashboardscribe", {
+                    state: {
+                      ...prevPageProps,
+                    },
+                  });
+                } else {
+                  navigate("/turnoverdashboardofficer", {
+                    state: {
+                      ...prevPageProps,
+                    },
+                  });
                 }
               }}
             >
