@@ -41,13 +41,10 @@ function TurnoverDashboard1() {
   const prevPageProps = location.state;
 
   const [userData, setUserData] = useState({
-    userID: prevPageProps.scribeID || "0118-27061",
-    name:
-      prevPageProps.userData.givenName +
-        " " +
-        prevPageProps.userData.lastName || "Philip Tolentino",
+    userID: prevPageProps.userData.userID || "0118-27061",
+    name: prevPageProps.userData.name || "Philip Tolentino",
     position: "Scribe",
-    chapterID: prevPageProps.userData.chapterId || "1",
+    chapterID: prevPageProps.userData.chapterID || "1",
   });
 
   const [chapterData, setChapterData] = useState({});
@@ -493,6 +490,7 @@ function TurnoverDashboard1() {
               turnoverID: turnoverData.turnoverStatusID,
               formData: advisoryData,
               advisoryID: turnoverData.advisoryID,
+              approved: turnoverData.advisoryApproved,
             },
           });
         });
@@ -538,6 +536,7 @@ function TurnoverDashboard1() {
               turnoverID: turnoverData.turnoverStatusID,
               formData: res.data,
               advisoryID: res.data._id,
+              approved: turnoverData.advisoryApproved,
             },
           });
         });
@@ -579,7 +578,7 @@ function TurnoverDashboard1() {
               type="button"
               style={{ border: "0" }}
               onClick={() => {
-                window.location.href = `/cscircular/${prevPageProps.scribeID}`;
+                window.location.href = `/cscircular/${prevPageProps.userData.userID}`;
               }}
             >
               <span>
@@ -596,7 +595,7 @@ function TurnoverDashboard1() {
               type="button"
               style={{ border: "0" }}
               onClick={() => {
-                window.location.href = `/csappinprogress/${prevPageProps.scribeID}`;
+                window.location.href = `/csappinprogress/${prevPageProps.userData.userID}`;
               }}
             >
               <span>
@@ -613,7 +612,7 @@ function TurnoverDashboard1() {
               type="button"
               style={{ border: "0" }}
               onClick={() => {
-                window.location.href = `/csapp1/${prevPageProps.scribeID}`;
+                window.location.href = `/csapp1/${prevPageProps.userData.userID}`;
               }}
             >
               <span>

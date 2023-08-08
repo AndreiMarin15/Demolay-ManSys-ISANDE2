@@ -128,6 +128,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="senBook"
+                  min="0"
                   value={formData.senBook}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -148,6 +149,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="crown"
+                  min="0"
                   value={formData.crown}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -168,6 +170,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="blackRobes"
+                  min="0"
                   value={formData.blackRobes}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -188,6 +191,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="whiteRobes"
+                  min="0"
                   value={formData.whiteRobes}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -208,6 +212,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="altarCloth"
+                  min="0"
                   value={formData.altarCloth}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -228,6 +233,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="bible"
+                  min="0"
                   value={formData.bible}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -252,6 +258,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="candleStands"
+                  min="0"
                   value={formData.candleStands}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -272,6 +279,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="candleLights"
+                  min="0"
                   value={formData.candleLights}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -292,6 +300,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="banner"
+                  min="0"
                   value={formData.banner}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -312,6 +321,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="charterLT"
+                  min="0"
                   value={formData.charterLT}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -332,6 +342,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="ballotBox"
+                  min="0"
                   value={formData.ballotBox}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}
@@ -352,6 +363,7 @@ function TurnoverHR1() {
                   type="number"
                   className="form-control"
                   id="scribeNotebook"
+                  min="0"
                   value={formData.scribeNotebook}
                   disabled={prevPageProps.userData.position !== "Scribe"}
                   onChange={onChange}

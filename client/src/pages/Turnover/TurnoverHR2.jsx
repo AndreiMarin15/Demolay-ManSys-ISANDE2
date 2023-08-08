@@ -34,7 +34,11 @@ function TurnoverHR2() {
         )
         .then((res) => {
           console.log("Assets Updated: " + res.data);
-          navigate("/turnoverDashboardscribe");
+          navigate("/turnoverDashboardscribe", {
+            state: {
+              ...prevPageProps,
+            },
+          });
         });
     } else {
       if (prevPageProps.userData.position === "Chapter Advisor") {
@@ -121,7 +125,11 @@ function TurnoverHR2() {
           }
         }
       }
-      navigate("/turnoverDashboardofficer");
+      navigate("/turnoverDashboardofficer", {
+        state: {
+          ...prevPageProps,
+        },
+      });
     }
   };
 
@@ -173,7 +181,11 @@ function TurnoverHR2() {
         alert("Disapproved: Waiting for revisions.");
       }
     }
-    navigate("/turnoverdashboardofficer");
+    navigate("/turnoverdashboardofficer", {
+      state: {
+        ...prevPageProps,
+      },
+    });
   };
 
   console.log(prevPageProps);
@@ -388,13 +400,18 @@ function TurnoverHR2() {
               id="primary-btn"
               value="SUBMIT"
               onClick={() => {
-                switch (prevPageProps.userData.position) {
-                  case "Scribe": {
-                    navigate("/turnoverdashboardscribe");
-                  }
-                  default: {
-                    navigate("/turnoverdashboardofficer");
-                  }
+                if (prevPageProps.userData.position === "Scribe") {
+                  navigate("/turnoverdashboardscribe", {
+                    state: {
+                      ...prevPageProps,
+                    },
+                  });
+                } else {
+                  navigate("/turnoverdashboardofficer", {
+                    state: {
+                      ...prevPageProps,
+                    },
+                  });
                 }
               }}
             >
