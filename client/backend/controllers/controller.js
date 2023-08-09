@@ -238,7 +238,7 @@ const controller = {
 				userId: data.userId,
 				initialPassword: hash,
 				email: data.email,
-				assignedChapterId: data.assignedChapterId,
+				chapterAssigned: data.assignedChapterId,
 			};
 
 			db.insertOne(AdvisoryCouncils, advisor, (result) => {

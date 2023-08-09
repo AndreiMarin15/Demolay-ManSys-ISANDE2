@@ -8,7 +8,7 @@ const advisoryCouncilSchema = new Schema({
   userId: String,
   password: String,
   email: String,
-  assignedChapterId: String,
+  chapterAssigned: String,
 });
 
 const AdvisoryCouncils = mongoose.model(
