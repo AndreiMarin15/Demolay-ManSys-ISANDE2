@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsAdd() {
+
   const location = useLocation();
   const navigate = useNavigate();
   const prevPageProps = location.state;
@@ -979,5 +980,6 @@ function EventsAdd() {
       </div>
     </div>
   );
+
 }
 export default EventsAdd;

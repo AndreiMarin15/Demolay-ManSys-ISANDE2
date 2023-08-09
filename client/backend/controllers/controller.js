@@ -70,10 +70,15 @@ const controller = {
 
 		console.log(update);
 
-		await db.updateOne(Application, { _id: applicationId }, update, (result) => {
-			console.log(result);
-			res.send(result._id);
-		});
+		await db.updateOne(
+			Application,
+			{ _id: applicationId },
+			update,
+			(result) => {
+				console.log(result);
+				res.send(result._id);
+			}
+		);
 	},
 
 	newApplication3: async (req, res) => {
@@ -113,9 +118,14 @@ const controller = {
 
 		console.log(update);
 
-		await db.updateOne(Application, { _id: applicationId }, update, (result) => {
-			res.send(result._id);
-		});
+		await db.updateOne(
+			Application,
+			{ _id: applicationId },
+			update,
+			(result) => {
+				res.send(result._id);
+			}
+		);
 	},
 
 	newApplication4: async (req, res) => {
@@ -179,10 +189,15 @@ const controller = {
 
 		console.log(update);
 
-		await db.updateOne(Application, { _id: applicationId }, update, (result) => {
-			console.log(result);
-			res.send(result._id);
-		});
+		await db.updateOne(
+			Application,
+			{ _id: applicationId },
+			update,
+			(result) => {
+				console.log(result);
+				res.send(result._id);
+			}
+		);
 	},
 
 	newApplication5: async (req, res) => {
@@ -372,7 +387,11 @@ const controller = {
 		console.log(dissemindatedDate);
 		Circulars.updateOne(
 			{ _id: req.params.circularId },
-			{ disseminateTo: disseminateTo, isDisseminated: true, disseminatedDate: dissemindatedDate }
+			{
+				disseminateTo: disseminateTo,
+				isDisseminated: true,
+				disseminatedDate: dissemindatedDate,
+			}
 		).then((result) => {
 			console.log(result);
 			res.send(result);
@@ -424,7 +443,10 @@ const controller = {
 				// If empty, initialize DeMolay Regions data
 
 				try {
-					const dmlyRegionsData = fs.readFileSync(path.join(__dirname, "dmlyRegionsData.json"), "utf8");
+					const dmlyRegionsData = fs.readFileSync(
+						path.join(__dirname, "dmlyRegionsData.json"),
+						"utf8"
+					);
 					const dmlyRegions = JSON.parse(dmlyRegionsData);
 
 					// Insert the DeMolay Regions array into the database
@@ -439,7 +461,10 @@ const controller = {
 				// If empty, initialize Chapters data
 
 				try {
-					const chapterData = fs.readFileSync(path.join(__dirname, "chaptersData.json"), "utf8");
+					const chapterData = fs.readFileSync(
+						path.join(__dirname, "chaptersData.json"),
+						"utf8"
+					);
 					const chapters = JSON.parse(chapterData);
 
 					// Insert the chapters array into the database
@@ -495,25 +520,30 @@ const controller = {
 	},
 
 	generateApplicantID: async (req, res) => {
-		db.findMany(Application, { applicantId: { $exists: true } }, { applicantId: 1 }, async (applications) => {
-			if (applications.length > 1 && applications) {
-				let highestId = applications[0].applicantId;
-				await applications.forEach((application) => {
-					if (parseInt(application.applicantId) > parseInt(highestId)) {
-						highestId = application.applicantId;
-					}
-				});
+		db.findMany(
+			Application,
+			{ applicantId: { $exists: true } },
+			{ applicantId: 1 },
+			async (applications) => {
+				if (applications.length > 1 && applications) {
+					let highestId = applications[0].applicantId;
+					await applications.forEach((application) => {
+						if (parseInt(application.applicantId) > parseInt(highestId)) {
+							highestId = application.applicantId;
+						}
+					});
 
-				res.send(highestId);
-				// eslint-disable-next-line eqeqeq
-			} else if (applications.length == 1 && applications) {
-				res.send(applications[0].applicantId);
-			} else {
-				const currentYear = new Date().getFullYear();
+					res.send(highestId);
+					// eslint-disable-next-line eqeqeq
+				} else if (applications.length == 1 && applications) {
+					res.send(applications[0].applicantId);
+				} else {
+					const currentYear = new Date().getFullYear();
 
-				res.send((currentYear.toString() + "0000").toString());
+					res.send((currentYear.toString() + "0000").toString());
+				}
 			}
-		});
+		);
 	},
 
 	getCurrentUser: async (req, res) => {
@@ -527,7 +557,10 @@ const controller = {
 	},
 
 	login: async (req, res) => {
-		const account = await Accounts.findOne({ accountId: req.body.idNumber }, {});
+		const account = await Accounts.findOne(
+			{ accountId: req.body.idNumber },
+			{}
+		);
 
 		if (account) {
 			if (bcrypt.compareSync(req.body.password, account.password)) {
@@ -540,10 +573,15 @@ const controller = {
 				res.send("WP");
 			}
 		} else {
-			const applicant = await Application.findOne({ applicantId: req.body.idNumber }, {});
+			const applicant = await Application.findOne(
+				{ applicantId: req.body.idNumber },
+				{}
+			);
 			if (applicant) {
 				console.log("Appli");
-				if (bcrypt.compareSync(req.body.password, applicant.applicantPassword)) {
+				if (
+					bcrypt.compareSync(req.body.password, applicant.applicantPassword)
+				) {
 					console.log("RIGHT");
 					session = applicant;
 					session.userType = "Scribe";
@@ -555,7 +593,10 @@ const controller = {
 					res.send("WP");
 				}
 			} else {
-				const member = await Member.findOne({ memberId: req.body.idNumber }, {});
+				const member = await Member.findOne(
+					{ memberId: req.body.idNumber },
+					{}
+				);
 				if (member) {
 					console.log("Member");
 					if (bcrypt.compareSync(req.body.password, member.password)) {
@@ -568,7 +609,10 @@ const controller = {
 						res.send("WP");
 					}
 				} else {
-					const scribe = await ChapterScribe.findOne({ accountId: req.body.idNumber }, {});
+					const scribe = await ChapterScribe.findOne(
+						{ accountId: req.body.idNumber },
+						{}
+					);
 					if (scribe) {
 						console.log("Scribe");
 						if (bcrypt.compareSync(req.body.password, scribe.password)) {
@@ -581,7 +625,10 @@ const controller = {
 							res.send("WP");
 						}
 					} else {
-						const grandmaster = await GrandMaster.findOne({ accountId: req.body.idNumber }, {});
+						const grandmaster = await GrandMaster.findOne(
+							{ accountId: req.body.idNumber },
+							{}
+						);
 						if (grandmaster) {
 							console.log("GM");
 							if (bcrypt.compareSync(req.body.password, grandmaster.password)) {
@@ -594,23 +641,40 @@ const controller = {
 								res.send("WP");
 							}
 						} else {
-							const advisoryCouncil = await AdvisoryCouncils.findOne({ userId: req.body.idNumber }, {});
+							console.log("AC");
+							const advisoryCouncil = await AdvisoryCouncils.findOne(
+								{ userId: req.body.idNumber },
+								{}
+							);
 							if (advisoryCouncil) {
 								console.log("AC");
-								if (bcrypt.compareSync(req.body.password, advisoryCouncil.password)) {
+								if (
+									bcrypt.compareSync(
+										req.body.password,
+										advisoryCouncil.password
+									)
+								) {
 									session = advisoryCouncil;
 									session.userType = "AdvisoryCouncil";
 									req.session.authenticated = true;
 									req.session.account = advisoryCouncil;
-									res.send([4, advisoryCouncil._id]);
+									res.send([6, advisoryCouncil._id]);
 								} else {
 									res.send("WP");
 								}
 							} else {
-								const executiveOfficer = await ExecutiveOfficer.findOne({ accountId: req.body.idNumber }, {});
+								const executiveOfficer = await ExecutiveOfficer.findOne(
+									{ accountId: req.body.idNumber },
+									{}
+								);
 								if (executiveOfficer) {
 									console.log("EO");
-									if (bcrypt.compareSync(req.body.password, executiveOfficer.password)) {
+									if (
+										bcrypt.compareSync(
+											req.body.password,
+											executiveOfficer.password
+										)
+									) {
 										session = executiveOfficer;
 										session.userType = "Executive Officer";
 										req.session.authenticated = true;
@@ -649,20 +713,32 @@ const controller = {
 		db.findOne(
 			Application,
 			{ _id: applicationId },
-			{ applicantId: 1, chapterId: 1, dateCreated: 1, status: 1, petStatus: 1, acceptedId: 1 },
+			{
+				applicantId: 1,
+				chapterId: 1,
+				dateCreated: 1,
+				status: 1,
+				petStatus: 1,
+				acceptedId: 1,
+			},
 			(application) => {
-				db.findOne(Chapters, { chapterID: application.chapterId }, { name: 1 }, (chapter) => {
-					const toSend = {
-						applicantId: application.applicantId,
-						chapter: chapter.name,
-						dateCreated: application.dateCreated,
-						status: application.status,
-						petStatus: application.petStatus,
-						acceptedId: application.acceptedId,
-					};
-					console.log(toSend);
-					res.send(toSend);
-				});
+				db.findOne(
+					Chapters,
+					{ chapterID: application.chapterId },
+					{ name: 1 },
+					(chapter) => {
+						const toSend = {
+							applicantId: application.applicantId,
+							chapter: chapter.name,
+							dateCreated: application.dateCreated,
+							status: application.status,
+							petStatus: application.petStatus,
+							acceptedId: application.acceptedId,
+						};
+						console.log(toSend);
+						res.send(toSend);
+					}
+				);
 			}
 		);
 	},
@@ -684,24 +760,39 @@ const controller = {
 	},
 
 	approveForPetitioning: async (req, res) => {
-		db.updateOne(Application, { _id: req.body.applicationId }, { status: req.body.status }, (application) => {
-			console.log(application);
-			res.send(req.body.applicationId);
-		});
+		db.updateOne(
+			Application,
+			{ _id: req.body.applicationId },
+			{ status: req.body.status },
+			(application) => {
+				console.log(application);
+				res.send(req.body.applicationId);
+			}
+		);
 	},
 
 	rejectApplication: async (req, res) => {
-		db.updateOne(Application, { _id: req.body.applicationId }, { status: req.body.status }, (application) => {
-			console.log(application);
-			res.send(req.body.applicationId);
-		});
+		db.updateOne(
+			Application,
+			{ _id: req.body.applicationId },
+			{ status: req.body.status },
+			(application) => {
+				console.log(application);
+				res.send(req.body.applicationId);
+			}
+		);
 	},
 
 	updatePetition: async (req, res) => {
-		db.updateOne(Application, { _id: req.body.applicationId }, { petStatus: req.body.petStatus }, (application) => {
-			console.log(application);
-			res.send(req.body.applicationId);
-		});
+		db.updateOne(
+			Application,
+			{ _id: req.body.applicationId },
+			{ petStatus: req.body.petStatus },
+			(application) => {
+				console.log(application);
+				res.send(req.body.applicationId);
+			}
+		);
 	},
 
 	submitProofOfPayment: async (req, res) => {
@@ -740,7 +831,9 @@ const controller = {
 			await newForm10.save();
 			res.status(200).send(newForm10);
 		} else {
-			const highestForm10Id = Math.max(...form10s.map((form10) => parseInt(form10.form10Id)));
+			const highestForm10Id = Math.max(
+				...form10s.map((form10) => parseInt(form10.form10Id))
+			);
 			if (form10s[0].initiatedMembers.length < 10) {
 				res.status(200).send(form10s[0]);
 			} else {
@@ -759,7 +852,11 @@ const controller = {
 	updateForm10: async (req, res) => {
 		const form10Id = req.params.form10Id;
 
-		Form10.updateOne({ form10Id: form10Id }, { initiatedMembers: req.body.updatedMembers }, {}).then((updated) => {
+		Form10.updateOne(
+			{ form10Id: form10Id },
+			{ initiatedMembers: req.body.updatedMembers },
+			{}
+		).then((updated) => {
 			res.send(updated);
 		});
 	},
@@ -778,35 +875,51 @@ const controller = {
 		db.findOne(Form10, { form10Id: form10Id }, {}, (result) => {
 			const applicants = result.initiatedMembers;
 
-			Application.find({ applicantId: { $in: applicants }, accepted: "false" || null }, {}).then((applications) => {
+			Application.find(
+				{ applicantId: { $in: applicants }, accepted: "false" || null },
+				{}
+			).then((applications) => {
 				res.send(applications);
 			});
 		});
 	},
 
 	generateMemberId: async (req, res) => {
-		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, async (members) => {
-			if (members.length > 1 && members) {
-				let highestId = members[0].memberId;
-				await members.forEach((member) => {
-					if (parseInt(member.memberId) > parseInt(highestId)) {
-						highestId = member.memberId;
-					}
-				});
-				console.log(`MemberID1: ${(highestId + 1).toString()}`);
-				res.send((highestId + 1).toString());
-				// eslint-disable-next-line eqeqeq
-			} else if (members.length == 1 && members) {
-				console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`);
-				res.send((members[0].applicantId + 1).toString());
-			} else {
-				const currentDate = new Date();
-				const currentMonth = currentDate.getMonth() + 1;
-				const currentYear = currentDate.getFullYear().toString().slice(-2);
-				console.log(`MemberID3: ${currentMonth.toString() + currentYear.toString() + "00001"}`);
-				res.send(currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
+		db.findMany(
+			Member,
+			{ memberId: { $exists: true } },
+			{ memberId: 1 },
+			async (members) => {
+				if (members.length > 1 && members) {
+					let highestId = members[0].memberId;
+					await members.forEach((member) => {
+						if (parseInt(member.memberId) > parseInt(highestId)) {
+							highestId = member.memberId;
+						}
+					});
+					console.log(`MemberID1: ${(highestId + 1).toString()}`);
+					res.send((highestId + 1).toString());
+					// eslint-disable-next-line eqeqeq
+				} else if (members.length == 1 && members) {
+					console.log(`MemberID2: ${(members[0].applicantId + 1).toString()}`);
+					res.send((members[0].applicantId + 1).toString());
+				} else {
+					const currentDate = new Date();
+					const currentMonth = currentDate.getMonth() + 1;
+					const currentYear = currentDate.getFullYear().toString().slice(-2);
+					console.log(
+						`MemberID3: ${
+							currentMonth.toString() + currentYear.toString() + "00001"
+						}`
+					);
+					res.send(
+						currentMonth.toString().padStart(2, "0") +
+							currentYear.toString() +
+							"00001"
+					);
+				}
 			}
-		});
+		);
 	},
 
 	createAccountsForInitiatedMembers: async (req, res) => {
@@ -814,90 +927,115 @@ const controller = {
 		let initiatedMembers = [];
 		let getMemberId = "";
 		let started = false;
-		db.findMany(Member, { memberId: { $exists: true } }, { memberId: 1 }, (members) => {
-			toInitiate.forEach((applicant) => {
-				if (members.length === 0) {
-					if (!started) {
-						const currentDate = new Date();
-						const currentMonth = currentDate.getMonth() + 1;
-						const currentYear = currentDate.getFullYear().toString().slice(-2);
-						console.log("FIRST ID", currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001");
-						getMemberId = currentMonth.toString().padStart(2, "0") + currentYear.toString() + "00001";
-						started = true;
+		db.findMany(
+			Member,
+			{ memberId: { $exists: true } },
+			{ memberId: 1 },
+			(members) => {
+				toInitiate.forEach((applicant) => {
+					if (members.length === 0) {
+						if (!started) {
+							const currentDate = new Date();
+							const currentMonth = currentDate.getMonth() + 1;
+							const currentYear = currentDate
+								.getFullYear()
+								.toString()
+								.slice(-2);
+							console.log(
+								"FIRST ID",
+								currentMonth.toString().padStart(2, "0") +
+									currentYear.toString() +
+									"00001"
+							);
+							getMemberId =
+								currentMonth.toString().padStart(2, "0") +
+								currentYear.toString() +
+								"00001";
+							started = true;
+						} else {
+							getMemberId = (parseInt(getMemberId) + 1).toString();
+						}
 					} else {
-						getMemberId = (parseInt(getMemberId) + 1).toString();
+						if (members.length > 1 && members) {
+							let highestId = members[0].memberId;
+							members.forEach((member) => {
+								if (parseInt(member.memberId) > parseInt(highestId)) {
+									highestId = member.memberId;
+								}
+							});
+							if (!started) {
+								getMemberId = (parseInt(highestId) + 1).toString();
+								started = true;
+							} else {
+								getMemberId = (parseInt(getMemberId) + 1).toString();
+							}
+							// eslint-disable-next-line eqeqeq
+						} else if (members.length == 1 && members) {
+							if (!started) {
+								getMemberId = (parseInt(members[0].memberId) + 1).toString();
+								started = true;
+							} else {
+								getMemberId = (parseInt(getMemberId) + 1).toString();
+							}
+						}
 					}
-				} else {
-					if (members.length > 1 && members) {
-						let highestId = members[0].memberId;
-						members.forEach((member) => {
-							if (parseInt(member.memberId) > parseInt(highestId)) {
-								highestId = member.memberId;
+
+					let finalizedMember = new Member({
+						memberId: getMemberId,
+						password: applicant.applicantPassword,
+						lastName: applicant.lastName,
+						givenName: applicant.givenName,
+						middleName: applicant.middleName,
+						birthdate: applicant.birthdate,
+						chapterId: applicant.chapterId,
+						email: applicant.email,
+						mobile: applicant.mobile,
+						homeAddress: applicant.streetAddress,
+						facebookLink: applicant.facebook,
+						photo: applicant.photo,
+						position: "Member",
+					});
+
+					Application.updateOne(
+						{ _id: applicant._id },
+						{ memberId: getMemberId, accepted: true, acceptedId: getMemberId }
+					).then((result) => {
+						console.log(getMemberId);
+						db.insertOne(Member, finalizedMember, (mem) => {
+							if (mem) {
+								console.log(applicant._id);
+
+								console.log(
+									finalizedMember.memberId,
+									finalizedMember.givenName
+								);
+							} else {
+								console.log("MEM: ", mem);
+								console.log("did not insert: ", finalizedMember.memberId);
 							}
 						});
-						if (!started) {
-							getMemberId = (parseInt(highestId) + 1).toString();
-							started = true;
-						} else {
-							getMemberId = (parseInt(getMemberId) + 1).toString();
-						}
-						// eslint-disable-next-line eqeqeq
-					} else if (members.length == 1 && members) {
-						if (!started) {
-							getMemberId = (parseInt(members[0].memberId) + 1).toString();
-							started = true;
-						} else {
-							getMemberId = (parseInt(getMemberId) + 1).toString();
-						}
-					}
-				}
-
-				let finalizedMember = new Member({
-					memberId: getMemberId,
-					password: applicant.applicantPassword,
-					lastName: applicant.lastName,
-					givenName: applicant.givenName,
-					middleName: applicant.middleName,
-					birthdate: applicant.birthdate,
-					chapterId: applicant.chapterId,
-					email: applicant.email,
-					mobile: applicant.mobile,
-					homeAddress: applicant.streetAddress,
-					facebookLink: applicant.facebook,
-					photo: applicant.photo,
-					position: "Member",
-				});
-
-				Application.updateOne(
-					{ _id: applicant._id },
-					{ memberId: getMemberId, accepted: true, acceptedId: getMemberId }
-				).then((result) => {
-					console.log(getMemberId);
-					db.insertOne(Member, finalizedMember, (mem) => {
-						if (mem) {
-							console.log(applicant._id);
-
-							console.log(finalizedMember.memberId, finalizedMember.givenName);
-						} else {
-							console.log("MEM: ", mem);
-							console.log("did not insert: ", finalizedMember.memberId);
-						}
 					});
 				});
-			});
-		});
+			}
+		);
 
 		res.send(initiatedMembers);
 	},
 
 	getCirculars: async (req, res) => {
-		const circulars = await Circulars.find({}, {}).sort({ dateReleased: -1, timeReleased: -1 });
+		const circulars = await Circulars.find({}, {}).sort({
+			dateReleased: -1,
+			timeReleased: -1,
+		});
 
 		res.send(circulars);
 	},
 
 	getCircularsByUser: async (req, res) => {
-		const circulars = await Circulars.find({ disseminateTo: { $elemMatch: { _id: req.params.memberId } } }, {}).sort({
+		const circulars = await Circulars.find(
+			{ disseminateTo: { $elemMatch: { _id: req.params.memberId } } },
+			{}
+		).sort({
 			dateReleased: -1,
 			timeReleased: -1,
 		});
@@ -906,7 +1044,10 @@ const controller = {
 	},
 
 	getCircularById: async (req, res) => {
-		const circular = await Circulars.findOne({ _id: req.params.circularId }, {});
+		const circular = await Circulars.findOne(
+			{ _id: req.params.circularId },
+			{}
+		);
 
 		res.send(circular);
 	},
@@ -936,7 +1077,10 @@ const controller = {
 	},
 
 	getMembersByChapter: async (req, res) => {
-		const members = await Member.find({ chapterId: req.params.chapterId }, {}).sort({ memberId: 1 });
+		const members = await Member.find(
+			{ chapterId: req.params.chapterId },
+			{}
+		).sort({ memberId: 1 });
 
 		res.send(members);
 	},
@@ -953,22 +1097,29 @@ const controller = {
 			array.push(memberId);
 			console.log(memberId);
 			console.log(array);
-			Circulars.updateOne({ _id: circularId }, { readBy: array }).then((result) => {
-				res.send("Marked as Read");
-			});
+			Circulars.updateOne({ _id: circularId }, { readBy: array }).then(
+				(result) => {
+					res.send("Marked as Read");
+				}
+			);
 		} else {
 			const index = array.indexOf(memberId);
 			array.splice(index, 1);
-			Circulars.updateOne({ _id: circularId }, { readBy: array }).then((result) => {
-				res.send("Marked as Unread");
-			});
+			Circulars.updateOne({ _id: circularId }, { readBy: array }).then(
+				(result) => {
+					res.send("Marked as Unread");
+				}
+			);
 		}
 	},
 
 	sendMessage: async (req, res) => {
 		const toPush = req.body;
 
-		Member.updateOne({ _id: req.params.memberId }, { $push: { inbox: toPush } }).then((result) => {
+		Member.updateOne(
+			{ _id: req.params.memberId },
+			{ $push: { inbox: toPush } }
+		).then((result) => {
 			res.send("Message Sent");
 		});
 	},
@@ -980,7 +1131,9 @@ const controller = {
 	},
 
 	getAllMeetings: async (req, res) => {
-		const meetings = await Meetings.find({}, {}).sort({date: -1}).sort({time: -1});
+		const meetings = await Meetings.find({}, {})
+			.sort({ date: -1 })
+			.sort({ time: -1 });
 
 		res.send(meetings);
 	},

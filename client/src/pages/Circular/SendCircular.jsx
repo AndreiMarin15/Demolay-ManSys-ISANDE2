@@ -73,7 +73,10 @@ function SendCircular() {
 							marginLeft: "50px",
 						}}
 					>
-						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
+						<FontAwesomeIcon
+							icon={faCircleUser}
+							style={{ fontSize: "150px" }}
+						/>
 						<div className="text-center">
 							<h5 className="name">
 								{grandMaster.givenName} {grandMaster.lastName}
@@ -86,28 +89,40 @@ function SendCircular() {
 					<div className="text-start" style={{ marginLeft: "100px" }}>
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faBullhorn}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							Circulars
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faMagnifyingGlass}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							For Review
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faFileLines} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faFileLines}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							Forms and Reports
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faAddressBook} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faAddressBook}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							Directory
 						</button>
@@ -117,12 +132,18 @@ function SendCircular() {
 					{/* Vertical line or divider */}
 					<div className="vertical-line"></div>
 				</div>
-				<div className="col-md-8 justify-content-center" style={{ marginLeft: "-60px" }}>
+				<div
+					className="col-md-8 justify-content-center"
+					style={{ marginLeft: "-60px" }}
+				>
 					<div className="row">
 						<div className="col">
 							<h1>
 								<span>
-									<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "15px" }} />
+									<FontAwesomeIcon
+										icon={faBullhorn}
+										style={{ marginRight: "15px" }}
+									/>
 								</span>
 								Circulars
 							</h1>
@@ -130,7 +151,11 @@ function SendCircular() {
 
 						<div className="col" style={{ marginTop: "15px" }}>
 							<div className="d-flex justify-content-end mb-2">
-								<input type="text" className="form-control" placeholder="Search" />
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Search"
+								/>
 								<div className="input-group-append">
 									<button type="button" className="filterbtn">
 										<FontAwesomeIcon icon={faFilter} />
@@ -147,15 +172,25 @@ function SendCircular() {
 						onSendClick={() => {}}
 					/>
 
-					<div className="row" style={{ marginTop: "10px", marginLeft: "30px" }}>
+					<div
+						className="row"
+						style={{ marginTop: "10px", marginLeft: "30px" }}
+					>
 						<div className="d-flex justify-content-end">
-							<button className="btn" type="button" onClick={handleReminderClick}>
+							<button
+								className="btn"
+								type="button"
+								onClick={handleReminderClick}
+							>
 								New Circular
 							</button>
 						</div>
 					</div>
 
-					<div className="row" style={{ marginTop: "10px", marginLeft: "20px" }}>
+					<div
+						className="row"
+						style={{ marginTop: "10px", marginLeft: "20px" }}
+					>
 						<div className="col">
 							<div class="list-group">
 								{circulars.circulars.map(function (circular) {
@@ -171,7 +206,8 @@ function SendCircular() {
 												<div className="col-md-1 date-time">
 													<p className="circ-date">
 														<b>
-															{circular.dateReleased} <br /> {circular.timeReleased}
+															{circular.dateReleased} <br />{" "}
+															{circular.timeReleased}
 														</b>
 													</p>
 												</div>
