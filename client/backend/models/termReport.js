@@ -28,17 +28,12 @@ const termReportSchema = new Schema({
   accountsReceivable: Number,
   accountsPayable: Number,
 
-  masterCouncilor: String,
-  statusMasterCouncilor: String,
-  dateSignedMasterCouncilor: Date,
 
   chapterScribe: String,
   statusChapterScribe: String,
   dateSignedChapterScribe: Date,
 
-  advisoryCouncilChairman: String,
-  statusAdvisoryCouncilChairman: String,
-  dateSignedAdvisoryCouncilChairman: Date,
+
 
   chapterAdvisor: String,
   statusChapterAdvisor: String,
