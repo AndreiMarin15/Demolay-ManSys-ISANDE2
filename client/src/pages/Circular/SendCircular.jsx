@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/cscircular.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,8 +20,11 @@ import NewCircular from "./NewCircular.jsx";
 const megaphone = <FontAwesomeIcon icon={faBullhorn} />;
 
 function SendCircular() {
+	const navigate = useNavigate();
 	const { grandmasterId } = useParams();
 	const [showPopup, setShowPopup] = useState(false);
+	const [user, setUser] = useState({});
+	const [chapter, setChapter] = useState({});
 	const [circulars, setCirculars] = useState({
 		circulars: [],
 		refresh: 0,
@@ -30,6 +33,11 @@ function SendCircular() {
 
 	useEffect(() => {
 		const fetchData = async () => {
+			const user = await axios.get("http://localhost:5000/getCurrentUser");
+			setUser(`/turnoverdashboardofficer/${user.data._id}`);
+			const chapter = await axios.get(
+				`http://localhost:5000/getChapterByID/${user.data.chapterId}`
+			);
 			const circs = await axios.get("http://localhost:5000/getCirculars");
 			const gm = await axios.get("http://localhost:5000/getCurrentUser");
 			console.log(gm);
@@ -73,7 +81,10 @@ function SendCircular() {
 							marginLeft: "50px",
 						}}
 					>
-						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
+						<FontAwesomeIcon
+							icon={faCircleUser}
+							style={{ fontSize: "150px" }}
+						/>
 						<div className="text-center">
 							<h5 className="name">
 								{grandMaster.givenName} {grandMaster.lastName}
@@ -86,28 +97,56 @@ function SendCircular() {
 					<div className="text-start" style={{ marginLeft: "100px" }}>
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faBullhorn}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							Circulars
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faMagnifyingGlass}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							For Review
 						</button>
 						<br />
-						<button className="btn-text" type="button" style={{ border: "0" }}>
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								navigate(user, {
+									state: {
+										userData: {
+											userID: user._id,
+											name: user.givenName + " " + user.lastName,
+											chapterID: user.chapterId,
+										},
+										chapterData: chapter,
+									},
+								});
+							}}
+						>
 							<span>
-								<FontAwesomeIcon icon={faFileLines} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faFileLines}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							Forms and Reports
 						</button>
 						<br />
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon icon={faAddressBook} style={{ marginRight: "8px" }} />
+								<FontAwesomeIcon
+									icon={faAddressBook}
+									style={{ marginRight: "8px" }}
+								/>
 							</span>
 							Directory
 						</button>
@@ -117,12 +156,18 @@ function SendCircular() {
 					{/* Vertical line or divider */}
 					<div className="vertical-line"></div>
 				</div>
-				<div className="col-md-8 justify-content-center" style={{ marginLeft: "-60px" }}>
+				<div
+					className="col-md-8 justify-content-center"
+					style={{ marginLeft: "-60px" }}
+				>
 					<div className="row">
 						<div className="col">
 							<h1>
 								<span>
-									<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "15px" }} />
+									<FontAwesomeIcon
+										icon={faBullhorn}
+										style={{ marginRight: "15px" }}
+									/>
 								</span>
 								Circulars
 							</h1>
@@ -130,7 +175,11 @@ function SendCircular() {
 
 						<div className="col" style={{ marginTop: "15px" }}>
 							<div className="d-flex justify-content-end mb-2">
-								<input type="text" className="form-control" placeholder="Search" />
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Search"
+								/>
 								<div className="input-group-append">
 									<button type="button" className="filterbtn">
 										<FontAwesomeIcon icon={faFilter} />
@@ -147,15 +196,25 @@ function SendCircular() {
 						onSendClick={() => {}}
 					/>
 
-					<div className="row" style={{ marginTop: "10px", marginLeft: "30px" }}>
+					<div
+						className="row"
+						style={{ marginTop: "10px", marginLeft: "30px" }}
+					>
 						<div className="d-flex justify-content-end">
-							<button className="btn" type="button" onClick={handleReminderClick}>
+							<button
+								className="btn"
+								type="button"
+								onClick={handleReminderClick}
+							>
 								New Circular
 							</button>
 						</div>
 					</div>
 
-					<div className="row" style={{ marginTop: "10px", marginLeft: "20px" }}>
+					<div
+						className="row"
+						style={{ marginTop: "10px", marginLeft: "20px" }}
+					>
 						<div className="col">
 							<div class="list-group">
 								{circulars.circulars.map(function (circular) {
@@ -171,7 +230,8 @@ function SendCircular() {
 												<div className="col-md-1 date-time">
 													<p className="circ-date">
 														<b>
-															{circular.dateReleased} <br /> {circular.timeReleased}
+															{circular.dateReleased} <br />{" "}
+															{circular.timeReleased}
 														</b>
 													</p>
 												</div>
