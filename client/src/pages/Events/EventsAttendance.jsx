@@ -36,6 +36,8 @@ function EventsAttendance() {
     "Organist",
   ];
 
+  const [currentApplications, setApplication] = useState({});
+
   const [eventsData, setEventsData] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState({
     term: "",
@@ -43,113 +45,133 @@ function EventsAttendance() {
     meetingDate: "",
   });
 
+  const [formData, setFormData] = useState({
+    eventID: "",
+    position: "",
+    performance: "",
+    attendance: "",
+    proof: "",
+    color: "",
+  });
+
   useEffect(() => {
     console.log(prevPageProps);
-    setEventsData(prevPageProps.eventsData.attendanceEvents || []);
+    setEventsData(prevPageProps.eventsData?.attendanceEvents || []);
+    setFormData({ ...formData, color: prevPageProps.color });
+    console.log(eventsData);
   }, []);
 
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    const selectedEventData = eventsData.find(
-      (event) => event.meetingName === value
-    );
+    const { id, value } = e.target;
+    const selectedEventData = eventsData.find((event) => event._id === value);
 
     setSelectedEvent((prev) => ({
       ...prev,
-      [name]: value,
+      meetingName: selectedEventData?.meetingName || "",
       meetingDate: selectedEventData?.meetingDate || "",
       term: selectedEventData?.term || "",
     }));
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
   };
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setFormData({
+      ...formData,
+      proof: base64,
+    });
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission and save attendance data to the backend
-    // ...
+    if (
+      formData.eventID === "" ||
+      formData.position === "" ||
+      formData.performance === "" ||
+      formData.attendance === "" ||
+      formData.proof === ""
+    ) {
+      alert("Please fill in all the required fields.");
+      return;
+    }
 
-    // Reset the form after submission
-    setSelectedEvent({
-      term: "",
-      meetingName: "",
-      meetingDate: "",
-    });
+    if (prevPageProps.applications.length < 5) {
+      const attendance = {
+        eventID: formData.eventID,
+        position: formData.position,
+        performance: formData.performance,
+        attendance: formData.attendance,
+        proof: formData.proof,
+      };
+
+      const newApplication = {
+        applicantID: prevPageProps.userData.userID,
+        name: prevPageProps.userData.name,
+        chapterID: prevPageProps.userData.chapterID,
+        type: "Attendance",
+        color: prevPageProps.color,
+        attendance: attendance,
+        isSubmitted: false,
+        isApproved: false,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
+        .then((res) => {
+          window.location.href = `/eventsHome`;
+        });
+
+      // Reset the form after submission
+      setSelectedEvent({
+        term: "",
+        meetingName: "",
+        meetingDate: "",
+      });
+    }
   };
 
   return (
     <div className="container">
       <br />
-      <nav className="eventsNavbar">
-        <table className="navbar-table">
-          <tbody>
-            <tr className="navbar-row">
-              <td>
-                <a href="/eventsAttendance">Attendance</a>
-              </td>
-              <td>
-                <a href="/eventsAthletic">Athletic</a>
-              </td>
-              <td>
-                <a href="/eventsCivicService">Civic Service</a>
-              </td>
-              <td>
-                <a href="/eventsConclave">Conclave</a>
-              </td>
-              <td>
-                <a href="/eventsFineArts">Fine Arts</a>
-              </td>
-              <td>
-                <a href="/eventsFundRaising">Fund Raising</a>
-              </td>
-              <td>
-                <a href="/eventsInstalling">Installing</a>
-              </td>
-              <td>
-                <a href="/eventsJournalism">Journalism</a>
-              </td>
-            </tr>
-            <tr className="navbar-row">
-              <td>
-                <a href="/eventsMasonicAttendance">Masonic Attendance</a>
-              </td>
-              <td>
-                <a href="/eventsMasonicService">Masonic Service</a>
-              </td>
-              <td>
-                <a href="/eventsMerit">Merit</a>
-              </td>
-              <td>
-                <a href="/eventsPetitions">Petitions</a>
-              </td>
-              <td>
-                <a href="/eventsReligion">Religion</a>
-              </td>
-              <td>
-                <a href="/eventsRitual">Ritual</a>
-              </td>
-              <td>
-                <a href="/eventsScholastics">Scholastics</a>
-              </td>
-              <td>
-                <a href="/eventsVisitation">Visitation</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </nav>
       <br />
 
       {/* Header */}
 
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1>Add Event - Attendance </h1>
-        <button
-          type="submit"
-          form="submit"
-          className="primary-btn"
-          value="ADD NEW ENTRY"
-        >
-          ADD NEW ENTRY
-        </button>
+        <h1>Merit Bar Application - Attendance </h1>
       </div>
 
       {/* Instruction */}
@@ -212,16 +234,22 @@ function EventsAttendance() {
                 Meeting Name:
               </label>
             </div>
-            <div className="col-md-7">
+            <div className="col-md-8">
               <select
                 className="form-select form-control"
-                id="meetingname"
+                id="eventID"
                 name="meetingName"
-                value={selectedEvent.meetingName}
                 onChange={handleChange}
               >
+                <option
+                  value=""
+                  disabled={selectedEvent.meetingName !== ""}
+                  hidden
+                >
+                  Select
+                </option>
                 {eventsData.map((event) => (
-                  <option key={event._id} value={event.meetingName}>
+                  <option key={event._id} value={event._id}>
                     {event.meetingName}
                   </option>
                 ))}
@@ -232,7 +260,7 @@ function EventsAttendance() {
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
               <label
-                htmlFor="meetingdate"
+                htmlFor="meetingDate"
                 className="col-form-label text-right"
               >
                 Meeting Date:
@@ -242,11 +270,11 @@ function EventsAttendance() {
               <input
                 type="text"
                 className="form-control"
-                id="meetingdate"
+                id="meetingDate"
                 name="meetingDate"
                 placeholder="MM/DD/YYYY"
-                value={selectedEvent.meetingDate}
-                onChange={handleChange}
+                value={selectedEvent.meetingDate.split("T")[0]}
+                disabled
               />
             </div>
           </div>
@@ -257,18 +285,14 @@ function EventsAttendance() {
                 Term:
               </label>
             </div>
-            <div className="col-md-7">
-              <select
-                className="form-select form-control"
+            <div className="col-md-8">
+              <input
+                className="form-control"
                 id="term"
                 name="term"
                 value={selectedEvent.term}
-                onChange={handleChange}
-              >
-                <option>2022</option>
-                <option>2021</option>
-                <option>2020</option>
-              </select>
+                disabled
+              />
             </div>
           </div>
           <br />
@@ -278,8 +302,16 @@ function EventsAttendance() {
                 Position:
               </label>
             </div>
-            <div className="col-md-7">
-              <select className="form-select form-control" id="position">
+            <div className="col-md-8">
+              <select
+                className="form-select form-control"
+                id="position"
+                value={formData.position}
+                onChange={onChange}
+              >
+                <option value="" disabled={formData.position !== ""} hidden>
+                  Select
+                </option>
                 {officerPositions.map((position) => {
                   return <option key={position}>{position}</option>;
                 })}
@@ -293,8 +325,16 @@ function EventsAttendance() {
                 Performance:
               </label>
             </div>
-            <div className="col-md-7">
-              <select className="form-select form-control" id="performance">
+            <div className="col-md-8">
+              <select
+                className="form-select form-control"
+                id="performance"
+                value={formData.performance}
+                onChange={onChange}
+              >
+                <option value="" disabled={formData.performance !== ""} hidden>
+                  Select
+                </option>
                 <option>Beginner</option>
                 <option>Amateur</option>
                 <option>Expert</option>
@@ -313,8 +353,16 @@ function EventsAttendance() {
                 Attendance:
               </label>
             </div>
-            <div className="col-md-7">
-              <select className="form-select form-control" id="attendance">
+            <div className="col-md-8">
+              <select
+                className="form-select form-control"
+                id="attendance"
+                value={formData.attendance}
+                onChange={onChange}
+              >
+                <option value="" disabled={formData.attendance !== ""} hidden>
+                  Select
+                </option>
                 <option>Present</option>
                 <option>Absent</option>
                 <option>Left Early</option>
@@ -331,8 +379,13 @@ function EventsAttendance() {
                 Proof:
               </label>
             </div>
-            <div className="col-md-7">
-              <input type="file" className="form-control" id="uploadproof" />
+            <div className="col-md-8">
+              <input
+                type="file"
+                className="form-control"
+                id="uploadproof"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -340,7 +393,17 @@ function EventsAttendance() {
         {/* Buttons */}
 
         <div className="d-flex justify-content-between mt-4">
-          <button type="button" className="primary-btn">
+          <button
+            type="button"
+            className="primary-btn"
+            onClick={() => {
+              navigate("/eventshome", {
+                state: {
+                  ...prevPageProps,
+                },
+              });
+            }}
+          >
             BACK
           </button>
           <button

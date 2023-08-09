@@ -87,6 +87,7 @@ import EOCircular from "./pages/Circular/EOCircular";
 import SetMeeting from "./pages/Meetings/SetMeeting";
 
 function App() {
+
 	return (
 		<>
 			<Header />
@@ -114,10 +115,12 @@ function App() {
 					<Route path="eoapp1/:eoId" element={<EOApp1 />} />
 					{/* protected routes only for Scribe */}
 					{/* <Route
+
             element={
               <RequireAuth allowedRoles={[1]} allowedPositions={["Scribe"]} />
             }
           > */}
+
 					<Route path="csapp1" element={<CSApp1 />} />
 					<Route path="csapp1/:scribeId" element={<CSApp1 />} />
 					<Route path="csappinprogress" element={<CSAppInProgress />} />
@@ -219,6 +222,7 @@ function App() {
 			</Routes>
 		</>
 	);
+
 }
 
 export default App;
