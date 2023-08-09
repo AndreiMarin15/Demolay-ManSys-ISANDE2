@@ -32,7 +32,10 @@ function Login() {
 			idNumber: formData.idNumber,
 			password: formData.password,
 		};
-		const result = await axios.post("http://localhost:5000/login", loginDetails);
+		const result = await axios.post(
+			"http://localhost:5000/login",
+			loginDetails
+		);
 		console.log(result.data);
 		console.log("TRRIGER");
 		if (result.data === "WP") {
@@ -56,6 +59,9 @@ function Login() {
 			alert("No Account Found");
 		} else if (result.data[0] === 5) {
 			window.location.href = `/turnoverdashboardofficer/${result.data[1]}`;
+		} else if (result.data[0] === 6) {
+			window.location.href = `/turnoverdashboardofficer/${result.data[1]}`;
+			console.log(result.data[1]);
 		} else {
 			console.log("Not Triggered");
 			console.log(result.data[0]);
@@ -72,10 +78,22 @@ function Login() {
 			<div id="homechild">
 				<form id="login" onSubmit={onSubmit}>
 					<label for="idnum">ID Number</label>
-					<input type="text" id="idNumber" name="idnum" onChange={onChange} value={formData.idNumber} />
+					<input
+						type="text"
+						id="idNumber"
+						name="idnum"
+						onChange={onChange}
+						value={formData.idNumber}
+					/>
 					<br></br>
 					<label for="pass">Password</label>
-					<input type="password" id="password" name="pass" onChange={onChange} value={formData.password} />
+					<input
+						type="password"
+						id="password"
+						name="pass"
+						onChange={onChange}
+						value={formData.password}
+					/>
 				</form>
 
 				<button type="submit" form="login" class="primary-btn" value="LOGIN">
