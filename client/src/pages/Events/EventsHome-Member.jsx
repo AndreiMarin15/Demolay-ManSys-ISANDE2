@@ -29,7 +29,7 @@ function EventsHome() {
   const [selectedApplication, setSelectedApplication] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [meritBarCtg, setCategory] = useState(0);
+  const [meritBarCtg, setCategory] = useState(-1);
 
   const handleNavigation = (action) => {
     let nextIndex;
@@ -117,6 +117,7 @@ function EventsHome() {
               className="btn small"
               value="VIEW"
               onClick={() => {
+                setCurrentIndex(0);
                 const ctg = index + 1;
                 const type = col2;
 
@@ -130,7 +131,7 @@ function EventsHome() {
 
                 if (filtered.length > 0) {
                   setFilteredApplications(filtered);
-                  setSelectedApplication(filtered[0]);
+                  setSelectedApplication(filtered[currentIndex]);
                   setCategory(ctg);
                 } else {
                   setFilteredApplications([]);
@@ -369,6 +370,20 @@ function EventsHome() {
         {/* Second Column */}
 
         <div className="col-md-5 mx-auto">
+          {meritBarCtg === -1 && (
+            <div>
+              <h3>
+                <i>{"Choose a category on the left to view."}</i>
+              </h3>
+            </div>
+          )}
+          {meritBarCtg === 0 && (
+            <div>
+              <div>
+                <h2> No data to display.</h2>
+              </div>
+            </div>
+          )}
           {meritBarCtg === 1 && (
             <>
               {eventsData.attendanceEvents.map((event) => {

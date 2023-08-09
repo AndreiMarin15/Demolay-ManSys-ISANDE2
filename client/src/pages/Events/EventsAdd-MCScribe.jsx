@@ -126,7 +126,7 @@ function EventsAdd() {
   };
 
   const handleCreateNewEvent = () => {
-    if (formData.meritBar === 1) {
+    if (formData.meritBar == 1) {
       if (!newEvent.meetingName || !newEvent.meetingDate || !newEvent.term) {
         alert("Please fill in all the required fields.");
         return;
@@ -138,7 +138,7 @@ function EventsAdd() {
 
   const handleCreate = () => {
     try {
-      if (formData.meritBar === 1) {
+      if (formData.meritBar == 1) {
         eventsData.attendanceEvents.push(newEvent);
 
         const props = {
@@ -149,7 +149,7 @@ function EventsAdd() {
         axios
           .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
           .then((res) => {
-            console.log(res);
+            console.log("Added new event: " + res);
           });
       }
     } catch (error) {
@@ -172,12 +172,15 @@ function EventsAdd() {
         {/* First Column */}
         <div className="col-md-5">
           <div className="row align-items-center mt-3">
-            <div className="col-md-4">
-              <label htmlFor="meritBar" className="col-form-label text-right">
+            <div className="col-md-2">
+              <label
+                htmlFor="meritBar"
+                className="col-form-label text-right ps-4"
+              >
                 Merit Bar:
               </label>
             </div>
-            <div className="col-md-7">
+            <div className="col-md-5 ps-5">
               <select
                 className="form-select"
                 name="meritBar"
@@ -226,6 +229,7 @@ function EventsAdd() {
                       type="text"
                       className="form-control"
                       id="activityname"
+                      min="1"
                       placeholder="Enter Activity Name"
                       onChange={(e) =>
                         setNewEvent((prevEvent) => ({
@@ -280,6 +284,9 @@ function EventsAdd() {
                         }))
                       }
                     >
+                      <option value="" hidden>
+                        Select
+                      </option>
                       <option>Term A</option>
                       <option>Term B</option>
                     </select>
