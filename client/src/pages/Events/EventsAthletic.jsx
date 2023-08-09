@@ -14,7 +14,7 @@ function EventsAthletic() {
       {/* Header */}
 
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1>Merit Bar Application - Athletic </h1>
+        <h1>Merit Bar Application - Athletics </h1>
       </div>
 
       {/* Instruction */}

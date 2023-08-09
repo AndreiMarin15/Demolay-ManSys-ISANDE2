@@ -147,76 +147,70 @@ function EventsHome() {
     });
   };
 
-  // const handleNavigationClick = (type) => {
-  //   const filtered = applications.filter((application) => {
-  //     if (application.type === type) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   });
+  const handleNavigationClick = (type) => () => {
+    const filtered = applications.filter((application) => {
+      if (application.type === type) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 
-  //   const submitted = filtered.filter((application) => {
-  //     if (
-  //       application.isSubmitted === true &&
-  //       application.isApproved === false
-  //     ) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   });
+    const submitted = filtered.filter((application) => {
+      if (
+        application.isSubmitted === true &&
+        application.isApproved === false
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 
-  //   const approved = filtered.filter((application) => {
-  //     if (application.isSubmitted === true && application.isApproved === true) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   });
+    const approved = filtered.filter((application) => {
+      if (application.isSubmitted === true && application.isApproved === true) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 
-  //   if (submitted.length > 0) {
-  //     alert(
-  //       "You have an on-going application. You may only apply after it has been reviewed and approved."
-  //     );
-  //   } else {
-  //     if (approved.length < 5) {
-  //       let nextColor;
+    if (submitted.length > 0) {
+      alert(
+        "You have an on-going application. You may only apply after it has been reviewed and approved."
+      );
+    } else {
+      if (approved.length < 5) {
+        let nextColor;
 
-  //       if (approved.length === 0) {
-  //         nextColor = "White";
-  //       } else if (approved.length === 1) {
-  //         nextColor = "Red";
-  //       } else if (approved.length === 2) {
-  //         nextColor = "Blue";
-  //       } else if (approved.length === 3) {
-  //         nextColor = "Purple";
-  //       } else if (approved.length === 4) {
-  //         nextColor = "Gold";
-  //       }
+        if (approved.length === 0) {
+          nextColor = "White";
+        } else if (approved.length === 1) {
+          nextColor = "Red";
+        } else if (approved.length === 2) {
+          nextColor = "Blue";
+        } else if (approved.length === 3) {
+          nextColor = "Purple";
+        } else if (approved.length === 4) {
+          nextColor = "Gold";
+        }
 
-  //       const state = {
-  //         userData: userData,
-  //         applications: filtered,
-  //         eventsData: eventsData,
-  //         color: nextColor,
-  //       };
-
-  //       if (type === "Attendance") {
-  //         navigate("/eventsAttendance", {
-  //           state: {
-  //             ...state,
-  //           },
-  //         });
-  //       }
-  //     } else if (approved.length >= 5) {
-  //       alert(
-  //         `You already have 5 approved applications and achieved the highest rank (Gold) for ${type}.`
-  //       );
-  //       return;
-  //     }
-  //   }
-  // };
+        navigate(`/events${type}`, {
+          state: {
+            userData: userData,
+            applications: filtered,
+            eventsData: eventsData,
+            color: nextColor,
+          },
+        });
+      } else if (approved.length >= 5) {
+        alert(
+          `You already have 5 approved applications and achieved the highest rank (Gold) for ${type}.`
+        );
+        return;
+      }
+    }
+  };
 
   const handleSubmit = () => {
     const props = {
@@ -243,56 +237,86 @@ function EventsHome() {
           <tbody>
             <tr className="navbar-row">
               <td>
-                <a href="" onClick={() => {}}>
+                <a href="" onClick={handleNavigationClick("Attendance")}>
                   Attendance
                 </a>
               </td>
               <td>
-                <a href="/eventsAthletic">Athletics</a>
+                <a href="" onClick={handleNavigationClick("Athletic")}>
+                  Athletics
+                </a>
               </td>
               <td>
-                <a href="/eventsCivicService">Civic Service</a>
+                <a href="" onClick={handleNavigationClick("CivicService")}>
+                  Civic Service
+                </a>
               </td>
               <td>
-                <a href="/eventsConclave">Conclave</a>
+                <a href="" onClick={handleNavigationClick("Conclave")}>
+                  Conclave
+                </a>
               </td>
               <td>
-                <a href="/eventsFineArts">Fine Arts</a>
+                <a href="" onClick={handleNavigationClick("FineArts")}>
+                  Fine Arts
+                </a>
               </td>
               <td>
-                <a href="/eventsFundRaising">Fundraising</a>
+                <a href="" onClick={handleNavigationClick("FundRaising")}>
+                  Fundraising
+                </a>
               </td>
               <td>
-                <a href="/eventsInstalling">Installing</a>
+                <a href="" onClick={handleNavigationClick("Installing")}>
+                  Installing
+                </a>
               </td>
               <td>
-                <a href="/eventsJournalism">Journalism</a>
+                <a href="" onClick={handleNavigationClick("Journalism")}>
+                  Journalism
+                </a>
               </td>
             </tr>
             <tr className="navbar-row">
               <td>
-                <a href="/eventsMasonicAttendance">Masonic Attendance</a>
+                <a href="" onClick={handleNavigationClick("MasonicAttendance")}>
+                  Masonic Attendance
+                </a>
               </td>
               <td>
-                <a href="/eventsMasonicService">Masonic Service</a>
+                <a href="" onClick={handleNavigationClick("MasonicService")}>
+                  Masonic Service
+                </a>
               </td>
               <td>
-                <a href="/eventsMerit">Merit</a>
+                <a href="" onClick={handleNavigationClick("Merit")}>
+                  Merit
+                </a>
               </td>
               <td>
-                <a href="/eventsPetitions">Petitions</a>
+                <a href="" onClick={handleNavigationClick("Petitions")}>
+                  Petitions
+                </a>
               </td>
               <td>
-                <a href="/eventsReligion">Religion</a>
+                <a href="" onClick={handleNavigationClick("Religion")}>
+                  Religion
+                </a>
               </td>
               <td>
-                <a href="/eventsRitual">Ritual</a>
+                <a href="" onClick={handleNavigationClick("Ritual")}>
+                  Ritual
+                </a>
               </td>
               <td>
-                <a href="/eventsScholastics">Scholastics</a>
+                <a href="" onClick={handleNavigationClick("Scholastics")}>
+                  Scholastics
+                </a>
               </td>
               <td>
-                <a href="/eventsVisitation">Visitation</a>
+                <a href="" onClick={handleNavigationClick("Visitation")}>
+                  Visitation
+                </a>
               </td>
             </tr>
           </tbody>
