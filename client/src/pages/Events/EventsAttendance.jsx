@@ -43,26 +43,9 @@ function EventsAttendance() {
     meetingDate: "",
   });
 
-<<<<<<< Updated upstream
   useEffect(() => {
     console.log(prevPageProps);
     setEventsData(prevPageProps.eventsData.attendanceEvents || []);
-=======
-  const [formData, setFormData] = useState({
-    eventID: "",
-    position: "",
-    performance: "",
-    attendance: "",
-    proof: "",
-    color: "",
-  });
-
-  useEffect(() => {
-    console.log(prevPageProps);
-    setEventsData(prevPageProps.eventsData?.attendanceEvents || []);
-    setFormData({ ...formData, color: prevPageProps.color });
-    console.log(eventsData);
->>>>>>> Stashed changes
   }, []);
 
   const handleChange = (e) => {
@@ -81,49 +64,8 @@ function EventsAttendance() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< Updated upstream
     // Handle form submission and save attendance data to the backend
     // ...
-=======
-
-    if (
-      formData.eventID === "" ||
-      formData.position === "" ||
-      formData.performance === "" ||
-      formData.attendance === "" ||
-      formData.proof === ""
-    ) {
-      alert("Please fill in all the required fields.");
-      return;
-    }
-
-    if (prevPageProps.applications.length < 5) {
-      const attendance = {
-        eventID: formData.eventID,
-        position: formData.position,
-        performance: formData.performance,
-        attendance: formData.attendance,
-        proof: formData.proof,
-      };
-
-      const newApplication = {
-        applicantID: prevPageProps.userData.userID,
-        name: prevPageProps.userData.name,
-        chapterID: prevPageProps.userData.chapterID,
-        type: "Attendance",
-        color: prevPageProps.color,
-        attendance: attendance,
-        isSubmitted: false,
-        isApproved: false,
-      };
-
-      axios
-        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
-        .then((res) => {
-          window.location.href = `/eventsHome`;
-        });
-    }
->>>>>>> Stashed changes
 
     // Reset the form after submission
     setSelectedEvent({
@@ -136,7 +78,6 @@ function EventsAttendance() {
   return (
     <div className="container">
       <br />
-<<<<<<< Updated upstream
       <nav className="eventsNavbar">
         <table className="navbar-table">
           <tbody>
@@ -195,14 +136,20 @@ function EventsAttendance() {
           </tbody>
         </table>
       </nav>
-=======
->>>>>>> Stashed changes
       <br />
 
       {/* Header */}
 
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1>Merit Bar Application - Attendance </h1>
+        <h1>Add Event - Attendance </h1>
+        <button
+          type="submit"
+          form="submit"
+          className="primary-btn"
+          value="ADD NEW ENTRY"
+        >
+          ADD NEW ENTRY
+        </button>
       </div>
 
       {/* Instruction */}
