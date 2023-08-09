@@ -1,7 +1,7 @@
 const router = require("express").Router();
 //let Application = require("../models/applications");
 const controller = require("../controllers/controller");
-const turnoverController = require("../controllers/turnoverController");
+const controller2 = require("../controllers/turnoverController");
 
 //router.route("/").get((req, res) => {
 //	// Application.find()
@@ -24,7 +24,7 @@ router.post("/createAdvisor", controller.createAdvisor);
 router.post("/createAdmin", controller.createAdmin);
 router.post("/createScribe", controller.createScribe);
 router.post("/createGrandMaster", controller.createGrandmaster);
-router.post("/createEO", controller.createEO)
+router.post("/createEO", controller.createEO);
 
 router.get("/initDatabase", controller.checkAndInitDB);
 router.get("/getRegions", controller.getRegions);
@@ -58,46 +58,42 @@ router.get("/getUser/:memberId", controller.getCurrentMember);
 router.get("/getForm10", controller.getForm10);
 router.post("/updateForm10/:form10Id", controller.updateForm10);
 
-router.post("/newTF", turnoverController.newTF);
-router.post("/updateTF/:id", turnoverController.updateTF);
-router.get("/getForm1/:id", turnoverController.getForm1);
+router.post("/newTF", controller2.newTF);
+router.post("/updateTF/:id", controller2.updateTF);
+router.get("/getForm1/:id", controller2.getForm1);
 
-router.post("/newF15", turnoverController.newF15);
-router.post("/updateF15/:id", turnoverController.updateF15);
-router.get("/getForm15/:id", turnoverController.getForm15);
+router.post("/newF15", controller2.newF15);
+router.post("/updateF15/:id", controller2.updateF15);
+router.get("/getForm15/:id", controller2.getForm15);
 
-router.post("/newAR", turnoverController.newAR);
-router.post("/updateAR/:id", turnoverController.updateAR);
-router.get("/getAR/:id", turnoverController.getAR);
+router.post("/newAR", controller2.newAR);
+router.post("/updateAR/:id", controller2.updateAR);
+router.get("/getAR/:id", controller2.getAR);
 
-router.post("/newAdvisory", turnoverController.newAdvisory);
-router.post("/updateAdvisory/:id", turnoverController.updateAdvisory);
-router.get("/getAdvisory/:id", turnoverController.getAdvisory);
+router.post("/newAdvisory", controller2.newAdvisory);
+router.post("/updateAdvisory/:id", controller2.updateAdvisory);
+router.get("/getAdvisory/:id", controller2.getAdvisory);
 
-router.post("/newTurnover", turnoverController.newTurnover);
-router.post("/updateTurnover", turnoverController.updateTurnover);
-
-
+router.post("/newTurnover", controller2.newTurnover);
+router.post("/updateTurnover", controller2.updateTurnover);
 router.get(
   "/getTurnoverReports/:chapterID/:currentTerm",
-  turnoverController.getTurnoverReports
+  controller2.getTurnoverReports
 );
 
 router.get("/getChapterByID/:chapter", controller.getChapterByID);
-router.get(
-  "/getTurnoverReports/:chapterID/:currentTerm",
-  turnoverController.getTurnoverReports
-);
-router.get("/getForm1/:id", turnoverController.getForm1);
 
-router.get("/getAllMembers/:id", turnoverController.getAllMembers);
-router.get("/getChapters", turnoverController.getAllChapters);
+router.get("/getAllMembers/:id", controller2.getAllMembers);
+router.get("/getChapters", controller2.getAllChapters);
 
+router.post("/newEvents", controller2.newEvents);
+router.post("/updateEvents/:id", controller2.updateEvents);
+router.get("/getEvents/:id", controller2.getEvents);
 
-router.post("/newEvents", turnoverController.newEvents);
-router.post("/updateEvents/:id", turnoverController.updateEvents);
-router.get("/getEvents/:id", turnoverController.getEvents);
-
+router.post("/newAwardApplication", controller2.newApplication);
+router.post("/updateAwardApplication/:id", controller2.updateApplication);
+router.get("/getAwardApplications/:id", controller2.getCurrentApplications);
+router.get("/getAllAwardApplications", controller2.getAllApplications);
 
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);
@@ -117,10 +113,10 @@ router.post("/disseminateCircular/:circularId", controller.disseminateCircular);
 
 router.post("/updateRead/:memberId/:circularId", controller.updateRead);
 
-router.post("/sendMessage/:memberId", controller.sendMessage)
-router.get("/getInbox/:memberId", controller.retrieveInbox)
+router.post("/sendMessage/:memberId", controller.sendMessage);
+router.get("/getInbox/:memberId", controller.retrieveInbox);
 
-router.get("/getMeetings", controller.getAllMeetings)
-router.post("/newMeeting", controller.newMeeting)
+router.get("/getMeetings", controller.getAllMeetings);
+router.post("/newMeeting", controller.newMeeting);
 
 module.exports = router;
