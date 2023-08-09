@@ -6,11 +6,16 @@ const attendanceAwardSchema = new Schema({
   position: String,
   performance: String,
   attendance: String,
+  proof: String,
 });
 
 const applicationSchema = new Schema({
   applicantID: String,
+  name: String,
+  chapterID: String,
   attendance: [attendanceAwardSchema],
+  isSubmitted: Boolean,
+  isApproved: Boolean,
 });
 
 const awardApplication = mongoose.model("awardApplication", applicationSchema);

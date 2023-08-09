@@ -15,7 +15,7 @@ function EventsAdd() {
     userID: "0118-27061",
     name: "Philip Tolentino",
     position: "Scribe",
-    chapterID: "1",
+    chapterID: "37",
   });
 
   const [chapters, setChapters] = useState([]);
@@ -69,7 +69,7 @@ function EventsAdd() {
       },
     ],
 
-    meritBar: 1,
+    meritBar: 0,
   });
 
   useEffect(() => {
@@ -125,12 +125,11 @@ function EventsAdd() {
   };
 
   const handleCreateNewEvent = () => {
-    switch (formData.meritBar) {
-      case 1:
-        if (!newEvent.meetingName || !newEvent.meetingDate || !newEvent.term) {
-          alert("Please fill in all the required fields.");
-          return;
-        }
+    if (formData.meritBar === 1) {
+      if (!newEvent.meetingName || !newEvent.meetingDate || !newEvent.term) {
+        alert("Please fill in all the required fields.");
+        return;
+      }
     }
 
     handleCreate();
@@ -138,21 +137,19 @@ function EventsAdd() {
 
   const handleCreate = () => {
     try {
-      switch (formData.meritBar) {
-        case 1: {
-          eventsData.attendanceEvents.push(newEvent);
+      if (formData.meritBar === 1) {
+        eventsData.attendanceEvents.push(newEvent);
 
-          const props = {
-            fieldToUpdate: "attendanceEvents",
-            updateValue: eventsData.attendanceEvents,
-          };
+        const props = {
+          fieldToUpdate: "attendanceEvents",
+          updateValue: eventsData.attendanceEvents,
+        };
 
-          axios
-            .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
-            .then((res) => {
-              console.log(res);
-            });
-        }
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log(res);
+          });
       }
     } catch (error) {
       console.error("Error saving new event:", error);
@@ -187,6 +184,9 @@ function EventsAdd() {
                 value={formData.meritBar}
                 onChange={onChangeMeritBar}
               >
+                <option value="" disabled={formData.meritBar !== 0} hidden>
+                  Select Merit Bar
+                </option>
                 {formData.meritBars.map(function (meritBar) {
                   return (
                     <option value={meritBar.value} key={meritBar.key}>
@@ -279,7 +279,6 @@ function EventsAdd() {
                         }))
                       }
                     >
-                      <option value={null} disabled></option>
                       <option>Term A</option>
                       <option>Term B</option>
                     </select>
