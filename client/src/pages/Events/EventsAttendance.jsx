@@ -408,8 +408,16 @@ function EventsAttendance() {
           </button>
           <button
             type="button"
-            className="primary-btn"
+            className="btn"
             value="SUBMIT"
+            disabled={
+              formData.eventID === "" ||
+              formData.position === "" ||
+              formData.performance === "" ||
+              formData.attendance === "" ||
+              formData.proof === "" ||
+              formData.color === ""
+            }
             onClick={handleSubmit}
           >
             SUBMIT

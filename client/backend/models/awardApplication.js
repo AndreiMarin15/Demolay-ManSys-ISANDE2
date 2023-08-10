@@ -19,6 +19,7 @@ const applicationSchema = new Schema({
 
   isSubmitted: Boolean,
   isApproved: Boolean,
+  isRequested: Boolean,
 });
 
 const awardApplication = mongoose.model("awardApplication", applicationSchema);
