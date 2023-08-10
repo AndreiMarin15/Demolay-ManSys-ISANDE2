@@ -10,11 +10,6 @@ function TurnoverTF3() {
       <div className="container">
          <div className="d-flex justify-content-between align-items-center mb-3">
             <h1>Term and Financial Report</h1>
-            <Link to="/turnoverTF3">
-               <button type="submit" form="submit" className="primary-btn">
-                  SAVE AND COMPLETE LATER
-               </button>
-            </Link>
          </div>
          <hr />
 

@@ -4,7 +4,7 @@ import "../../styles/Turnover.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+ 
 function TurnoverNO4() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -61,9 +61,7 @@ function TurnoverNO4() {
 
           if (prevPageProps.approved === false) {
             if (
-              updateApproval.statusChapterAdvisor === "Approved" &&
-              prevPageProps.formData.statusAdvisoryCouncilChairman ===
-                "Approved"
+              updateApproval.statusChapterAdvisor === "Approved"
             ) {
               const turnoverUpdate = {
                 chapterID: prevPageProps.userData.chapterID,
@@ -79,111 +77,13 @@ function TurnoverNO4() {
             }
           }
         }
-      } else if (
-        prevPageProps.userData.position === "Advisory Council Chairman"
-      ) {
-        if (
-          prevPageProps.formData.statusAdvisoryCouncilChairman === "Approved"
-        ) {
-          alert("Already approved.");
-        } else {
-          const updateApproval = {
-            advisoryCouncilChairman: prevPageProps.userData.userID,
-            statusAdvisoryCouncilChairman: "Approved",
-            dateSignedAdvisoryCouncilChairman: new Date(),
-          };
-
-          const props = {
-            ...prevPageProps,
-            updateApproval: updateApproval,
-          };
-
-          axios.post(
-            `http://localhost:5000/updateF15/${prevPageProps.formData.form15ID}`,
-            props
-          );
-
-          if (prevPageProps.approved === false) {
-            if (
-              updateApproval.statusAdvisoryCouncilChairman === "Approved" &&
-              prevPageProps.formData.statusChapterAdvisor === "Approved"
-            ) {
-              const turnoverUpdate = {
-                chapterID: prevPageProps.userData.chapterID,
-                termID: prevPageProps.chapterData.currentTerm,
-                fieldToUpdate: "form15Approved",
-                updateValue: true,
-              };
-
-              axios.post(
-                "http://localhost:5000/updateTurnover",
-                turnoverUpdate
-              );
-            }
-          }
-        }
-      }
-      navigate("/turnoverDashboardofficer", {
+      } 
+      navigate(`/turnoverDashboardofficer/${prevPageProps.userData.userID}`, {
         state: {
           ...prevPageProps,
         },
       });
     }
-  };
-
-  const handleDisapprove = (e) => {
-    e.preventDefault();
-
-    if (prevPageProps.userData.position === "Chapter Advisor") {
-      if (prevPageProps.formData.statusChapterAdvisor === "Approved") {
-        alert("Already approved.");
-      } else {
-        const updateApproval = {
-          chapterAdvisor: prevPageProps.userData.userID,
-          statusChapterAdvisor: "For Revisions",
-          dateSignedChapterAdvisor: new Date(),
-        };
-
-        const props = {
-          ...prevPageProps,
-          updateApproval: updateApproval,
-        };
-
-        axios.post(
-          `http://localhost:5000/updateF15/${prevPageProps.formData.form15ID}`,
-          props
-        );
-        alert("Disapproved: Waiting for revisions.");
-      }
-    } else if (
-      prevPageProps.userData.position === "Advisory Council Chairman"
-    ) {
-      if (prevPageProps.formData.statusAdvisoryCouncilChairman === "Approved") {
-        alert("Already approved.");
-      } else {
-        const updateApproval = {
-          advisoryCouncilChairman: prevPageProps.userData.userID,
-          statusAdvisoryCouncilChairman: "For Revisions",
-          dateSignedAdvisoryCouncilChairman: new Date(),
-        };
-
-        const props = {
-          ...prevPageProps,
-          updateApproval: updateApproval,
-        };
-
-        axios.post(
-          `http://localhost:5000/updateF15/${prevPageProps.formData.form15ID}`,
-          props
-        );
-        alert("Disapproved: Waiting for revisions.");
-      }
-    }
-    navigate("/turnoverdashboardofficer", {
-      state: {
-        ...prevPageProps,
-      },
-    });
   };
 
   console.log(prevPageProps);
@@ -192,11 +92,6 @@ function TurnoverNO4() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> New Officers Report (Form 15) </h1>
-        <Link to="/turnoverTF1">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
       </div>
 
       <hr />
@@ -215,27 +110,8 @@ function TurnoverNO4() {
 
       <div className="row">
         {/* First Column */}
-
+ 
         <div className="col-md-4">
-          <div className="row align-items-center mt-3">
-            <div className="col-md-4">
-              <label
-                htmlFor="chairmanofadvisory"
-                className="col-form-label text-left"
-              >
-                Chairman of Advisory:
-              </label>
-            </div>
-            <div className="col-md-8">
-              <input
-                type="text"
-                className="form-control readonly-input"
-                value="Name"
-                readOnly
-              />
-            </div>
-          </div>
-
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
               <label
@@ -262,25 +138,6 @@ function TurnoverNO4() {
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
               <label
-                htmlFor="statuschairman"
-                className="col-form-label text-left"
-              >
-                Status:
-              </label>
-            </div>
-            <div className="col-md-8">
-              <input
-                type="text"
-                className="form-control readonly-input"
-                value={prevPageProps.formData.statusAdvisoryCouncilChairman}
-                readOnly
-              />
-            </div>
-          </div>
-
-          <div className="row align-items-center mt-3">
-            <div className="col-md-4">
-              <label
                 htmlFor="statusadvisor"
                 className="col-form-label text-left"
               >
@@ -301,25 +158,6 @@ function TurnoverNO4() {
         {/* Third Column */}
 
         <div className="col-md-4">
-          <div className="row align-items-center mt-3">
-            <div className="col-md-4">
-              <label
-                htmlFor="datesignedchairman"
-                className="col-form-label text-left"
-              >
-                Date Signed:
-              </label>
-            </div>
-            <div className="col-md-8">
-              <input
-                type="date"
-                className="form-control readonly-input"
-                value={prevPageProps.formData.dateSignedAdvisoryCouncilChairman}
-                readOnly
-              />
-            </div>
-          </div>
-
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
               <label
@@ -372,19 +210,10 @@ function TurnoverNO4() {
                   type="submit"
                   form="submit"
                   className="primary-btn"
-                  value="DISAPPROVE"
-                  onClick={handleDisapprove}
-                >
-                  DISAPPROVE
-                </button>
-                <button
-                  type="submit"
-                  form="submit"
-                  className="primary-btn"
                   value="APPROVE"
                   onClick={onSubmit}
                 >
-                  APPROVE
+                  SIGN
                 </button>
               </div>
             )}

@@ -733,7 +733,7 @@ function TurnoverDashboard1() {
 
 										{turnoverData.form1Approved ? (
 											<span className="badge text-bg-success mt-3">
-												Approved
+												Signed
 											</span>
 										) : turnoverData.form1ID === "" ? (
 											<span className="badge text-bg-secondary mt-3">
@@ -742,7 +742,7 @@ function TurnoverDashboard1() {
 										) : turnoverData.form1ID !== "" &&
 										  !turnoverData.form1Approved ? (
 											<span className="badge text-bg-warning mt-3">
-												Pending Approval
+												Pending
 											</span>
 										) : (
 											<span />
@@ -763,7 +763,7 @@ function TurnoverDashboard1() {
 										<br />
 										{turnoverData.form15Approved ? (
 											<span className="badge text-bg-success mt-3">
-												Approved
+												Signed
 											</span>
 										) : turnoverData.form15ID === "" ? (
 											<span className="badge text-bg-secondary mt-3">
@@ -772,7 +772,7 @@ function TurnoverDashboard1() {
 										) : turnoverData.form15ID !== "" &&
 										  !turnoverData.form15Approved ? (
 											<span className="badge text-bg-warning mt-3">
-												Pending Approval
+												Pending
 											</span>
 										) : (
 											<span />
@@ -800,7 +800,7 @@ function TurnoverDashboard1() {
 										<br />
 										{turnoverData.assetsApproved ? (
 											<span className="badge text-bg-success mt-3">
-												Approved
+												Signed
 											</span>
 										) : turnoverData.assetsID === "" ? (
 											<span className="badge text-bg-secondary mt-3">
@@ -809,7 +809,7 @@ function TurnoverDashboard1() {
 										) : turnoverData.assetsID !== "" &&
 										  !turnoverData.assetsApproved ? (
 											<span className="badge text-bg-warning mt-3">
-												Pending Approval
+												Pending
 											</span>
 										) : (
 											<span />
@@ -830,7 +830,7 @@ function TurnoverDashboard1() {
 										<br />
 										{turnoverData.advisoryApproved ? (
 											<span className="badge text-bg-success mt-3">
-												Approved
+												Signed
 											</span>
 										) : turnoverData.advisoryID === "" ? (
 											<span className="badge text-bg-secondary mt-3">
@@ -839,7 +839,7 @@ function TurnoverDashboard1() {
 										) : turnoverData.advisoryID !== "" &&
 										  !turnoverData.advisoryApproved ? (
 											<span className="badge text-bg-warning mt-3">
-												Pending Approval
+												Pending
 											</span>
 										) : (
 											<span />

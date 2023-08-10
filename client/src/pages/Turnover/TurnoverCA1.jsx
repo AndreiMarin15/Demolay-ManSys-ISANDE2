@@ -6,7 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
-
+ 
 function TurnoverCA1() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -97,7 +97,7 @@ function TurnoverCA1() {
         alert("Already approved.");
       }
 
-      navigate("/turnoverdashboardofficer", {
+      navigate(`/turnoverdashboardofficer/${prevPageProps.userData.userID}`, {
         state: {
           ...prevPageProps,
         },
@@ -111,9 +111,6 @@ function TurnoverCA1() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Certification of Advisory Council Members </h1>
-        <button type="button" className="primary-btn">
-          SAVE AND COMPLETE LATER
-        </button>
       </div>
 
       <hr />
@@ -433,18 +430,10 @@ function TurnoverCA1() {
                 type="submit"
                 form="submit"
                 className="primary-btn"
-                value="DISAPPROVE"
-              >
-                DISAPPROVE
-              </button>
-              <button
-                type="submit"
-                form="submit"
-                className="primary-btn"
                 value="APPROVE"
                 onClick={onSubmit}
               >
-                APPROVE
+                SIGN
               </button>
             </div>
           )}

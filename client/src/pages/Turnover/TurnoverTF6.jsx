@@ -4,7 +4,7 @@ import "../../styles/Turnover.css";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+ 
 function TurnoverTF6() {
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -111,7 +111,7 @@ function TurnoverTF6() {
 					}
 				}
 			}
-			navigate("/turnoverdashboardofficer", {
+			navigate(`/turnoverdashboardofficer/${prevPageProps.userData.userID}`, {
 				state: {
 					...prevPageProps,
 				},
@@ -125,9 +125,6 @@ function TurnoverTF6() {
 		<div className="container">
 			<div className="d-flex justify-content-between align-items-center mb-3">
 				<h1> Term and Financial Report </h1>
-				<button type="submit" form="submit" className="primary-btn">
-					SAVE AND COMPLETE LATER
-				</button>
 			</div>
 			<hr />
 
