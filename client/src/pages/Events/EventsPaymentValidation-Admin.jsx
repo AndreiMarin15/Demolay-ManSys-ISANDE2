@@ -75,7 +75,7 @@ function EventsPaymentValidation() {
           <td>{meritBarsData.blue}</td>
           <td>{meritBarsData.purple}</td>
           <td>{meritBarsData.gold}</td>
-          <td>{total}</td>
+          <td>{`PHP ` + total}</td>
         </tr>
       );
     });
@@ -120,7 +120,7 @@ function EventsPaymentValidation() {
       <div className="row">
         {/* First Column */}
 
-        <div className="col-md-5">
+        <div className="col-md-7">
           <table className="table">
             <thead>
               <tr>
@@ -145,7 +145,7 @@ function EventsPaymentValidation() {
 
         {/* Second Column */}
 
-        <div className="col-md-6">
+        <div className="col-md-4">
           <div className="row align-items-center">
             <div className="col-md-3">
               <label htmlFor="chapter" className="col-form-label text-left">
@@ -175,7 +175,7 @@ function EventsPaymentValidation() {
           <div className="row align-items-center">
             <div className="col-md-3">
               <label htmlFor="total" className="col-form-label text-right">
-                Total Amount to Pay:
+                Total Amount:
               </label>
             </div>
             <div className="col-md-9">
