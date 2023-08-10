@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,128 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsConclave() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const prevPageProps = location.state;
+
+  const [eventsData, setEventsData] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState({
+    activityName: "",
+    type: "",
+    startDate: "",
+    endDate: "",
+  });
+
+  const [formData, setFormData] = useState({
+    eventID: "",
+    proof: "",
+    color: "",
+  });
+
+  useEffect(() => {
+    console.log(prevPageProps);
+    setEventsData(prevPageProps.eventsData?.conclaves || []);
+    setFormData({ ...formData, color: prevPageProps.color });
+    console.log(eventsData);
+  }, []);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    const selectedEventData = eventsData.find((event) => event._id === value);
+
+    setSelectedEvent((prev) => ({
+      ...prev,
+      activityName: selectedEventData?.activityName || "",
+      type: selectedEventData?.type || "",
+      startDate: selectedEventData?.startDate || "",
+      endDate: selectedEventData?.endDate || "",
+    }));
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setFormData({
+      ...formData,
+      proof: base64,
+    });
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.eventID === "" || formData.proof === "") {
+      alert("Please fill in all the required fields.");
+      return;
+    }
+
+    if (prevPageProps.applications.length < 5) {
+      const appData = {
+        eventID: formData.eventID,
+        proof: formData.proof,
+      };
+
+      const newApplication = {
+        applicantID: prevPageProps.userData.userID,
+        name: prevPageProps.userData.name,
+        chapterID: prevPageProps.userData.chapterID,
+        type: prevPageProps.type,
+        color: prevPageProps.color,
+
+        conclave: appData,
+
+        isSubmitted: false,
+        isApproved: false,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
+        .then((res) => {
+          window.location.href = `/eventsHome`;
+        });
+
+      // Reset the form after submission
+      setSelectedEvent({
+        activityName: "",
+        type: "",
+        startDate: "",
+        endDate: "",
+      });
+    }
+  };
+
   return (
     <div className="container">
       <br />
@@ -34,10 +156,6 @@ function EventsConclave() {
         <div className="col-md-4">
           <table class="legend-table">
             <tr>
-              <td>Duration:</td>
-              <td>defines how long the conclave is</td>
-            </tr>
-            <tr>
               <td>Type:</td>
               <td>
                 defines if it is National or Luzon, Visayas, Mindanao
@@ -45,16 +163,8 @@ function EventsConclave() {
               </td>
             </tr>
             <tr>
-              <td className="no-wrap">Chap Rep:</td>
-              <td>name of the chapter that was represented by the member</td>
-            </tr>
-            <tr>
-              <td>OR No.:</td>
-              <td>
-                official receipt number from the host reflecting the member’s
-                name or registration sheet that includes the member’s name with
-                a copy of the OR reflecting the chapter’s name{" "}
-              </td>
+              <td>Duration:</td>
+              <td>defines how long the conclave is</td>
             </tr>
           </table>
         </div>
@@ -63,74 +173,97 @@ function EventsConclave() {
 
         <div className="col-md-4">
           <div className="row align-items-center mt-3">
-            <div className="col-md-3">
-              <label htmlFor="duration" className="col-form-label text-left">
-                Duration:
+            <div className="col-md-4">
+              <label
+                htmlFor="activityName"
+                className="col-form-label text-left"
+              >
+                Conclave:
               </label>
             </div>
-            <div className="col-md-3">
-              <input
-                type="text"
-                className="form-control"
-                id="startdate"
-                placeholder="Start Date"
-              />
-            </div>
-            <div className="col-md-3">
-              <input
-                type="text"
-                className="form-control"
-                id="enddate"
-                placeholder="End Date"
-              />
+            <div className="col-md-8">
+              <select
+                className="form-select form-control"
+                id="eventID"
+                onChange={handleChange}
+              >
+                <option value="" hidden>
+                  Select
+                </option>
+                {eventsData.map((event) => (
+                  <option key={event._id} value={event._id}>
+                    {event.activityName}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
+
           <br />
+
           <div className="row align-items-center mt-3">
-            <div className="col-md-3">
+            <div className="col-md-4">
               <label htmlFor="type" className="col-form-label text-left">
                 Type:
               </label>
             </div>
             <div className="col-md-8">
-              <select className="form-select form-control" id="type">
-                <option>National / Luzon</option>
-                <option>Visayas</option>
-                <option>Mindanao</option>
-              </select>
+              <input
+                type="text"
+                className="form-control"
+                id="type"
+                value={selectedEvent.type}
+                disabled
+              />
             </div>
           </div>
+
           <br />
+
           <div className="row align-items-center mt-3">
-            <div className="col-md-3">
-              <label htmlFor="chaprep" className="col-form-label text-left">
-                Chap Rep:
-              </label>
-            </div>
-            <div className="col-md-8">
-              <select className="form-select form-control" id="chaprep">
-                <option>Loyalty</option>
-                <option>Jose Abad</option>
-                <option>Others</option>
-              </select>
-            </div>
-          </div>
-          <br />
-          <div className="row align-items-center mt-3">
-            <div className="col-md-3">
-              <label htmlFor="orno" className="col-form-label text-right">
-                OR No:
+            <div className="col-md-4">
+              <label
+                htmlFor="activityDate"
+                className="col-form-label text-right"
+              >
+                Start Date:
               </label>
             </div>
             <div className="col-md-8">
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                id="orno"
-                placeholder="Enter OR No."
+                id="startDate"
+                name="startDate"
+                placeholder="MM/DD/YYYY"
+                value={selectedEvent.startDate.split("T")[0]}
+                disabled
               />
             </div>
           </div>
+          <div className="row align-items-center mt-3">
+            <div className="col-md-4">
+              <label
+                htmlFor="activityDate"
+                className="col-form-label text-right"
+              >
+                End Date:
+              </label>
+            </div>
+            <div className="col-md-8">
+              <input
+                type="date"
+                className="form-control"
+                id="endDate"
+                name="endDate"
+                placeholder="MM/DD/YYYY"
+                value={selectedEvent.endDate.split("T")[0]}
+                disabled
+              />
+            </div>
+          </div>
+
+          <br />
         </div>
 
         {/* Third Column */}
@@ -143,7 +276,12 @@ function EventsConclave() {
               </label>
             </div>
             <div className="col-md-7">
-              <input type="file" className="form-control" id="uploadID" />
+              <input
+                type="file"
+                className="form-control"
+                id="uploadproof"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -156,7 +294,17 @@ function EventsConclave() {
               BACK
             </button>
           </Link>
-          <button type="button" className="primary-btn" value="SUBMIT">
+          <button
+            type="button"
+            className="btn"
+            value="SUBMIT"
+            disabled={
+              formData.eventID === "" ||
+              formData.proof === "" ||
+              formData.color === ""
+            }
+            onClick={handleSubmit}
+          >
             SUBMIT
           </button>
         </div>

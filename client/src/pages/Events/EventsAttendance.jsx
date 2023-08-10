@@ -36,8 +36,6 @@ function EventsAttendance() {
     "Organist",
   ];
 
-  const [currentApplications, setApplication] = useState({});
-
   const [eventsData, setEventsData] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState({
     term: "",
@@ -129,7 +127,7 @@ function EventsAttendance() {
     }
 
     if (prevPageProps.applications.length < 5) {
-      const attendance = {
+      const appData = {
         eventID: formData.eventID,
         position: formData.position,
         performance: formData.performance,
@@ -141,9 +139,11 @@ function EventsAttendance() {
         applicantID: prevPageProps.userData.userID,
         name: prevPageProps.userData.name,
         chapterID: prevPageProps.userData.chapterID,
-        type: "Attendance",
+        type: prevPageProps.type,
         color: prevPageProps.color,
-        attendance: attendance,
+
+        attendance: appData,
+
         isSubmitted: false,
         isApproved: false,
       };
@@ -190,16 +190,16 @@ function EventsAttendance() {
         <div className="col-md-4">
           <table className="legend-table">
             <tr>
-              <td>Term:</td>
-              <td>means Term of Office</td>
-            </tr>
-            <tr>
               <td className="no-wrap">Meeting Name:</td>
               <td>name of Stated Meetings</td>
             </tr>
             <tr>
               <td>Meeting Date:</td>
               <td>date of Stated Meetings</td>
+            </tr>
+            <tr>
+              <td>Term:</td>
+              <td>means Term of Office</td>
             </tr>
             <tr>
               <td>Position:</td>
@@ -332,7 +332,7 @@ function EventsAttendance() {
                 value={formData.performance}
                 onChange={onChange}
               >
-                <option value="" disabled={formData.performance !== ""} hidden>
+                <option value="" hidden>
                   Select
                 </option>
                 <option>Beginner</option>

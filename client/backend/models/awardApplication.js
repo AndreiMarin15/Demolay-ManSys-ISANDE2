@@ -17,6 +17,42 @@ const applicationSchema = new Schema({
     proof: String,
   },
 
+  athletics: {
+    eventID: String,
+    proof: String,
+  },
+
+  civicService: {
+    eventID: String,
+    hours: Number,
+    proof: String,
+  },
+
+  conclave: {
+    eventID: String,
+    proof: String,
+  },
+
+  fineArts: {
+    eventID: String,
+    performances: Number,
+    proof: String,
+  },
+
+  fundraising: {
+    eventID: String,
+    hours: Number,
+    proof: String,
+  },
+
+  installing: {
+    activityDate: Date,
+    chapter: String,
+    position: String,
+    performance: String,
+    proof: String,
+  },
+
   isSubmitted: Boolean,
   isApproved: Boolean,
   isRequested: Boolean,
