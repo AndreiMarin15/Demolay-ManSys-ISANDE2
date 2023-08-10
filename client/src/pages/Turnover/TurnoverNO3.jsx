@@ -10,11 +10,6 @@ function TurnoverNO3() {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> New Officers Report (Form 15) </h1>
-        <Link to="/turnoverTF1">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
       </div>
 
       <hr />

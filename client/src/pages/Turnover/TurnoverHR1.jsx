@@ -92,11 +92,6 @@ function TurnoverHR1() {
           Report on Historical Records, Official Files and Assets, and
           Properties
         </h1>
-        <Link to="">
-          <button type="submit" form="submit" className="primary-btn">
-            SAVE AND COMPLETE LATER
-          </button>
-        </Link>
       </div>
 
       <hr />

@@ -97,7 +97,7 @@ function TurnoverDashboard1() {
 							`http://localhost:5000/getTurnoverReports/${res.data.chapterAssigned}/${res1.data.currentTerm}`
 						);
 						if (res2.data !== "") {
-							console.log(
+							console.log( 
 								"TURNOVER REPORTS EXISTS: ",
 								res2.data,
 								res.data.chapterAssigned,
@@ -558,11 +558,11 @@ function TurnoverDashboard1() {
 											<br />
 											{turnoverData.form1Approved ? (
 												<span className="badge text-bg-success mt-3">
-													Approved
+													Signed
 												</span>
 											) : (
 												<span className="badge text-bg-warning mt-3">
-													Pending Approval
+													Pending
 												</span>
 											)}
 											{turnoverData.eoCertification && (
@@ -582,11 +582,11 @@ function TurnoverDashboard1() {
 											<br />
 											{turnoverData.form15Approved ? (
 												<span className="badge text-bg-success mt-3">
-													Approved
+													Signed
 												</span>
 											) : (
 												<span className="badge text-bg-warning mt-3">
-													Pending Approval
+													Pending
 												</span>
 											)}
 											{turnoverData.eoCertification && (
@@ -611,11 +611,11 @@ function TurnoverDashboard1() {
 											<br />
 											{turnoverData.assetsApproved ? (
 												<span className="badge text-bg-success mt-3">
-													Approved
+													Signed
 												</span>
 											) : (
 												<span className="badge text-bg-warning mt-3">
-													Pending Approval
+													Pending
 												</span>
 											)}
 											{turnoverData.eoCertification && (
@@ -634,11 +634,11 @@ function TurnoverDashboard1() {
 											<br />
 											{turnoverData.advisoryApproved ? (
 												<span className="badge text-bg-success mt-3">
-													Approved
+													Signed
 												</span>
 											) : (
 												<span className="badge text-bg-warning mt-3">
-													Pending Approval
+													Pending
 												</span>
 											)}
 											{turnoverData.eoCertification && (

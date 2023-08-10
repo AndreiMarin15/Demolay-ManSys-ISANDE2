@@ -561,7 +561,9 @@ const controller = {
 			{ accountId: req.body.idNumber },
 			{}
 		);
-
+		bcrypt.hash("", 10, (err, hash) => {
+			console.log("Hashed: " + hash);
+		});
 		if (account) {
 			if (bcrypt.compareSync(req.body.password, account.password)) {
 				session = account;
