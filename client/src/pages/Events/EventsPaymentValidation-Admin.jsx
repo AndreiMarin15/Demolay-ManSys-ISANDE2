@@ -1,12 +1,17 @@
-import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
-import { Component } from "react";
 
-const RenderTableData = () => {
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+function EventsPaymentValidation() {
+  const [chapters, setChapters] = useState([]);
+  const [selectedChapter, setSelectedChapter] = useState(0);
+  const [formData, setFormData] = useState({});
+
   const tableData = [
     ["1", "Attendance"],
-    ["2", "Athletic"],
+    ["2", "Athletics"],
     ["3", "Civic Service"],
     ["4", "Conclave"],
     ["5", "Fine Arts"],
@@ -23,28 +28,84 @@ const RenderTableData = () => {
     ["16", "Visitation"],
   ];
 
-  return tableData.map((rowData, index) => {
-    const [col1, col2, col3, col4] = rowData;
-    return (
-      <tr key={index}>
-        <td>{col2}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    );
-  });
-};
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/getChapters")
+      .then((res) => {
+        setChapters(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-const styles = {
-  maxWidth: "200px",
-  maxHeight: "200px",
-  objectFit: "contain",
-};
+  useEffect(() => {
+    if (selectedChapter !== 0) {
+      axios
+        .get(`http://localhost:5000/getRequests/${selectedChapter}`)
+        .then((res) => {
+          if (res.data.isApproved !== true) setFormData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      setFormData({});
+    }
+  }, [selectedChapter]);
 
-function EventsPaymentValidation() {
+  const RenderTableData = () => {
+    const updatedTableData = formData.meritBars || {};
+
+    return tableData.map((rowData, index) => {
+      const [, col2] = rowData;
+      const meritBarsData = updatedTableData[col2] || {};
+      const total =
+        (meritBarsData.white +
+          meritBarsData.red +
+          meritBarsData.blue +
+          meritBarsData.purple +
+          meritBarsData.gold) *
+          50 || 0;
+      return (
+        <tr key={index}>
+          <td>{col2}</td>
+          <td>{meritBarsData.white}</td>
+          <td>{meritBarsData.red}</td>
+          <td>{meritBarsData.blue}</td>
+          <td>{meritBarsData.purple}</td>
+          <td>{meritBarsData.gold}</td>
+          <td>{`PHP ` + total}</td>
+        </tr>
+      );
+    });
+  };
+
+  const styles = {
+    maxWidth: "200px",
+    maxHeight: "200px",
+    objectFit: "contain",
+  };
+
+  const onChangeChapter = (e) => {
+    setSelectedChapter(+e.target.value);
+  };
+
+  const handleSubmit = () => {
+    const props = {
+      fieldToUpdate: "isApproved",
+      updateValue: true,
+    };
+
+    axios
+      .post(`http://localhost:5000/updateRequest/${formData._id}`, props)
+      .then((res) => {
+        alert(`Approved request for merit bars`);
+        console.log("Updated and request: " + res.data);
+        window.location.reload();
+      });
+  };
+
   return (
     <div className="container">
       <br />
@@ -52,14 +113,14 @@ function EventsPaymentValidation() {
       {/* Header */}
 
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h1> Request for Approved Merit Bars (Payment Validation)</h1>
+        <h1> Payment Validation for Approved Merit Bars</h1>
       </div>
       <hr />
 
       <div className="row">
         {/* First Column */}
 
-        <div className="col-md-5">
+        <div className="col-md-7">
           <table className="table">
             <thead>
               <tr>
@@ -84,11 +145,37 @@ function EventsPaymentValidation() {
 
         {/* Second Column */}
 
-        <div className="col-md-6">
+        <div className="col-md-4">
+          <div className="row align-items-center">
+            <div className="col-md-3">
+              <label htmlFor="chapter" className="col-form-label text-left">
+                Chapter:
+              </label>
+            </div>
+            <div className="col-md-9">
+              <select
+                className="form-select form-control"
+                id="chapter"
+                placeholder="Select Chapter"
+                onChange={onChangeChapter}
+              >
+                <option value="0" muted>
+                  Select Chapter
+                </option>
+                {chapters.map((chapter) => {
+                  return (
+                    <option key={chapter._id} value={chapter.chapterID}>
+                      {chapter.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
           <div className="row align-items-center">
             <div className="col-md-3">
               <label htmlFor="total" className="col-form-label text-right">
-                Total Amount to Pay:
+                Total Amount:
               </label>
             </div>
             <div className="col-md-9">
@@ -97,7 +184,7 @@ function EventsPaymentValidation() {
                 className="form-control"
                 disabled
                 id="uploadID"
-                value=""
+                value={formData.total || 0}
               />
             </div>
           </div>
@@ -108,21 +195,23 @@ function EventsPaymentValidation() {
               </label>
             </div>
             <div className="col-md-9">
-              {/* {selectedApplication.attendance.proof ? (
-                <img
-                  src={selectedApplication.attendance.proof}
-                  alt="img"
-                  style={styles}
-                />
+              {formData.proof ? (
+                <img src={formData.proof} alt="img" style={styles} />
               ) : (
                 <p></p>
-              )} */}
+              )}
             </div>
           </div>
 
           {/* Mark as Paid */}
           <div className="d-flex justify-content-end ms-5">
-            <button type="button" form="submit" className="btn">
+            <button
+              type="button"
+              form="submit"
+              className="btn"
+              onClick={handleSubmit}
+              disabled={formData._id === undefined}
+            >
               MARK AS PAID
             </button>
           </div>

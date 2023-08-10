@@ -593,9 +593,67 @@ const controller = {
     });
   },
 
-  newRequest: async (req, res) => {},
-  updateRequest: async (req, res) => {},
-  getRequests: async (req, res) => {},
+  newRequest: async (req, res) => {
+    const newRequest = {
+      userID: req.body.userData.userID,
+      name: req.body.userData.name,
+      chapterID: req.body.userData.chapterID,
+
+      meritBars: req.body.formData,
+
+      total: req.body.total,
+      proof: req.body.photoData,
+
+      isApproved: false,
+    };
+
+    db.insertOne(Requests, newRequest, (result) => {
+      if (result) {
+        // Successfully created the new document
+        res.send(result);
+      } else {
+        // Failed to create the new document
+        res.json({
+          success: false,
+          message: "Failed to create events document",
+        });
+      }
+    });
+  },
+
+  updateRequest: async (req, res) => {
+    const id = req.params.id;
+
+    const update = {
+      [req.body.fieldToUpdate]: req.body.updateValue,
+    };
+
+    db.findOne(Requests, { _id: id }, {}, () => {
+      db.updateOne(Requests, { _id: id }, update, (result) => {
+        if (result) {
+          // Successfully updated the document
+          res.json({
+            success: true,
+            message: "Events document updated successfully",
+          });
+        } else {
+          // Failed to update the document
+          res.json({
+            success: false,
+            message: "Failed to update Events document",
+          });
+        }
+      });
+    });
+  },
+
+  getRequests: async (req, res) => {
+    const chapter = req.params.chapter;
+
+    db.findOne(Requests, { chapterID: chapter }, {}, (result) => {
+      res.send(result);
+    });
+  },
 };
 
 module.exports = controller;
