@@ -29,7 +29,7 @@ function EventsHome() {
   const [selectedApplication, setSelectedApplication] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const [meritBarCtg, setCategory] = useState(-1);
+  const [meritBarCtg, setCategory] = useState(-2);
 
   const handleNavigation = (action) => {
     let nextIndex;
@@ -55,6 +55,7 @@ function EventsHome() {
         userID: user.data._id,
         name: user.data.givenName + " " + user.data.lastName,
         chapterID: user.data.chapterId,
+        position: user.data.position,
       });
 
       const events = await axios.get(
@@ -67,10 +68,13 @@ function EventsHome() {
           if (res1.data !== "") {
             console.log("EXISTING APPLICATIONS: ", res1.data);
             setApplications(res1.data);
+            setCategory(-1);
           } else {
             console.log("NO APPLICATIONS");
           }
         });
+
+      console.log(events.data);
 
       setEventsData(events.data);
     }
@@ -329,6 +333,13 @@ function EventsHome() {
 
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h1> Events </h1>
+        {userData.position === "Scribe" && (
+          <Link to="/eventsAdd">
+            <button type="button" form="submit" className="primary-btn">
+              CREATE NEW EVENT
+            </button>
+          </Link>
+        )}
       </div>
 
       {/* Instruction */}
@@ -357,7 +368,7 @@ function EventsHome() {
                 <th>View</th>
               </tr>
             </thead>
-            <tbody>{<RenderTableData />}</tbody>
+            {applications.length > 0 && <tbody>{<RenderTableData />}</tbody>}
           </table>
         </div>
 
@@ -370,20 +381,31 @@ function EventsHome() {
         {/* Second Column */}
 
         <div className="col-md-5 mx-auto">
-          {meritBarCtg === -1 && (
-            <div>
-              <h3>
-                <i>{"Choose a category on the left to view."}</i>
-              </h3>
-            </div>
-          )}
-          {meritBarCtg === 0 && (
+          {meritBarCtg === -2 && (
             <div>
               <div>
-                <h2> No data to display.</h2>
+                <h2>Loading...</h2>
               </div>
             </div>
           )}
+
+          {meritBarCtg === -1 && applications.length > 0 && (
+            <div>
+              <h3>
+                <i>Choose a category on the left to manage.</i>
+              </h3>
+            </div>
+          )}
+
+          {(meritBarCtg === -1 && applications.length === 0) ||
+            (meritBarCtg === 0 && (
+              <div>
+                <div>
+                  <h2> No data to display.</h2>
+                </div>
+              </div>
+            ))}
+
           {meritBarCtg === 1 && (
             <>
               {eventsData.attendanceEvents.map((event) => {

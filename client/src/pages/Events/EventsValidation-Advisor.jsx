@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
-import { Component } from "react";
 
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -13,8 +11,6 @@ function EventsValidation() {
   const [eventsData, setEventsData] = useState({});
 
   const [selectedApplication, setSelectedApplication] = useState({});
-  const [currentList, setCurrentList] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const [applicationData, setApplicationData] = useState({
     applications: [],

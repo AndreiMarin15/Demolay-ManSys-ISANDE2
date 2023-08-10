@@ -14,6 +14,7 @@ const TurnoverStatus = require("../models/turnoverStatus.js");
 const Event = require("../models/events.js");
 const fs = require("fs");
 const AdvisoryCouncils = require("../models/advisoryCouncils.js");
+const Requests = require("../models/requests.js");
 
 let session = {};
 
@@ -535,6 +536,7 @@ const controller = {
       attendance: req.body.attendance,
       isSubmitted: false,
       isApproved: false,
+      isRequested: false,
     };
 
     db.insertOne(AwardApplication, newApplication, (result) => {
@@ -590,6 +592,10 @@ const controller = {
       res.send(result);
     });
   },
+
+  newRequest: async (req, res) => {},
+  updateRequest: async (req, res) => {},
+  getRequests: async (req, res) => {},
 };
 
 module.exports = controller;
