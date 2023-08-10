@@ -95,6 +95,10 @@ router.post("/updateAwardApplication/:id", controller2.updateApplication);
 router.get("/getAwardApplications/:id", controller2.getCurrentApplications);
 router.get("/getAllAwardApplications", controller2.getAllApplications);
 
+router.post("/newRequest", controller2.newRequest);
+router.post("/updateRequest/:id", controller2.updateRequest);
+router.get("/getRequests/:chapter", controller2.getRequests);
+
 router.get("/getCirculars", controller.getCirculars);
 router.get("/getCircular/:circularId", controller.getCircularById);
 router.get("/getCircularsByUser/:memberId", controller.getCircularsByUser);

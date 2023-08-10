@@ -123,11 +123,14 @@ function EventsProof() {
       purple: 0,
       gold: 0,
     },
+  });
 
+  const [total, setTotal] = useState({
     total: 0,
-    proof: "",
+  });
 
-    isApproved: false,
+  const [photoData, setPhotoData] = useState({
+    proof: "",
   });
 
   const [userData, setUserData] = useState({});
@@ -212,7 +215,9 @@ function EventsProof() {
               }
             });
 
-            setFormData({ ...formData, total: filtered.length * 50 });
+            setFormData({ ...formData });
+
+            setTotal({ total: filtered.length * 50 });
 
             setFilteredApplications({
               ...filteredApplications,
@@ -236,8 +241,7 @@ function EventsProof() {
     const file = e.target.files[0];
     const base64 = await convertToBase64(file);
 
-    setFormData({
-      ...formData,
+    setPhotoData({
       proof: base64,
     });
   };
@@ -310,9 +314,33 @@ function EventsProof() {
       };
     });
 
-    const newApplication = {};
+    const newApplication = {
+      userData: userData,
+      formData: updatedFormData,
+      photoData: photoData.proof,
+      total: total.total,
+    };
 
-    console.log(updatedFormData);
+    axios
+      .post("http://localhost:5000/newRequest", newApplication)
+      .then((res) => {
+        console.log(res);
+        filteredApplications.approvedApplications.forEach((application) => {
+          const props = {
+            fieldToUpdate: "isRequested",
+            updateValue: true,
+          };
+          axios
+            .post(
+              `http://localhost:5000/updateAwardApplication/${application._id}`,
+              props
+            )
+            .then((res) => {
+              console.log("Updated application: " + res.data);
+            });
+        });
+        window.location.reload();
+      });
   };
 
   const RenderTableData = () => {
@@ -391,25 +419,21 @@ function EventsProof() {
       <div className="row">
         {/* First Column */}
         <div className="col-md-5">
-          {filteredApplications.approvedApplications.length > 0 ? (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>White</th>
-                  <th>Red</th>
-                  <th>Blue</th>
-                  <th>Purple</th>
-                  <th>Gold</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>White</th>
+                <th>Red</th>
+                <th>Blue</th>
+                <th>Purple</th>
+                <th>Gold</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
 
-              <tbody>{<RenderTableData />}</tbody>
-            </table>
-          ) : (
-            <h2>Loading...</h2>
-          )}
+            <tbody>{<RenderTableData />}</tbody>
+          </table>
         </div>
 
         {/* Vertical Line */}
@@ -465,7 +489,7 @@ function EventsProof() {
               className="btn"
               value="NEXT"
               onClick={handleSubmit}
-              disabled={formData.proof === ""}
+              disabled={photoData.proof === ""}
             >
               SUBMIT
             </button>
