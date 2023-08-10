@@ -533,7 +533,15 @@ const controller = {
       chapterID: req.body.chapterID,
       type: req.body.type,
       color: req.body.color,
+
       attendance: req.body.attendance,
+      athletics: req.body.athletics,
+      civicService: req.body.civicService,
+      conclave: req.body.conclave,
+      fineArts: req.body.fineArts,
+      fundraising: req.body.fundraising,
+      installing: req.body.installing,
+
       isSubmitted: false,
       isApproved: false,
       isRequested: false,

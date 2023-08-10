@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,129 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsAthletic() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const prevPageProps = location.state;
+
+  const [eventsData, setEventsData] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState({
+    activityName: "",
+    activityDate: Date(),
+    host: "",
+    location: "",
+  });
+
+  const [formData, setFormData] = useState({
+    eventID: "",
+    proof: "",
+    color: "",
+  });
+
+  useEffect(() => {
+    console.log(prevPageProps);
+    setEventsData(prevPageProps.eventsData?.athleticEvents || []);
+    setFormData({ ...formData, color: prevPageProps.color });
+    console.log(eventsData);
+  }, []);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    const selectedEventData = eventsData.find((event) => event._id === value);
+
+    setSelectedEvent((prev) => ({
+      ...prev,
+      activityName: selectedEventData?.activityName || "",
+      activityDate: selectedEventData?.activityDate || "",
+      host: selectedEventData?.host || "",
+      location: selectedEventData?.location || "",
+    }));
+
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setFormData({
+      ...formData,
+      proof: base64,
+    });
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (formData.eventID === "" || formData.proof === "") {
+      alert("Please fill in all the required fields.");
+      return;
+    }
+
+    if (prevPageProps.applications.length < 5) {
+      const appData = {
+        eventID: formData.eventID,
+        proof: formData.proof,
+      };
+
+      const newApplication = {
+        applicantID: prevPageProps.userData.userID,
+        name: prevPageProps.userData.name,
+        chapterID: prevPageProps.userData.chapterID,
+        type: prevPageProps.type,
+        color: prevPageProps.color,
+
+        athletics: appData,
+
+        isSubmitted: false,
+        isApproved: false,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
+        .then((res) => {
+          window.location.href = `/eventsHome`;
+        });
+
+      // Reset the form after submission
+      setSelectedEvent({
+        activityName: "",
+        activityDate: Date(),
+        host: "",
+        location: "",
+      });
+    }
+  };
+
   return (
     <div className="container">
       <br />
@@ -33,13 +156,14 @@ function EventsAthletic() {
         <div className="col-md-4">
           <table class="legend-table">
             <tr>
+              <td className="no-wrap">Activity:</td>
+              <td>what sport did the member participate</td>
+            </tr>
+            <tr>
               <td>Date:</td>
               <td>date of athletic activities</td>
             </tr>
-            <tr>
-              <td className="no-wrap">Name of Sport:</td>
-              <td>what sport did the member participate</td>
-            </tr>
+
             <tr>
               <td>Hosted by:</td>
               <td>
@@ -58,47 +182,68 @@ function EventsAthletic() {
         <div className="col-md-4">
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
-              <label htmlFor="nameofsport" className="col-form-label text-left">
-                Name of Sport:
+              <label
+                htmlFor="activityName"
+                className="col-form-label text-left"
+              >
+                Activity:
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="nameofsport">
-                <option>Sport 1</option>
-                <option>Sport 2</option>
-                <option>Sport 3</option>
+              <select
+                className="form-select form-control"
+                id="eventID"
+                name="activityName"
+                onChange={handleChange}
+              >
+                <option value="" hidden>
+                  Select
+                </option>
+                {eventsData.map((event) => (
+                  <option key={event._id} value={event._id}>
+                    {event.activityName}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
           <br />
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
-              <label htmlFor="date" className="col-form-label text-right">
+              <label
+                htmlFor="activityDate"
+                className="col-form-label text-right"
+              >
                 Date:
               </label>
             </div>
             <div className="col-md-7">
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                id="date"
+                id="activityDate"
+                name="activityDate"
                 placeholder="MM/DD/YYYY"
+                value={selectedEvent.activityDate.split("T")[0]}
+                disabled
               />
             </div>
           </div>
           <br />
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
-              <label htmlFor="hostedby" className="col-form-label text-right">
+              <label htmlFor="host" className="col-form-label text-right">
                 Hosted by:
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="hostedby">
-                <option>Hosted by 1</option>
-                <option>Hosted by 2</option>
-                <option>Hosted by 3</option>
-              </select>
+              <input
+                type="text"
+                className="form-control"
+                id="host"
+                value={selectedEvent.host}
+                disabled
+              />
             </div>
           </div>
           <div className="row align-items-center mt-3">
@@ -112,7 +257,8 @@ function EventsAthletic() {
                 type="text"
                 className="form-control"
                 id="location"
-                placeholder="Enter Location"
+                value={selectedEvent.location}
+                disabled
               />
             </div>
           </div>
@@ -123,13 +269,18 @@ function EventsAthletic() {
 
         <div className="col-md-4">
           <div className="row align-items-center mt-3">
-            <div className="col-md-3">
+            <div className="col-md-2">
               <label htmlFor="uploadID" className="col-form-label text-right">
                 Proof:
               </label>
             </div>
-            <div className="col-md-7">
-              <input type="file" className="form-control" id="uploadID" />
+            <div className="col-md-10">
+              <input
+                type="file"
+                className="form-control"
+                id="uploadproof"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -142,7 +293,17 @@ function EventsAthletic() {
               BACK
             </button>
           </Link>
-          <button type="button" className="primary-btn" value="SUBMIT">
+          <button
+            type="button"
+            className="btn"
+            value="SUBMIT"
+            disabled={
+              formData.eventID === "" ||
+              formData.proof === "" ||
+              formData.color === ""
+            }
+            onClick={handleSubmit}
+          >
             SUBMIT
           </button>
         </div>

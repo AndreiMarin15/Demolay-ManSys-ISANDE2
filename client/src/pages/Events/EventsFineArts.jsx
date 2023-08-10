@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,131 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsFineArts() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const prevPageProps = location.state;
+
+  const [eventsData, setEventsData] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState({
+    activityName: "",
+    activityDate: "",
+    type: "",
+  });
+
+  const [formData, setFormData] = useState({
+    eventID: "",
+    performances: 0,
+    proof: "",
+    color: "",
+  });
+
+  useEffect(() => {
+    console.log(prevPageProps);
+    setEventsData(prevPageProps.eventsData?.faEvents || []);
+    setFormData({ ...formData, color: prevPageProps.color });
+    console.log(eventsData);
+  }, []);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    const selectedEventData = eventsData.find((event) => event._id === value);
+
+    setSelectedEvent((prev) => ({
+      ...prev,
+      activityName: selectedEventData?.activityName || "",
+      activityDate: selectedEventData?.activityDate || "",
+      type: selectedEventData?.type || "",
+    }));
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setFormData({
+      ...formData,
+      proof: base64,
+    });
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      formData.eventID === "" ||
+      formData.performances === "" ||
+      formData.proof === ""
+    ) {
+      alert("Please fill in all the required fields.");
+      return;
+    }
+
+    if (prevPageProps.applications.length < 5) {
+      const appData = {
+        eventID: formData.eventID,
+        performances: formData.performances,
+        proof: formData.proof,
+      };
+
+      const newApplication = {
+        applicantID: prevPageProps.userData.userID,
+        name: prevPageProps.userData.name,
+        chapterID: prevPageProps.userData.chapterID,
+        type: prevPageProps.type,
+        color: prevPageProps.color,
+
+        fineArts: appData,
+
+        isSubmitted: false,
+        isApproved: false,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
+        .then((res) => {
+          window.location.href = `/eventsHome`;
+        });
+
+      // Reset the form after submission
+      setSelectedEvent({
+        activityName: "",
+        activityDate: "",
+        type: "",
+      });
+    }
+  };
+
   return (
     <div className="container">
       <br />
@@ -69,10 +194,19 @@ function EventsFineArts() {
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="nameofactivity">
-                <option>Name 1</option>
-                <option>Name 2</option>
-                <option>Name 3</option>
+              <select
+                className="form-select form-control"
+                id="eventID"
+                onChange={handleChange}
+              >
+                <option value="" hidden>
+                  Select
+                </option>
+                {eventsData.map((event) => (
+                  <option key={event._id} value={event._id}>
+                    {event.activityName}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -85,10 +219,12 @@ function EventsFineArts() {
             </div>
             <div className="col-md-7">
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                id="date"
+                id="activityDate"
                 placeholder="MM/DD/YYYY"
+                value={selectedEvent.activityDate.split("T")[0]}
+                disabled
               />
             </div>
           </div>
@@ -100,10 +236,14 @@ function EventsFineArts() {
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="type">
-                <option>Musical</option>
-                <option>Theatrical</option>
-              </select>
+              <input
+                type="text"
+                className="form-control"
+                id="location"
+                placeholder="Enter Location"
+                value={selectedEvent.type}
+                disabled
+              />
             </div>
           </div>
           <br />
@@ -115,10 +255,17 @@ function EventsFineArts() {
             </div>
             <div className="col-md-7">
               <input
-                type="text"
+                type="number"
                 className="form-control"
-                id="noofperf"
-                placeholder="00"
+                min="0"
+                id="performances"
+                placeholder="Enter No. of Performances"
+                onChange={(e) => {
+                  setFormData(() => ({
+                    ...formData,
+                    performances: +e.target.value,
+                  }));
+                }}
               />
             </div>
           </div>
@@ -135,7 +282,12 @@ function EventsFineArts() {
               </label>
             </div>
             <div className="col-md-7">
-              <input type="file" className="form-control" id="uploadID" />
+              <input
+                type="file"
+                className="form-control"
+                id="uploadproof"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -148,7 +300,18 @@ function EventsFineArts() {
               BACK
             </button>
           </Link>
-          <button type="button" className="primary-btn" value="SUBMIT">
+          <button
+            type="button"
+            className="btn"
+            value="SUBMIT"
+            disabled={
+              formData.eventID === "" ||
+              formData.performances === "" ||
+              formData.proof === "" ||
+              formData.color === ""
+            }
+            onClick={handleSubmit}
+          >
             SUBMIT
           </button>
         </div>

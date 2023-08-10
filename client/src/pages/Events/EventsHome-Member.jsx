@@ -91,7 +91,7 @@ function EventsHome() {
   const RenderTableData = () => {
     const tableData = [
       ["1", "Attendance"],
-      ["2", "Athletic"],
+      ["2", "Athletics"],
       ["3", "Civic Service"],
       ["4", "Conclave"],
       ["5", "Fine Arts"],
@@ -153,8 +153,22 @@ function EventsHome() {
   };
 
   const handleNavigationClick = (type) => () => {
+    let newType;
+
+    if (type === "CivicService") {
+      newType = "CivicService";
+    } else if (type === "FineArts") {
+      newType = "Fine Arts";
+    } else if (type === "MasonicAttendance") {
+      newType = "Masonic Attendance";
+    } else if (type === "MasonicService") {
+      newType = "Masonic Service";
+    } else {
+      newType = type;
+    }
+
     const filtered = applications.filter((application) => {
-      if (application.type === type) {
+      if (application.type === newType) {
         return true;
       } else {
         return false;
@@ -206,6 +220,7 @@ function EventsHome() {
             applications: filtered,
             eventsData: eventsData,
             color: nextColor,
+            type: newType,
           },
         });
       } else if (approved.length >= 5) {
@@ -247,7 +262,7 @@ function EventsHome() {
                 </a>
               </td>
               <td>
-                <a href="" onClick={handleNavigationClick("Athletic")}>
+                <a href="" onClick={handleNavigationClick("Athletics")}>
                   Athletics
                 </a>
               </td>
@@ -267,7 +282,7 @@ function EventsHome() {
                 </a>
               </td>
               <td>
-                <a href="" onClick={handleNavigationClick("FundRaising")}>
+                <a href="" onClick={handleNavigationClick("Fundraising")}>
                   Fundraising
                 </a>
               </td>
@@ -540,32 +555,917 @@ function EventsHome() {
               </div>
 
               {/* Buttons  */}
-              {applications.length > 1 && (
-                <div className="d-flex justify-content-center mt-4">
-                  <div className="mr-2">
-                    <button
-                      type="button"
-                      form="button"
-                      className="primary-btn"
-                      value="PREVIOUS"
-                      onClick={() => handleNavigation("prev")}
-                    >
-                      PREVIOUS
-                    </button>
-                  </div>
-                  <div className="ms-2">
-                    <button
-                      type="button"
-                      form="button"
-                      className="primary-btn"
-                      value="NEXT"
-                      onClick={() => handleNavigation("next")}
-                    >
-                      NEXT
-                    </button>
-                  </div>
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
                 </div>
               )}
+            </>
+          )}
+
+          {meritBarCtg === 2 && (
+            <>
+              {eventsData.athleticEvents.map((event) => {
+                if (event._id === selectedApplication.athletics.eventID) {
+                  return (
+                    <div key={selectedApplication.athletics.eventID}>
+                      <div>
+                        <h2> Athletics </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Host:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.host}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.athletics.proof ? (
+                    <img
+                      src={selectedApplication.athletics.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 3 && (
+            <>
+              {eventsData.csEvents.map((event) => {
+                if (event._id === selectedApplication.civicService.eventID) {
+                  return (
+                    <div key={selectedApplication.civicService.eventID}>
+                      <div>
+                        <h2> Civic Service </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    Hours of Service:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.civicService.hours || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.civicService.proof ? (
+                    <img
+                      src={selectedApplication.civicService.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 4 && (
+            <>
+              {eventsData.conclaves.map((event) => {
+                if (event._id === selectedApplication.conclave.eventID) {
+                  return (
+                    <div key={selectedApplication.conclave.eventID}>
+                      <div>
+                        <h2> Conclave </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Conclave:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Type:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.type}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Start Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.startDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            End Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.endDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.conclave.proof ? (
+                    <img
+                      src={selectedApplication.conclave.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 5 && (
+            <>
+              {eventsData.faEvents.map((event) => {
+                if (event._id === selectedApplication.fineArts.eventID) {
+                  return (
+                    <div key={selectedApplication.fineArts.eventID}>
+                      <div>
+                        <h2> Fine Arts </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Type:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.type}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    No. of Performances:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.fineArts.performances || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.fineArts.proof ? (
+                    <img
+                      src={selectedApplication.fineArts.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 6 && (
+            <>
+              {eventsData.frEvents.map((event) => {
+                if (event._id === selectedApplication.fundraising.eventID) {
+                  return (
+                    <div key={selectedApplication.fundraising.eventID}>
+                      <div>
+                        <h2> Fundraising </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    Hours Rendered:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.fundraising.hours || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.fundraising.proof ? (
+                    <img
+                      src={selectedApplication.fundraising.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 7 && (
+            <>
+              <div>
+                <div>
+                  <h2> Installing </h2>
+                  {selectedApplication.isSubmitted === true && (
+                    <span className="badge text-bg-info ms-2">Submitted</span>
+                  )}
+                  {selectedApplication.isApproved === true && (
+                    <span className="badge text-bg-success ms-2">
+                      Approved - {selectedApplication.color}
+                    </span>
+                  )}
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Activity Date:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.installing.activityDate.split(
+                          "T"
+                        )[0]
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Chapter:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.installing.chapter}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label
+                    htmlFor="position"
+                    className="col-form-label text-right"
+                  >
+                    Position:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.installing.position || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label
+                    htmlFor="position"
+                    className="col-form-label text-right"
+                  >
+                    Performance:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.installing.performance || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.installing.proof ? (
+                    <img
+                      src={selectedApplication.installing.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
 
               {selectedApplication.isSubmitted === false && (
                 <div className="d-flex justify-content-end ms-5 w-100">

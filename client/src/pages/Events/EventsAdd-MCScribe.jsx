@@ -6,7 +6,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsAdd() {
-
   const location = useLocation();
   const navigate = useNavigate();
   const prevPageProps = location.state;
@@ -33,7 +32,7 @@ function EventsAdd() {
         value: 2,
       },
       {
-        key: "Civil Service",
+        key: "Civic Service",
         value: 3,
       },
       {
@@ -61,12 +60,8 @@ function EventsAdd() {
         value: 9,
       },
       {
-        key: "Petitions",
-        value: 10,
-      },
-      {
         key: "Visitation",
-        value: 11,
+        value: 10,
       },
     ],
 
@@ -103,7 +98,7 @@ function EventsAdd() {
     };
 
     axios
-      .get("http://localhost:5000/getChapters")
+      .get("http://localhost:5000/getAllChapters")
       .then((res) => {
         setChapters(res.data);
       })
@@ -123,6 +118,8 @@ function EventsAdd() {
       ...formData,
       meritBar: e.target.value,
     });
+
+    setNewEvent([]);
   };
 
   const handleCreateNewEvent = () => {
@@ -151,7 +148,74 @@ function EventsAdd() {
           .then((res) => {
             console.log("Added new event: " + res);
           });
+      } else if (formData.meritBar == 2) {
+        eventsData.athleticEvents.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "athleticEvents",
+          updateValue: eventsData.athleticEvents,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
+      } else if (formData.meritBar == 3) {
+        eventsData.csEvents.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "csEvents",
+          updateValue: eventsData.csEvents,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
+      } else if (formData.meritBar == 4) {
+        eventsData.conclaves.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "conclaves",
+          updateValue: eventsData.conclaves,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
+      } else if (formData.meritBar == 5) {
+        eventsData.faEvents.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "faEvents",
+          updateValue: eventsData.faEvents,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
+      } else if (formData.meritBar == 6) {
+        eventsData.frEvents.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "frEvents",
+          updateValue: eventsData.frEvents,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
       }
+
+      window.location.reload();
     } catch (error) {
       console.error("Error saving new event:", error);
     }
@@ -188,7 +252,7 @@ function EventsAdd() {
                 value={formData.meritBar}
                 onChange={onChangeMeritBar}
               >
-                <option value="" disabled={formData.meritBar !== 0} hidden>
+                <option value="" hidden>
                   Select Merit Bar
                 </option>
                 {formData.meritBars.map(function (meritBar) {
@@ -305,7 +369,7 @@ function EventsAdd() {
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activityname"
+                      htmlFor="activityName"
                       className="col-form-label text-right"
                     >
                       Name of Activity:
@@ -315,8 +379,15 @@ function EventsAdd() {
                     <input
                       type="text"
                       className="form-control"
-                      id="activityname"
+                      id="activityName"
                       placeholder="Enter Activity Name"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityName: e.target.value,
+                        }))
+                      }
+                      required
                     />
                   </div>
                 </div>
@@ -324,7 +395,7 @@ function EventsAdd() {
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activitydate"
+                      htmlFor="activityDate"
                       className="col-form-label text-right"
                     >
                       Date of Activity:
@@ -332,29 +403,38 @@ function EventsAdd() {
                   </div>
                   <div className="col-md-7">
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
-                      id="activitydate"
+                      id="activityDate"
                       placeholder="Enter Activity Date"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityDate: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
 
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
-                    <label
-                      htmlFor="hostchapter"
-                      className="col-form-label text-right"
-                    >
-                      Host Chapter:
+                    <label htmlFor="host" className="col-form-label text-right">
+                      Hosted by:
                     </label>
                   </div>
                   <div className="col-md-7">
                     <input
                       type="text"
                       className="form-control"
-                      id="hostchapter"
-                      placeholder="Enter Host Chapter"
+                      id="host"
+                      placeholder="Enter Host"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          host: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -374,6 +454,12 @@ function EventsAdd() {
                       className="form-control"
                       id="location"
                       placeholder="Enter Location"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          location: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -383,14 +469,14 @@ function EventsAdd() {
         }
 
         {
-          // Civil Service
-          formData.meritBar == 3 && (
+          // Civil Service & Fundraising
+          (formData.meritBar == 3 || formData.meritBar == 6) && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activityname"
+                      htmlFor="activityName"
                       className="col-form-label text-right"
                     >
                       Name of Activity:
@@ -400,8 +486,14 @@ function EventsAdd() {
                     <input
                       type="text"
                       className="form-control"
-                      id="activityname"
+                      id="activityName"
                       placeholder="Enter Activity Name"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityName: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -409,7 +501,7 @@ function EventsAdd() {
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activitydate"
+                      htmlFor="activityDate"
                       className="col-form-label text-right"
                     >
                       Date of Activity:
@@ -417,10 +509,16 @@ function EventsAdd() {
                   </div>
                   <div className="col-md-7">
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
-                      id="activitydate"
+                      id="activityDate"
                       placeholder="Enter Activity Date"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityDate: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -440,6 +538,12 @@ function EventsAdd() {
                       className="form-control"
                       id="location"
                       placeholder="Enter Location"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          location: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -456,7 +560,7 @@ function EventsAdd() {
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activityname"
+                      htmlFor="activityName"
                       className="col-form-label text-right"
                     >
                       Name of Activity:
@@ -466,8 +570,14 @@ function EventsAdd() {
                     <input
                       type="text"
                       className="form-control"
-                      id="activityname"
+                      id="activityName"
                       placeholder="Enter Activity Name"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityName: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -479,11 +589,25 @@ function EventsAdd() {
                     </label>
                   </div>
                   <div className="col-md-7">
-                    <select className="form-select form-control" id="type">
-                      <option>National</option>
-                      <option>Luzon</option>
-                      <option>Visayas</option>
-                      <option>Minadanao</option>
+                    <select
+                      className="form-select form-control"
+                      id="type"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          type: e.target.value,
+                        }))
+                      }
+                    >
+                      <option value="" hidden>
+                        Select
+                      </option>
+                      <option value="National">National</option>
+                      <option value="Jurisdictional - Luzon">Luzon</option>
+                      <option value="Jurisdictional - Visayas">Visayas</option>
+                      <option value="Jurisdictional - Minadanao">
+                        Minadanao
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -499,18 +623,30 @@ function EventsAdd() {
                   </div>
                   <div className="col-md-4">
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
-                      id="startdate"
+                      id="startDate"
                       placeholder="Start Date"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          startDate: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                   <div className="col-md-4">
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
-                      id="enddate"
+                      id="endDate"
                       placeholder="End Date"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          endDate: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -527,7 +663,7 @@ function EventsAdd() {
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activityname"
+                      htmlFor="activityName"
                       className="col-form-label text-right"
                     >
                       Name of Activity:
@@ -537,8 +673,14 @@ function EventsAdd() {
                     <input
                       type="text"
                       className="form-control"
-                      id="activityname"
+                      id="activityName"
                       placeholder="Enter Activity Name"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityName: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -546,7 +688,7 @@ function EventsAdd() {
                 <div className="row align-items-center mt-3">
                   <div className="col-md-4">
                     <label
-                      htmlFor="activitydate"
+                      htmlFor="activityDate"
                       className="col-form-label text-right"
                     >
                       Date of Activity:
@@ -554,10 +696,16 @@ function EventsAdd() {
                   </div>
                   <div className="col-md-7">
                     <input
-                      type="text"
+                      type="date"
                       className="form-control"
-                      id="activitydate"
+                      id="activityDate"
                       placeholder="Enter Activity Date"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          activityDate: e.target.value,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -569,7 +717,19 @@ function EventsAdd() {
                     </label>
                   </div>
                   <div className="col-md-7">
-                    <select className="form-select form-control" id="type">
+                    <select
+                      className="form-select form-control"
+                      id="type"
+                      onChange={(e) =>
+                        setNewEvent((prevEvent) => ({
+                          ...prevEvent,
+                          type: e.target.value,
+                        }))
+                      }
+                    >
+                      <option value="" hidden>
+                        Select
+                      </option>
                       <option>Musical</option>
                       <option>Theatrical</option>
                     </select>
@@ -581,146 +741,8 @@ function EventsAdd() {
         }
 
         {
-          // Fundraising
-          formData.meritBar == 6 && (
-            <>
-              <div className="col-md-6">
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="activityname"
-                      className="col-form-label text-right"
-                    >
-                      Name of Activity:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="activityname"
-                      placeholder="Enter Activity Name"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="activitydate"
-                      className="col-form-label text-right"
-                    >
-                      Date of Activity:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="activitydate"
-                      placeholder="Enter Activity Date"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="location"
-                      className="col-form-label text-right"
-                    >
-                      Location:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="location"
-                      placeholder="Enter Location"
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {
-          // Installing
-          formData.meritBar == 7 && (
-            <>
-              <div className="col-md-6">
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="activityname"
-                      className="col-form-label text-right"
-                    >
-                      Name of Activity:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="activityname"
-                      placeholder="Enter Activity Name"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="activitydate"
-                      className="col-form-label text-right"
-                    >
-                      Date of Activity:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="activitydate"
-                      placeholder="Enter Activity Date"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="chapter"
-                      className="col-form-label text-left"
-                    >
-                      Chapter:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <select
-                      className="form-select form-control"
-                      id="chapter"
-                      placeholder="Select Chapter"
-                    >
-                      <option value="0" muted>
-                        Select Chapter
-                      </option>
-                      {chapters.map((chapter) => {
-                        return <option key={chapter.id}>{chapter.name}</option>;
-                      })}
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {
           // Journalism
-          formData.meritBar == 8 && (
+          formData.meritBar == 7 && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
@@ -781,7 +803,7 @@ function EventsAdd() {
 
         {
           // Merit
-          formData.meritBar == 9 && (
+          formData.meritBar == 8 && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
@@ -846,83 +868,8 @@ function EventsAdd() {
         }
 
         {
-          // Petitions
-          formData.meritBar == 10 && (
-            <>
-              <div className="col-md-6">
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label htmlFor="name" className="col-form-label text-right">
-                      Name:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="scod"
-                      placeholder="Enter Member Name"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label htmlFor="date" className="col-form-label text-right">
-                      I.D. Date:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="date"
-                      placeholder="MM/DD/YYYY"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="chapter"
-                      className="col-form-label text-left"
-                    >
-                      Chapter:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <select className="form-select form-control" id="chapter">
-                      <option>Chapter 1</option>
-                      <option>Chapter 2</option>
-                      <option>Chapter 3</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label htmlFor="scod" className="col-form-label text-right">
-                      SCOD-OR No.:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="scod"
-                      placeholder="Enter SCOD-OR No."
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {
           // Visitation
-          formData.meritBar == 11 && (
+          formData.meritBar == 9 && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
@@ -940,11 +887,15 @@ function EventsAdd() {
                       id="chapter"
                       placeholder="Select Chapter"
                     >
-                      <option value="0" muted>
+                      <option value="" hidden>
                         Select Chapter
                       </option>
                       {chapters.map((chapter) => {
-                        return <option key={chapter.id}>{chapter.name}</option>;
+                        return (
+                          <option key={chapter.chapterID} value={chapter.name}>
+                            {chapter.name}
+                          </option>
+                        );
                       })}
                     </select>
                   </div>
@@ -987,6 +938,5 @@ function EventsAdd() {
       </div>
     </div>
   );
-
 }
 export default EventsAdd;
