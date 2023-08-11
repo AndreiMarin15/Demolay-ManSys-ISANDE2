@@ -30,7 +30,7 @@ function EventsPaymentValidation() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/getChapters")
+      .get("http://localhost:5000/getAllChapters")
       .then((res) => {
         setChapters(res.data);
       })
