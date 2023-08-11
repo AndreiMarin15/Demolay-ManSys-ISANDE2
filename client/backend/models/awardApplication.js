@@ -110,7 +110,7 @@ const applicationSchema = new Schema({
 
   visitation: {
     chapter: String,
-    date: String,
+    date: Date,
     proof: String,
   },
 

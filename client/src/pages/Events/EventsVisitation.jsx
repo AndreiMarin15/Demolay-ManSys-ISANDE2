@@ -180,7 +180,7 @@ function EventsVisitation() {
             </div>
             <div className="col-md-9">
               <input
-                type="text"
+                type="date"
                 className="form-control"
                 id="date"
                 placeholder="MM/DD/YYYY"
