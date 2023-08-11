@@ -971,6 +971,571 @@ function EventsValidation() {
               )}
             </>
           )}
+
+          {meritBarCtg === "Journalism" && (
+            <>
+              <div>
+                <div>
+                  <h2> Journalism </h2>
+                </div>
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Article Name:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.journalism.articleName}
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Date Published:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.journalism.articleDate.split("T")[0]
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Article Type:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.journalism.articleType}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label
+                    htmlFor="position"
+                    className="col-form-label text-right"
+                  >
+                    Position:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.journalism.position || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.journalism.proof ? (
+                    <img
+                      src={selectedApplication.journalism.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Masonic Attendance" && (
+            <>
+              <div>
+                <div>
+                  <h2> Masonic Attendance </h2>
+                </div>
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Mason's Full Name:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.masonicAttendance.masonFullName
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Date Published:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.masonicAttendance.dateAttended.split(
+                          "T"
+                        )[0]
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.masonicAttendance.proof ? (
+                    <img
+                      src={selectedApplication.masonicAttendance.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Masonic Service" && (
+            <>
+              {eventsData.msEvents.map((event) => {
+                if (event._id === selectedApplication.masonicService.eventID) {
+                  return (
+                    <div key={selectedApplication.masonicService.eventID}>
+                      <div>
+                        <h2> Masonic Service </h2>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    Hours Rendered:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.masonicService.hours || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.masonicService.proof ? (
+                    <img
+                      src={selectedApplication.masonicService.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Merit" && (
+            <>
+              {eventsData.meritEvents.map((event) => {
+                if (event._id === selectedApplication.merit.eventID) {
+                  return (
+                    <div key={selectedApplication.merit.eventID}>
+                      <div>
+                        <h2> Merit </h2>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    Hours Rendered:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.merit.hours || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.merit.proof ? (
+                    <img
+                      src={selectedApplication.merit.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Petitions" && (
+            <>
+              <div>
+                <div>
+                  <h2> Petitions </h2>
+                </div>
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Member's Full Name:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.petition.memberName}
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Initiatory Degree:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={selectedApplication.petition.idDate.split("T")[0]}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Chapter:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.petition.chapter}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.petition.proof ? (
+                    <img
+                      src={selectedApplication.petition.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Religion" && (
+            <>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Ritual" && (
+            <>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Scholastics" && (
+            <>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === "Visitation" && (
+            <>
+              {selectedApplication.isApproved === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

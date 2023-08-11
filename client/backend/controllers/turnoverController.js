@@ -541,6 +541,11 @@ const controller = {
       fineArts: req.body.fineArts,
       fundraising: req.body.fundraising,
       installing: req.body.installing,
+      journalism: req.body.journalism,
+      masonicAttendance: req.body.masonicAttendance,
+      masonicService: req.body.masonicService,
+      merit: req.body.merit,
+      petition: req.body.petition,
 
       isSubmitted: false,
       isApproved: false,
@@ -658,9 +663,14 @@ const controller = {
   getRequests: async (req, res) => {
     const chapter = req.params.chapter;
 
-    db.findOne(Requests, { chapterID: chapter }, {}, (result) => {
-      res.send(result);
-    });
+    db.findOne(
+      Requests,
+      { chapterID: chapter, isApproved: false },
+      {},
+      (result) => {
+        res.send(result);
+      }
+    );
   },
 };
 

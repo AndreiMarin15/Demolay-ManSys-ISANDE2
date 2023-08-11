@@ -156,7 +156,7 @@ function EventsHome() {
     let newType;
 
     if (type === "CivicService") {
-      newType = "CivicService";
+      newType = "Civic Service";
     } else if (type === "FineArts") {
       newType = "Fine Arts";
     } else if (type === "MasonicAttendance") {
@@ -1432,6 +1432,682 @@ function EventsHome() {
                   {selectedApplication.installing.proof ? (
                     <img
                       src={selectedApplication.installing.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 8 && (
+            <>
+              <div>
+                <div>
+                  <h2> Journalism </h2>
+                  {selectedApplication.isSubmitted === true && (
+                    <span className="badge text-bg-info ms-2">Submitted</span>
+                  )}
+                  {selectedApplication.isApproved === true && (
+                    <span className="badge text-bg-success ms-2">
+                      Approved - {selectedApplication.color}
+                    </span>
+                  )}
+                </div>
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Article Name:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.journalism.articleName}
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Date Published:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.journalism.articleDate.split("T")[0]
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Article Type:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.journalism.articleType}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label
+                    htmlFor="position"
+                    className="col-form-label text-right"
+                  >
+                    Position:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.journalism.position || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.journalism.proof ? (
+                    <img
+                      src={selectedApplication.journalism.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 9 && (
+            <>
+              <div>
+                <div>
+                  <h2> Masonic Attendance </h2>
+                  {selectedApplication.isSubmitted === true && (
+                    <span className="badge text-bg-info ms-2">Submitted</span>
+                  )}
+                  {selectedApplication.isApproved === true && (
+                    <span className="badge text-bg-success ms-2">
+                      Approved - {selectedApplication.color}
+                    </span>
+                  )}
+                </div>
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Mason's Full Name:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.masonicAttendance.masonFullName
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Date Published:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={
+                        selectedApplication.masonicAttendance.dateAttended.split(
+                          "T"
+                        )[0]
+                      }
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.masonicAttendance.proof ? (
+                    <img
+                      src={selectedApplication.masonicAttendance.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 10 && (
+            <>
+              {eventsData.msEvents.map((event) => {
+                if (event._id === selectedApplication.masonicService.eventID) {
+                  return (
+                    <div key={selectedApplication.masonicService.eventID}>
+                      <div>
+                        <h2> Masonic Service </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    Hours Rendered:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.masonicService.hours || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.masonicService.proof ? (
+                    <img
+                      src={selectedApplication.masonicService.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 11 && (
+            <>
+              {eventsData.meritEvents.map((event) => {
+                if (event._id === selectedApplication.merit.eventID) {
+                  return (
+                    <div key={selectedApplication.merit.eventID}>
+                      <div>
+                        <h2> Masonic Service </h2>
+                        {selectedApplication.isSubmitted === true && (
+                          <span className="badge text-bg-info ms-2">
+                            Submitted
+                          </span>
+                        )}
+                        {selectedApplication.isApproved === true && (
+                          <span className="badge text-bg-success ms-2">
+                            Approved - {selectedApplication.color}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-left">
+                            Activity Name:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.activityName}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Activity Date:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="date"
+                            className="form-control readonly-input"
+                            value={event.activityDate.split("T")[0]}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+
+                      <div className="row align-items-center mt-3">
+                        <div className="col-md-4">
+                          <label className="col-form-label text-right">
+                            Location:
+                          </label>
+                        </div>
+                        <div className="col-md-8">
+                          <input
+                            type="text"
+                            className="form-control readonly-input"
+                            value={event.location}
+                            readOnly
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="hours" className="col-form-label text-right">
+                    Hours Rendered:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="number"
+                    className="form-control readonly-input"
+                    value={selectedApplication.merit.hours || ""}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.merit.proof ? (
+                    <img
+                      src={selectedApplication.merit.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons  */}
+              <div className="d-flex justify-content-center mt-4">
+                <div className="mr-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="PREVIOUS"
+                    onClick={() => handleNavigation("prev")}
+                  >
+                    PREVIOUS
+                  </button>
+                </div>
+                <div className="ms-2">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    value="NEXT"
+                    onClick={() => handleNavigation("next")}
+                  >
+                    NEXT
+                  </button>
+                </div>
+              </div>
+
+              {selectedApplication.isSubmitted === false && (
+                <div className="d-flex justify-content-end ms-5 w-100">
+                  <button
+                    type="button"
+                    form="button"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    SUBMIT
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {meritBarCtg === 12 && (
+            <>
+              <div>
+                <div>
+                  <h2> Petitions </h2>
+                  {selectedApplication.isSubmitted === true && (
+                    <span className="badge text-bg-info ms-2">Submitted</span>
+                  )}
+                  {selectedApplication.isApproved === true && (
+                    <span className="badge text-bg-success ms-2">
+                      Approved - {selectedApplication.color}
+                    </span>
+                  )}
+                </div>
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-right">
+                      Member's Full Name:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="text"
+                      className="form-control readonly-input"
+                      value={selectedApplication.petition.memberName}
+                      readOnly
+                    />
+                  </div>
+                </div>
+
+                <div className="row align-items-center mt-3">
+                  <div className="col-md-4">
+                    <label className="col-form-label text-left">
+                      Initiatory Degree:
+                    </label>
+                  </div>
+                  <div className="col-md-8">
+                    <input
+                      type="date"
+                      className="form-control readonly-input"
+                      value={selectedApplication.petition.idDate.split("T")[0]}
+                      readOnly
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">
+                    Chapter Initiated to:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.petition.chapter}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.petition.proof ? (
+                    <img
+                      src={selectedApplication.petition.proof}
                       alt="img"
                       style={styles}
                     />

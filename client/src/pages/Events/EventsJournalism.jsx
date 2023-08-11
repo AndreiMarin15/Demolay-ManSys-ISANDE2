@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,95 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsJournalism() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const prevPageProps = location.state;
+
+  const [formData, setFormData] = useState({
+    articleName: "",
+    articleDate: "",
+    type: "",
+    position: "",
+    proof: "",
+    color: "",
+  });
+
+  useEffect(() => {
+    console.log(prevPageProps);
+    setFormData({ ...formData, color: prevPageProps.color });
+  }, []);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setFormData({
+      ...formData,
+      proof: base64,
+    });
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (prevPageProps.applications.length < 5) {
+      const appData = {
+        articleName: formData.articleName,
+        articleDate: formData.articleDate,
+        articleType: formData.type,
+        position: formData.position,
+        proof: formData.proof,
+      };
+
+      const newApplication = {
+        applicantID: prevPageProps.userData.userID,
+        name: prevPageProps.userData.name,
+        chapterID: prevPageProps.userData.chapterID,
+        type: prevPageProps.type,
+        color: prevPageProps.color,
+
+        journalism: appData,
+
+        isSubmitted: false,
+        isApproved: false,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
+        .then((res) => {
+          window.location.href = `/eventsHome`;
+        });
+    }
+  };
+
   return (
     <div className="container">
       <br />
@@ -32,8 +121,8 @@ function EventsJournalism() {
         <div className="col-md-4">
           <table class="legend-table">
             <tr>
-              <td className="no-wrap">Name of Newspaper:</td>
-              <td>title of the Chapter newspaper</td>
+              <td className="no-wrap">Article Name:</td>
+              <td>title of the newspaper article</td>
             </tr>
             <tr>
               <td>Date:</td>
@@ -52,34 +141,39 @@ function EventsJournalism() {
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
               <label
-                htmlFor="nameofnewspaper"
+                htmlFor="articleName"
                 className="col-form-label text-right"
               >
-                Name:
+                Article Name:
               </label>
             </div>
             <div className="col-md-7">
               <input
                 type="text"
                 className="form-control"
-                id="nameofnewspaper"
-                placeholder="Enter Name of Newspaper"
+                id="articleName"
+                placeholder="Enter Article Name"
+                onChange={onChange}
               />
             </div>
           </div>
           <br />
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
-              <label htmlFor="date" className="col-form-label text-right">
+              <label
+                htmlFor="articleDate"
+                className="col-form-label text-right"
+              >
                 Date:
               </label>
             </div>
             <div className="col-md-7">
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                id="date"
+                id="articleDate"
                 placeholder="MM/DD/YYYY"
+                onChange={onChange}
               />
             </div>
           </div>
@@ -96,6 +190,7 @@ function EventsJournalism() {
                 className="form-control"
                 id="type"
                 placeholder="Enter Type"
+                onChange={onChange}
               />
             </div>
           </div>
@@ -107,7 +202,14 @@ function EventsJournalism() {
               </label>
             </div>
             <div className="col-md-7">
-              <select className="form-select form-control" id="term">
+              <select
+                className="form-select form-control"
+                id="position"
+                onChange={onChange}
+              >
+                <option value="" hidden>
+                  Select
+                </option>
                 <option>Editor</option>
                 <option>Layout</option>
                 <option>Artist</option>
@@ -126,7 +228,12 @@ function EventsJournalism() {
               </label>
             </div>
             <div className="col-md-7">
-              <input type="file" className="form-control" id="uploadID" />
+              <input
+                type="file"
+                className="form-control"
+                id="uploadproof"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -139,7 +246,20 @@ function EventsJournalism() {
               BACK
             </button>
           </Link>
-          <button type="button" className="primary-btn" value="SUBMIT">
+          <button
+            type="button"
+            className="btn"
+            value="SUBMIT"
+            disabled={
+              formData.articleName === "" ||
+              formData.articleDate === "" ||
+              formData.position === "" ||
+              formData.type === "" ||
+              formData.proof === "" ||
+              formData.color === ""
+            }
+            onClick={handleSubmit}
+          >
             SUBMIT
           </button>
         </div>

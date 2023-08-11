@@ -39,6 +39,18 @@ const frEventSchema = new Schema({
   location: String,
 });
 
+const msEventSchema = new Schema({
+  activityName: String,
+  activityDate: Date,
+  location: String,
+});
+
+const meritEventSchema = new Schema({
+  activityName: String,
+  activityDate: Date,
+  location: String,
+});
+
 const eventSchema = new Schema({
   chapterID: String,
   attendanceEvents: [attendanceEventSchema],
@@ -47,6 +59,8 @@ const eventSchema = new Schema({
   conclaves: [conclaveEventSchema],
   faEvents: [faEventSchema],
   frEvents: [frEventSchema],
+  msEvents: [msEventSchema],
+  meritEvents: [meritEventSchema],
 });
 
 const Events = mongoose.model("Events", eventSchema);
