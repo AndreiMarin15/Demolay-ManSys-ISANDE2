@@ -1471,6 +1471,71 @@ function EventsValidation() {
 
           {meritBarCtg === "Religion" && (
             <>
+              <div>
+                <h2> Religion </h2>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Church:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.religion.church}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-left">Date:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="date"
+                    className="form-control readonly-input"
+                    value={selectedApplication.religion.date.split("T")[0]}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Location:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.religion.location}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.religion.proof ? (
+                    <img
+                      src={selectedApplication.religion.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
               {selectedApplication.isApproved === false && (
                 <div className="d-flex justify-content-end ms-5 w-100">
                   <button
@@ -1488,6 +1553,71 @@ function EventsValidation() {
 
           {meritBarCtg === "Ritual" && (
             <>
+              <div>
+                <h2> Ritual </h2>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Chapter:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.ritual.chapter}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-left">Date:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="date"
+                    className="form-control readonly-input"
+                    value={selectedApplication.ritual.date.split("T")[0]}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Position:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.ritual.position}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.ritual.proof ? (
+                    <img
+                      src={selectedApplication.ritual.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
               {selectedApplication.isApproved === false && (
                 <div className="d-flex justify-content-end ms-5 w-100">
                   <button
@@ -1505,6 +1635,89 @@ function EventsValidation() {
 
           {meritBarCtg === "Scholastics" && (
             <>
+              <div>
+                <h2> Scholastics </h2>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">School:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.scholastics.school}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">
+                    School Year:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.scholastics.schoolYear}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Semester:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.scholastics.semester}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">
+                    Average Grade:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.scholastics.aveGrade}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.scholastics.proof ? (
+                    <img
+                      src={selectedApplication.scholastics.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
               {selectedApplication.isApproved === false && (
                 <div className="d-flex justify-content-end ms-5 w-100">
                   <button
@@ -1522,6 +1735,57 @@ function EventsValidation() {
 
           {meritBarCtg === "Visitation" && (
             <>
+              <div>
+                <h2> Visitation </h2>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-right">Chapter:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control readonly-input"
+                    value={selectedApplication.visitation.chapter}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label className="col-form-label text-left">Date:</label>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="date"
+                    className="form-control readonly-input"
+                    value={selectedApplication.visitation.date.split("T")[0]}
+                    readOnly
+                  />
+                </div>
+              </div>
+
+              <div className="row align-items-center mt-3">
+                <div className="col-md-4">
+                  <label htmlFor="proof" className="col-form-label text-right">
+                    Proof:
+                  </label>
+                </div>
+                <div className="col-md-8">
+                  {selectedApplication.visitation.proof ? (
+                    <img
+                      src={selectedApplication.visitation.proof}
+                      alt="img"
+                      style={styles}
+                    />
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </div>
+
               {selectedApplication.isApproved === false && (
                 <div className="d-flex justify-content-end ms-5 w-100">
                   <button
