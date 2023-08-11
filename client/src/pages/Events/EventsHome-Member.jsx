@@ -50,33 +50,43 @@ function EventsHome() {
     async function fetchEventsData() {
       const user = await axios.get("http://localhost:5000/getCurrentUser");
 
-      setUserData({
-        ...userData,
-        userID: user.data._id,
-        name: user.data.givenName + " " + user.data.lastName,
-        chapterID: user.data.chapterId,
-        position: user.data.position,
-      });
+      console.log("POSITION",user.data.position)
 
-      const events = await axios.get(
-        `http://localhost:5000/getEvents/${user.data.chapterId}`
-      );
+      if(user.data.position == "Chapter Advisor"){
+        console.log("NATRIGGER AKO")
+        window.location.href = '/eventsValidation'
+      } else {
+        console.log("DI NATRIGGER")
+        setUserData({
+          ...userData,
+          userID: user.data._id,
+          name: user.data.givenName + " " + user.data.lastName,
+          chapterID: user.data.chapterId,
+          position: user.data.position,
+        });   
+  
+        const events = await axios.get(
+          `http://localhost:5000/getEvents/${user.data.chapterId}`
+        );
+  
+        axios
+          .get(`http://localhost:5000/getAwardApplications/${user.data._id}`)
+          .then(async (res1) => {
+            if (res1.data !== "") {
+              console.log("EXISTING APPLICATIONS: ", res1.data);
+              setApplications(res1.data);
+              setCategory(-1);
+            } else {
+              console.log("NO APPLICATIONS");
+            }
+          });
+  
+        console.log(events.data);
+  
+        setEventsData(events.data);
+      }
 
-      axios
-        .get(`http://localhost:5000/getAwardApplications/${user.data._id}`)
-        .then(async (res1) => {
-          if (res1.data !== "") {
-            console.log("EXISTING APPLICATIONS: ", res1.data);
-            setApplications(res1.data);
-            setCategory(-1);
-          } else {
-            console.log("NO APPLICATIONS");
-          }
-        });
-
-      console.log(events.data);
-
-      setEventsData(events.data);
+     
     }
 
     fetchEventsData();
