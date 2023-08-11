@@ -86,6 +86,34 @@ const applicationSchema = new Schema({
     proof: String,
   },
 
+  religion: {
+    church: String,
+    date: Date,
+    location: String,
+    proof: String,
+  },
+
+  ritual: {
+    chapter: String,
+    date: Date,
+    position: String,
+    proof: String,
+  },
+
+  scholastics: {
+    school: String,
+    schoolYear: String,
+    semester: String,
+    aveGrade: String,
+    proof: String,
+  },
+
+  visitation: {
+    chapter: String,
+    date: String,
+    proof: String,
+  },
+
   isSubmitted: Boolean,
   isApproved: Boolean,
   isRequested: Boolean,

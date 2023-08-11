@@ -546,6 +546,10 @@ const controller = {
       masonicService: req.body.masonicService,
       merit: req.body.merit,
       petition: req.body.petition,
+      religion: req.body.religion,
+      ritual: req.body.ritual,
+      scholastics: req.body.scholastics,
+      visitation: req.body.visitation,
 
       isSubmitted: false,
       isApproved: false,
