@@ -157,7 +157,7 @@ function EventsProof() {
       });
 
       axios
-        .get(`http://localhost:5000/getAwardApplications/${user.data._id}`)
+        .get(`http://localhost:5000/getAllAwardApplications`)
         .then(async (res1) => {
           if (res1.data !== "") {
             console.log("EXISTING APPLICATIONS: ", res1.data);
@@ -165,6 +165,7 @@ function EventsProof() {
 
             const filtered = res1.data.filter((application) => {
               if (
+                application.chapterID === user.data.chapterId &&
                 application.isSubmitted === true &&
                 application.isApproved === true &&
                 application.isRequested == false

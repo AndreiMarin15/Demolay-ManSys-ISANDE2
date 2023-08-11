@@ -48,20 +48,12 @@ function EventsAdd() {
         value: 6,
       },
       {
-        key: "Installing",
+        key: "Merit",
         value: 7,
       },
       {
-        key: "Journalism",
-        value: 8,
-      },
-      {
-        key: "Merit",
-        value: 9,
-      },
-      {
         key: "Visitation",
-        value: 10,
+        value: 8,
       },
     ],
 
@@ -741,69 +733,8 @@ function EventsAdd() {
         }
 
         {
-          // Journalism
-          formData.meritBar == 7 && (
-            <>
-              <div className="col-md-6">
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="articlename"
-                      className="col-form-label text-right"
-                    >
-                      Name of Article:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="articlename"
-                      placeholder="Enter Article Name"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="articledate"
-                      className="col-form-label text-right"
-                    >
-                      Date of Article:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="articledate"
-                      placeholder="Enter Article Date"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label htmlFor="type" className="col-form-label text-left">
-                      Type:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <select className="form-select form-control" id="type">
-                      <option>Printed</option>
-                      <option>Digital</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {
           // Merit
-          formData.meritBar == 8 && (
+          formData.meritBar == 7 && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
@@ -869,7 +800,7 @@ function EventsAdd() {
 
         {
           // Visitation
-          formData.meritBar == 9 && (
+          formData.meritBar == 8 && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
