@@ -11,7 +11,6 @@ function EventsInstalling() {
   const prevPageProps = location.state;
 
   const [chapters, setChapters] = useState([]);
-  const [eventsData, setEventsData] = useState([]);
 
   const [formData, setFormData] = useState({
     activityDate: "",
@@ -34,7 +33,6 @@ function EventsInstalling() {
 
     console.log(prevPageProps);
     setFormData({ ...formData, color: prevPageProps.color });
-    console.log(eventsData);
   }, []);
 
   useEffect(() => {

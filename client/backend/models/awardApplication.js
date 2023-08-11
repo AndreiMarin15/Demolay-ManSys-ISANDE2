@@ -53,6 +53,39 @@ const applicationSchema = new Schema({
     proof: String,
   },
 
+  journalism: {
+    articleName: String,
+    articleDate: Date,
+    articleType: String,
+    position: String,
+    proof: String,
+  },
+
+  masonicAttendance: {
+    masonFullName: String,
+    dateAttended: Date,
+    proof: String,
+  },
+
+  masonicService: {
+    eventID: String,
+    hours: Number,
+    proof: String,
+  },
+
+  merit: {
+    eventID: String,
+    hours: Number,
+    proof: String,
+  },
+
+  petition: {
+    memberName: String,
+    idDate: String,
+    chapter: String,
+    proof: String,
+  },
+
   isSubmitted: Boolean,
   isApproved: Boolean,
   isRequested: Boolean,

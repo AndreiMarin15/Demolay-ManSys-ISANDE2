@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../styles/base.css";
 import "../../styles/Events.css";
 import { useParams } from "react-router-dom";
@@ -6,6 +6,91 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function EventsMasonicAttendance() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const prevPageProps = location.state;
+
+  const [formData, setFormData] = useState({
+    name: "",
+    date: "",
+    proof: "",
+    color: "",
+  });
+
+  useEffect(() => {
+    console.log(prevPageProps);
+    setFormData({ ...formData, color: prevPageProps.color });
+  }, []);
+
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
+
+  const onChange = (e) => {
+    setFormData((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertToBase64(file);
+
+    setFormData({
+      ...formData,
+      proof: base64,
+    });
+  };
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (prevPageProps.applications.length < 5) {
+      const appData = {
+        masonFullName: formData.name,
+        dateAttended: formData.date,
+        proof: formData.proof,
+      };
+
+      const newApplication = {
+        applicantID: prevPageProps.userData.userID,
+        name: prevPageProps.userData.name,
+        chapterID: prevPageProps.userData.chapterID,
+        type: prevPageProps.type,
+        color: prevPageProps.color,
+
+        masonicAttendance: appData,
+
+        isSubmitted: false,
+        isApproved: false,
+      };
+
+      axios
+        .post(`http://localhost:5000/newAwardApplication/`, newApplication)
+        .then((res) => {
+          window.location.href = `/eventsHome`;
+        });
+    }
+  };
+
   return (
     <div className="container">
       <br />
@@ -34,14 +119,14 @@ function EventsMasonicAttendance() {
         <div className="col-md-4">
           <table class="legend-table">
             <tr>
-              <td>Date:</td>
+              <td className="no-wrap">Mason's Full Name:</td>
               <td>
                 defines the date when did the Master Mason attended your
                 Chapter’s meeting
               </td>
             </tr>
             <tr>
-              <td className="no-wrap">Mason's Full Name:</td>
+              <td>Date:</td>
               <td>
                 defines the date when did the Master Mason attended your
                 Chapter’s meeting
@@ -55,26 +140,7 @@ function EventsMasonicAttendance() {
         <div className="col-md-4">
           <div className="row align-items-center mt-3">
             <div className="col-md-4">
-              <label htmlFor="date" className="col-form-label text-right">
-                Date:
-              </label>
-            </div>
-            <div className="col-md-7">
-              <input
-                type="text"
-                className="form-control"
-                id="date"
-                placeholder="MM/DD/YYYY"
-              />
-            </div>
-          </div>
-          <br />
-          <div className="row align-items-center mt-3">
-            <div className="col-md-4">
-              <label
-                htmlFor="masonsfullname"
-                className="col-form-label text-right"
-              >
+              <label htmlFor="name" className="col-form-label text-right">
                 Mason's Full Name:
               </label>
             </div>
@@ -82,8 +148,26 @@ function EventsMasonicAttendance() {
               <input
                 type="text"
                 className="form-control"
-                id="masonsfullname"
-                placeholder="Enter Mason's Full Name"
+                id="name"
+                placeholder="Enter Full Name"
+                onChange={onChange}
+              />
+            </div>
+          </div>
+          <br />
+          <div className="row align-items-center mt-3">
+            <div className="col-md-4">
+              <label htmlFor="date" className="col-form-label text-right">
+                Date:
+              </label>
+            </div>
+            <div className="col-md-7">
+              <input
+                type="date"
+                className="form-control"
+                id="date"
+                placeholder="MM/DD/YYYY"
+                onChange={onChange}
               />
             </div>
           </div>
@@ -100,7 +184,12 @@ function EventsMasonicAttendance() {
               </label>
             </div>
             <div className="col-md-7">
-              <input type="file" className="form-control" id="uploadID" />
+              <input
+                type="file"
+                className="form-control"
+                id="uploadproof"
+                onChange={handleImageUpload}
+              />
             </div>
           </div>
         </div>
@@ -113,7 +202,18 @@ function EventsMasonicAttendance() {
               BACK
             </button>
           </Link>
-          <button type="button" className="primary-btn" value="SUBMIT">
+          <button
+            type="button"
+            className="btn"
+            value="SUBMIT"
+            disabled={
+              formData.name === "" ||
+              formData.date === "" ||
+              formData.proof === "" ||
+              formData.color === ""
+            }
+            onClick={handleSubmit}
+          >
             SUBMIT
           </button>
         </div>

@@ -48,11 +48,11 @@ function EventsAdd() {
         value: 6,
       },
       {
-        key: "Merit",
+        key: "Masonic Service",
         value: 7,
       },
       {
-        key: "Visitation",
+        key: "Merit",
         value: 8,
       },
     ],
@@ -198,6 +198,32 @@ function EventsAdd() {
         const props = {
           fieldToUpdate: "frEvents",
           updateValue: eventsData.frEvents,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
+      } else if (formData.meritBar == 7) {
+        eventsData.msEvents.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "msEvents",
+          updateValue: eventsData.msEvents,
+        };
+
+        axios
+          .post(`http://localhost:5000/updateEvents/${eventsData._id}`, props)
+          .then((res) => {
+            console.log("Added new event: " + res);
+          });
+      } else if (formData.meritBar == 8) {
+        eventsData.meritEvents.push(newEvent);
+
+        const props = {
+          fieldToUpdate: "meritEvents",
+          updateValue: eventsData.meritEvents,
         };
 
         axios
@@ -461,8 +487,11 @@ function EventsAdd() {
         }
 
         {
-          // Civil Service & Fundraising
-          (formData.meritBar == 3 || formData.meritBar == 6) && (
+          // Civil Service & Fundraising & Masonic Service
+          (formData.meritBar == 3 ||
+            formData.meritBar == 6 ||
+            formData.meritBar == 7 ||
+            formData.meritBar == 8) && (
             <>
               <div className="col-md-6">
                 <div className="row align-items-center mt-3">
@@ -725,129 +754,6 @@ function EventsAdd() {
                       <option>Musical</option>
                       <option>Theatrical</option>
                     </select>
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {
-          // Merit
-          formData.meritBar == 7 && (
-            <>
-              <div className="col-md-6">
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="activityname"
-                      className="col-form-label text-right"
-                    >
-                      Name of Activity:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="activityname"
-                      placeholder="Enter Activity Name"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="activitydate"
-                      className="col-form-label text-right"
-                    >
-                      Date of Activity:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="activitydate"
-                      placeholder="Enter Activity Date"
-                    />
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="location"
-                      className="col-form-label text-right"
-                    >
-                      Location:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="location"
-                      placeholder="Enter Location"
-                    />
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {
-          // Visitation
-          formData.meritBar == 8 && (
-            <>
-              <div className="col-md-6">
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="chapter"
-                      className="col-form-label text-left"
-                    >
-                      Chapter:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <select
-                      className="form-select form-control"
-                      id="chapter"
-                      placeholder="Select Chapter"
-                    >
-                      <option value="" hidden>
-                        Select Chapter
-                      </option>
-                      {chapters.map((chapter) => {
-                        return (
-                          <option key={chapter.chapterID} value={chapter.name}>
-                            {chapter.name}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="row align-items-center mt-3">
-                  <div className="col-md-4">
-                    <label
-                      htmlFor="location"
-                      className="col-form-label text-right"
-                    >
-                      Location:
-                    </label>
-                  </div>
-                  <div className="col-md-7">
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="location"
-                      placeholder="Enter Location"
-                    />
                   </div>
                 </div>
               </div>
