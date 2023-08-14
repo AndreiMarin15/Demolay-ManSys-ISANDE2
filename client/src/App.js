@@ -212,6 +212,7 @@ function App() {
           <Route path="inbox" element={<Inbox />} />
           <Route path="inbox/:memberId" element={<Inbox />} />
           <Route path="sendcircular" element={<SendCircular />} />
+          <Route path="setMeeting/:userId" element={<SetMeeting/>}/>
           <Route
             path="sendcircular/:grandmasterId"
             element={<SendCircular />}
