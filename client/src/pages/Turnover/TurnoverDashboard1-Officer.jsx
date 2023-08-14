@@ -16,6 +16,7 @@ import {
 	faFileLines,
 	faAddressBook,
 	faAddressCard,
+	faPhoneSquare
 } from "@fortawesome/free-solid-svg-icons";
 
 const openTab = (event, tabId) => {
@@ -86,53 +87,39 @@ function TurnoverDashboard1() {
 						chapterID: res.data.chapterAssigned,
 					});
 				}
-				axios
-					.get(
-						`http://localhost:5000/getChapterByID/${res.data.chapterAssigned}`
-					)
-					.then(async (res1) => {
-						setChapterData(res1.data);
+				axios.get(`http://localhost:5000/getChapterByID/${res.data.chapterAssigned}`).then(async (res1) => {
+					setChapterData(res1.data);
 
-						const res2 = await axios.get(
-							`http://localhost:5000/getTurnoverReports/${res.data.chapterAssigned}/${res1.data.currentTerm}`
-						);
-						if (res2.data !== "") {
-							console.log( 
-								"TURNOVER REPORTS EXISTS: ",
-								res2.data,
-								res.data.chapterAssigned,
-								res1.data.currentTerm
-							);
+					const res2 = await axios.get(
+						`http://localhost:5000/getTurnoverReports/${res.data.chapterAssigned}/${res1.data.currentTerm}`
+					);
+					if (res2.data !== "") {
+						console.log("TURNOVER REPORTS EXISTS: ", res2.data, res.data.chapterAssigned, res1.data.currentTerm);
+						setTurnoverData({
+							turnoverStatusID: res2.data._id,
+							form1ID: res2.data.form1ID,
+							form1Approved: res2.data.form1Approved,
+							form15ID: res2.data.form15ID,
+							form15Approved: res2.data.form15Approved,
+							assetsID: res2.data.assetsID,
+							assetsApproved: res2.data.assetsApproved,
+							advisoryID: res2.data.advisoryID,
+							advisoryApproved: res2.data.advisoryApproved,
+							eoCertification: res2.data.eoCertification,
+						});
+					} else {
+						console.log(`NO EXISTING TURNOVER REPORTS FOR TERM ${res1.data.currentTerm}: `, res2.data);
+						const newTurnover = {
+							chapterID: userData.chapterID,
+							termID: res1.data.currentTerm,
+						};
+						axios.post(`http://localhost:5000/newTurnover`, newTurnover).then((res3) => {
 							setTurnoverData({
-								turnoverStatusID: res2.data._id,
-								form1ID: res2.data.form1ID,
-								form1Approved: res2.data.form1Approved,
-								form15ID: res2.data.form15ID,
-								form15Approved: res2.data.form15Approved,
-								assetsID: res2.data.assetsID,
-								assetsApproved: res2.data.assetsApproved,
-								advisoryID: res2.data.advisoryID,
-								advisoryApproved: res2.data.advisoryApproved,
-								eoCertification: res2.data.eoCertification,
+								turnoverStatusID: res3.data._id,
 							});
-						} else {
-							console.log(
-								`NO EXISTING TURNOVER REPORTS FOR TERM ${res1.data.currentTerm}: `,
-								res2.data
-							);
-							const newTurnover = {
-								chapterID: userData.chapterID,
-								termID: res1.data.currentTerm,
-							};
-							axios
-								.post(`http://localhost:5000/newTurnover`, newTurnover)
-								.then((res3) => {
-									setTurnoverData({
-										turnoverStatusID: res3.data._id,
-									});
-								});
-						}
-					});
+						});
+					}
+				});
 			});
 		}
 
@@ -144,71 +131,60 @@ function TurnoverDashboard1() {
 	const handleForm1Click = () => {
 		if (turnoverData.form1ID !== "") {
 			console.log("EXISTING FORM 1: ", turnoverData.form1ID);
-			axios
-				.get(`http://localhost:5000/getForm1/${turnoverData.form1ID}`)
-				.then((res1) => {
-					const form1Data = {
-						form1ID: turnoverData.form1ID,
-						term: res1.data.term,
-						year: res1.data.year,
-						startTerm: new Date(res1.data.startTerm).toLocaleDateString(
-							"en-US",
-							{
-								year: "numeric",
-								month: "long",
-								day: "numeric",
-							}
-						),
-						endTerm: new Date(res1.data.endTerm).toLocaleDateString("en-US", {
-							year: "numeric",
-							month: "long",
-							day: "numeric",
-						}),
-						totalMembers: res1.data.totalMembers,
-						initiated: res1.data.initiated,
-						affiliated: res1.data.affiliated,
-						majority: res1.data.majority,
-						transferred: res1.data.transferred,
-						deaths: res1.data.deaths,
-						resigned: res1.data.resigned,
-						expelled: res1.data.expelled,
-						totalGains: res1.data.totalGains,
-						totalLoss: res1.data.totalLoss,
-						totalNetMembers: res1.data.totalNetMembers,
+			axios.get(`http://localhost:5000/getForm1/${turnoverData.form1ID}`).then((res1) => {
+				const form1Data = {
+					form1ID: turnoverData.form1ID,
+					term: res1.data.term,
+					year: res1.data.year,
+					startTerm: new Date(res1.data.startTerm).toLocaleDateString("en-US", {
+						year: "numeric",
+						month: "long",
+						day: "numeric",
+					}),
+					endTerm: new Date(res1.data.endTerm).toLocaleDateString("en-US", {
+						year: "numeric",
+						month: "long",
+						day: "numeric",
+					}),
+					totalMembers: res1.data.totalMembers,
+					initiated: res1.data.initiated,
+					affiliated: res1.data.affiliated,
+					majority: res1.data.majority,
+					transferred: res1.data.transferred,
+					deaths: res1.data.deaths,
+					resigned: res1.data.resigned,
+					expelled: res1.data.expelled,
+					totalGains: res1.data.totalGains,
+					totalLoss: res1.data.totalLoss,
+					totalNetMembers: res1.data.totalNetMembers,
 
-						reportedBy: res1.data.reportedBy,
-						position: res1.data.position,
+					reportedBy: res1.data.reportedBy,
+					position: res1.data.position,
 
-						bankID: res1.data.bankID,
-						cashInBank: res1.data.cashInBank,
-						accountsReceivable: res1.data.accountsReceivable,
-						accountsPayable: res1.data.accountsPayable,
+					bankID: res1.data.bankID,
+					cashInBank: res1.data.cashInBank,
+					accountsReceivable: res1.data.accountsReceivable,
+					accountsPayable: res1.data.accountsPayable,
 
-						chapterScribe: res1.data.chapterScribe,
-						statusChapterScribe: res1.data.statusChapterScribe,
-						dateSignedChapterScribe: new Date(res1.data.dateSignedChapterScribe)
-							.toISOString()
-							.split("T")[0],
+					chapterScribe: res1.data.chapterScribe,
+					statusChapterScribe: res1.data.statusChapterScribe,
+					dateSignedChapterScribe: new Date(res1.data.dateSignedChapterScribe).toISOString().split("T")[0],
 
-						chapterAdvisor: res1.data.chapterAdvisor,
-						statusChapterAdvisor: res1.data.statusChapterAdvisor,
-						dateSignedChapterAdvisor: new Date(
-							res1.data.dateSignedChapterAdvisor
-						)
-							.toISOString()
-							.split("T")[0],
-					};
+					chapterAdvisor: res1.data.chapterAdvisor,
+					statusChapterAdvisor: res1.data.statusChapterAdvisor,
+					dateSignedChapterAdvisor: new Date(res1.data.dateSignedChapterAdvisor).toISOString().split("T")[0],
+				};
 
-					navigate("/turnovertf1", {
-						state: {
-							userData: userData,
-							chapterData: chapterData,
-							turnoverID: turnoverData.turnoverStatusID,
-							formData: form1Data,
-							approved: turnoverData.form1Approved,
-						},
-					});
+				navigate("/turnovertf1", {
+					state: {
+						userData: userData,
+						chapterData: chapterData,
+						turnoverID: turnoverData.turnoverStatusID,
+						formData: form1Data,
+						approved: turnoverData.form1Approved,
+					},
 				});
+			});
 		} else {
 			console.log("NO EXISTING TERM AND FINANCIAL REPORT");
 		}
@@ -217,40 +193,30 @@ function TurnoverDashboard1() {
 	const handleForm15Click = () => {
 		if (turnoverData.form15ID !== "") {
 			console.log("EXISTING FORM 15: ", turnoverData.form15ID);
-			axios
-				.get(`http://localhost:5000/getForm15/${turnoverData.form15ID}`)
-				.then((res1) => {
-					const form15Data = {
-						form15ID: turnoverData.form15ID,
-						term: res1.data.term,
-						year: res1.data.year,
-						electDate: new Date(res1.data.electDate)
-							.toISOString()
-							.split("T")[0],
-						installDate: new Date(res1.data.installDate)
-							.toISOString()
-							.split("T")[0],
-						officers: res1.data.officers,
+			axios.get(`http://localhost:5000/getForm15/${turnoverData.form15ID}`).then((res1) => {
+				const form15Data = {
+					form15ID: turnoverData.form15ID,
+					term: res1.data.term,
+					year: res1.data.year,
+					electDate: new Date(res1.data.electDate).toISOString().split("T")[0],
+					installDate: new Date(res1.data.installDate).toISOString().split("T")[0],
+					officers: res1.data.officers,
 
-						chapterAdvisor: res1.data.chapterAdvisor,
-						statusChapterAdvisor: res1.data.statusChapterAdvisor,
-						dateSignedChapterAdvisor: new Date(
-							res1.data.dateSignedChapterAdvisor
-						)
-							.toISOString()
-							.split("T")[0],
-					};
+					chapterAdvisor: res1.data.chapterAdvisor,
+					statusChapterAdvisor: res1.data.statusChapterAdvisor,
+					dateSignedChapterAdvisor: new Date(res1.data.dateSignedChapterAdvisor).toISOString().split("T")[0],
+				};
 
-					navigate("/turnoverno1", {
-						state: {
-							userData: userData,
-							chapterData: chapterData,
-							turnoverID: turnoverData.turnoverStatusID,
-							formData: form15Data,
-							approved: turnoverData.form15Approved,
-						},
-					});
+				navigate("/turnoverno1", {
+					state: {
+						userData: userData,
+						chapterData: chapterData,
+						turnoverID: turnoverData.turnoverStatusID,
+						formData: form15Data,
+						approved: turnoverData.form15Approved,
+					},
 				});
+			});
 		} else {
 			console.log("NO EXISTING NEW OFFICERS REPORT");
 		}
@@ -259,46 +225,40 @@ function TurnoverDashboard1() {
 	const handleAssetClick = () => {
 		if (turnoverData.assetsID !== "") {
 			console.log("EXISTING ASSETS REPORT: ", turnoverData.assetsID);
-			axios
-				.get(`http://localhost:5000/getAR/${turnoverData.assetsID}`)
-				.then((res1) => {
-					const arData = {
-						assetsID: turnoverData.assetsID,
-						year: res1.data.year,
-						term: res1.data.term,
-						senBook: res1.data.senBook,
-						crown: res1.data.crown,
-						blackRobes: res1.data.blackRobes,
-						whiteRobes: res1.data.whiteRobes,
-						altarCloth: res1.data.altarCloth,
-						bible: res1.data.bible,
-						candleStands: res1.data.candleStands,
-						candleLights: res1.data.candleLights,
-						banner: res1.data.banner,
-						charterLT: res1.data.charterLT,
-						ballotBox: res1.data.ballotBox,
-						scribeNotebook: res1.data.scribeNotebook,
-						treasNotebook: res1.data.treasNotebook,
+			axios.get(`http://localhost:5000/getAR/${turnoverData.assetsID}`).then((res1) => {
+				const arData = {
+					assetsID: turnoverData.assetsID,
+					year: res1.data.year,
+					term: res1.data.term,
+					senBook: res1.data.senBook,
+					crown: res1.data.crown,
+					blackRobes: res1.data.blackRobes,
+					whiteRobes: res1.data.whiteRobes,
+					altarCloth: res1.data.altarCloth,
+					bible: res1.data.bible,
+					candleStands: res1.data.candleStands,
+					candleLights: res1.data.candleLights,
+					banner: res1.data.banner,
+					charterLT: res1.data.charterLT,
+					ballotBox: res1.data.ballotBox,
+					scribeNotebook: res1.data.scribeNotebook,
+					treasNotebook: res1.data.treasNotebook,
 
-						chapterAdvisor: res1.data.chapterAdvisor,
-						statusChapterAdvisor: res1.data.statusChapterAdvisor,
-						dateSignedChapterAdvisor: new Date(
-							res1.data.dateSignedChapterAdvisor
-						)
-							.toISOString()
-							.split("T")[0],
-					};
+					chapterAdvisor: res1.data.chapterAdvisor,
+					statusChapterAdvisor: res1.data.statusChapterAdvisor,
+					dateSignedChapterAdvisor: new Date(res1.data.dateSignedChapterAdvisor).toISOString().split("T")[0],
+				};
 
-					navigate("/turnoverhr1", {
-						state: {
-							userData: userData,
-							chapterData: chapterData,
-							turnoverID: turnoverData.turnoverStatusID,
-							formData: arData,
-							approved: turnoverData.assetsApproved,
-						},
-					});
+				navigate("/turnoverhr1", {
+					state: {
+						userData: userData,
+						chapterData: chapterData,
+						turnoverID: turnoverData.turnoverStatusID,
+						formData: arData,
+						approved: turnoverData.assetsApproved,
+					},
 				});
+			});
 		} else {
 			console.log("NO EXISTING NEW OFFICERS REPORT");
 		}
@@ -307,39 +267,37 @@ function TurnoverDashboard1() {
 	const handleCAClick = () => {
 		if (turnoverData.advisoryID !== "") {
 			console.log("EXISTING ADVISORY REPORT: ", turnoverData.advisoryID);
-			axios
-				.get(`http://localhost:5000/getAdvisory/${turnoverData.advisoryID}`)
-				.then((res1) => {
-					const advisoryData = {
-						term: res1.data.term,
-						year: res1.data.year,
+			axios.get(`http://localhost:5000/getAdvisory/${turnoverData.advisoryID}`).then((res1) => {
+				const advisoryData = {
+					term: res1.data.term,
+					year: res1.data.year,
 
-						chairID: res1.data.chairID,
-						chairEmail: res1.data.chairEmail,
-						chairAddress: res1.data.chairAddress,
-						chairPhone: res1.data.chairPhone,
-						chairIsReAppt: res1.data.chairIsReAppt,
-						chairYears: res1.data.chairYears,
+					chairID: res1.data.chairID,
+					chairEmail: res1.data.chairEmail,
+					chairAddress: res1.data.chairAddress,
+					chairPhone: res1.data.chairPhone,
+					chairIsReAppt: res1.data.chairIsReAppt,
+					chairYears: res1.data.chairYears,
 
-						caID: res1.data.caID,
-						caEmail: res1.data.caEmail,
-						caAddress: res1.data.caAddress,
-						caPhone: res1.data.caPhone,
-						caIsReAppt: res1.data.caIsReAppt,
-						caYears: res1.data.caYears,
-					};
+					caID: res1.data.caID,
+					caEmail: res1.data.caEmail,
+					caAddress: res1.data.caAddress,
+					caPhone: res1.data.caPhone,
+					caIsReAppt: res1.data.caIsReAppt,
+					caYears: res1.data.caYears,
+				};
 
-					navigate("/turnoverca1", {
-						state: {
-							userData: userData,
-							chapterData: chapterData,
-							turnoverID: turnoverData.turnoverStatusID,
-							formData: advisoryData,
-							advisoryID: turnoverData.advisoryID,
-							approved: turnoverData.advisoryApproved,
-						},
-					});
+				navigate("/turnoverca1", {
+					state: {
+						userData: userData,
+						chapterData: chapterData,
+						turnoverID: turnoverData.turnoverStatusID,
+						formData: advisoryData,
+						advisoryID: turnoverData.advisoryID,
+						approved: turnoverData.advisoryApproved,
+					},
 				});
+			});
 		} else {
 			alert("NO EXISTING REPORT YET");
 			console.log("NO EXISTING REPORT");
@@ -367,9 +325,7 @@ function TurnoverDashboard1() {
 				eoCertification: true,
 			});
 
-			window.alert(
-				`Certified Reports of Term ${chapterData.currentTerm} ${chapterData.name}.`
-			);
+			window.alert(`Certified Reports of Term ${chapterData.currentTerm} ${chapterData.name}.`);
 		}
 	};
 
@@ -389,18 +345,13 @@ function TurnoverDashboard1() {
 							marginLeft: "50px",
 						}}
 					>
-						<FontAwesomeIcon
-							icon={faCircleUser}
-							style={{ fontSize: "150px" }}
-						/>
+						<FontAwesomeIcon icon={faCircleUser} style={{ fontSize: "150px" }} />
 						<div className="text-center">
 							<h5 className="name">{userData.name}</h5>
 
 							<small class="text-muted">
 								{userData.position}, <br />
-								{userData.position === "Executive Officer"
-									? userData.region
-									: chapterData.name}
+								{userData.position === "Executive Officer" ? userData.region : chapterData.name}
 							</small>
 							<hr className="hori-line" />
 						</div>
@@ -415,16 +366,12 @@ function TurnoverDashboard1() {
 							}}
 						>
 							<span>
-								<FontAwesomeIcon
-									icon={faBullhorn}
-									style={{ marginRight: "8px" }}
-								/>
+								<FontAwesomeIcon icon={faBullhorn} style={{ marginRight: "8px" }} />
 							</span>
 							Circulars
 						</button>
 						<br />
-						{(userData.position === "Executive Officer" ||
-							userData.position === "AdvisoryCouncil") && (
+						{(userData.position === "Executive Officer" || userData.position === "AdvisoryCouncil") && (
 							<>
 								<button
 									className="btn-text"
@@ -435,22 +382,30 @@ function TurnoverDashboard1() {
 									}}
 								>
 									<span>
-										<FontAwesomeIcon
-											icon={faMagnifyingGlass}
-											style={{ marginRight: "8px" }}
-										/>
+										<FontAwesomeIcon icon={faMagnifyingGlass} style={{ marginRight: "8px" }} />
 									</span>
 									For Review
 								</button>
 								<br />
 							</>
 						)}
+						<button
+							className="btn-text"
+							type="button"
+							style={{ border: "0" }}
+							onClick={() => {
+								window.location.href = `/setMeeting/${officerId}`;
+							}}
+						>
+							<span>
+								<FontAwesomeIcon icon={faPhoneSquare} style={{ marginRight: "8px" }} />
+							</span>
+							Meetings
+						</button>
+
 						<button className="btn-text" type="button" style={{ border: "0" }}>
 							<span>
-								<FontAwesomeIcon
-									icon={faFileLines}
-									style={{ marginRight: "8px" }}
-								/>
+								<FontAwesomeIcon icon={faFileLines} style={{ marginRight: "8px" }} />
 							</span>
 							Forms and Reports
 						</button>
@@ -470,10 +425,7 @@ function TurnoverDashboard1() {
 									}}
 								>
 									<span>
-										<FontAwesomeIcon
-											icon={faAddressCard}
-											style={{ marginRight: "8px" }}
-										/>
+										<FontAwesomeIcon icon={faAddressCard} style={{ marginRight: "8px" }} />
 									</span>
 									Chapter Directory
 								</button>
@@ -489,26 +441,16 @@ function TurnoverDashboard1() {
 
 				{/* Second Column */}
 
-				<div
-					className="col-md-8 justify-content-center"
-					style={{ marginLeft: "-60px" }}
-				>
+				<div className="col-md-8 justify-content-center" style={{ marginLeft: "-60px" }}>
 					<div className="d-flex justify-content-between align-items-center mb-3">
 						<h1>
 							<span>
-								<FontAwesomeIcon
-									icon={faFileText}
-									style={{ marginRight: "15px" }}
-								/>
+								<FontAwesomeIcon icon={faFileText} style={{ marginRight: "15px" }} />
 							</span>
 							Reports
 						</h1>
 						<div className="d-flex justify-content-end mb-2">
-							<input
-								type="text"
-								className="form-control"
-								placeholder="Search"
-							/>
+							<input type="text" className="form-control" placeholder="Search" />
 							<div className="input-group-append">
 								<button type="button" className="filterbtn">
 									<FontAwesomeIcon icon={faFilter} />
@@ -520,22 +462,13 @@ function TurnoverDashboard1() {
 						{/* Tab Headers */}
 
 						<div className="tab-header">
-							<button
-								className="tab-button active"
-								onClick={(event) => openTab(event, "tab1")}
-							>
+							<button className="tab-button active" onClick={(event) => openTab(event, "tab1")}>
 								All
 							</button>
-							<button
-								className="tab-button"
-								onClick={(event) => openTab(event, "tab2")}
-							>
+							<button className="tab-button" onClick={(event) => openTab(event, "tab2")}>
 								Started
 							</button>
-							<button
-								className="tab-button"
-								onClick={(event) => openTab(event, "tab3")}
-							>
+							<button className="tab-button" onClick={(event) => openTab(event, "tab3")}>
 								Submitted
 							</button>
 						</div>
@@ -548,28 +481,17 @@ function TurnoverDashboard1() {
 									{turnoverData.form1ID !== "" && (
 										<div className="box">
 											<h4>Term and Financial Report</h4>
-											<button
-												className="fill-btn center"
-												onClick={handleForm1Click}
-											>
+											<button className="fill-btn center" onClick={handleForm1Click}>
 												{" "}
 												REVIEW{" "}
 											</button>
 											<br />
 											{turnoverData.form1Approved ? (
-												<span className="badge text-bg-success mt-3">
-													Signed
-												</span>
+												<span className="badge text-bg-success mt-3">Signed</span>
 											) : (
-												<span className="badge text-bg-warning mt-3">
-													Pending
-												</span>
+												<span className="badge text-bg-warning mt-3">Pending</span>
 											)}
-											{turnoverData.eoCertification && (
-												<span className="badge text-bg-info ms-2">
-													Certified
-												</span>
-											)}
+											{turnoverData.eoCertification && <span className="badge text-bg-info ms-2">Certified</span>}
 										</div>
 									)}
 									{turnoverData.form15ID !== "" && (
@@ -581,48 +503,29 @@ function TurnoverDashboard1() {
 											</button>
 											<br />
 											{turnoverData.form15Approved ? (
-												<span className="badge text-bg-success mt-3">
-													Signed
-												</span>
+												<span className="badge text-bg-success mt-3">Signed</span>
 											) : (
-												<span className="badge text-bg-warning mt-3">
-													Pending
-												</span>
+												<span className="badge text-bg-warning mt-3">Pending</span>
 											)}
-											{turnoverData.eoCertification && (
-												<span className="badge text-bg-info ms-2">
-													Certified
-												</span>
-											)}
+											{turnoverData.eoCertification && <span className="badge text-bg-info ms-2">Certified</span>}
 										</div>
 									)}
 								</div>
 								<div className="boxRow">
 									{turnoverData.assetsID !== "" && (
 										<div className="box">
-											<h4>
-												Report on Historical Records, Official Files, Assets, &
-												Properties
-											</h4>
+											<h4>Report on Historical Records, Official Files, Assets, & Properties</h4>
 											<button className="fill-btn" onClick={handleAssetClick}>
 												{" "}
 												REVIEW{" "}
 											</button>
 											<br />
 											{turnoverData.assetsApproved ? (
-												<span className="badge text-bg-success mt-3">
-													Signed
-												</span>
+												<span className="badge text-bg-success mt-3">Signed</span>
 											) : (
-												<span className="badge text-bg-warning mt-3">
-													Pending
-												</span>
+												<span className="badge text-bg-warning mt-3">Pending</span>
 											)}
-											{turnoverData.eoCertification && (
-												<span className="badge text-bg-info ms-2">
-													Certified
-												</span>
-											)}
+											{turnoverData.eoCertification && <span className="badge text-bg-info ms-2">Certified</span>}
 										</div>
 									)}
 									{turnoverData.advisoryID !== "" && (
@@ -633,19 +536,11 @@ function TurnoverDashboard1() {
 											</button>
 											<br />
 											{turnoverData.advisoryApproved ? (
-												<span className="badge text-bg-success mt-3">
-													Signed
-												</span>
+												<span className="badge text-bg-success mt-3">Signed</span>
 											) : (
-												<span className="badge text-bg-warning mt-3">
-													Pending
-												</span>
+												<span className="badge text-bg-warning mt-3">Pending</span>
 											)}
-											{turnoverData.eoCertification && (
-												<span className="badge text-bg-info ms-2">
-													Certified
-												</span>
-											)}
+											{turnoverData.eoCertification && <span className="badge text-bg-info ms-2">Certified</span>}
 										</div>
 									)}
 								</div>
@@ -672,13 +567,7 @@ function TurnoverDashboard1() {
 						turnoverData.assetsApproved === true &&
 						turnoverData.advisoryApproved === true && (
 							<div className="d-flex justify-content-center">
-								<button
-									type="submit"
-									form="submit"
-									className="primary-btn"
-									value="SUBMIT"
-									onClick={handleEOCertify}
-								>
+								<button type="submit" form="submit" className="primary-btn" value="SUBMIT" onClick={handleEOCertify}>
 									CERTIFY REPORTS
 								</button>
 							</div>
